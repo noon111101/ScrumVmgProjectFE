@@ -4,13 +4,11 @@
       <h3>{{content}}</h3>
     </header>
   </div> -->
-  <el-calendar v-model="value">
+<el-calendar v-model="value">
 </el-calendar>
 </template>
-
 <script>
 import UserService from '../services/user.service';
-
 export default {
   name: 'UserVue',
   data() {
