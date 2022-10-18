@@ -2,8 +2,7 @@
   <div class="ml-auto" >
 
 
-    <el-button @click="importExcel"  type="info" class="el-icon-upload2" round> Import Excel File</el-button>
-    <el-button @click="exportExcel"  type="danger" class="el-icon-download" round> Export Excel File</el-button>
+
     <hr>
     <div class="block" right>
       <span class="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
@@ -76,6 +75,7 @@
         layout="prev, pager, next"
         :total="1000">
     </el-pagination>
+
   </div>
 </template>
 

@@ -45,7 +45,7 @@ export default {
     </h1>
   <div>
           <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home" />Home
+            <font-awesome-icon icon="home" /> Home
           </router-link>
 
            
@@ -61,17 +61,17 @@ export default {
           <router-link v-if="!currentUser" to="/register" class="nav-link">
             <font-awesome-icon icon="user-plus" />Sign Up
           </router-link>
-
-          <router-link to="/login" class="nav-link">
+    <br><br>
+          <router-link to="/login" class="nav-link" v-if="!currentUser">
             <font-awesome-icon icon="sign-in-alt" />Login
           </router-link>
-
+    <br><br>
           <router-link v-if="currentUser" to="/profile" class="nav-link">
             <font-awesome-icon icon="user" />
             {{ currentUser.username }}
           </router-link>
-
-          <a class="nav-link" href @click.prevent="logOut">
+          <br>
+          <a class="nav-link" href @click.prevent="logOut" v-if="currentUser">
             <font-awesome-icon icon="sign-out-alt" />LogOut
           </a>
   </div>
