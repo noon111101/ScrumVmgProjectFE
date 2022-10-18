@@ -61,52 +61,42 @@
                     style="width: 185px;" alt="logo">
                   <h4 class="mt-1 mb-5 pb-1">PHÁT TRIỂN CÙNG CÔNG NGHỆ</h4>
                 </div>
-
                 <form name="form" @submit.prevent="handleLogin">
                   <p>Please login to your account</p>
-
                   <div class="form-outline mb-4">
-                    <input  v-model="user.username"
-            v-validate="'required'"
+                    <input placeholder="Enter Your Email"  v-model="user.username"
+            v-validate="{required:true}"
             type=""
             class="form-control"
             name="username"
             />
-
-                    <label class="form-label" for="form2Example11">Email</label>
+                    <!-- <label class="form-label" for="form2Example11">Email</label> -->
                   </div>
-
                   <div
             v-if="errors.has('username')"
             class="alert alert-danger"
             role="alert"
           >Email is required!</div>
                   <div class="form-outline mb-4">
-                    <input v-model="user.password"
+                    <input placeholder="Enter Your Password" v-model="user.password"
             v-validate="'required'"
             type="password"
             class="form-control"
             name="password"
             />
-                    <label class="form-label" for="form2Example22">Password</label>
+                    <!-- <label class="form-label" for="form2Example22">Password</label> -->
                   </div>
                            <div
             v-if="errors.has('password')"
             class="alert alert-danger"
             role="alert"
           >Password is required!</div>
-
                   <div class="text-center pt-1 mb-5 pb-1">
-                    <button class="btn btn-primary btn-block" :disabled="loading">Log
+                    <button class="btn btn-danger btn-block" :disabled="loading">Log
                       in</button>
+                      <br>
                     <a class="text-muted" href="#!">Forgot password?</a>
                   </div>
-
-                  <div class="d-flex align-items-center justify-content-center pb-4">
-                    <p class="mb-0 me-2">Don't have an account?</p>
-                    <button class="btn btn-primary btn-block" :disabled="loading">Create new</button>
-                  </div>
-
                 </form>
 
               </div>
