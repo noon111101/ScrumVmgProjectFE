@@ -46,161 +46,150 @@
             role="tabpanel"
             aria-labelledby="home-tab"
           >
-            <h3 class="register-heading">Create an account</h3>
-            <div class="row register-form">
-              <div
-                class="col-md-6"
-                id="my-strictly-unique-vue-upload-multiple-image"
-                style="display: flex; justify-content: center"
-              >
-                <vue-upload-multiple-image
-                  @upload-success="uploadImageSuccess"
-                  @before-remove="beforeRemove"
-                  @edit-image="editImage"
-                  :data-images="images"
-                  idUpload="myIdUpload"
-                  editUpload="myIdEdit"
-                ></vue-upload-multiple-image>
-              </div>
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    name="fullname"
-                    placeholder="Full name *"
-                    value=""
-                    v-validate="{ required: true, min: 6}"
-                  />
-                  <div
-                    v-if="errors.has('fullname')"
-                    class="alert alert-danger"
-                    role="alert"
-                  >
-                    Full name is required and the full Name field must be at
-                    least 6 characters!
+            <form name="form" @submit.prevent="handleRegister">
+              <h3 class="register-heading">Create an account</h3>
+              <div class="row register-form">
+                <div
+                  class="col-md-6"
+                  id="my-strictly-unique-vue-upload-multiple-image"
+                  style="display: flex; justify-content: center"
+                >
+                  <vue-upload-multiple-image
+                    @upload-success="uploadImageSuccess"
+                    @before-remove="beforeRemove"
+                    @edit-image="editImage"
+                    :data-images="images"
+                    idUpload="myIdUpload"
+                    editUpload="myIdEdit"
+                  ></vue-upload-multiple-image>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input
+                      v-model="user.fullName"
+                      type="text"
+                      class="form-control"
+                      name="fullName"
+                      placeholder="Full name *"
+                      value=""
+                      v-validate="{ required: true, min: 6 }"
+                    />
+                    <div
+                      v-if="errors.has('fullName')"
+                      class="alert alert-danger"
+                      role="alert"
+                    >
+                      Full name is required and the full Name field must be at
+                      least 6 characters!
+                    </div>
                   </div>
-
-                </div>
-                <br />
-                <div class="form-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Email *"
-                    value=""
-                    v-validate="{required:true, min:2}"
-                    name="email"
-                  />
-                </div>
-                     <div
-                    v-if="errors.has('email')"
+                  <br />
+                  <div class="form-group">
+                    <input
+                      v-model="user.username"
+                      type="email"
+                      class="form-control"
+                      placeholder="Email *"
+                      value=""
+                      v-validate="{ required: true, min: 2 }"
+                      name="username"
+                    />
+                  </div>
+                  <div
+                    v-if="errors.has('username')"
                     class="alert alert-danger"
                     role="alert"
                   >
                     Email is required!
                   </div>
 
-                
-                <br />
-                <!-- <div class="form-group">
+                  <br />
+                  <!-- <div class="form-group">
                                             <input type="password" class="form-control" placeholder="Password *" value="" />
                                         </div> -->
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Employee ID *"
-                    value=""
-                    v-validate="{required:true}"
-                    name="employeeId"
-                  />
-                </div>
-                             <div
-                    v-if="errors.has('employeeId')"
+                  <div class="form-group">
+                    <input
+                      v-model="user.code"
+                      type=""
+                      class="form-control"
+                      placeholder="Employee ID *"
+                      v-validate="{ required: true, min: 2 }"
+                      name="code"
+                    />
+                  </div>
+                  <div
+                    v-if="errors.has('code')"
                     class="alert alert-danger"
                     role="alert"
                   >
                     EmployeeId is required!
                   </div>
-
-                <br />
-                <div class="form-group">
-                  <select class="form-control">
-                    <option class="hidden" selected disabled>Department</option>
-                    <option>Phòng nhân sự</option>
-                    <option>Phòng phát triển phần mềm</option>
-                    <option>Phòng kế toán</option>
-                  </select>
+                  <br />
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Nam"
+                    v-model="user.gender"
+                  />
+                  Male
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="Nữ"
+                    v-model="user.gender"
+                  />
+                  Female
+                  <br />
+                  <div class="form-group">
+                    <select
+                      name="department"
+                      v-validate="{ required: true }"
+                      class="form-control"
+                      v-model="user.department"
+                    >
+                      <!-- <option class="hidden" selected disabled>
+                        Department *
+                      </option> -->
+                      <option>Phòng nhân sự</option>
+                      <option>Phòng phát triển phần mềm</option>
+                      <option>Phòng kế toán</option>
+                    </select>
+                  </div>
+                  <br />
+                  <div class="form-group">
+                    <input
+                      type="checkbox"
+                      id="admin"
+                      value="admin"
+                      v-model="user.role"
+                    />
+                    <label for="admin">admin</label>
+                    <br>
+                    <input
+                      type="checkbox"
+                      id="manage"
+                      value="manage"
+                      v-model="user.role"
+                    />
+                    <label for="manage">manage</label>
+                    <br>
+                    <input
+                      type="checkbox"
+                      id="user"
+                      value="user"
+                      v-model="user.role"
+                    />
+                    <label for="user">user</label>
+                    <br />
+                    <span>Select: {{ user.role }}</span>
+                  </div>
+                  <br />
+                  <div class="form-group">
+                    <button class="btn btn-danger btn-block">Sign Up</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div
-            class="tab-pane fade show"
-            id="profile"
-            role="tabpanel"
-            aria-labelledby="profile-tab"
-          >
-            <h3 class="register-heading">Apply as a Hirer</h3>
-            <div class="row register-form">
-              <div class="col-md-6">
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="First Name *"
-                    value=""
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Last Name *"
-                    value=""
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="email"
-                    class="form-control"
-                    placeholder="Email *"
-                    value=""
-                  />
-                </div>
-                <div class="form-group">
-                  <input
-                    type="text"
-                    maxlength="10"
-                    minlength="10"
-                    class="form-control"
-                    placeholder="Phone *"
-                    value=""
-                  />
-                </div>
-              </div>
-              <!-- <div class="col-md-6">
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Password *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Confirm Password *" value="" />
-                                        </div>
-                                        <div class="form-group">
-                                            <select class="form-control">
-                                                <option class="hidden"  selected disabled>Please select your Sequrity Question</option>
-                                                <option>What is your Birthdate?</option>
-                                                <option>What is Your old Phone Number</option>
-                                                <option>What is your Pet Name?</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="`Answer *" value="" />
-                                        </div>
-                                        <input type="submit" class="btnRegister"  value="Register"/>
-                                    </div> -->
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -210,14 +199,21 @@
 <script>
 import VueUploadMultipleImage from "vue-upload-multiple-image";
 import UserService from "../services/user.service";
-import User from "../models/user";
 export default {
   name: "AdminVue",
   data() {
     return {
       content: "",
       value: new Date(),
-      user: new User("", "", ""),
+      user: {
+        username:"",
+        fullName:"",
+        role:[],
+        department:"",
+        code: "",
+        gender:""
+
+      },
       submitted: false,
       successful: false,
       message: "",
@@ -244,6 +240,7 @@ export default {
     handleRegister() {
       this.message = "";
       this.submitted = true;
+      console.log(this.roles)
       this.$validator.validate().then((isValid) => {
         if (isValid) {
           this.$store.dispatch("auth/register", this.user).then(

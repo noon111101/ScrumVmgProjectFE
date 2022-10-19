@@ -19,14 +19,7 @@
           label="Date"
           prop="date">
       </el-table-column>
-      <el-table-column
-          label="Ngày trong tuần"
-          prop="day">
-      </el-table-column>
-      <el-table-column
-          label="Số giờ làm"
-          prop="hoursWork">
-      </el-table-column>
+      
       <el-table-column
           label="In"
           prop="in">
@@ -35,10 +28,7 @@
           label="Out"
           prop="out">
       </el-table-column>
-      <el-table-column
-          label="Exception"
-          prop="exception">
-      </el-table-column>
+      
     </el-table>
     <el-pagination
         :page-size="20"
