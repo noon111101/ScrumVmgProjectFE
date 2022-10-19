@@ -2,8 +2,6 @@
      <div class="container">
       <div style="margin-top:50px" class="row">
          <div class="col-lg">
-           <el-button @click="importExcel"  type="info" class="el-icon-upload2" round> Import Excel File</el-button>
-           <el-button @click="exportExcel"  type="danger" class="el-icon-download" round> Export Excel File</el-button>
             <table class="table table-responsive table-bordered">
                <thead>
                   <tr>
@@ -31,79 +29,22 @@
                           <td v-for="(n,index) in 30 " :key="index"></td>
                   </tr>
 
-                    <tr>
-                     <td></td>
-                     <td></td>
-                     Tổng cộng
-                  </tr>
-               </tbody>
-            </table>
-         </div>
+            <tr>
+              <td></td>
+              <td></td>
+              Tổng cộng
+            </tr>
+          </tbody>
+        </table>
       </div>
-   </div>
+    </div>
+    <div style="display: flex; margin-top:20px">
+      <h5 style="font-weight: bold;">Ký hiệu:</h5>
+      <h5 style="margin-left: 20px; font-weight: bold;">Ca:</h5>
+           <div style="float:left;margin-left:20px;">
+      <p style="margin-left: 20px">H: Làm hành chính</p>
+      <p style="margin-left: 20px">NT: Nghỉ thứ 7, Chủ nhật</p>
+      </div>
+    </div>
+  </div>
 </template>
-
-<script>
-// import UserService from '../services/user.service';
-import ExcelService from "@/services/excel-service";
-
-export default {
-  name: 'HomeVue',
-  data() {
-    return {
-      tableData: [{
-        name: 'Nguyễn Đình Phú',
-        id: "123",
-        department: "All Users/Thuc tap PTPM",
-        date: '2016-05-03',
-        shift: "CHAM CONG HANH CHINH",
-        in: "8:10:11",
-        out: "5:24:22",
-        exception: "Late In"
-      }, {
-        name: 'Nguyễn Trường Thọ',
-        id: "123",
-        department: "All Users/Thuc tap PTPM",
-        date: '2016-05-02',
-        shift: "CHAM CONG HANH CHINH",
-        in: "8:00:00",
-        out: "5:24:22",
-        exception: "Late In"
-      }, {
-        name: 'Phạm Minh Giang',
-        id: "123",
-        department: "All Users/Thuc tap PTPM",
-        date: '2016-05-04',
-        shift: "CHAM CONG HANH CHINH",
-        in: "12:00:00",
-        out: "5:24:22",
-        exception: "Late In"
-      }, {
-        name: 'Khuất Tiến Quang',
-        id: "123",
-        department: "All Users/Thuc tap PTPM",
-        date: '2016-05-01',
-        shift: "CHAM CONG HANH CHINH",
-        in: "12:00:00",
-        out: "5:24:22",
-        exception: "Late In"
-      }],
-      search: '',
-    }
-  },
-  methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
-    },
-    handleDelete(index, row) {
-      console.log(index, row);
-    },
-    exportExcel(){
-      ExcelService.exportExcel();
-    }
-
-  },
-
-
-};
-</script>

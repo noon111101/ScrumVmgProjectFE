@@ -1,9 +1,7 @@
 <template>
   <!-- <div class="container">
     <header class="jumbotron">
-      <h3>
-        <strong>{{currentUser.username}}</strong> Profile
-      </h3>
+      <h3>{{content}}</h3>
     </header>
     <p>
       <strong>Token:</strong>

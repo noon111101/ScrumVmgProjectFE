@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div class="ml-auto">
 
-    <div class="block" >
+    <div class="block" right>
       <span class="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker style="width: 30%"
                       v-model="value1"
@@ -12,32 +12,29 @@
       </el-date-picker>
     </div>
     <br><br>
-
     <el-table
-        :data="logs"
-        cell-style="border: solid 1px"
-        row-style="border: solid 1px"
-        style="width: 100%; border: solid 1px; align-items: center">
+        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
+        style="width: 100%">
       <el-table-column
           label="Date"
-          prop="date_log"
-          >
+          prop="date">
       </el-table-column>
+      
       <el-table-column
           label="In"
-          prop="timeIn">
+          prop="in">
       </el-table-column>
       <el-table-column
           label="Out"
-          prop="timeOut">
+          prop="out">
       </el-table-column>
+      
     </el-table>
     <el-pagination
-        small
+        :page-size="20"
+        :pager-count="5"
         layout="prev, pager, next"
-        :total="totalItems"
-        :page-size="pageSize"
-        @current-change="handlePageChange">
+        :total="1000">
     </el-pagination>
   </div>
 </template>
@@ -45,83 +42,67 @@
 <script>
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
-import LogdetailService from "@/services/logdetail-service";
 
 export default {
   name: 'HomeVue',
   data() {
     return {
-      // user_code:  this.currentUser.usercode,
-      value1: "",
-      logs: [
-
-      ],
+      tableData: [{
+        date: '05-05-2022',
+        day: 'Thứ sáu',
+        in: "8:10:11",
+        out: "5:24:22",
+        hoursWork: '',
+        name: 'Nguyễn Đình Phú',
+        department: "All Users/Thuc tap PTPM",
+        shift: "CHAM CONG HANH CHINH",
+        exception: "H"
+      }, {
+        date: '06-05-2022',
+        day: 'Thứ bảy',
+        in: "",
+        out: "",
+        hoursWork: '',
+        name: 'Nguyễn Đình Phú',
+        department: "All Users/Thuc tap PTPM",
+        shift: "CHAM CONG HANH CHINH",
+        exception: "NT"
+      }, {
+        date: '07-05-2022',
+        day: 'Chủ nhật',
+        in: "",
+        out: "",
+        hoursWork: '',
+        name: 'Nguyễn Đình Phú',
+        department: "All Users/Thuc tap PTPM",
+        shift: "CHAM CONG HANH CHINH",
+        exception: "NT"
+      }, {
+        date: '08-05-2022',
+        day: 'Thứ hai',
+        in: "8:10:11",
+        out: "5:24:22",
+        hoursWork: '',
+        name: 'Nguyễn Đình Phú',
+        department: "All Users/Thuc tap PTPM",
+        shift: "CHAM CONG HANH CHINH",
+        exception: "H"
+      }],
       search: '',
-      totalItems: 0,
-      page: 0,
-      pageSize: 5,
     }
   },
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn;
-    },
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-
-  },
-  mounted() {
-    this.getAll()
-    this.a()
-
-
-
-  },
-
   methods: {
-    getAll(){
-      const params ={
-        'page' : this.page,
-        'size': this.pageSize,
-
-      }
-      LogdetailService.getAll(params).then(response => {
-        // this.logs.datelog = response.data.content.date_log;
-        // this.logs.timein = response.data.content.timeIn;
-        // this.logs.timeout = response.data.content.timeOut;
-        this.logs = response.data.content;
-        this.page = response.data.pageable;
-        this.totalItems = response.data.totalElements;
-        console.log(this.totalItems)
-
-      })
-          .catch(error => {
-            console.log(error);
-          })
+    handleEdit(index, row) {
+      console.log(index, row);
     },
-    a(){
-      const a = String(this.logs.date_log).split("T")[0]
-      this.logs.data_log = a
+    handleDelete(index, row) {
+      console.log(index, row);
     },
     exportExcel() {
       ExcelService.exportExcel();
-    },
-    handlePageChange(value) {
-      this.page = value - 1;
-      this.getAll()
-      // if (this.search !== null) {
-      //   this.searchBlogs();
-      // }
-      // if (this.category !== null) {
-      //   this.getBlogs();
-      // }else {
-      //   this.getBlogs();
-      // }
-    },
+    }
 
   },
-
 
 
 };
