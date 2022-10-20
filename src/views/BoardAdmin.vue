@@ -4,192 +4,256 @@
       <h3><iframe src="https://calendar.google.com/calendar/embed?src=...." style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe></h3>
     </header>
   </div> -->
+
   <div class="container register">
+
     <div class="row">
       <div class="col-md-3 register-left">
-        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
-        <h3>Welcome</h3>
-        <p>VMG Media</p>
-        <img src="https://vmgmedia.vn/Content/images/logo/01.png" />
+        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+<!--        <h3>VMG Media</h3>-->
+<!--        <p>VMG Media</p>-->
+        <img style="width: 200px; line-height: 100%" src="../assets/vmg_logo.png"/>
       </div>
       <div class="col-md-9 register-right">
-        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist" style="background-color: #e24146">
           <li class="nav-item">
             <a
-              class="nav-link active"
-              id="home-tab"
-              data-toggle="tab"
-              href="#home"
-              role="tab"
-              aria-controls="home"
-              aria-selected="true"
-              >Employee</a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                href="#home"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+            >Tạo</a
             >
           </li>
           <li class="nav-item">
             <a
-              class="nav-link"
-              id="profile-tab"
-              data-toggle="tab"
-              href="#profile"
-              role="tab"
-              aria-controls="profile"
-              aria-selected="false"
-              >Hirer</a
-            >
+                class="nav-link"
+                id="profile-tab"
+                data-toggle="tab"
+                href="#profile"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false">
+              Nhân viên
+            </a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
           <div
-            class="tab-pane fade show active"
-            id="home"
-            role="tabpanel"
-            aria-labelledby="home-tab"
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
           >
             <form name="form" @submit.prevent="handleRegister">
-              <h3 class="register-heading">Create an account</h3>
+              <!--              <h3 class="register-heading">Create an account</h3>-->
               <div class="row register-form">
                 <div
-                  class="col-md-6"
-                  id="my-strictly-unique-vue-upload-multiple-image"
-                  style="display: flex; justify-content: center"
+                    class="col-md-4"
+                    id="my-strictly-unique-vue-upload-multiple-image"
+                    style="display: flex; justify-content: center"
                 >
                   <vue-upload-multiple-image
-                    @upload-success="uploadImageSuccess"
-                    @before-remove="beforeRemove"
-                    @edit-image="editImage"
-                    :data-images="images"
-                    idUpload="myIdUpload"
-                    editUpload="myIdEdit"
+                      @upload-success="uploadImageSuccess"
+                      @before-remove="beforeRemove"
+                      @edit-image="editImage"
+                      :data-images="images"
+                      idUpload="myIdUpload"
+                      editUpload="myIdEdit"
                   ></vue-upload-multiple-image>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <input
-                      v-model="user.fullName"
-                      type="text"
-                      class="form-control"
-                      name="fullName"
-                      placeholder="Full name *"
-                      value=""
-                      v-validate="{ required: true, min: 6 }"
-                    />
-                    <div
-                      v-if="errors.has('fullName')"
-                      class="alert alert-danger"
-                      role="alert"
-                    >
-                      Full name is required and the full Name field must be at
-                      least 6 characters!
-                    </div>
-                  </div>
-                  <br />
-                  <div class="form-group">
-                    <input
-                      v-model="user.username"
-                      type="email"
-                      class="form-control"
-                      placeholder="Email *"
-                      value=""
-                      v-validate="{ required: true, min: 2 }"
-                      name="username"
-                    />
-                  </div>
-                  <div
-                    v-if="errors.has('username')"
-                    class="alert alert-danger"
-                    role="alert"
-                  >
-                    Email is required!
-                  </div>
+                <div class="col-md-8">
 
-                  <br />
-                  <!-- <div class="form-group">
-                                            <input type="password" class="form-control" placeholder="Password *" value="" />
-                                        </div> -->
-                  <div class="form-group">
-                    <input
-                      v-model="user.code"
-                      type=""
-                      class="form-control"
-                      placeholder="Employee ID *"
-                      v-validate="{ required: true, min: 2 }"
-                      name="code"
-                    />
-                  </div>
-                  <div
-                    v-if="errors.has('code')"
-                    class="alert alert-danger"
-                    role="alert"
-                  >
-                    EmployeeId is required!
-                  </div>
-                  <br />
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="Nam"
-                    v-model="user.gender"
-                  />
-                  Male
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="Nữ"
-                    v-model="user.gender"
-                  />
-                  Female
-                  <br />
-                  <div class="form-group">
-                    <select
-                      name="department"
-                      v-validate="{ required: true }"
-                      class="form-control"
-                      v-model="user.department"
-                    >
-                      <!-- <option class="hidden" selected disabled>
-                        Department *
-                      </option> -->
-                      <option>Phòng nhân sự</option>
-                      <option>Phòng phát triển phần mềm</option>
-                      <option>Phòng kế toán</option>
-                    </select>
-                  </div>
-                  <br />
-                  <div class="form-group">
-                    <input
-                      type="checkbox"
-                      id="admin"
-                      value="admin"
-                      v-model="user.role"
-                    />
-                    <label for="admin">admin</label>
-                    <br>
-                    <input
-                      type="checkbox"
-                      id="manage"
-                      value="manage"
-                      v-model="user.role"
-                    />
-                    <label for="manage">manage</label>
-                    <br>
-                    <input
-                      type="checkbox"
-                      id="user"
-                      value="user"
-                      v-model="user.role"
-                    />
-                    <label for="user">user</label>
-                    <br />
-                    <span>Select: {{ user.role }}</span>
-                  </div>
-                  <br />
-                  <div class="form-group">
-                    <button class="btn btn-danger btn-block">Sign Up</button>
-                  </div>
+                  <table class="text-start">
+
+                    <!--                      Full Name-->
+
+                    <tr style="height: 70px">
+                      <td style="width: 100px">Họ và tên<span style="color: red">*</span></td>
+                      <td style="width: 300px">
+                        <div class="form-group">
+                          <input
+
+                              v-model="user.fullName"
+                              type="text"
+                              class="form-control"
+                              name="fullName"
+                              placeholder="Họ và tên"
+                              value=""
+                              v-validate="{ required: true, min: 6 }"
+
+                          />
+                          <div
+                              v-if="errors.has('fullName')"
+                              class="alert alert-danger"
+                              role="alert"
+                          >
+<!--                            Full name is required and the full Name field must be at-->
+<!--                            least 6 characters!-->
+                            Nhập họ và tên
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <tr style="height: 70px">
+                      <td style="width: 100px">Email<span style="color: red">*</span></td>
+                      <td style="width: 300px">
+                        <div class="form-group">
+                          <input
+                              v-model="user.username"
+                              type="email"
+                              class="form-control"
+                              placeholder="Email *"
+                              value=""
+                              v-validate="{ required: true, min: 5 }"
+                              name="username"/>
+                        </div>
+                        <div
+                            v-if="errors.has('username')"
+                            class="alert alert-danger"
+                            role="alert">
+                          Nhập email
+                        </div>
+                      </td>
+                    </tr>
+
+
+                    <tr style="height: 70px">
+                      <td style="width: 100px">Mã nhân viên<span style="color: red">*</span></td>
+                      <td style="width: 300px">
+                        <div class="form-group">
+                          <input
+                              v-model="user.code"
+                              type=""
+                              class="form-control"
+                              placeholder="Employee ID *"
+                              v-validate="{ required: true, min: 2 }"
+                              name="code"
+                          />
+                        </div>
+                        <div
+                            v-if="errors.has('code')"
+                            class="alert alert-danger"
+                            role="alert"
+                        >
+                          Nhập mã nhân viên
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr style="height: 70px">
+                      <td style="width: 150px">Giới tính<span style="color: red">*</span></td>
+                      <td style="width: 300px">
+                        <el-radio v-model="user.gender" name="gender" value="Nam" label="Nam" border>&nbsp; Nam</el-radio>
+                        <el-radio v-model="user.gender" name="gender" value="Nữ" label="Nữ" border>&nbsp; Nữ</el-radio>
+<!--                          <input-->
+<!--                              type="radio"-->
+<!--                              name="gender"-->
+<!--                              value="Nam"-->
+<!--                              v-model="user.gender"-->
+<!--                          />-->
+<!--                          Male-->
+                          &emsp;&emsp;
+<!--                          <input-->
+<!--                              type="radio"-->
+<!--                              name="gender"-->
+<!--                              value="Nữ"-->
+<!--                              v-model="user.gender"-->
+<!--                          />-->
+<!--                          Female-->
+                      </td>
+                    </tr>
+
+                    <tr style="height: 70px">
+                      <td style="width: 100px">Phòng ban<span style="color: red">*</span></td>
+                      <td style="width: 300px">
+                        <div class="form-group">
+                          <select
+                              name="department"
+                              v-validate="{ required: true }"
+                              class="form-control"
+                              v-model="user.department">
+<!--                            <option selected>Chọn phòng ban</option>-->
+                            <option>Phòng nhân sự</option>
+                            <option>Phòng phát triển phần mềm</option>
+                            <option>Phòng kế toán</option>
+                          </select>
+                        </div>
+                        <div
+                            v-if="errors.has('department')"
+                            class="alert alert-danger"
+                            role="alert"
+                        >
+                          Chọn phòng ban
+                        </div>
+                      </td>
+                    </tr>
+
+                    <tr style="height: 40px">
+                      <td style="width: 100px">Chức vụ<span style="color: red">*</span></td>
+                      <td style="width: 300px">
+<!--                        <el-radio v-model="user.role" id="admin" value="admin" label="3" border>&nbsp; Admin</el-radio>-->
+                        <input
+                            type="checkbox"
+                            id="admin"
+                            value="admin"
+                            v-model="user.role"
+                        />
+                        <label for="admin">&nbsp; Admin</label>
+                      </td>
+                    </tr>
+                    <tr style="height: 40px">
+                      <td style="width: 100px"></td>
+                      <td style="width: 300px">
+<!--                        <el-radio v-model="user.role" id="manage" value="manage" label="2" border>&nbsp; Manage</el-radio>-->
+                        <input
+                            type="checkbox"
+                            id="manage"
+                            value="manage"
+                            v-model="user.role"
+                        />
+                        <label for="manage">&nbsp; Manage</label>
+                      </td>
+                    </tr>
+                    <tr style="height: 40px">
+                      <td style="width: 100px"></td>
+                      <td style="width: 300px">
+<!--                        <el-radio v-model="user.role" id="user" value="user" label="1" border>&nbsp; User</el-radio>-->
+                        <input
+                            type="checkbox"
+                            id="user"
+                            value="user"
+                            v-model="user.role"
+                        />
+                        <label for="user">&nbsp; User</label>
+                      </td>
+                    </tr>
+
+                    <tr style="height: 60px">
+                      <td style="width: 100px"></td>
+                      <td style="width: 300px">
+                        <div class="form-group">
+                          <button class="btn btn-block btn-signup" >Sign Up</button>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                  <br/>
+
                 </div>
               </div>
             </form>
+            <div
+                v-if="message"
+                class="alert"
+                :class="successful ? 'alert-success' : 'alert-danger'"
+            >{{ message }}
+            </div>
           </div>
         </div>
       </div>
@@ -199,6 +263,8 @@
 <script>
 import VueUploadMultipleImage from "vue-upload-multiple-image";
 import UserService from "../services/user.service";
+import ExcelService from "@/services/excel-service";
+
 export default {
   name: "AdminVue",
   data() {
@@ -206,12 +272,12 @@ export default {
       content: "",
       value: new Date(),
       user: {
-        username:"",
-        fullName:"",
-        role:[],
-        department:"",
+        username: "",
+        fullName: "",
+        role: [],
+        department: "",
         code: "",
-        gender:""
+        gender: ""
 
       },
       submitted: false,
@@ -225,15 +291,15 @@ export default {
   },
   mounted() {
     UserService.getAdminBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
+        (response) => {
+          this.content = response.data;
+        },
+        (error) => {
+          this.content =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
+        }
     );
   },
   methods: {
@@ -244,17 +310,17 @@ export default {
       this.$validator.validate().then((isValid) => {
         if (isValid) {
           this.$store.dispatch("auth/register", this.user).then(
-            (data) => {
-              this.message = data.message;
-              this.successful = true;
-            },
-            (error) => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
+              (data) => {
+                this.message = data.message;
+                this.successful = true;
+              },
+              (error) => {
+                this.message =
+                    (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
+                this.successful = false;
+              }
           );
         }
       });
@@ -276,6 +342,9 @@ export default {
     editImage(formData, index, fileList) {
       console.log("edit data", formData, index, fileList);
     },
+    exportExcel() {
+      ExcelService.exportExcel();
+    }
   },
 };
 </script>
@@ -284,7 +353,7 @@ export default {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /*text-align: center;*/
   color: #2c3e50;
 }
 
@@ -306,16 +375,19 @@ li {
 a {
   color: #42b983;
 }
+
 .register {
   background: -webkit-linear-gradient(left, rgba(52, 58, 64, 255), #ffffff);
   margin-top: 3%;
   padding: 3%;
 }
+
 .register-left {
   text-align: center;
   color: #fff;
   margin-top: 4%;
 }
+
 .register-left input {
   border: none;
   border-radius: 1.5rem;
@@ -328,11 +400,13 @@ a {
   margin-bottom: 3%;
   cursor: pointer;
 }
+
 .register-right {
   background: #f8f9fa;
   border-top-left-radius: 10% 50%;
   border-bottom-left-radius: 10% 50%;
 }
+
 .register-left img {
   margin-top: 15%;
   margin-bottom: 5%;
@@ -340,6 +414,7 @@ a {
   -webkit-animation: mover 2s infinite alternate;
   animation: mover 1s infinite alternate;
 }
+
 @-webkit-keyframes mover {
   0% {
     transform: translateY(0);
@@ -348,6 +423,7 @@ a {
     transform: translateY(-20px);
   }
 }
+
 @keyframes mover {
   0% {
     transform: translateY(0);
@@ -356,15 +432,18 @@ a {
     transform: translateY(-20px);
   }
 }
+
 .register-left p {
   font-weight: lighter;
   padding: 12%;
   margin-top: -9%;
 }
+
 .register .register-form {
-  padding: 10%;
+  padding: 20px;
   margin-top: 10%;
 }
+
 .btnRegister {
   float: right;
   margin-top: 10%;
@@ -377,6 +456,7 @@ a {
   width: 50%;
   cursor: pointer;
 }
+
 .register .nav-tabs {
   margin-top: 3%;
   border: none;
@@ -385,6 +465,7 @@ a {
   width: 28%;
   float: right;
 }
+
 .register .nav-tabs .nav-link {
   padding: 2%;
   height: 34px;
@@ -393,9 +474,11 @@ a {
   border-top-right-radius: 1.5rem;
   border-bottom-right-radius: 1.5rem;
 }
+
 .register .nav-tabs .nav-link:hover {
   border: none;
 }
+
 .register .nav-tabs .nav-link.active {
   width: 100px;
   color: red;
@@ -403,10 +486,25 @@ a {
   border-top-left-radius: 1.5rem;
   border-bottom-left-radius: 1.5rem;
 }
+
 .register-heading {
   text-align: center;
   margin-top: 8%;
   margin-bottom: -15%;
   color: #495057;
+}
+
+.tab-content {
+  padding: 0;
+}
+
+.btn-signup{
+  background-color: #e24146;
+  color: #ffffff
+}
+
+.btn-signup:hover{
+  background-color: #a31c20;
+
 }
 </style>

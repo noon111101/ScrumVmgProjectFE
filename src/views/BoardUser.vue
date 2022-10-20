@@ -1,8 +1,8 @@
 <template>
-  <div class="ml-auto">
+  <div className="container" >
 
-    <div class="block" right>
-      <span class="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+    <div className="block">
+      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker style="width: 30%"
                       v-model="value1"
                       type="daterange"
@@ -12,29 +12,35 @@
       </el-date-picker>
     </div>
     <br><br>
-    <el-table
-        :data="tableData.filter(data => !search || data.name.toLowerCase().includes(search.toLowerCase()))"
-        style="width: 100%">
-      <el-table-column
-          label="Date"
-          prop="date">
-      </el-table-column>
-      
-      <el-table-column
-          label="In"
-          prop="in">
-      </el-table-column>
-      <el-table-column
-          label="Out"
-          prop="out">
-      </el-table-column>
-      
-    </el-table>
+    <div >
+      <el-table
+          :data="logs"
+          cell-style="border: solid 1px"
+          row-style="border: solid 1px"
+          style="width: 60%; border: solid 1px; display: inline-block"
+          >
+        <el-table-column
+            label="Date"
+            prop="date_log"
+        >
+        </el-table-column>
+        <el-table-column
+            label="In"
+            prop="timeIn">
+        </el-table-column>
+        <el-table-column
+            label="Out"
+            prop="timeOut">
+        </el-table-column>
+      </el-table>
+    </div>
+
     <el-pagination
-        :page-size="20"
-        :pager-count="5"
+        small
         layout="prev, pager, next"
-        :total="1000">
+        :total="totalItems"
+        :page-size="pageSize"
+        @current-change="handlePageChange">
     </el-pagination>
   </div>
 </template>
@@ -42,68 +48,71 @@
 <script>
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
+import LogdetailService from "@/services/logdetail-service";
 
 export default {
   name: 'HomeVue',
   data() {
     return {
-      tableData: [{
-        date: '05-05-2022',
-        day: 'Thứ sáu',
-        in: "8:10:11",
-        out: "5:24:22",
-        hoursWork: '',
-        name: 'Nguyễn Đình Phú',
-        department: "All Users/Thuc tap PTPM",
-        shift: "CHAM CONG HANH CHINH",
-        exception: "H"
-      }, {
-        date: '06-05-2022',
-        day: 'Thứ bảy',
-        in: "",
-        out: "",
-        hoursWork: '',
-        name: 'Nguyễn Đình Phú',
-        department: "All Users/Thuc tap PTPM",
-        shift: "CHAM CONG HANH CHINH",
-        exception: "NT"
-      }, {
-        date: '07-05-2022',
-        day: 'Chủ nhật',
-        in: "",
-        out: "",
-        hoursWork: '',
-        name: 'Nguyễn Đình Phú',
-        department: "All Users/Thuc tap PTPM",
-        shift: "CHAM CONG HANH CHINH",
-        exception: "NT"
-      }, {
-        date: '08-05-2022',
-        day: 'Thứ hai',
-        in: "8:10:11",
-        out: "5:24:22",
-        hoursWork: '',
-        name: 'Nguyễn Đình Phú',
-        department: "All Users/Thuc tap PTPM",
-        shift: "CHAM CONG HANH CHINH",
-        exception: "H"
-      }],
+      // user_code:  this.currentUser.usercode,
+      value1: "",
+      logs: [],
       search: '',
+      totalItems: 0,
+      page: 0,
+      pageSize: 30,
     }
   },
-  methods: {
-    handleEdit(index, row) {
-      console.log(index, row);
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
     },
-    handleDelete(index, row) {
-      console.log(index, row);
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
+  mounted() {
+    this.getAll()
+    this.a()
+  },
+  methods: {
+    getAll() {
+      const params = {
+        'page': this.page,
+        'size': this.pageSize,
+      }
+      LogdetailService.getAll(params).then(response => {
+        // this.logs.datelog = response.data.content.date_log;
+        // this.logs.timein = response.data.content.timeIn;
+        // this.logs.timeout = response.data.content.timeOut;
+        this.logs = response.data.content;
+        this.page = response.data.pageable;
+        this.totalItems = response.data.totalElements;
+        console.log(this.totalItems)
+      })
+          .catch(error => {
+            console.log(error);
+          })
+    },
+    a() {
+      const a = String(this.logs.date_log).split("T")[0]
+      this.logs.data_log = a
     },
     exportExcel() {
       ExcelService.exportExcel();
-    }
-
+    },
+    handlePageChange(value) {
+      this.page = value - 1;
+      this.getAll()
+      // if (this.search !== null) {
+      //   this.searchBlogs();
+      // }
+      // if (this.category !== null) {
+      //   this.getBlogs();
+      // }else {
+      //   this.getBlogs();
+      // }
+    },
   },
-
-
 };
 </script>
