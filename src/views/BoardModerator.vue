@@ -1,8 +1,5 @@
 <template>
   <div class="ml-auto" >
-
-
-
     <hr>
     <div class="block" right>
       <span class="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;

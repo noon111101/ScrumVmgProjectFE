@@ -42,53 +42,48 @@ export default {
         <div style="color:red">G</div> -->
       </span>
       <img
-        src="https://vmgmedia.vn/Content/images/logo/01.png"
-        style="width: 100px"
+        src="../../assets/vmg_logo.png"
+        style="width: 125px"
         v-else
       />
     </h1>
     <br />
     <div>
-      <router-link to="/home" class="nav-link">
-        <font-awesome-icon icon="home" />Home
+      <router-link to="/user" v-if="currentUser" class="nav-link sel">
+        <font-awesome-icon icon="home" /> Home
       </router-link>
-      <br />
 
-      <router-link
-        v-if="!currentUser && !showAdminBoard && !showModeratorBoard"
-        to="/login"
-        class="nav-link"
-      >
+
+      <router-link v-if="!currentUser && !showAdminBoard && !showModeratorBoard" to="/login" class="nav-link">
         <font-awesome-icon icon="sign-in-alt" />Login
       </router-link>
       <br />
 
-      <router-link v-if="showAdminBoard" to="/admin" class="nav-link"
-        >Admin Board</router-link
+      <router-link v-if="showAdminBoard" to="/admin" class="nav-link sel"
+        ><i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên</router-link
       >
       <br />
+      <div v-if="showAdminBoard">
+      <router-link  to="/timesheet" class="nav-link sel">
+        <i class="el-icon-document-copy"> </i> Bảng Chấm Công
+      </router-link>
+      </div>
 
-      <router-link v-if="showAdminBoard" to="/timesheet" class="nav-link"
-        > <font-awesome-icon icon="" />Time Sheet</router-link
-      >
       <br />
-      <router-link v-if="showModeratorBoard" to="/mod" class="nav-link"
-        >Moderator Board</router-link
-      >
-      <br />
-      <router-link v-if="currentUser" to="/user" class="nav-link"
-        >User</router-link
-      >
-      <!-- <router-link v-if="!currentUser" to="/register" class="nav-link">
-        <font-awesome-icon icon="user-plus" />Sign Up
-      </router-link> -->
-      <router-link v-if="currentUser" to="/profile" class="nav-link">
+      <router-link v-if="showModeratorBoard" to="/mod" class="nav-link sel">
+        Moderator Board
+      </router-link>
+<!--      <br />-->
+<!--      <router-link v-if="currentUser" to="/user" class="nav-link"-->
+<!--        >User</router-link-->
+<!--      >-->
+      <router-link v-if="currentUser" to="/profile" class="nav-link sel">
         <font-awesome-icon icon="user" />
         {{ currentUser.username }}
       </router-link>
       <br />
-      <a v-if="showAdminBoard" class="nav-link" href @click.prevent="logOut">
-        <font-awesome-icon icon="sign-out-alt" />LogOut
+      <a v-if="currentUser" class="nav-link sel" href @click.prevent="logOut">
+        <font-awesome-icon icon="sign-out-alt" /> LogOut
       </a>
     </div>
     <span
@@ -109,9 +104,12 @@ export default {
 </style>
 
 <style scoped>
+*{
+  font-family: 'Montserrat', sans-serif;
+}
 .sidebar {
-  color: white;
-  background-color: var(--sidebar-bg-color);
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0 ,0 ,0.3);
   float: left;
   position: fixed;
   z-index: 1;
@@ -139,5 +137,8 @@ export default {
 }
 .nav-link {
   overflow: hidden;
+}
+.sel:hover{
+  color: #e24146;
 }
 </style>
