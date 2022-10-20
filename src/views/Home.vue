@@ -73,24 +73,7 @@
                 </div>
               </div>
               <hr>
-<!--              <div class="row">-->
-<!--                <div class="col-sm-3">-->
-<!--                  <p class="mb-0">Số điện thoại</p>-->
-<!--                </div>-->
-<!--                <div class="col-sm-9">-->
-<!--                  <p class="text-muted mb-0">(097) 234-5678</p>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--              <hr>-->
-<!--              <hr>-->
-<!--              <div class="row">-->
-<!--                <div class="col-sm-3">-->
-<!--                  <p class="mb-0">Địa chỉ</p>-->
-<!--                </div>-->
-<!--                <div class="col-sm-9">-->
-<!--                  <p class="text-muted mb-0">Sao Hỏa</p>-->
-<!--                </div>-->
-<!--              </div>-->
+
             </div>
           </div>
           <div class="row">

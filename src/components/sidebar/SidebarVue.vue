@@ -33,7 +33,7 @@ export default {
 };
 </script>
 
-<template>
+<template >
   <div class="sidebar" :style="{ width: sidebarWidth }">
     <h1>
       <span v-if="collapsed">
@@ -48,7 +48,7 @@ export default {
       />
     </h1>
     <br />
-    <div>
+    <div class="text-start">
       <router-link to="/user" v-if="currentUser" class="nav-link sel">
         <font-awesome-icon icon="home" /> Home
       </router-link>
