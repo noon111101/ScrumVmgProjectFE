@@ -76,13 +76,37 @@
   <!--  </div>-->
 
 
-  <nav class="navbar fixed-top" >
+  <nav class="navbar fixed-top">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
               aria-controls="offcanvasDarkNavbar" v-if="currentUser">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <a class="navbar-brand" href="#"><img src="../../assets/logo_vmg.png" width="50px"></a>
+      <!--      <a class="navbar-brand" href="#"><img src="../../assets/logo_vmg.png" width="50px"></a>-->
+
+      <ul class="dropdown-menu navbar-brand" style="float: right">
+        <li><a class="dropdown-item">
+          <router-link to="/profile" class="nav-link sel">
+            <font-awesome-icon icon="user"/>
+            Thông tin cá nhân
+          </router-link>
+        </a></li>
+        <li><a class="dropdown-item">
+          <router-link to="/changepassword" class="nav-link">
+            <i class="el-icon-refresh-left"></i>
+            Thay đổi mật khẩu
+          </router-link>
+        </a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="#">
+          <a class="nav-link sel" href @click.prevent="logOut">
+            <font-awesome-icon icon="sign-out-alt"/>
+            LogOut
+          </a>
+        </a></li>
+      </ul>
 
 
       <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDarkNavbar"
@@ -150,7 +174,7 @@
                     Thông tin cá nhân
                   </router-link>
                 </a></li>
-                <li><a class="dropdown-item" >
+                <li><a class="dropdown-item">
                   <router-link to="/changepassword" class="nav-link">
                     <i class="el-icon-refresh-left"></i>
                     Thay đổi mật khẩu

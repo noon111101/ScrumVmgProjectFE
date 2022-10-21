@@ -9,10 +9,10 @@
 
     <div class="row">
       <div class="col-md-3 register-left">
-        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+<!--        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>-->
         <!--        <h3>VMG Media</h3>-->
         <!--        <p>VMG Media</p>-->
-        <img style="width: 200px; line-height: 100%" src="../assets/vmg_logo.png"/>
+        <img style="width: 200px; line-height: 100%" src="../assets/new_logo.png"/>
       </div>
       <div class="col-md-9 register-right">
         <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist" style="background-color: #e24146">
@@ -51,20 +51,20 @@
             <form name="form" @submit.prevent="changePassword">
               <!--              <h3 class="register-heading">Create an account</h3>-->
               <div class="row register-form">
-                <div
-                    class="col-md-4"
-                    id="my-strictly-unique-vue-upload-multiple-image"
-                    style="display: flex; justify-content: center"
-                >
-                  <vue-upload-multiple-image
-                      @upload-success="uploadImageSuccess"
-                      @before-remove="beforeRemove"
-                      @edit-image="editImage"
-                      :data-images="images"
-                      idUpload="myIdUpload"
-                      editUpload="myIdEdit"
-                  ></vue-upload-multiple-image>
-                </div>
+<!--                <div-->
+<!--                    class="col-md-4"-->
+<!--                    id="my-strictly-unique-vue-upload-multiple-image"-->
+<!--                    style="display: flex; justify-content: center"-->
+<!--                >-->
+<!--                  <vue-upload-multiple-image-->
+<!--                      @upload-success="uploadImageSuccess"-->
+<!--                      @before-remove="beforeRemove"-->
+<!--                      @edit-image="editImage"-->
+<!--                      :data-images="images"-->
+<!--                      idUpload="myIdUpload"-->
+<!--                      editUpload="myIdEdit"-->
+<!--                  ></vue-upload-multiple-image>-->
+<!--                </div>-->
                 <div class="col-md-8">
 
                   <table class="text-start">
@@ -76,15 +76,13 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-
-                              v-model="user.fullName"
                               type="password"
                               class="form-control"
                               v-validate="{ required: true, min: 6 }"
 
                           />
                           <div
-                              v-if="errors.has('fullName')"
+                              v-if="errors.has('')"
                               class="alert alert-danger"
                               role="alert"
                           >
@@ -102,7 +100,6 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                              v-model="user.username"
                               type="password"
                               class="form-control"
                               placeholder=""
@@ -111,7 +108,7 @@
                               name="username"/>
                         </div>
                         <div
-                            v-if="errors.has('username')"
+                            v-if="errors.has('')"
                             class="alert alert-danger"
                             role="alert">
                           Nhập mật khẩu mới
@@ -124,7 +121,6 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                              v-model="user.username"
                               type="password"
                               class="form-control"
                               placeholder=""
@@ -133,7 +129,7 @@
                               name="username"/>
                         </div>
                         <div
-                            v-if="errors.has('username')"
+                            v-if="errors.has('')"
                             class="alert alert-danger"
                             role="alert">
                           Nhập lại mật khẩu mới
@@ -173,21 +169,20 @@ export default {
   name: "ChangePassword",
   data() {
     return {
-      content: "",
-      value: new Date(),
-      user: {
-        username: "",
-        fullName: "",
-        role: [],
-        department: "",
-        code: "",
-        gender: ""
-
-      },
-      submitted: false,
-      successful: false,
+      // content: "",
+      // user: {
+      //   username: "",
+      //   fullName: "",
+      //   role: [],
+      //   department: "",
+      //   code: "",
+      //   gender: ""
+      //
+      // },
+      // submitted: false,
+      // successful: false,
       message: "",
-      images: [],
+      // images: [],
     };
   },
   components: {
