@@ -13,15 +13,18 @@
                       type="daterange"
                       format="yyyy-MM-dd"
                       value-format="yyyy-MM-dd"
-                      range-separator="To"
+                      range-separator=""
                       start-placeholder="Start date"
-                      end-placeholder="End date">
+                      end-placeholder="End date"
+                      @change="pickDate">
       </el-date-picker>
     </div>
-    <p  >{{from}}</p>
-    <p  >{{to}}</p>
+
+    <p> {{ from }} </p>
+    <p> {{ to }} </p>
     <br><br>
     <div >
+
       <el-table
           :data="logs"
           style="width: 60%; border: solid 1px; display: inline-block"
@@ -87,17 +90,18 @@ export default {
   },
   mounted() {
     this.getAllByUser()
-    this.a()
-    this.user_code = this.currentUser.user.code
-    this.fullname = this.currentUser.user.fullName
-    this.from = this.dateRange.at(0)
-    this.to = this.dateRange.at(1)
+    this.user_code = this.currentUser.user.code;
+
+    console.log(this.dateRange)
     console.log(this.from)
     console.log(this.to)
 
   },
   methods: {
-
+    pickDate(){
+      this.from = this.dateRange.at(0);
+      this.to = this.dateRange.at(1);
+    },
     getAllByUser() {
       const params = {
         'page': this.page,
