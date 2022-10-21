@@ -142,7 +142,7 @@
                 <p class="mb-0">Full Name</p>
               </div>
               <div class="col-sm-9">
-                <p class="text-muted mb-0">Nguyễn Đình Phú</p>
+                <p class="text-muted mb-0">{{currentUser.fullName}}</p>
               </div>
             </div>
             <hr>
@@ -164,23 +164,6 @@
               </div>
             </div>
             <hr>
-<!--            <div class="row">-->
-<!--              <div class="col-sm-3">-->
-<!--                <p class="mb-0">Mobile</p>-->
-<!--              </div>-->
-<!--              <div class="col-sm-9">-->
-<!--                <p class="text-muted mb-0">(098) 765-4321</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--            <div class="row">-->
-<!--              <div class="col-sm-3">-->
-<!--                <p class="mb-0">Address</p>-->
-<!--              </div>-->
-<!--              <div class="col-sm-9">-->
-<!--                <p class="text-muted mb-0">Sao Hỏa</p>-->
-<!--              </div>-->
-<!--            </div>-->
           </div>
         </div>
         <div class="row">
@@ -197,8 +180,14 @@
 
 export default {
   name: 'ProfileVue',
+  data(){
+    return{
+      fullname: ""
+    }
+  },
   computed: {
     currentUser() {
+      // return JSON.parse(localStorage.getItem('user'));
       return this.$store.state.auth.user;
     }
   },
@@ -206,6 +195,8 @@ export default {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
+    this.fullname = this.currentUser.fullName
+    console.log(this.fullname)
   }
 };
  </script>

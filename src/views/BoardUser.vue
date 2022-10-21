@@ -1,6 +1,11 @@
 <template>
   <div className="container" >
-
+    <br>
+    <h5 style="font-weight: 600;">
+      Phòng ban: {{currentUser.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      Nhân viên: {{currentUser.fullName}}
+    </h5>
+    <br><br>
     <div className="block">
       <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker style="width: 30%"
@@ -11,12 +16,11 @@
                       end-placeholder="End date">
       </el-date-picker>
     </div>
+    <p>{{value1}}</p>
     <br><br>
     <div >
       <el-table
           :data="logs"
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
           style="width: 60%; border: solid 1px; display: inline-block"
           >
         <el-table-column
@@ -56,7 +60,7 @@ export default {
   data() {
     return {
       user_code:  "",
-      value1: "",
+      value1: [],
       logs: [],
       search: '',
       totalItems: 0,
@@ -69,26 +73,30 @@ export default {
       return this.$store.state.auth.status.loggedIn;
     },
     currentUser() {
+      console.log(localStorage.getItem('user'))
+      // return JSON.parse(localStorage.getItem('user'));
+      // console.log("dddd"+this.$store.state.auth.user)
       return this.$store.state.auth.user;
+
     },
   },
   mounted() {
-    this.getAll()
+    this.getAllByUser()
     this.a()
-    this.getUserCode()
+    this.user_code = this.currentUser.user.code
+    this.fullname = this.currentUser.user.fullName
+    console.log(this.user_code)
+    console.log(this.value1)
   },
   methods: {
-    getUserCode(){
-      this.user_code = this.$store.state.auth.user.code
-      console.log("user code"+this.user_code)
-      // console.log("user code"+curr)
-    },
-    getAll() {
+
+    getAllByUser() {
       const params = {
         'page': this.page,
         'size': this.pageSize,
+        'code': this.currentUser.code
       }
-      LogdetailService.getAll(params).then(response => {
+      LogdetailService.getByUsers(params).then(response => {
         this.logs = response.data.content;
         this.page = response.data.pageable;
         this.totalItems = response.data.totalElements;

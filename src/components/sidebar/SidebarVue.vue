@@ -1,24 +1,26 @@
 <script>
 // import SidebarLink from './SidebarLink'
-import { collapsed, toggleSidebar, sidebarWidth } from "./state";
+import {collapsed, toggleSidebar, sidebarWidth} from "./state";
+
 export default {
   props: {},
   // components: { SidebarLink },
   setup() {
-    return { collapsed, toggleSidebar, sidebarWidth };
+    return {collapsed, toggleSidebar, sidebarWidth};
   },
   computed: {
     currentUser() {
+      // return JSON.parse(localStorage.getItem('user'));
       return this.$store.state.auth.user;
     },
     showAdminBoard() {
-      if (this.currentUser && this.currentUser.roles) {
+      if (this.currentUser.roles) {
         return this.currentUser.roles.includes("ROLE_ADMIN");
       }
       return false;
     },
     showModeratorBoard() {
-      if (this.currentUser && this.currentUser.roles) {
+      if (this.currentUser.roles) {
         return this.currentUser.roles.includes("ROLE_MODERATOR");
       }
       return false;
@@ -33,7 +35,7 @@ export default {
 };
 </script>
 
-<template >
+<template>
   <div class="sidebar" :style="{ width: sidebarWidth }">
     <h1>
       <span v-if="collapsed">
@@ -42,56 +44,64 @@ export default {
         <div style="color:red">G</div> -->
       </span>
       <img
-        src="../../assets/vmg_logo.png"
-        style="width: 125px"
-        v-else
+          src="../../assets/vmg_logo.png"
+          style="width: 125px"
+          v-else
       />
     </h1>
-    <br />
+    <br/>
     <div class="text-start">
       <router-link to="/user" v-if="currentUser" class="nav-link sel">
-        <font-awesome-icon icon="home" /> Home
+        <font-awesome-icon icon="home"/>
+        Home
       </router-link>
 
 
-      <router-link v-if="!currentUser && !showAdminBoard && !showModeratorBoard" to="/login" class="nav-link">
-        <font-awesome-icon icon="sign-in-alt" />Login
+      <router-link v-if="!currentUser" to="/login" class="nav-link">
+        <font-awesome-icon icon="sign-in-alt"/>
+        Login
       </router-link>
-      <br />
+      <br/>
 
-      <router-link v-if="showAdminBoard" to="/admin" class="nav-link sel"
-        ><i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên</router-link
-      >
-      <br />
       <div v-if="showAdminBoard">
-      <router-link  to="/timesheet" class="nav-link sel">
-        <i class="el-icon-document-copy"> </i> Bảng Chấm Công
-      </router-link>
+        <router-link to="/admin" class="nav-link sel">
+          <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên
+        </router-link>
+        <br/>
+      </div>
+      <div v-if="showAdminBoard">
+
+        <router-link to="/timesheet" class="nav-link sel">
+          <i class="el-icon-document-copy"> </i> Bảng Chấm Công
+        </router-link>
+
+
+        <br/>
       </div>
 
-      <br />
       <router-link v-if="showModeratorBoard" to="/mod" class="nav-link sel">
         Moderator Board
       </router-link>
-<!--      <br />-->
-<!--      <router-link v-if="currentUser" to="/user" class="nav-link"-->
-<!--        >User</router-link-->
-<!--      >-->
+      <!--      <br />-->
+      <!--      <router-link v-if="currentUser" to="/user" class="nav-link"-->
+      <!--        >User</router-link-->
+      <!--      >-->
       <router-link v-if="currentUser" to="/profile" class="nav-link sel">
-        <font-awesome-icon icon="user" />
+        <font-awesome-icon icon="user"/>
         {{ currentUser.username }}
       </router-link>
-      <br />
+      <br/>
       <a v-if="currentUser" class="nav-link sel" href @click.prevent="logOut">
-        <font-awesome-icon icon="sign-out-alt" /> LogOut
+        <font-awesome-icon icon="sign-out-alt"/>
+        LogOut
       </a>
     </div>
     <span
-      class="collapse-icon"
-      :class="{ 'rotate-180': collapsed }"
-      @click="toggleSidebar"
+        class="collapse-icon"
+        :class="{ 'rotate-180': collapsed }"
+        @click="toggleSidebar"
     >
-      <i class="fas fa-angle-double-left" />
+      <i class="fas fa-angle-double-left"/>
     </span>
   </div>
 </template>
@@ -104,12 +114,13 @@ export default {
 </style>
 
 <style scoped>
-*{
+* {
   font-family: 'Montserrat', sans-serif;
 }
+
 .sidebar {
   background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0 ,0 ,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   float: left;
   position: fixed;
   z-index: 1;
@@ -121,9 +132,11 @@ export default {
   display: flex;
   flex-direction: column;
 }
+
 .sidebar h1 {
   height: 2.5em;
 }
+
 .collapse-icon {
   position: absolute;
   bottom: 0;
@@ -131,14 +144,17 @@ export default {
   color: rgba(255, 255, 255, 0.7);
   transition: 0.2s linear;
 }
+
 .rotate-180 {
   transform: rotate(180deg);
   transition: 0.2s linear;
 }
+
 .nav-link {
   overflow: hidden;
 }
-.sel:hover{
+
+.sel:hover {
   color: #e24146;
 }
 </style>
