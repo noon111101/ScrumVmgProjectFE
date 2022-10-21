@@ -25,7 +25,7 @@
                 role="tab"
                 aria-controls="home"
                 aria-selected="true"
-            >Tạo</a
+            >Thay đổi</a
             >
           </li>
           <li class="nav-item">
@@ -37,7 +37,7 @@
                 role="tab"
                 aria-controls="profile"
                 aria-selected="false">
-              Nhân viên
+              Mật khẩu
             </a>
           </li>
         </ul>
@@ -72,17 +72,14 @@
                     <!--                      Full Name-->
 
                     <tr style="height: 70px">
-                      <td style="width: 100px">Họ và tên<span style="color: red">*</span></td>
+                      <td style="width: 200px">Mật khẩu mới<span style="color: red">*</span></td>
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
 
                               v-model="user.fullName"
-                              type="text"
+                              type="password"
                               class="form-control"
-                              name="fullName"
-                              placeholder="Họ và tên"
-                              value=""
                               v-validate="{ required: true, min: 6 }"
 
                           />
@@ -93,7 +90,7 @@
                           >
                             <!--                            Full name is required and the full Name field must be at-->
                             <!--                            least 6 characters!-->
-                            Nhập họ và tên
+                            Nhập mật khẩu cũ
                           </div>
                         </div>
                       </td>
@@ -101,14 +98,14 @@
 
 
                     <tr style="height: 70px">
-                      <td style="width: 100px">Email<span style="color: red">*</span></td>
+                      <td style="width: 100px">Mật khẩu mới<span style="color: red">*</span></td>
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
                               v-model="user.username"
-                              type="email"
+                              type="password"
                               class="form-control"
-                              placeholder="Email *"
+                              placeholder=""
                               value=""
                               v-validate="{ required: true, min: 5 }"
                               name="username"/>
@@ -117,42 +114,39 @@
                             v-if="errors.has('username')"
                             class="alert alert-danger"
                             role="alert">
-                          Nhập email
+                          Nhập mật khẩu mới
                         </div>
                       </td>
                     </tr>
 
-
                     <tr style="height: 70px">
-                      <td style="width: 100px">Mã nhân viên<span style="color: red">*</span></td>
+                      <td style="width: 100px">Nhập lại mật khẩu mới<span style="color: red">*</span></td>
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                              v-model="user.code"
-                              type=""
+                              v-model="user.username"
+                              type="password"
                               class="form-control"
-                              placeholder="Employee ID *"
-                              v-validate="{ required: true, min: 2 }"
-                              name="code"
-                          />
+                              placeholder=""
+                              value=""
+                              v-validate="{ required: true, min: 5 }"
+                              name="username"/>
                         </div>
                         <div
-                            v-if="errors.has('code')"
+                            v-if="errors.has('username')"
                             class="alert alert-danger"
-                            role="alert"
-                        >
-                          Nhập mã nhân viên
+                            role="alert">
+                          Nhập lại mật khẩu mới
                         </div>
                       </td>
                     </tr>
-
 
 
                     <tr style="height: 60px">
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <div class="form-group">
-                          <button class="btn btn-block btn-signup" >Sign Up</button>
+                          <button class="btn btn-block btn-signup" >Change Password</button>
                         </div>
                       </td>
                     </tr>

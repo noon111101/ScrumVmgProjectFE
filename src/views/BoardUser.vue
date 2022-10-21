@@ -1,22 +1,25 @@
 <template>
-  <div className="container" >
+  <div className="container" style="text-align: center">
     <br>
     <h5 style="font-weight: 600;">
-      Phòng ban: {{currentUser.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      Nhân viên: {{currentUser.fullName}}
+      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      Nhân viên: {{currentUser.user.fullName}}
     </h5>
     <br><br>
     <div className="block">
       <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker style="width: 30%"
-                      v-model="value1"
+                      v-model="dateRange"
                       type="daterange"
+                      format="yyyy-MM-dd"
+                      value-format="yyyy-MM-dd"
                       range-separator="To"
                       start-placeholder="Start date"
                       end-placeholder="End date">
       </el-date-picker>
     </div>
-    <p>{{value1}}</p>
+    <p  >{{from}}</p>
+    <p  >{{to}}</p>
     <br><br>
     <div >
       <el-table
@@ -24,16 +27,16 @@
           style="width: 60%; border: solid 1px; display: inline-block"
           >
         <el-table-column
-            label="Date"
+            label="Ngày"
             prop="date_log"
         >
         </el-table-column>
         <el-table-column
-            label="In"
+            label="Giờ vào"
             prop="timeIn">
         </el-table-column>
         <el-table-column
-            label="Out"
+            label="Giờ ra"
             prop="timeOut">
         </el-table-column>
 
@@ -60,7 +63,9 @@ export default {
   data() {
     return {
       user_code:  "",
-      value1: [],
+      dateRange: [],
+      from: "",
+      to: "",
       logs: [],
       search: '',
       totalItems: 0,
@@ -85,8 +90,11 @@ export default {
     this.a()
     this.user_code = this.currentUser.user.code
     this.fullname = this.currentUser.user.fullName
-    console.log(this.user_code)
-    console.log(this.value1)
+    this.from = this.dateRange.at(0)
+    this.to = this.dateRange.at(1)
+    console.log(this.from)
+    console.log(this.to)
+
   },
   methods: {
 
@@ -94,13 +102,16 @@ export default {
       const params = {
         'page': this.page,
         'size': this.pageSize,
-        'code': this.currentUser.code
+        'code': this.currentUser.user.code,
+
       }
       LogdetailService.getByUsers(params).then(response => {
         this.logs = response.data.content;
         this.page = response.data.pageable;
         this.totalItems = response.data.totalElements;
+        this.user_code = this.currentUser.code
         console.log(this.totalItems)
+
       })
           .catch(error => {
             console.log(error);
