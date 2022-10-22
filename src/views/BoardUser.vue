@@ -32,6 +32,7 @@
             label="Out"
             prop="timeOut">
         </el-table-column>
+
       </el-table>
     </div>
 
@@ -54,7 +55,7 @@ export default {
   name: 'HomeVue',
   data() {
     return {
-      // user_code:  this.currentUser.usercode,
+      user_code:  "",
       value1: "",
       logs: [],
       search: '',
@@ -74,17 +75,20 @@ export default {
   mounted() {
     this.getAll()
     this.a()
+    this.getUserCode()
   },
   methods: {
+    getUserCode(){
+      this.user_code = this.$store.state.auth.user.code
+      console.log("user code"+this.user_code)
+      // console.log("user code"+curr)
+    },
     getAll() {
       const params = {
         'page': this.page,
         'size': this.pageSize,
       }
       LogdetailService.getAll(params).then(response => {
-        // this.logs.datelog = response.data.content.date_log;
-        // this.logs.timein = response.data.content.timeIn;
-        // this.logs.timeout = response.data.content.timeOut;
         this.logs = response.data.content;
         this.page = response.data.pageable;
         this.totalItems = response.data.totalElements;
