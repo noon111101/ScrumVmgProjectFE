@@ -107,7 +107,7 @@
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <i class="fab fa-github fa-lg" style="color: #333333;"></i>
-                  <p class="mb-0">Role: </p>
+                  <p class="mb-0">Role:{{currentUser.roles.name}} </p>
                 </li>
                 <li class="list-group-item d-flex justify-content-between align-items-center p-3">
                   <i class="fab fa-twitter fa-lg" style="color: #55acee;"></i>
@@ -133,7 +133,7 @@
                   <p class="mb-0">Full Name</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">Pham Dat Thanh</p>
+                  <p class="text-muted mb-0">{{currentUser.fullName}}</p>
                 </div>
               </div>
               <hr>
@@ -142,7 +142,7 @@
                   <p class="mb-0">Email</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">thanh@gmail.com</p>
+                  <p class="text-muted mb-0">{{currentUser.username}}</p>
                 </div>
               </div>
               <hr>
@@ -251,8 +251,15 @@
 <script>
 export default {
   name: 'ProfileVue',
+  data(){
+    return {
+      user:[]
+    }
+  },
+
   computed: {
     currentUser() {
+      console.log(this.$store.state.auth.user)
       return this.$store.state.auth.user;
     }
   },
@@ -260,6 +267,7 @@ export default {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
+
   }
 };
 </script>
