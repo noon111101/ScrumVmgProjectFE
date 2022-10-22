@@ -133,7 +133,7 @@
                   <p class="mb-0">Full Name</p>
                 </div>
                 <div class="col-sm-9">
-                  <p class="text-muted mb-0">{{currentUser.fullName}}</p>
+                  <p class="text-muted mb-0">{{currentUser.user.fullName}}</p>
                 </div>
               </div>
               <hr>
