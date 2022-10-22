@@ -57,6 +57,11 @@ export const router = new Router({
       // lazy-loaded
       component: () => import('./views/TimeSheets.vue')
     },
+    {
+      path: '/calender',
+      name: 'calender',
+      component: () => import('./views/CalenderReport.vue')
+    },
   ]
 }
 );
