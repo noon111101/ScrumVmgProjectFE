@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mounthSelect">
-      <span class="demonstration">Month</span>
+      <span class="demonstration mx-4">Month</span>
       <el-date-picker
           v-model="mounth"
           type="month"

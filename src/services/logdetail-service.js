@@ -12,7 +12,7 @@ class LogdtailService{
         return  httpCommon.get("/log/allByUser", {params});
     }
     getDepartment(){
-        return httpCommon.get("departments");
+        return httpCommon.get("department");
     }
 
 }

@@ -37,9 +37,6 @@ export default {
   <div class="sidebar" :style="{ width: sidebarWidth }">
     <h1>
       <span v-if="collapsed">
-        <!-- <div style="color:red">V</div>
-        <div style="color:red">M</div>
-        <div style="color:red">G</div> -->
       </span>
       <img
         src="../../assets/vmg_logo.png"
@@ -73,10 +70,7 @@ export default {
       <router-link v-if="showModeratorBoard" to="/mod" class="nav-link sel">
         Moderator Board
       </router-link>
-<!--      <br />-->
-<!--      <router-link v-if="currentUser" to="/user" class="nav-link"-->
-<!--        >User</router-link-->
-<!--      >-->
+
       <router-link v-if="currentUser" to="/profile" class="nav-link sel">
         <font-awesome-icon icon="user" />
         {{ currentUser.username }}
