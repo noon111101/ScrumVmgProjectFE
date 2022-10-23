@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-      <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>
-      <Sidebar />
     <div class="container">
-      <router-view />  
+    <div class="row flex-nowrap">
+        <Sidebar/>
+        <router-view />
     </div>
+    </div>
+    <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>
   </div>
 </template>
 <script>
@@ -58,6 +60,10 @@ export default {
 }
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+body{
+  margin: 0;
+  padding: 0;
 }
 
 </style>

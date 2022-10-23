@@ -1,70 +1,95 @@
 <template>
-     <div class="container">
-       <br><br>
-       <div style="float: left">
-         <el-button @click="importExcel"  type="info" class="el-icon-upload2" round> Import Excel File</el-button>
-         <el-button @click="exportExcel"  type="danger" class="el-icon-download" round> Export Excel File</el-button>
-       </div>
+      <div>
+        <div class="row mt-5">
+          <div class="col-3">
+            <label-wrap>Bộ phận:</label-wrap>
+            <el-select v-model="department" placeholder="Select">
+              <el-option
+                  v-for="(item,index) in departments"
+                  :key="index"
+                  :label="item.name"
+                  :value="item.name"
+                  >
+              </el-option>
+            </el-select>
+          </div>
+          <div class="col-3">
+            <el-input
+                size="medium"
+                placeholder="Tìm kiếm nhân viên"
+                v-model="search">
+            </el-input>
+          </div>
+          <div class="col-3">
+            <el-select v-model="month" placeholder="Select">
+              <el-option
+                  v-for="item in 12"
+                  :key="item"
+                  :value="item"
+                  :label= "`Tháng ` + item"
+                  >
+                Tháng {{item}}
+              </el-option>
+            </el-select>
+          </div>
+          <div class="col-3">
+            <el-button type="warning" class="el-icon-edit-outline" round>Chỉnh sửa</el-button>
+            <el-button @click="exportExcel"  type="danger" class="el-icon-upload2" round> Xuất File</el-button>
+          </div>
+        </div>
 
-      <div style="margin-top:50px" class="row">
-         <div class="col-lg">
-            <table class="table table-responsive table-bordered">
-               <thead>
-                  <tr>
-                     <th>TT</th>
-                     <th style="width:200px">Họ và tên</th>
-                     <th colspan="31">Ngày trong tháng</th>
-                     <th>Tổng số ngày làm việc</th>
-                  </tr>
-               </thead>
-               <tbody>
-                  <tr>
-                     <td></td>
-                     <td></td>
-                     <td v-for="(n,index) in 30 " :key="index">{{n}}
-                    </td>
-                  </tr>
-                  <tr>
-                     <td>1</td>
-                     <td>Phan Văn Đức</td>
-                          <td v-for="(n,index) in 30 " :key="index"></td>
-                  </tr>
-                     <tr>
-                     <td>2</td>
-                     <td>Phan Văn Hải</td>
-                          <td v-for="(n,index) in 30 " :key="index"></td>
-                  </tr>
+        <div class="table-responsive" style="margin-top:50px">
+            <table class="table table-bordered align-middle ">
+              <thead>
+              <tr>
+                <th rowspan="2">TT</th>
+                <th rowspan="2" style="white-space: pre">Họ tên</th>
+                <th colspan="31">Ngày trong tháng</th>
+                <th rowspan="2" style="white-space: pre" >Tổng số <br>ngày làm <br>việc</th>
+                <th rowspan="2" style="white-space: pre" >Tổng số <br>ngày hưởng <br>lương</th>
+              </tr>
+              <tr>
+                <th v-for="(n,index) in 31 " :key="index">{{n}}</th>
+              </tr>
+              </thead>
+              <tbody>
 
-            <tr>
-              <td></td>
-              <td></td>
-              Tổng cộng
-            </tr>
-          </tbody>
-        </table>
+              <tr  v-for="(n,index) in 10 " :key="index">
+                <td>{{n}}</td>
+                <td style="white-space: pre">Phan Văn Đức</td>
+                <td v-for="(n,index) in 31 " :key="index"></td>
+                <td>1</td>
+                <td>1</td>
+              </tr>
+              </tbody>
+            </table>
+
+        </div>
+        <div style="display: flex; margin-top:20px">
+          <h5 style="font-weight: bold;">Ký hiệu:</h5>
+          <div style="margin-left:20px;text-align: justify">
+            <p>H: Làm hành chính</p>
+            <p>NT: Nghỉ thứ 7, Chủ nhật</p>
+          </div>
+        </div>
+
       </div>
-    </div>
-    <div style="display: flex; margin-top:20px">
-      <h5 style="font-weight: bold;">Ký hiệu:</h5>
-      <h5 style="margin-left: 20px; font-weight: bold;">Ca:</h5>
-           <div style="float:left;margin-left:20px;">
-      <p style="margin-left: 20px">H: Làm hành chính</p>
-      <p style="margin-left: 20px">NT: Nghỉ thứ 7, Chủ nhật</p>
-      </div>
-    </div>
-  </div>
+
 </template>
 
 <script>
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
-
+import LogService from "@/services/logdetail-service"
 export default {
   name: 'HomeVue',
   data() {
     return {
 
       search: '',
+      month:'',
+      department:'',
+      departments:[]
     }
   },
   methods: {
@@ -76,10 +101,24 @@ export default {
     },
     exportExcel(){
       ExcelService.exportExcel();
+    },
+    getDepartment(){
+      LogService.getDepartment().then(respone => {
+        this.departments=respone.data
+        console.log(respone.data)
+      });
     }
 
   },
+mounted() {
+    this.getDepartment();
+}
 
 
 };
 </script>
+<style>
+.boder-round{
+  border-radius: 6px;
+}
+</style>
