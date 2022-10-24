@@ -11,6 +11,7 @@ export default axios.create({
     headers:{
         enctype:"multipart/form-data",
         "Content-type": 'application/octet-stream',
+
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         processData: false,
     }

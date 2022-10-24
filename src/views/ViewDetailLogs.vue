@@ -7,23 +7,23 @@
     </h5>
     <br><br>
     <form ac>
-    <div className="block">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker style="width: 30%"
-                      v-model="dateRange"
-                      type="daterange"
-                      format="yyyy-MM-dd"
-                      value-format="yyyy-MM-dd"
-                      range-separator=""
-                      start-placeholder="Start date"
-                      end-placeholder="End date"
-                      @change="getAllByDate">
-      </el-date-picker>
-    </div>
+      <div className="block">
+        <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+        <el-date-picker style="width: 30%"
+                        v-model="dateRange"
+                        type="daterange"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        range-separator=""
+                        start-placeholder="Start date"
+                        end-placeholder="End date"
+                        @change="getAllByDate">
+        </el-date-picker>
+      </div>
     </form>
 
-<!--    <p> {{ from }} </p>-->
-<!--    <p> {{ to }} </p>-->
+    <!--    <p> {{ from }} </p>-->
+    <!--    <p> {{ to }} </p>-->
     <br><br>
     <div >
       <el-table
@@ -116,13 +116,13 @@ export default {
         'from': this.from,
         'to': this.to
       }
-        LogdetailService.getByDate(params).then(response => {
-          this.logs = response.data.content;
-          this.page = response.data.pageable;
-          this.totalItems = response.data.totalElements;
-        }).catch(error => {
-          console.log(error);
-        })
+      LogdetailService.getByDate(params).then(response => {
+        this.logs = response.data.content;
+        this.page = response.data.pageable;
+        this.totalItems = response.data.totalElements;
+      }).catch(error => {
+        console.log(error);
+      })
 
     },
     a() {

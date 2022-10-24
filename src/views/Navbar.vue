@@ -72,7 +72,7 @@ export default {
   name: "Nav-bar",
   data() {
     return {
-      user: ''
+
     }
   },
   computed: {
