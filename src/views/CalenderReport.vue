@@ -40,7 +40,7 @@ export default {
   methods: {
     getAll() {
       const params = {
-        'code': this.currentUser.code,
+        'code': this.currentUser.user.code,
       }
       LogdetailService.getAllByUser(params).then(response => {
         this.logs = response.data;

@@ -79,7 +79,7 @@
   <nav class="navbar fixed-top">
     <div class="container-fluid">
       <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
-              aria-controls="offcanvasDarkNavbar" v-if="currentUser">
+              aria-controls="offcanvasDarkNavbar" v-if="currentUser" style="border: none">
         <span class="navbar-toggler-icon"></span>
       </button>
       <!--      <a class="navbar-brand" href="#"><img src="../../assets/logo_vmg.png" width="50px"></a>-->
@@ -114,7 +114,7 @@
         <div class="offcanvas-header" style="margin: auto">
           <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"><img src="../../assets/new_logo.png" width="50px">
           </h5>
-          <button type="button" class="btn-close btn-close-white text-center" data-bs-dismiss="offcanvas"
+          <button  type="button" class="btn-close btn-close-white text-center" data-bs-dismiss="offcanvas"
                   aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
@@ -291,6 +291,7 @@ export default {
 /*  color: #e24146;*/
 /*}*/
 .navbar {
+  background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 </style>
