@@ -6,6 +6,7 @@
       Nhân viên: {{currentUser.user.fullName}}
     </h5>
     <br><br>
+    <form ac>
     <div className="block">
       <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker style="width: 30%"
@@ -16,33 +17,31 @@
                       range-separator=""
                       start-placeholder="Start date"
                       end-placeholder="End date"
-                      @change="pickDate">
+                      @change="getAllByDate">
       </el-date-picker>
     </div>
+    </form>
 
     <p> {{ from }} </p>
     <p> {{ to }} </p>
     <br><br>
     <div >
-
       <el-table
           :data="logs"
           style="width: 60%; border: solid 1px; display: inline-block"
-          >
+          :row-class-name="tableRowClassName">
         <el-table-column
-            label="Ngày"
             prop="date_log"
-        >
+            label="Ngày">
         </el-table-column>
         <el-table-column
-            label="Giờ vào"
-            prop="timeIn">
+            prop="timeIn"
+            label="Giờ vào">
         </el-table-column>
         <el-table-column
-            label="Giờ ra"
-            prop="timeOut">
+            prop="timeOut"
+            label="Giờ ra">
         </el-table-column>
-
       </el-table>
     </div>
 
@@ -73,7 +72,7 @@ export default {
       search: '',
       totalItems: 0,
       page: 0,
-      pageSize: 30,
+      pageSize: 3,
     }
   },
   computed: {
@@ -89,25 +88,52 @@ export default {
     },
   },
   mounted() {
-    this.getAllByUser()
+    this.getAllByDate()
     this.user_code = this.currentUser.user.code;
-
-    console.log(this.dateRange)
-    console.log(this.from)
-    console.log(this.to)
 
   },
   methods: {
-    pickDate(){
+    getAllByDate(){
       this.from = this.dateRange.at(0);
       this.to = this.dateRange.at(1);
+      console.log(this.from,this.to)
+      const params ={
+        'code': this.currentUser.user.code,
+        'from': this.from,
+        'to': this.to
+      }
+      // if(params.from==="" || params.to==="" || params.from===null || params.to===null){
+      //   LogdetailService.getByUsers(params).then(response => {
+      //     this.logs = response.data.content;
+      //     this.page = response.data.pageable;
+      //     this.totalItems = response.data.totalElements;
+      //     this.user_code = this.currentUser.code
+      //     console.log(this.totalItems)
+      //
+      //   })
+      //       .catch(error => {
+      //         console.log(error);
+      //       })
+      // }
+      // else{
+        LogdetailService.getByDate(params).then(response => {
+          this.logs = response.data.content;
+          this.page = response.data.pageable;
+          this.totalItems = response.data.totalElements;
+          this.user_code = this.currentUser.code;
+          this.from = response.data.from;
+          console.log(response.data.from)
+        }).catch(error => {
+          console.log(error);
+        })
+      // }
+
     },
     getAllByUser() {
       const params = {
         'page': this.page,
         'size': this.pageSize,
         'code': this.currentUser.user.code,
-
       }
       LogdetailService.getByUsers(params).then(response => {
         this.logs = response.data.content;
@@ -130,16 +156,32 @@ export default {
     },
     handlePageChange(value) {
       this.page = value - 1;
-      this.getAll()
-      // if (this.search !== null) {
-      //   this.searchBlogs();
-      // }
+      this.getAllByDate();
       // if (this.category !== null) {
       //   this.getBlogs();
       // }else {
       //   this.getBlogs();
       // }
     },
+    tableRowClassName() {
+      // if (rowIndex % 2 === 1) {
+      //   return 'warning-row';
+      // } else if (rowIndex % 2 === 0) {
+      //   return 'success-row';
+      // }
+      return 'success-row';
+    }
   },
 };
 </script>
+
+<style>
+.el-table .warning-row {
+  background: oldlace;
+}
+
+
+.el-table .success-row {
+  background: #f3a8aa;
+}
+</style>

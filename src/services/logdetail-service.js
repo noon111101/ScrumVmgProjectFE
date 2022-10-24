@@ -8,6 +8,10 @@ class LogdtailService{
     getByUsers(params){
         return  httpCommon.get("/log/byUser", {params});
     }
+
+    getByDate(params){
+        return  httpCommon.get("/log/byDate", {params});
+    }
     getDepartment(){
         return httpCommon.get("departments");
     }
