@@ -82,6 +82,7 @@ export default {
     }
   },
   created() {
+    this.$router.push("/login");
     if (this.loggedIn) {
       this.$router.push('/profile');
     }

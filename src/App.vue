@@ -1,12 +1,11 @@
 <template>
   <div id="app">
+
+<!--      <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>-->
+      <Sidebar />
     <div class="container">
-    <div class="row flex-nowrap">
-        <Sidebar/>
-        <router-view />
+      <router-view />  
     </div>
-    </div>
-    <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>
   </div>
 </template>
 <script>
@@ -45,10 +44,12 @@ export default {
 </script>
 <style scoped>
 #app {
+  margin-top: 100px;
+
   font-family:'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /*text-align: center;*/
   color: #2c3e50;
 }
 #nav {
@@ -61,9 +62,4 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-body{
-  margin: 0;
-  padding: 0;
-}
-
 </style>

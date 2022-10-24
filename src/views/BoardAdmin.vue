@@ -9,7 +9,7 @@
 
     <div class="row">
       <div class="col-md-3 register-left">
-        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
+<!--        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>-->
 <!--        <h3>VMG Media</h3>-->
 <!--        <p>VMG Media</p>-->
         <img style="width: 200px; line-height: 100%" src="../assets/new_logo.png"/>
