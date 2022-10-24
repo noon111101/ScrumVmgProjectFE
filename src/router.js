@@ -16,10 +16,6 @@ export const router = new Router({
       component: Home
     },
     {
-      path: '/home',
-      component: Home
-    },
-    {
       path: '/login',
       component: Login
     },
@@ -56,6 +52,17 @@ export const router = new Router({
       name: 'timesheet',
       // lazy-loaded
       component: () => import('./views/TimeSheets.vue')
+    },
+    {
+      path: '/changepassword',
+      name: 'changepassword',
+      // lazy-loaded
+      component: () => import('./views/ChangePassword.vue')
+    },
+    {
+      path: '/calender',
+      name: 'calender',
+      component: () => import('./views/CalenderReport.vue')
     },
   ]
 }
