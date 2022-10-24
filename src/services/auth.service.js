@@ -11,25 +11,18 @@ class AuthService {
         })
         .then(response => {
           if (response.data.accessToken) {
-            localStorage.setItem('user', JSON.stringify(response.data.user));
+            localStorage.setItem('user', JSON.stringify(response.data));
           }
           return response.data;
         });
     }
-  
-    logout() {
+    logout() {                        
       localStorage.removeItem('user');
     }
   
     register(user) {
-      return axios.post(API_URL + 'signup', {
-        username: user.username,
-        fullName: user.fullName,
-        role: user.role,
-        code:user.code,
-        department:user.department,
-        gender: user.gender,
-      });
+      let userForm = new FormData(user)
+      return axios.post(API_URL + 'signup', userForm);
     }
 
   }

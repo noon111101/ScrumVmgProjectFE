@@ -41,42 +41,46 @@ export default {
         <div style="color:red">M</div>
         <div style="color:red">G</div> -->
       </span>
-      <img
-        src="../../assets/vmg_logo.png"
-        style="width: 125px"
-        v-else
-      />
+      <img src="../../assets/logo_vmg.png" style="width: 125px" v-else />
     </h1>
     <br />
-    <div>
+    <div class="text-start">
       <router-link to="/user" v-if="currentUser" class="nav-link sel">
         <font-awesome-icon icon="home" /> Home
       </router-link>
 
-
-      <router-link v-if="!currentUser && !showAdminBoard && !showModeratorBoard" to="/login" class="nav-link">
+      <router-link
+        v-if="!currentUser && !showAdminBoard && !showModeratorBoard"
+        to="/login"
+        class="nav-link"
+      >
         <font-awesome-icon icon="sign-in-alt" />Login
       </router-link>
       <br />
 
       <router-link v-if="showAdminBoard" to="/admin" class="nav-link sel"
-        ><i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên</router-link
+        ><i class="el-icon-circle-plus-outline"> </i> Thêm Nhân
+        Viên</router-link
       >
       <br />
       <div v-if="showAdminBoard">
-      <router-link  to="/timesheet" class="nav-link sel">
-        <i class="el-icon-document-copy"> </i> Bảng Chấm Công
-      </router-link>
+        <router-link to="/timesheet" class="nav-link sel">
+          <i class="el-icon-document-copy"> </i> Bảng Chấm Công
+        </router-link>
       </div>
 
       <br />
       <router-link v-if="showModeratorBoard" to="/mod" class="nav-link sel">
         Moderator Board
       </router-link>
-<!--      <br />-->
-<!--      <router-link v-if="currentUser" to="/user" class="nav-link"-->
-<!--        >User</router-link-->
-<!--      >-->
+      <router-link v-if="showAdminBoard" to="/timesheetadmin" class="nav-link sel">
+        <font-awesome-icon icon="" />
+        Bảng thống kê chấm công
+      </router-link>
+      <!--      <br />-->
+      <!--      <router-link v-if="currentUser" to="/user" class="nav-link"-->
+      <!--        >User</router-link-->
+      <!--      >-->
       <router-link v-if="currentUser" to="/profile" class="nav-link sel">
         <font-awesome-icon icon="user" />
         {{ currentUser.username }}
@@ -104,12 +108,12 @@ export default {
 </style>
 
 <style scoped>
-*{
-  font-family: 'Montserrat', sans-serif;
+* {
+  font-family: "Montserrat", sans-serif;
 }
 .sidebar {
   background-color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0 ,0 ,0.3);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   float: left;
   position: fixed;
   z-index: 1;
@@ -138,7 +142,7 @@ export default {
 .nav-link {
   overflow: hidden;
 }
-.sel:hover{
+.sel:hover {
   color: #e24146;
 }
 </style>

@@ -57,6 +57,12 @@ export const router = new Router({
       // lazy-loaded
       component: () => import('./views/TimeSheets.vue')
     },
+    {
+      path: '/timesheetadmin',
+      name: 'timesheetadmin',
+      // lazy-loaded
+      component: () => import('./views/TimeSheetsAdmin.vue')
+    },
   ]
 }
 );

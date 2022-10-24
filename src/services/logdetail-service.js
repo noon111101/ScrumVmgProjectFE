@@ -11,6 +11,9 @@ class LogdtailService{
     getDepartment(){
         return httpCommon.get("departments");
     }
+    getBySearch(params){
+        return  httpCommon.get("/log/search", {params});
+    }
 
 }
 
