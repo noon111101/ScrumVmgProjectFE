@@ -1,10 +1,10 @@
 <template>
   <div className="container">
-    <div className="block">
+    <div className="block" class="text-end">
       <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker
           style="width: 20%"
-          v-model="value1"
+          v-model="date"
           placeholder="Pick a day"
           type="date"
           range-separator="To"
@@ -14,12 +14,12 @@
       </el-date-picker>
       <br /><br />
     </div>
-    <div style="float:right">
-      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" />
+    <div class="text-end" >
+      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 40%"/>
     </div>
     <br /><br />
     <div>
-      <el-table
+      <el-table class="text-center"
           :data="
           logs.filter(
             (data) =>
@@ -29,14 +29,14 @@
         "
           cell-style="border: solid 1px"
           row-style="border: solid 1px"
-          style="width: 80%;border: solid 1px; display: inline-block"
+          style="width: 100%;border: solid 1px; display: inline-block"
       >
-        <el-table-column label="STT" prop="id"> </el-table-column>
-        <el-table-column label="Name" prop="user.fullName"> </el-table-column>
-        <el-table-column label="Mã NV" prop="user.code"> </el-table-column>
-        <el-table-column label="Date" prop="date_log"> </el-table-column>
-        <el-table-column label="In" prop="timeIn"> </el-table-column>
-        <el-table-column label="Out" prop="timeOut"> </el-table-column>
+        <el-table-column label="ID" prop="id"></el-table-column>
+        <el-table-column label="Họ và tên" prop="user.fullName"> </el-table-column>
+        <el-table-column label="Mã nhân viên" prop="user.code"> </el-table-column>
+        <el-table-column label="Ngày" prop="date_log"> </el-table-column>
+        <el-table-column label="Giờ vào" prop="timeIn"> </el-table-column>
+        <el-table-column label="Giờ ra" prop="timeOut"> </el-table-column>
         <el-table-column label="" prop="" v-slot:="data">
           <router-link :to="`/user/${data.row.user.code}`">
             <el-button>Xem chi tiết</el-button>
@@ -68,8 +68,9 @@ export default {
   name: "HomeVue",
   data() {
     return {
+      stt: 1,
       user_code: "",
-      value1: "",
+      date: "",
       logs: [],
       search: "",
       departmentId: 0,
@@ -98,6 +99,9 @@ export default {
 
   },
   methods: {
+    auto(){
+      this.stt = this.stt++;
+    },
     getUserCode() {
       this.user_code = this.$store.state.auth.user.code;
       console.log("user code" + this.user_code);
@@ -117,7 +121,7 @@ export default {
         "size": this.pageSize,
         "id" : this.departmentId,
       };
-      LogdetailService.getDepartment(params)
+      LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
             this.logs = response.data.content;
             this.page = response.data.pageable;
