@@ -1,44 +1,51 @@
 <template>
   <div className="container">
-    <div className="block">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+    <div className="block" class="text-end">
+      <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker
           style="width: 20%"
-          v-model="value1"
-          placeholder="Pick a day"
+          v-model="date"
+          placeholder="Ngày"
           type="date"
-          range-separator="To"
-          start-placeholder="Start date"
-          end-placeholder="End date"
-      >
+          format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd"
+          @change="getAll">
       </el-date-picker>
       <br /><br />
     </div>
-    <div style="float:right">
-      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" />
+    <div class="text-end" >
+      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 40%"/>
     </div>
     <br /><br />
     <div>
-      <el-table
+<!--      <div >-->
+<!--        <p v-if="date!=''" style="color: cadetblue">-->
+<!--          Tìm kiếm ngày: {{date}}-->
+<!--        </p>-->
+<!--        <p v-if="search!=''" style="color: cadetblue">-->
+<!--          Tìm kiếm tên: {{search}}-->
+<!--        </p>-->
+<!--      </div>-->
+      <el-table class="text-center"
           :data="
           logs.filter(
             (data) =>
               !search ||
-              data.fullName.toLowerCase().includes(search.toLowerCase())
+              data.user.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
           cell-style="border: solid 1px"
           row-style="border: solid 1px"
-          style="width: 80%;border: solid 1px; display: inline-block"
+          style="width: 100%;border: solid 1px; display: inline-block"
       >
-        <el-table-column label="STT" prop="id"> </el-table-column>
-        <el-table-column label="Name" prop="user.fullName"> </el-table-column>
-        <el-table-column label="Mã NV" prop="user.code"> </el-table-column>
-        <el-table-column label="Date" prop="date_log"> </el-table-column>
-        <el-table-column label="In" prop="timeIn"> </el-table-column>
-        <el-table-column label="Out" prop="timeOut"> </el-table-column>
+        <el-table-column label="ID" prop="id"></el-table-column>
+        <el-table-column label="Họ và tên" prop="user.fullName"> </el-table-column>
+        <el-table-column label="Mã nhân viên" prop="user.code"> </el-table-column>
+        <el-table-column label="Ngày" prop="date_log"> </el-table-column>
+        <el-table-column label="Giờ vào" prop="timeIn"> </el-table-column>
+        <el-table-column label="Giờ ra" prop="timeOut"> </el-table-column>
         <el-table-column label="" prop="" v-slot:="data">
-          <router-link :to="`/user/${data.row.user.code}`">
+          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
             <el-button>Xem chi tiết</el-button>
 <!--            <el-button type="primary" icon="el-icon-edit" circle></el-button>-->
           </router-link>
@@ -62,14 +69,15 @@
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
-import {router} from "@/router";
+// import {router} from "@/router";
 
 export default {
   name: "HomeVue",
   data() {
     return {
+      stt: 1,
       user_code: "",
-      value1: "",
+      date: "",
       logs: [],
       search: "",
       departmentId: 0,
@@ -94,8 +102,6 @@ export default {
   },
   mounted() {
     this.getAll();
-    this.a();
-
   },
   methods: {
     getUserCode() {
@@ -103,21 +109,20 @@ export default {
       console.log("user code" + this.user_code);
       // console.log("user code"+curr)
     },
-    viewDetail(code){
-      console.log(code)
-      router.push(`/user/${code}`)
-    },
+    // viewDetail(code){
+    //   console.log(code)
+    //   router.push(`/user/${code}`)
+    // },
 
     getDepartmentId() {
       this.departmentId = this.currentUser.user.departments.id
     },
     getAll() {
       const params = {
-        "page": this.page,
-        "size": this.pageSize,
         "id" : this.departmentId,
+        "date": this.date
       };
-      LogdetailService.getDepartment(params)
+      LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
             this.logs = response.data.content;
             this.page = response.data.pageable;
@@ -126,10 +131,6 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0];
-      this.logs.data_log = a;
     },
     exportExcel() {
       ExcelService.exportExcel();

@@ -3,7 +3,11 @@
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
       Nhân viên: {{fullname}}
+
+      Nhân viên: {{fullName}}
+
     </h5>
     <br><br>
     <form ac>
@@ -15,14 +19,20 @@
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         range-separator=""
-                        start-placeholder="Start date"
-                        end-placeholder="End date"
+                        start-placeholder="Từ ngày"
+                        end-placeholder="Đến ngày"
                         @change="getAllByDate">
         </el-date-picker>
       </div>
     </form>
     <br><br>
     <div >
+<!--      <div v-if="dateRange!=''" >-->
+<!--        <p  style="color: cadetblue">-->
+<!--          Từ ngày: {{from}} đến {{to}}-->
+<!--        </p>-->
+
+<!--      </div>-->
       <el-table
           :data="logs"
           style="width: 60%; border: solid 1px; display: inline-block"
@@ -55,13 +65,17 @@
 </template>
 
 <script>
+
 import ExcelService from "@/services/excel-service";
+
 import LogdetailService from "@/services/logdetail-service";
 export default {
   name: 'HomeVue',
   data() {
     return {
       user_code:  "",
+      departmentName: "",
+      fullName: "",
       dateRange: [],
       from: "",
       to: "",
@@ -87,9 +101,18 @@ export default {
     this.getParams();
   },
   mounted() {
+
     this.getAllByDate()
+
+    this.getAllByDate();
+
   },
   methods: {
+    getParams(){
+      this.departmentName = this.$route.params.departmentName
+      this.fullName = this.$route.params.fullName
+
+    },
     getUserCode(){
       if(this.$route.params.code == null){
         this.user_code = this.currentUser.user.code;
@@ -110,7 +133,7 @@ export default {
       this.to = this.dateRange.at(1);
       console.log(this.from,this.to)
       const params ={
-        'code': this.user_code,
+        'code': this.currentUser.user.code,
         'from': this.from,
         'to': this.to
       }
@@ -121,13 +144,6 @@ export default {
       }).catch(error => {
         console.log(error);
       })
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0]
-      this.logs.data_log = a
-    },
-    exportExcel() {
-      ExcelService.exportExcel();
     },
     handlePageChange(value) {
       this.page = value - 1;
