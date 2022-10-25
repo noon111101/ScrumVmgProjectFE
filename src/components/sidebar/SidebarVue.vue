@@ -169,6 +169,8 @@
               <a class="nav-link">
                 <router-link to="/manage" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Quản lý nhân viên
+                           </router-link>
+       
 
                 <router-link to="/timesheetmod" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)

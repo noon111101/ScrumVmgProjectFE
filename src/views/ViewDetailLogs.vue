@@ -66,8 +66,6 @@
 
 <script>
 
-import ExcelService from "@/services/excel-service";
-
 import LogdetailService from "@/services/logdetail-service";
 export default {
   name: 'HomeVue',
@@ -84,7 +82,6 @@ export default {
       page: 0,
       pageSize: 30,
       fullname:"",
-      departmentName:"",
     }
   },
   computed: {
@@ -123,11 +120,11 @@ export default {
         console.log(this.$route.params.code)
       }
     },
-    getParams(){
-      this.fullname = this.$route.params.fullName
-      this.departmentName = this.$route.params.departmentName
-       console.log(this.fullname+"dahfkdsh"+this.departmentName)
-    },
+    // getParams(){
+    //   this.fullname = this.$route.params.fullName
+    //   this.departmentName = this.$route.params.departmentName
+    //    console.log(this.fullname+"dahfkdsh"+this.departmentName)
+    // },
     getAllByDate(){
       this.from = this.dateRange.at(0);
       this.to = this.dateRange.at(1);
