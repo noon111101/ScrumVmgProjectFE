@@ -22,8 +22,8 @@
     </div>
     </form>
 
-<!--    <p> {{ from }} </p>-->
-<!--    <p> {{ to }} </p>-->
+    <p> {{ from }} </p>
+    <p> {{ to }} </p>
     <br><br>
     <div >
       <el-table
@@ -90,10 +90,11 @@ export default {
   },
   created() {
     this.getUserCode();
+
   },
   mounted() {
-    this.getAllByDate()
 
+    this.getAllByDate()
   },
   methods: {
     getUserCode(){

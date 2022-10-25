@@ -1,16 +1,15 @@
 <template>
   <div className="container">
     <div className="block" class="text-end">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+      <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker
           style="width: 20%"
           v-model="date"
-          placeholder="Pick a day"
+          placeholder="Ngày"
           type="date"
-          range-separator="To"
-          start-placeholder="Start date"
-          end-placeholder="End date"
-      >
+          format="yyyy-MM-dd"
+          value-format="yyyy-MM-dd"
+          @change="getAll">
       </el-date-picker>
       <br /><br />
     </div>
@@ -19,12 +18,20 @@
     </div>
     <br /><br />
     <div>
+      <div >
+        <p v-if="date!=''" style="color: cadetblue">
+          Kết quả tìm kiếm: {{date}}
+        </p>
+        <p v-if="search!=''" style="color: cadetblue">
+          Kết quả tìm kiếm: {{search}}
+        </p>
+      </div>
       <el-table class="text-center"
           :data="
           logs.filter(
             (data) =>
               !search ||
-              data.fullName.toLowerCase().includes(search.toLowerCase())
+              data.user.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
           cell-style="border: solid 1px"
@@ -38,7 +45,7 @@
         <el-table-column label="Giờ vào" prop="timeIn"> </el-table-column>
         <el-table-column label="Giờ ra" prop="timeOut"> </el-table-column>
         <el-table-column label="" prop="" v-slot:="data">
-          <router-link :to="`/user/${data.row.user.code}`">
+          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
             <el-button>Xem chi tiết</el-button>
 <!--            <el-button type="primary" icon="el-icon-edit" circle></el-button>-->
           </router-link>
@@ -95,13 +102,8 @@ export default {
   },
   mounted() {
     this.getAll();
-    this.a();
-
   },
   methods: {
-    auto(){
-      this.stt = this.stt++;
-    },
     getUserCode() {
       this.user_code = this.$store.state.auth.user.code;
       console.log("user code" + this.user_code);
@@ -117,9 +119,8 @@ export default {
     },
     getAll() {
       const params = {
-        "page": this.page,
-        "size": this.pageSize,
         "id" : this.departmentId,
+        "date": this.date
       };
       LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
@@ -130,10 +131,6 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0];
-      this.logs.data_log = a;
     },
     exportExcel() {
       ExcelService.exportExcel();

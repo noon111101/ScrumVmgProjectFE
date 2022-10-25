@@ -2,8 +2,8 @@
   <div className="container" style="text-align: center">
     <br>
     <h5 style="font-weight: 600;">
-      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      Nhân viên: {{currentUser.user.fullName}}
+      Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      Nhân viên: {{fullname}}
     </h5>
     <br><br>
     <form ac>
@@ -67,6 +67,8 @@ export default {
   data() {
     return {
       user_code:  "",
+      departmentName: "",
+      fullname: "",
       dateRange: [],
       from: "",
       to: "",
@@ -90,12 +92,18 @@ export default {
   },
   created() {
     this.getUserCode();
+    this.getParams();
   },
   mounted() {
     this.getAllByDate()
 
   },
   methods: {
+    getParams(){
+      this.departmentName = this.$route.params.departmentName
+      this.fullname = this.$route.params.fullname
+
+    },
     getUserCode(){
       if(this.$route.params.code == null){
         this.user_code = this.currentUser.user.code;
@@ -111,7 +119,7 @@ export default {
       this.to = this.dateRange.at(1);
       console.log(this.from,this.to)
       const params ={
-        'code': this.user_code,
+        'code': this.currentUser.user.code,
         'from': this.from,
         'to': this.to
       }
