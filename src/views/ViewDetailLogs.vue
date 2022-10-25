@@ -3,7 +3,7 @@
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      Nhân viên: {{fullname}}
+      Nhân viên: {{fullName}}
     </h5>
     <br><br>
     <form ac>
@@ -58,8 +58,6 @@
 </template>
 
 <script>
-// import UserService from '../services/user.service';
-import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
 
 export default {
@@ -68,7 +66,7 @@ export default {
     return {
       user_code:  "",
       departmentName: "",
-      fullname: "",
+      fullName: "",
       dateRange: [],
       from: "",
       to: "",
@@ -100,7 +98,7 @@ export default {
   methods: {
     getParams(){
       this.departmentName = this.$route.params.departmentName
-      this.fullname = this.$route.params.fullname
+      this.fullName = this.$route.params.fullName
 
     },
     getUserCode(){
@@ -130,13 +128,6 @@ export default {
         console.log(error);
       })
 
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0]
-      this.logs.data_log = a
-    },
-    exportExcel() {
-      ExcelService.exportExcel();
     },
     handlePageChange(value) {
       this.page = value - 1;

@@ -69,7 +69,7 @@
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
-import {router} from "@/router";
+// import {router} from "@/router";
 
 export default {
   name: "HomeVue",
@@ -109,10 +109,10 @@ export default {
       console.log("user code" + this.user_code);
       // console.log("user code"+curr)
     },
-    viewDetail(code){
-      console.log(code)
-      router.push(`/user/${code}`)
-    },
+    // viewDetail(code){
+    //   console.log(code)
+    //   router.push(`/user/${code}`)
+    // },
 
     getDepartmentId() {
       this.departmentId = this.currentUser.user.departments.id
