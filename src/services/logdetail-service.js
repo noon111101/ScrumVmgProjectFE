@@ -22,8 +22,9 @@ class LogdtailService{
         return httpCommon.get("/log/allByMonthAndDepartment",{params})
     }
 
-    getDepartment(){
+    getDepartment() {
         return httpCommon.get("department");
+    }
     getDepartment(params){
         return httpCommon.get("/log/byDepartment", {params});
     }
