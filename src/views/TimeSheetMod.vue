@@ -20,10 +20,10 @@
     <div>
       <div >
         <p v-if="date!=''" style="color: cadetblue">
-          Kết quả tìm kiếm: {{date}}
+          Tìm kiếm ngày: {{date}}
         </p>
         <p v-if="search!=''" style="color: cadetblue">
-          Kết quả tìm kiếm: {{search}}
+          Tìm kiếm tên: {{search}}
         </p>
       </div>
       <el-table class="text-center"

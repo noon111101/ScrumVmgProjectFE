@@ -95,8 +95,7 @@ export default {
     this.getParams();
   },
   mounted() {
-    this.getAllByDate()
-
+    this.getAllByDate();
   },
   methods: {
     getParams(){
