@@ -18,6 +18,17 @@ class LogdtailService{
     getDepartment(params){
         return httpCommon.get("/log/byDepartment", {params});
     }
+    getLogsByDate_Department(params){
+        return httpCommon.get("/log/byDate_Department", {params});
+    }
+
+    getByDate_UserCode(params) {
+        return httpCommon.get("/log/byDate_Usercode", {params});
+    }
+
+    getAllBySearch(params) {
+        return httpCommon.get("/log/search", {params});
+    }
 
 }
 

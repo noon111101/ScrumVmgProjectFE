@@ -24,7 +24,6 @@
   <!--        Chi tiết chấm công-->
   <!--      </router-link>-->
 
-
   <!--      <router-link v-if="!currentUser" to="/login" class="nav-link">-->
   <!--        <font-awesome-icon icon="sign-in-alt"/>-->
   <!--        Login-->
@@ -42,7 +41,6 @@
   <!--        <router-link to="/timesheet" class="nav-link sel">-->
   <!--          <i class="el-icon-document-copy"> </i> Bảng Chấm Công-->
   <!--        </router-link>-->
-
 
   <!--        <br/>-->
   <!--      </div>-->
@@ -75,54 +73,75 @@
   <!--    </span>-->
   <!--  </div>-->
 
-
   <nav class="navbar fixed-top">
     <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar"
-              aria-controls="offcanvasDarkNavbar" v-if="currentUser" style="border: none">
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasDarkNavbar"
+        aria-controls="offcanvasDarkNavbar"
+        v-if="currentUser"
+        style="border: none"
+      >
         <span class="navbar-toggler-icon"></span>
       </button>
       <!--      <a class="navbar-brand" href="#"><img src="../../assets/logo_vmg.png" width="50px"></a>-->
 
       <ul class="dropdown-menu navbar-brand" style="float: right">
-        <li><a class="dropdown-item">
-          <router-link to="/profile" class="nav-link sel">
-            <font-awesome-icon icon="user"/>
-            Thông tin cá nhân
-          </router-link>
-        </a></li>
-        <li><a class="dropdown-item">
-          <router-link to="/changepassword" class="nav-link">
-            <i class="el-icon-refresh-left"></i>
-            Thay đổi mật khẩu
-          </router-link>
-        </a></li>
         <li>
-          <hr class="dropdown-divider">
-        </li>
-        <li><a class="dropdown-item" href="#">
-          <a class="nav-link sel" href @click.prevent="logOut">
-            <font-awesome-icon icon="sign-out-alt"/>
-            LogOut
+          <a class="dropdown-item">
+            <router-link to="/profile" class="nav-link sel">
+              <font-awesome-icon icon="user" />
+              Thông tin cá nhân
+            </router-link>
           </a>
-        </a></li>
+        </li>
+        <li>
+          <a class="dropdown-item">
+            <router-link to="/changepassword" class="nav-link">
+              <i class="el-icon-refresh-left"></i>
+              Thay đổi mật khẩu
+            </router-link>
+          </a>
+        </li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
+            <a class="nav-link sel" href @click.prevent="logOut">
+              <font-awesome-icon icon="sign-out-alt" />
+              LogOut
+            </a>
+          </a>
+        </li>
       </ul>
 
-
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasDarkNavbar"
-           aria-labelledby="offcanvasDarkNavbarLabel" style="width: 14%">
+      <div
+        class="offcanvas offcanvas-start"
+        tabindex="-1"
+        id="offcanvasDarkNavbar"
+        aria-labelledby="offcanvasDarkNavbarLabel"
+        style="width: 14%"
+      >
         <div class="offcanvas-header" style="margin: auto">
-          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel"><img src="../../assets/new_logo.png" width="50px">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
+            <img src="../../assets/new_logo.png" width="50px" />
           </h5>
-          <button  type="button" class="btn-close btn-close-white text-center" data-bs-dismiss="offcanvas"
-                  aria-label="Close"></button>
+          <button
+            type="button"
+            class="btn-close btn-close-white text-center"
+            data-bs-dismiss="offcanvas"
+            aria-label="Close"
+          ></button>
         </div>
         <div class="offcanvas-body">
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile">
                 <router-link to="/home" v-if="currentUser" class="nav-link sel">
-                  <font-awesome-icon icon="home"/>
+                  <font-awesome-icon icon="home" />
                   Home
                 </router-link>
               </a>
@@ -138,10 +157,26 @@
 
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
+                <router-link to="/timesheetadmin" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công
+                  [Admin]
+                </router-link>
+              </a>
+            </li>
+
+            <li class="nav-item" v-if="showAdminBoard">
+              <a class="nav-link">
+                <router-link to="/manage" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Quản lý nhân viên
+                </router-link>
+              </a>
+            </li>
+
+            <li class="nav-item" v-if="showAdminBoard">
+              <a class="nav-link">
                 <router-link to="/admin" class="nav-link sel">
                   <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên
                 </router-link>
-
               </a>
             </li>
 
@@ -162,37 +197,47 @@
             </li>
 
             <li class="nav-item dropdown" v-if="currentUser">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                 aria-expanded="false">
-                <font-awesome-icon icon="user"/>
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <font-awesome-icon icon="user" />
                 {{ currentUser.user.fullName }}
               </a>
-              <ul class="dropdown-menu ">
-                <li><a class="dropdown-item">
-                  <router-link to="/profile" class="nav-link sel">
-                    <font-awesome-icon icon="user"/>
-                    Thông tin cá nhân
-                  </router-link>
-                </a></li>
-                <li><a class="dropdown-item">
-                  <router-link to="/changepassword" class="nav-link">
-                    <i class="el-icon-refresh-left"></i>
-                    Thay đổi mật khẩu
-                  </router-link>
-                </a></li>
+              <ul class="dropdown-menu">
                 <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">
-                  <a class="nav-link sel" href @click.prevent="logOut">
-                    <font-awesome-icon icon="sign-out-alt"/>
-                    LogOut
+                  <a class="dropdown-item">
+                    <router-link to="/profile" class="nav-link sel">
+                      <font-awesome-icon icon="user" />
+                      Thông tin cá nhân
+                    </router-link>
                   </a>
-                </a></li>
+                </li>
+                <li>
+                  <a class="dropdown-item">
+                    <router-link to="/changepassword" class="nav-link">
+                      <i class="el-icon-refresh-left"></i>
+                      Thay đổi mật khẩu
+                    </router-link>
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider" />
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <a class="nav-link sel" href @click.prevent="logOut">
+                      <font-awesome-icon icon="sign-out-alt" />
+                      LogOut
+                    </a>
+                  </a>
+                </li>
               </ul>
             </li>
           </ul>
-
         </div>
       </div>
     </div>
@@ -204,7 +249,7 @@
 
 export default {
   data() {
-    return {}
+    return {};
   },
   props: {},
   // components: { SidebarLink },
@@ -233,7 +278,7 @@ export default {
     logOut() {
       this.$store.dispatch("auth/logout");
       // this.$router.push("/login");
-      window.location.replace("http://localhost:8081/login")
+      window.location.replace("http://localhost:8081/login");
     },
   },
 };
@@ -248,7 +293,7 @@ export default {
 
 <style scoped>
 * {
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
 /*.sidebar {*/

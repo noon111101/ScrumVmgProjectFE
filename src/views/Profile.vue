@@ -5,7 +5,7 @@
       <div class="col-lg-4">
         <div class="card mb-4">
           <div class="card-body text-center">
-            <img :src="'http://localhost:8080/uploads/images/' + currentUser.user.image" 
+            <img :src="'http://localhost:8080/uploads/images/' + currentUser.user.cover" 
               class="rounded-circle img-fluid" style="width: 120px">
             <h5 class="my-3">{{currentUser.user.username}}</h5>
             <p class="text-muted mb-1" v-for="(role,index) in currentUser.user.roles" :key="index">{{role.name}}</p>
