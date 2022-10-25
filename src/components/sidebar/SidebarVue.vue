@@ -160,41 +160,40 @@
                 </router-link>
               </a>
             </li>
-
-            <li class="nav-item dropdown" v-if="currentUser">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                 aria-expanded="false">
-                <font-awesome-icon icon="user"/>
-                {{ currentUser.user.fullName }}
-              </a>
-              <ul class="dropdown-menu ">
-                <li><a class="dropdown-item">
-                  <router-link to="/profile" class="nav-link sel">
-                    <font-awesome-icon icon="user"/>
-                    Thông tin cá nhân
-                  </router-link>
-                </a></li>
-                <li><a class="dropdown-item">
-                  <router-link to="/changepassword" class="nav-link">
-                    <i class="el-icon-refresh-left"></i>
-                    Thay đổi mật khẩu
-                  </router-link>
-                </a></li>
-                <li>
-                  <hr class="dropdown-divider">
-                </li>
-                <li><a class="dropdown-item" href="#">
-                  <a class="nav-link sel" href @click.prevent="logOut">
-                    <font-awesome-icon icon="sign-out-alt"/>
-                    LogOut
-                  </a>
-                </a></li>
-              </ul>
-            </li>
           </ul>
 
         </div>
       </div>
+    </div>
+    <div class="nav-item dropdown user-detail" v-if="currentUser">
+      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+         aria-expanded="false">
+        <font-awesome-icon icon="user"/>
+        {{ currentUser.user.fullName }}
+      </a>
+      <ul class="dropdown-menu" style="position: absolute; left: 10px">
+        <li><a class="dropdown-item">
+          <router-link to="/profile" class="nav-link sel">
+            <font-awesome-icon icon="user"/>
+            Thông tin cá nhân
+          </router-link>
+        </a></li>
+        <li><a class="dropdown-item">
+          <router-link to="/changepassword" class="nav-link">
+            <i class="el-icon-refresh-left"></i>
+            Thay đổi mật khẩu
+          </router-link>
+        </a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" href="#">
+          <a class="nav-link sel" href @click.prevent="logOut">
+            <font-awesome-icon icon="sign-out-alt"/>
+            LogOut
+          </a>
+        </a></li>
+      </ul>
     </div>
   </nav>
 </template>
@@ -291,6 +290,13 @@ export default {
 /*  color: #e24146;*/
 /*}*/
 .navbar {
+  background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.user-detail{
+  position: fixed;
+  top: 10px ;
+  right: 30px;
+  z-index: 1030;
 }
 </style>
