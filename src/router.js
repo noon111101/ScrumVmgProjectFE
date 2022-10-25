@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
-import Register from './views/Register.vue';
+import Register from './views/ManageUser.vue';
 
 
 Vue.use(Router);
@@ -30,6 +30,12 @@ export const router = new Router({
       component: () => import('./views/Profile.vue')
     },
     {
+      path: '/manage',
+      name: 'manage',
+      // lazy-loaded
+      component: () => import('./views/ManageUser.vue')
+    },
+    {
       path: '/admin',
       name: 'admin',
       // lazy-loaded
@@ -48,6 +54,12 @@ export const router = new Router({
       component: () => import('./views/BoardUser.vue')
     },
     {
+      path: '/user/:code/:departmentName/:fullName',
+      name: 'user',
+      // lazy-loaded
+      component: () => import('./views/ViewDetailLogs.vue')
+    },
+    {
       path: '/timesheet',
       name: 'timesheet',
       // lazy-loaded
@@ -63,6 +75,16 @@ export const router = new Router({
       path: '/calender',
       name: 'calender',
       component: () => import('./views/CalenderReport.vue')
+    },
+    {
+      path: '/timesheetmod',
+      name: 'timesheetmod',
+      component: () => import('./views/TimeSheetMod.vue')
+    },
+    {
+      path: '/timesheetadmin',
+      name: 'timesheetadmin',
+      component: () => import('./views/TimeSheetsAdmin.vue')
     },
   ]
 }

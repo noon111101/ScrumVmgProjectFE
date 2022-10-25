@@ -2,30 +2,37 @@
   <div className="container" style="text-align: center">
     <br>
     <h5 style="font-weight: 600;">
-      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      Nhân viên: {{currentUser.user.fullName}}
+      Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+      Nhân viên: {{fullname}}
+
+      Nhân viên: {{fullName}}
+
     </h5>
     <br><br>
     <form ac>
-    <div className="block">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker style="width: 30%"
-                      v-model="dateRange"
-                      type="daterange"
-                      format="yyyy-MM-dd"
-                      value-format="yyyy-MM-dd"
-                      range-separator=""
-                      start-placeholder="Start date"
-                      end-placeholder="End date"
-                      @change="getAllByDate">
-      </el-date-picker>
-    </div>
+      <div className="block">
+        <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+        <el-date-picker style="width: 30%"
+                        v-model="dateRange"
+                        type="daterange"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        range-separator=""
+                        start-placeholder="Từ ngày"
+                        end-placeholder="Đến ngày"
+                        @change="getAllByDate">
+        </el-date-picker>
+      </div>
     </form>
-
-    <p> {{ from }} </p>
-    <p> {{ to }} </p>
     <br><br>
     <div >
+<!--      <div v-if="dateRange!=''" >-->
+<!--        <p  style="color: cadetblue">-->
+<!--          Từ ngày: {{from}} đến {{to}}-->
+<!--        </p>-->
+
+<!--      </div>-->
       <el-table
           :data="logs"
           style="width: 60%; border: solid 1px; display: inline-block"
@@ -58,15 +65,17 @@
 </template>
 
 <script>
-// import UserService from '../services/user.service';
-import ExcelService from "@/services/excel-service";
-import LogdetailService from "@/services/logdetail-service";
 
+import ExcelService from "@/services/excel-service";
+
+import LogdetailService from "@/services/logdetail-service";
 export default {
   name: 'HomeVue',
   data() {
     return {
       user_code:  "",
+      departmentName: "",
+      fullName: "",
       dateRange: [],
       from: "",
       to: "",
@@ -74,6 +83,8 @@ export default {
       totalItems: 0,
       page: 0,
       pageSize: 30,
+      fullname:"",
+      departmentName:"",
     }
   },
   computed: {
@@ -82,21 +93,26 @@ export default {
     },
     currentUser() {
       console.log(localStorage.getItem('user'))
-      // return JSON.parse(localStorage.getItem('user'));
-      // console.log("dddd"+this.$store.state.auth.user)
       return this.$store.state.auth.user;
-
     },
   },
   created() {
     this.getUserCode();
-
+    this.getParams();
   },
   mounted() {
 
     this.getAllByDate()
+
+    this.getAllByDate();
+
   },
   methods: {
+    getParams(){
+      this.departmentName = this.$route.params.departmentName
+      this.fullName = this.$route.params.fullName
+
+    },
     getUserCode(){
       if(this.$route.params.code == null){
         this.user_code = this.currentUser.user.code;
@@ -107,46 +123,33 @@ export default {
         console.log(this.$route.params.code)
       }
     },
+    getParams(){
+      this.fullname = this.$route.params.fullName
+      this.departmentName = this.$route.params.departmentName
+       console.log(this.fullname+"dahfkdsh"+this.departmentName)
+    },
     getAllByDate(){
       this.from = this.dateRange.at(0);
       this.to = this.dateRange.at(1);
       console.log(this.from,this.to)
       const params ={
-        'code': this.user_code,
+        'code': this.currentUser.user.code,
         'from': this.from,
         'to': this.to
       }
-        LogdetailService.getByDate_UserCode(params).then(response => {
-          this.logs = response.data.content;
-          this.page = response.data.pageable;
-          this.totalItems = response.data.totalElements;
-        }).catch(error => {
-          console.log(error);
-        })
-
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0]
-      this.logs.data_log = a
-    },
-    exportExcel() {
-      ExcelService.exportExcel();
+      LogdetailService.getByDate_UserCode(params).then(response => {
+        this.logs = response.data.content;
+        this.page = response.data.pageable;
+        this.totalItems = response.data.totalElements;
+      }).catch(error => {
+        console.log(error);
+      })
     },
     handlePageChange(value) {
       this.page = value - 1;
       this.getAllByDate();
-      // if (this.category !== null) {
-      //   this.getBlogs();
-      // }else {
-      //   this.getBlogs();
-      // }
     },
     tableRowClassName() {
-      // if (rowIndex % 2 === 1) {
-      //   return 'warning-row';
-      // } else if (rowIndex % 2 === 0) {
-      //   return 'success-row';
-      // }
       return 'success-row';
     }
   },
@@ -154,12 +157,4 @@ export default {
 </script>
 
 <style>
-/*.el-table .warning-row {*/
-/*  background: oldlace;*/
-/*}*/
-
-
-/*.el-table .success-row {*/
-/*  !*background: #f3a8aa;*!*/
-/*}*/
 </style>
