@@ -3,7 +3,11 @@
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+
+      Nhân viên: {{fullname}}
+
       Nhân viên: {{fullName}}
+
     </h5>
     <br><br>
     <form ac>
@@ -21,9 +25,6 @@
         </el-date-picker>
       </div>
     </form>
-
-    <!--    <p> {{ from }} </p>-->
-    <!--    <p> {{ to }} </p>-->
     <br><br>
     <div >
 <!--      <div v-if="dateRange!=''" >-->
@@ -64,8 +65,10 @@
 </template>
 
 <script>
-import LogdetailService from "@/services/logdetail-service";
 
+import ExcelService from "@/services/excel-service";
+
+import LogdetailService from "@/services/logdetail-service";
 export default {
   name: 'HomeVue',
   data() {
@@ -80,6 +83,8 @@ export default {
       totalItems: 0,
       page: 0,
       pageSize: 30,
+      fullname:"",
+      departmentName:"",
     }
   },
   computed: {
@@ -88,10 +93,7 @@ export default {
     },
     currentUser() {
       console.log(localStorage.getItem('user'))
-      // return JSON.parse(localStorage.getItem('user'));
-      // console.log("dddd"+this.$store.state.auth.user)
       return this.$store.state.auth.user;
-
     },
   },
   created() {
@@ -99,7 +101,11 @@ export default {
     this.getParams();
   },
   mounted() {
+
+    this.getAllByDate()
+
     this.getAllByDate();
+
   },
   methods: {
     getParams(){
@@ -117,6 +123,11 @@ export default {
         console.log(this.$route.params.code)
       }
     },
+    getParams(){
+      this.fullname = this.$route.params.fullName
+      this.departmentName = this.$route.params.departmentName
+       console.log(this.fullname+"dahfkdsh"+this.departmentName)
+    },
     getAllByDate(){
       this.from = this.dateRange.at(0);
       this.to = this.dateRange.at(1);
@@ -133,23 +144,12 @@ export default {
       }).catch(error => {
         console.log(error);
       })
-
     },
     handlePageChange(value) {
       this.page = value - 1;
       this.getAllByDate();
-      // if (this.category !== null) {
-      //   this.getBlogs();
-      // }else {
-      //   this.getBlogs();
-      // }
     },
     tableRowClassName() {
-      // if (rowIndex % 2 === 1) {
-      //   return 'warning-row';
-      // } else if (rowIndex % 2 === 0) {
-      //   return 'success-row';
-      // }
       return 'success-row';
     }
   },
@@ -157,12 +157,4 @@ export default {
 </script>
 
 <style>
-/*.el-table .warning-row {*/
-/*  background: oldlace;*/
-/*}*/
-
-
-/*.el-table .success-row {*/
-/*  !*background: #f3a8aa;*!*/
-/*}*/
 </style>

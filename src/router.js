@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Home from './views/Home.vue';
 import Login from './views/Login.vue';
-import Register from './views/Register.vue';
+import Register from './views/ManageUser.vue';
 
 
 Vue.use(Router);
@@ -28,6 +28,12 @@ export const router = new Router({
       name: 'profile',
       // lazy-loaded
       component: () => import('./views/Profile.vue')
+    },
+    {
+      path: '/manage',
+      name: 'manage',
+      // lazy-loaded
+      component: () => import('./views/ManageUser.vue')
     },
     {
       path: '/admin',
@@ -74,6 +80,11 @@ export const router = new Router({
       path: '/timesheetmod',
       name: 'timesheetmod',
       component: () => import('./views/TimeSheetMod.vue')
+    },
+    {
+      path: '/timesheetadmin',
+      name: 'timesheetadmin',
+      component: () => import('./views/TimeSheetsAdmin.vue')
     },
   ]
 }
