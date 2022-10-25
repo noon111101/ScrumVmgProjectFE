@@ -22,8 +22,8 @@
     </div>
     </form>
 
-<!--    <p> {{ from }} </p>-->
-<!--    <p> {{ to }} </p>-->
+    <p> {{ from }} </p>
+    <p> {{ to }} </p>
     <br><br>
     <div >
       <el-table
@@ -71,7 +71,6 @@ export default {
       from: "",
       to: "",
       logs: [],
-      search: '',
       totalItems: 0,
       page: 0,
       pageSize: 30,
@@ -91,10 +90,11 @@ export default {
   },
   created() {
     this.getUserCode();
+
   },
   mounted() {
-    this.getAllByDate()
 
+    this.getAllByDate()
   },
   methods: {
     getUserCode(){
@@ -116,7 +116,7 @@ export default {
         'from': this.from,
         'to': this.to
       }
-        LogdetailService.getByDate(params).then(response => {
+        LogdetailService.getByDate_UserCode(params).then(response => {
           this.logs = response.data.content;
           this.page = response.data.pageable;
           this.totalItems = response.data.totalElements;

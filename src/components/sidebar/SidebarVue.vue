@@ -138,10 +138,17 @@
 
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
+                <router-link to="/timesheetmod" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)
+                </router-link>
+              </a>
+            </li>
+
+            <li class="nav-item" v-if="showAdminBoard">
+              <a class="nav-link">
                 <router-link to="/admin" class="nav-link sel">
                   <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên
                 </router-link>
-
               </a>
             </li>
 
@@ -160,6 +167,7 @@
                 </router-link>
               </a>
             </li>
+
 
             <li class="nav-item dropdown" v-if="currentUser">
               <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"

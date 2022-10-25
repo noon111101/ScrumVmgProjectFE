@@ -2,8 +2,8 @@
   <div className="container" style="text-align: center">
     <br>
     <h5 style="font-weight: 600;">
-      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      Nhân viên: {{currentUser.user.fullName}}
+      Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+      Nhân viên: {{fullName}}
     </h5>
     <br><br>
     <form ac>
@@ -58,8 +58,6 @@
 </template>
 
 <script>
-// import UserService from '../services/user.service';
-import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
 
 export default {
@@ -67,11 +65,12 @@ export default {
   data() {
     return {
       user_code:  "",
+      departmentName: "",
+      fullName: "",
       dateRange: [],
       from: "",
       to: "",
       logs: [],
-      search: '',
       totalItems: 0,
       page: 0,
       pageSize: 30,
@@ -91,12 +90,17 @@ export default {
   },
   created() {
     this.getUserCode();
+    this.getParams();
   },
   mounted() {
-    this.getAllByDate()
-
+    this.getAllByDate();
   },
   methods: {
+    getParams(){
+      this.departmentName = this.$route.params.departmentName
+      this.fullName = this.$route.params.fullName
+
+    },
     getUserCode(){
       if(this.$route.params.code == null){
         this.user_code = this.currentUser.user.code;
@@ -112,11 +116,11 @@ export default {
       this.to = this.dateRange.at(1);
       console.log(this.from,this.to)
       const params ={
-        'code': this.user_code,
+        'code': this.currentUser.user.code,
         'from': this.from,
         'to': this.to
       }
-      LogdetailService.getByDate(params).then(response => {
+      LogdetailService.getByDate_UserCode(params).then(response => {
         this.logs = response.data.content;
         this.page = response.data.pageable;
         this.totalItems = response.data.totalElements;
@@ -124,13 +128,6 @@ export default {
         console.log(error);
       })
 
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0]
-      this.logs.data_log = a
-    },
-    exportExcel() {
-      ExcelService.exportExcel();
     },
     handlePageChange(value) {
       this.page = value - 1;
