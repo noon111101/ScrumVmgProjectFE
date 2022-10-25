@@ -54,7 +54,7 @@
                   class="col-md-4"
      
                 >
-         <input type="file" name="image" class="form-control" placeholder="Title">
+         <input type="file" name="cover" class="form-control" placeholder="Title">
                 </div>
                 <div class="col-md-8">
                   <table class="text-start">
@@ -172,7 +172,7 @@
                             v-model="user.department"
                           >
                             <option>Phòng nhân sự</option>
-                            <option>Phòng phát triển phần mềm</option>
+                            <option>Thuc tap PTPM</option>
                             <option>Phòng kế toán</option>
                           </select>
                         </div>
@@ -279,7 +279,7 @@ export default {
       submitted: false,
       successful: false,
       message: "",
-      image: {
+      cover: {
         
       },
     };
