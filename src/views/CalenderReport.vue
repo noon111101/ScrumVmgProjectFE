@@ -16,8 +16,8 @@
           {{ date.getDate() }}
           <br>
         </p>
-        <p class="sign-calender">
-          {{getSign(date.getDate(),date.getMonth()+1)}}
+        <p :class="getSign(date.getDate(),date.getMonth()).status?'sign-calender green':'sign-calender red'">
+          {{getSign(date.getDate(),date.getMonth()).name}}
         </p>
       </template>
     </el-calendar>
@@ -52,16 +52,20 @@ export default {
 
     },
    getSign(date,month){
-     let sign;
+     let sign={
+       name:'',
+       status:false
+     };
      for (let log of this.logs) {
        let dateLog = log.date_log.split("-")[2]
        let monthLog =log.date_log.split("-")[1]
        if(dateLog==date && monthLog==month){
-         sign = log.signs.name
+         sign.name= log.signs.name
+         if((sign.name.includes("H") && !(sign.name.includes("_"))) || sign.name.includes("NT")){
+           sign.status=true;
+         }
          return sign
        }
-       else
-         sign = null
      }
      return sign
    },
@@ -93,6 +97,9 @@ export default {
 }
 .green{
   color: #42b983;
+}
+.red{
+  color: #e24146;
 }
 .mounthSelect{
   float:right

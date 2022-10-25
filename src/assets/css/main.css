@@ -4,3 +4,6 @@
 .el-date-editor .el-range-separator{
     margin-right: 10px;
 }
+.custom-control-label{
+    margin-left: 20px;
+}
