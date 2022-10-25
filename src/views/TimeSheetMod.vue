@@ -18,14 +18,14 @@
     </div>
     <br /><br />
     <div>
-      <div >
-        <p v-if="date!=''" style="color: cadetblue">
-          Tìm kiếm ngày: {{date}}
-        </p>
-        <p v-if="search!=''" style="color: cadetblue">
-          Tìm kiếm tên: {{search}}
-        </p>
-      </div>
+<!--      <div >-->
+<!--        <p v-if="date!=''" style="color: cadetblue">-->
+<!--          Tìm kiếm ngày: {{date}}-->
+<!--        </p>-->
+<!--        <p v-if="search!=''" style="color: cadetblue">-->
+<!--          Tìm kiếm tên: {{search}}-->
+<!--        </p>-->
+<!--      </div>-->
       <el-table class="text-center"
           :data="
           logs.filter(

@@ -15,8 +15,8 @@
                         format="yyyy-MM-dd"
                         value-format="yyyy-MM-dd"
                         range-separator=""
-                        start-placeholder="Start date"
-                        end-placeholder="End date"
+                        start-placeholder="Từ ngày"
+                        end-placeholder="Đến ngày"
                         @change="getAllByDate">
         </el-date-picker>
       </div>
@@ -26,6 +26,12 @@
     <!--    <p> {{ to }} </p>-->
     <br><br>
     <div >
+<!--      <div v-if="dateRange!=''" >-->
+<!--        <p  style="color: cadetblue">-->
+<!--          Từ ngày: {{from}} đến {{to}}-->
+<!--        </p>-->
+
+<!--      </div>-->
       <el-table
           :data="logs"
           style="width: 60%; border: solid 1px; display: inline-block"
