@@ -3,9 +3,6 @@
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-
-      Nhân viên: {{fullname}}
-
       Nhân viên: {{fullName}}
 
     </h5>
@@ -65,7 +62,6 @@
 </template>
 
 <script>
-
 import LogdetailService from "@/services/logdetail-service";
 export default {
   name: 'HomeVue',
@@ -81,7 +77,6 @@ export default {
       totalItems: 0,
       page: 0,
       pageSize: 30,
-      fullname:"",
     }
   },
   computed: {
@@ -120,11 +115,7 @@ export default {
         console.log(this.$route.params.code)
       }
     },
-    // getParams(){
-    //   this.fullname = this.$route.params.fullName
-    //   this.departmentName = this.$route.params.departmentName
-    //    console.log(this.fullname+"dahfkdsh"+this.departmentName)
-    // },
+
     getAllByDate(){
       this.from = this.dateRange.at(0);
       this.to = this.dateRange.at(1);

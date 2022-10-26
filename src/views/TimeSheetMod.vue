@@ -39,8 +39,9 @@
           style="width: 100%;border: solid 1px; display: inline-block"
       >
         <el-table-column label="ID" prop="id"></el-table-column>
-        <el-table-column label="Họ và tên" prop="user.fullName"> </el-table-column>
         <el-table-column label="Mã nhân viên" prop="user.code"> </el-table-column>
+        <el-table-column label="Họ và tên" prop="user.fullName"> </el-table-column>
+        <el-table-column label="Phòng ban" prop="user.departments.name"> </el-table-column>
         <el-table-column label="Ngày" prop="date_log"> </el-table-column>
         <el-table-column label="Giờ vào" prop="timeIn"> </el-table-column>
         <el-table-column label="Giờ ra" prop="timeOut"> </el-table-column>
@@ -105,14 +106,10 @@ export default {
   },
   methods: {
     getUserCode() {
-      this.user_code = this.$store.state.auth.user.code;
+      this.user_code = this.currentUser.user.code;
+      // this.user_code = this.currentUser.user.user_code;
       console.log("user code" + this.user_code);
-      // console.log("user code"+curr)
-    },
-    // viewDetail(code){
-    //   console.log(code)
-    //   router.push(`/user/${code}`)
-    // },
+      },
 
     getDepartmentId() {
       this.departmentId = this.currentUser.user.departments.id
@@ -127,6 +124,7 @@ export default {
             this.logs = response.data.content;
             this.page = response.data.pageable;
             this.totalItems = response.data.totalElements;
+            console.log(this.departmentId + "fdafdsafsd")
           })
           .catch((error) => {
             console.log(error);

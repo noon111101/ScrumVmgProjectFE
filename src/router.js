@@ -30,17 +30,12 @@ export const router = new Router({
       component: () => import('./views/ManageUser.vue')
     },
     {
-      path: '/admin',
-      name: 'admin',
+      path: '/add-user',
+      name: 'add-user',
       // lazy-loaded
-      component: () => import('./views/BoardAdmin.vue')
+      component: () => import('./views/Add-User.vue')
     },
-    {
-      path: '/mod',
-      name: 'moderator',
-      // lazy-loaded
-      component: () => import('./views/BoardModerator.vue')
-    },
+
     {
       path: '/user',
       name: 'user',
@@ -79,6 +74,12 @@ export const router = new Router({
       path: '/timesheetadmin',
       name: 'timesheetadmin',
       component: () => import('./views/TimeSheetsAdmin.vue')
+    },
+    {
+      path: '/manage',
+      name: 'manage',
+      // lazy-loaded
+      component: () => import('./views/ManageUser.vue')
     },
   ]
 }
