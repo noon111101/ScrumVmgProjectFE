@@ -172,7 +172,7 @@
                             v-model="user.department"
                           >
                             <option>Phòng nhân sự</option>
-                            <option>Phòng phát triển phần mềm</option>
+                            <option>Thuc tap PTPM</option>
                             <option>Phòng kế toán</option>
                           </select>
                         </div>

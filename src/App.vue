@@ -2,7 +2,7 @@
   <div id="app">
 
 <!--      <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>-->
-      <Sidebar />
+    <Sidebar />
     <div class="container">
       <router-view />  
     </div>

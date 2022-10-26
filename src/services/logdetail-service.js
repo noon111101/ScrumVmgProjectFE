@@ -9,21 +9,32 @@ class LogdtailService{
         return  httpCommon.get("/log/byUser", {params});
     }
 
-    getByDate_UserCode(params) {
-        return httpCommon.get("/log/byDate_Usercode", {params});
+    getByDate(params) {
+        return httpCommon.get("/log/byDate", {params});
+    }
+    getByDepartment(params) {
+        return httpCommon.get("/log/byDepartment", {params});
+    }
+    getAllByUser(params){
+        return  httpCommon.get("/log/allByUser", {params});
+    }
+    getAllByMonthAndDepartment(params){
+        return httpCommon.get("/log/allByMonthAndDepartment",{params})
+    }
+
+    getDepartment() {
+        return httpCommon.get("department");
     }
 
     getLogsByDate_Department(params){
         return httpCommon.get("/log/byDate_Department", {params});
     }
-    getAllByUser(params){
-        return  httpCommon.get("/log/allByUser", {params});
-    }
-    getDepartment(params){
-        return httpCommon.get("/log/byDepartment", {params});
+
+    getByDate_UserCode(params){
+        return httpCommon.get("/log/byDate_Usercode", {params});
     }
 
-    getAllBySearch(params) {
+    getAllBySearch(params){
         return httpCommon.get("/log/search", {params});
     }
 
