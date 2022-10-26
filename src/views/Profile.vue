@@ -6,15 +6,14 @@
         <div class="card mb-4">
           <div class="card-body text-center">
 
-            <img :src="'http://localhost:8080/uploads/images/' + currentUser.user.cover" 
+            <img v-bind:src="`http://localhost:8080/uploads/images/` + currentUser.user.cover"
               class="rounded-circle img-fluid" style="width: 120px">
-            <h5 class="my-3">{{currentUser.user.username}}</h5>
-            <p class="text-muted mb-1" v-for="(role,index) in currentUser.user.roles" :key="index">{{role.name}}</p>
+            <h5 class="my-3">{{currentUser.user.fullName}}</h5>
             <p class="text-muted mb-4">{{currentUser.user.code}}</p>
 
-            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar"
-              class="rounded-circle img-fluid" style="width: 150px;">
-            <h5 class="my-3">{{currentUser.user.fullName}}</h5>
+<!--            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar"-->
+<!--              class="rounded-circle img-fluid" style="width: 150px;">-->
+            <h5 class="my-3">{{currentUser.user.username}}</h5>
             <p class="text-muted mb-4">{{currentUser.code}}</p>
 
             <div class="d-flex justify-content-center mb-2">
@@ -73,14 +72,18 @@
                 <p class="mb-0">Chức vụ</p>
               </div>
               <div class="col-sm-9">
-
-                <p class="text-muted mb-0"  v-for="(role,index) in currentUser.user.roles" :key="index">{{role.name}}</p>
+                <p class="text-muted mb-0"  v-for="(role,index) in currentUser.roles" :key="index" >
+                  <span v-if="role=='ROLE_USER'">Nhân viên</span>
+                  <span v-if="role=='ROLE_MANAGE'">Trưởng phòng</span>
+                  <span v-if="role=='ROLE_ADMIN'">Phòng nhân sự</span>
+                  <!--                  {{role}}-->
+                </p>
               </div>
             </div>
             <hr>
                    <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Gender</p>
+                <p class="mb-0">Giới tính</p>
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0">{{currentUser.user.gender}}</p>
@@ -89,36 +92,13 @@
               <hr>
                    <div class="row">
               <div class="col-sm-3">
-                <p class="mb-0">Department</p>
+                <p class="mb-0">Phòng ban</p>
               </div>
               <div class="col-sm-9">
                 <p class="text-muted mb-0">{{currentUser.user.departments.name}}</p>
               </div>
             </div>
-<!--            <div class="row">-->
-<!--              <div class="col-sm-3">-->
-<!--                <p class="mb-0">Mobile</p>-->
-<!--              </div>-->
-<!--              <div class="col-sm-9">-->
-<!--                <p class="text-muted mb-0">(098) 765-4321</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <hr>-->
-<!--            <div class="row">-->
-<!--              <div class="col-sm-3">-->
-<!--                <p class="mb-0">Address</p>-->
-<!--              </div>-->
-<!--              <div class="col-sm-9">-->
-<!--                <p class="text-muted mb-0">Sao Hỏa</p>-->
-<!--              </div>-->
-<!--            </div>-->
 
-                <p class="text-muted mb-0"  v-for="(role,index) in currentUser.roles" :key="index" >
-                  <span v-if="role=='ROLE_USER'">Nhân viên</span>
-                  <span v-if="role=='ROLE_MANAGE'">Trưởng phòng</span>
-                  <span v-if="role=='ROLE_ADMIN'">Phòng nhân sự</span>
-<!--                  {{role}}-->
-                </p>
               </div>
             </div>
             <hr>
@@ -131,8 +111,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+
 </section>
 </template>
 

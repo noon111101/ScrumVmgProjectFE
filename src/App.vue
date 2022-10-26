@@ -9,9 +9,9 @@
   </div>
 </template>
 <script>
-import Sidebar from '@/components/sidebar/SidebarVue'
-import { sidebarWidth } from '@/components/sidebar/state'
-import { collapsed, toggleSidebar } from '@/components/sidebar/state'
+import Sidebar from '@/views/sidebar/SidebarVue'
+import { sidebarWidth } from '@/views/sidebar/state'
+import { collapsed, toggleSidebar } from '@/views/sidebar/state'
 export default {
   components:{Sidebar},
   setup() {
@@ -29,7 +29,7 @@ export default {
     },
     showModeratorBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_MODERATOR');
+        return this.currentUser.roles.includes('ROLE_MANAGE');
       }
       return false;
     }

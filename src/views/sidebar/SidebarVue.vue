@@ -157,7 +157,6 @@
 
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
-
                 <router-link to="/timesheetadmin" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Chi tiết chấm công
                   [Admin]
@@ -169,26 +168,24 @@
               <a class="nav-link">
                 <router-link to="/manage" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Quản lý nhân viên
+                </router-link>
+              </a>
+            </li>
 
+            <li class="nav-item" v-if="showModeratorBoard">
+              <a class="nav-link">
                 <router-link to="/timesheetmod" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)
-
                 </router-link>
               </a>
             </li>
 
-            <li class="nav-item" v-if="showAdminBoard">
-              <a class="nav-link">
-                <router-link to="/admin" class="nav-link sel">
-                  <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên
-                </router-link>
-              </a>
-            </li>
+
 
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
                 <router-link to="/timesheet" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Bảng Chấm Công
+                  <i class="el-icon-finished"> </i> Bảng Chấm Công
                 </router-link>
               </a>
             </li>
@@ -196,7 +193,7 @@
             <li class="nav-item" v-if="showModeratorBoard">
               <a class="nav-link">
                 <router-link to="/timesheet" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Bảng Chấm Công
+                  <i class="el-icon-finished"> </i> Bảng Chấm Công
                 </router-link>
               </a>
             </li>
@@ -275,7 +272,8 @@ export default {
     },
     showModeratorBoard() {
       if (this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_MODERATOR");
+        console.log(this.currentUser.roles)
+        return this.currentUser.roles.includes("ROLE_MANAGE");
       }
       return false;
     },

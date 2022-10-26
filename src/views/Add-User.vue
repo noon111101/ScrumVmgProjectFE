@@ -54,7 +54,7 @@
                   class="col-md-4"
      
                 >
-         <input type="file" name="image" class="form-control" placeholder="Title">
+         <input type="file" name="cover" class="form-control" placeholder="Title">
                 </div>
                 <div class="col-md-8">
                   <table class="text-start">
@@ -250,6 +250,7 @@
               :class="successful ? 'alert-success' : 'alert-danger'"
             >
               {{ message }}
+
             </div>
           </div>
         </div>
@@ -279,7 +280,7 @@ export default {
       submitted: false,
       successful: false,
       message: "",
-      image: {
+      cover: {
         
       },
     };
@@ -304,10 +305,21 @@ export default {
       console.log(form);
          let response = authService.register(form);
           if (response) {
-            return this.$router.push('/admin')
+            // this.$swal.fire(
+            //     'Đăng ký thành công!',
+            //     '',
+            //     'success'
+            // )
+            return this.$router.push('/add-user')
+
           }
           else {
-            return this.$router.push('/admin')
+            this.$swal.fire(
+                'Đăng ký thất bại!',
+                '',
+                'success'
+            )
+            return this.$router.push('/add-user')
           }
     },
     handleRegister() {
@@ -321,6 +333,7 @@ export default {
             (data) => {
               this.message = data.message;
               this.successful = true;
+
             },
             (error) => {
               this.message =
