@@ -3,9 +3,9 @@ import axios from 'axios';
 
 
 class ExcelService{
-    exportExcel(){
+    exportExcel(params){
         // return httpCommon.get("/excel/export");
-        axios.get(`http://localhost:8080/api/excel/export?id=1`, {
+        axios.get(`http://localhost:8080/api/excel/export`, {params,
             responseType: 'blob',
         }).then((response) => {
             const url = URL.createObjectURL(new Blob([response.data]))

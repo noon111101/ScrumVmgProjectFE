@@ -81,6 +81,12 @@ export const router = new Router({
       // lazy-loaded
       component: () => import('./views/ManageUser.vue')
     },
+    {
+      path: '/profile',
+      name: '',
+      // lazy-loaded
+      component: () => import('./views/Profile.vue')
+    },
   ]
 }
 );

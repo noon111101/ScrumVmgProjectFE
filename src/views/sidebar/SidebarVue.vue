@@ -108,7 +108,7 @@
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile">
-                <router-link to="/home" v-if="currentUser" class="nav-link sel">
+                <router-link to="/calender" v-if="currentUser" class="nav-link sel">
                   <font-awesome-icon icon="home" />
                   Home
                 </router-link>
@@ -133,27 +133,23 @@
               </a>
             </li>
 
+            <li class="nav-item" v-if="showModeratorBoard">
+              <a class="nav-link">
+                <router-link to="/timesheetmod" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)
+                </router-link>
+              </a>
+            </li>
+
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
                 <router-link to="/manage" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Quản lý nhân viên
-                           </router-link>
-       
-
-                <router-link to="/timesheetmod" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)
-
                 </router-link>
               </a>
             </li>
 
-            <li class="nav-item" v-if="showAdminBoard">
-              <a class="nav-link">
-                <router-link to="/admin" class="nav-link sel">
-                  <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên
-                </router-link>
-              </a>
-            </li>
+
 
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
@@ -202,7 +198,7 @@ export default {
     },
     showModeratorBoard() {
       if (this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_MODERATOR");
+        return this.currentUser.roles.includes("ROLE_MANAGE");
       }
       return false;
     },
