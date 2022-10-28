@@ -1,7 +1,7 @@
 <template>
-  <div className="container">
-    <div className="block">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+  <div className="container" style="text-align: center; width: 90%;margin: auto">
+    <div className="block" class="text-start">
+      <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker
           style="width: 20%"
           v-model="date"
@@ -31,10 +31,10 @@
         </el-option>
       </el-select>
     </div>
-    <div style="float: right">
-      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" />
+    <div class="text-end" >
+      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 20%"/>
     </div>
-    <br /><br />
+    <br />
     <div>
       <el-table
           :data="
@@ -44,22 +44,30 @@
               data.user.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
-          style="width: 100%; border: solid 1px; display: inline-block"
-      >
-        <el-table-column label="STT" prop="id"> </el-table-column>
-        <el-table-column label="Mã NV" prop="user.code"> </el-table-column>
-        <el-table-column label="Name" prop="user.fullName"> </el-table-column>
-        <el-table-column label="Phòng ban" prop="user.departments.name"> </el-table-column>
-        <el-table-column label="Date" prop="date_log"> </el-table-column>
-        <el-table-column label="In" prop="timeIn"> </el-table-column>
-        <el-table-column label="Out" prop="timeOut"> </el-table-column>
-        <el-table-column v-slot:="data">
+          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
+          border="true"
+          :cell-style="{border: '1px solid'}"
+          :row-style="{border: '1px solid'}"
+         style="width: 100%; display: inline-block">
+        <!--   border: solid 1px;-->
+        <template>
+
+
+        <el-table-column label="STT" type="index" align="center" > </el-table-column>
+        <el-table-column label="Mã nhân viên" prop="user.code" align="center"   width="120px">
+<!--          <span>{{log.row.user.code}}</span>-->
+        </el-table-column>
+        <el-table-column label="Name" prop="user.fullName" header-align="center"> </el-table-column>
+        <el-table-column label="Phòng ban" prop="user.departments.name" header-align="center"> </el-table-column>
+        <el-table-column label="Date" prop="date_log" align="center" width="150px"> </el-table-column>
+        <el-table-column label="In" prop="timeIn" align="center" width="150px"> </el-table-column>
+        <el-table-column label="Out" prop="timeOut" align="center" width="150px"> </el-table-column>
+        <el-table-column v-slot:="data" align="center">
           <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
-            <el-button>Xem chi tiết</el-button>
+            <el-button type="info">Xem chi tiết</el-button>
           </router-link>
         </el-table-column>
+        </template>
       </el-table>
     </div>
     <el-pagination
@@ -104,7 +112,6 @@ export default {
   },
   mounted() {
     this.getAll();
-    this.a();
     this.getUserCode();
   },
 
@@ -120,30 +127,11 @@ export default {
   },
 
   methods: {
-    // findByDepartmentId() {
-    //   console.log(this.departmentId+"fdsfsdfds");
-    //   // this.logs = this.logs.filter((user) => {
-    //   //   return this.departmentId === user.departmentId;
-    //   // });
-    //   const params = {
-    //     // "date": this.value1,
-    //     "id": this.departmentId,
-    //   };
-    //   LogdetailService.getLogsByDate_Department(params).then((response) =>{
-    //     this.logs = response.data.content,
-    //     this.page = response.data.pageable;
-    //       this.totalItems = response.data.totalElements;
-    //   })
-    // },
     getUserCode() {
-      this.user_code = this.$store.state.auth.user.code;
+      this.user_code = this.currentUser.user.code;
       console.log("user code" + this.user_code);
       // console.log("user code"+curr)
     },
-    // viewDetail(code,departmentName, fullName) {
-    //   // console.log(code);
-    //   router.push(`/user/${code}/${departmentName}/${fullName}`);
-    // },
     getAll() {
       const params = {
         // page: this.page,
@@ -201,3 +189,8 @@ export default {
   },
 };
 </script>
+<style>
+el-table .cell-style{
+
+}
+</style>

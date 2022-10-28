@@ -6,8 +6,10 @@
         <div class="card mb-4">
           <div class="card-body text-center">
 
-            <img v-bind:src="`http://localhost:8080/uploads/images/` + currentUser.user.cover"
+            <img v-if="currentUser.user.cover!=null" v-bind:src="`http://localhost:8080/uploads/images/` + currentUser.user.cover"
               class="rounded-circle img-fluid" style="width: 120px">
+            <img v-if="currentUser.user.cover==null" src="https://bootdey.com/img/Content/avatar/avatar7.png"
+                 class="rounded-circle img-fluid" style="width: 120px">
             <h5 class="my-3">{{currentUser.user.fullName}}</h5>
             <p class="text-muted mb-4">{{currentUser.user.code}}</p>
 

@@ -3,7 +3,7 @@
 
 <!--      <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>-->
     <Sidebar />
-    <div class="container">
+      <div class="text-center">
       <router-view />  
     </div>
   </div>

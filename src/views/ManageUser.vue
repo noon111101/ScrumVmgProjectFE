@@ -1,20 +1,7 @@
 <template>
-  <div className="container">
+  <div className="container" style="text-align: center; width: 90%;margin: auto">
     <div className="block">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker
-          style="width: 20%"
-          v-model="date"
-          placeholder="Ngày"
-          type="date"
-          range-separator="To"
-          start-placeholder="Start date"
-          end-placeholder="End date"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-          @change="getAll"
-      >
-      </el-date-picker>&ensp;&ensp;&ensp;&ensp;
+
       <el-select
           v-model="departmentId"
           @change="getAll"
@@ -46,30 +33,43 @@
 
       <el-table
           :data="
-          logs.filter(
+          users.filter(
             (data) =>
               !search ||
-              data.user.fullName.toLowerCase().includes(search.toLowerCase())
+              data.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
-          style="width: 100%; border: solid 1px; display: inline-block"
+          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
+          border="true"
+          :cell-style="{border: '1px solid'}"
+          :row-style="{border: '1px solid'}"
+          style="width: 100%; display: inline-block"
       >
-        <el-table-column label="STT" prop="id"> </el-table-column>
-        <el-table-column label="Mã NV" prop="user.code"> </el-table-column>
-        <el-table-column label="Ho và tên" prop="user.fullName"> </el-table-column>
-        <el-table-column label="Phòng ban" prop="user.departments.name">
+        <el-table-column label="STT" type="index"> </el-table-column>
+        <el-table-column label="Mã NV" prop="code"> </el-table-column>
+        <el-table-column label="Ho và tên" prop="fullName"> </el-table-column>
+        <el-table-column label="Phòng ban" prop="departments.name">
         </el-table-column>
-        <el-table-column label="Email" prop="user.username"> </el-table-column>
-        <el-table-column label="Ảnh" prop="user.cover"> </el-table-column>
-        <el-table-column label="Loai tài khoản" prop="user.roles.name"> </el-table-column>
-        <el-table-column v-slot:="data">
-          <router-link
-              :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`"
-          >
-            <el-button>Xem chi tiết</el-button>
+        <el-table-column label="Email" prop="username"> </el-table-column>
+        <el-table-column label="Ảnh" prop="cover"> </el-table-column>
+<!--        <el-table-column label="Chức vụ" v-slot:="data">-->
+<!--          <p  v-for="(role,index) in data.roles.name" :key="index" >-->
+<!--            <span v-if="role=='ROLE_USER'">Nhân viên</span>-->
+<!--            <span v-if="role=='ROLE_MANAGE'">Trưởng phòng</span>-->
+<!--            <span v-if="role=='ROLE_ADMIN'">Phòng nhân sự</span>-->
+<!--            &lt;!&ndash;                  {{role}}&ndash;&gt;-->
+<!--          </p>-->
+<!--        </el-table-column>-->
+        <el-table-column label="Chỉnh sửa">
+          <router-link :to="`/edit`">
+            <el-button type="info">Chỉnh sửa</el-button>
           </router-link>
+        </el-table-column>
+        <el-table-column label="Trạng thái">
+          <label class="switch">
+            <input type="checkbox" checked>
+            <span class="slider round"></span>
+          </label>
         </el-table-column>
       </el-table>
     </div>
@@ -86,20 +86,20 @@
 
 <script>
 import ExcelService from "@/services/excel-service";
-import LogdetailService from "@/services/logdetail-service";
+// import LogdetailService from "@/services/logdetail-service";
 import DepartmentService from "@/services/department.service";
-// import UserService from "@/services/user.service";
+import UserService from "@/services/user.service";
 export default {
   name: "HomeVue",
   data() {
     return {
       user_code: "",
       date: "",
-      logs: [],
+      users: [],
       search: "",
       totalItems: 0,
       page: 0,
-      pageSize: 30,
+      pageSize: 10,
       departments: [],
       departmentId: "",
     };
@@ -114,11 +114,12 @@ export default {
   },
   mounted() {
     this.getAll();
-    this.a();
-    this.getUserCode();
+
   },
 
   created() {
+    this.getAll();
+    this.getUserCode();
     DepartmentService.getAllDepartment()
         .then((response) => {
           this.departments = response.data;
@@ -130,32 +131,26 @@ export default {
 
   methods: {
     getUserCode() {
-      this.user_code = this.$store.state.auth.user.code;
+      this.user_code = this.currentUser.user.user_code;
       console.log("user code" + this.user_code);
     },
     getAll() {
       const params = {
-        // page: this.page,
-        // size: this.pageSize,
-        date: this.date,
-        id: this.departmentId,
+        "page": this.page,
+        "size": this.pageSize,
+        "departid": this.departmentId
       };
-      LogdetailService.getLogsByDate_Department(params)
+      UserService.getUser_Department(params)
           .then((response) => {
-            this.logs = response.data.content;
-            this.page = response.data.pageable;
+            this.users = response.data.content;
+            this.page = response.data.pageable.pageNumber;
+            console.log(response.data.pageable.pageNumber)
             this.totalItems = response.data.totalElements;
-            console.log(response.data);
-            console.log(this.date);
-            console.log(this.id);
+            console.log(response.data.content+"fdasfds");
           })
           .catch((error) => {
             console.log(error);
           });
-    },
-    a() {
-      const a = String(this.logs.date_log).split("T")[0];
-      this.logs.data_log = a;
     },
     exportExcel() {
       ExcelService.exportExcel();
@@ -164,24 +159,88 @@ export default {
       this.page = value - 1;
       this.getAll();
     },
-    searchLogs() {
-      const params = {
-        page: this.page,
-        pageSize: this.pageSize,
-        key: this.search,
-        date: this.search,
-      };
-      console.log(params);
-      LogdetailService.search(params)
-          .then((response) => {
-            this.logs = response.data.blogs;
-            this.totalItems = response.data.totalItems;
-            this.page = response.data.page;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    },
+    // searchLogs() {
+    //   const params = {
+    //     page: this.page,
+    //     pageSize: this.pageSize,
+    //     key: this.search,
+    //     date: this.search,
+    //   };
+    //   console.log(params);
+    //   LogdetailService.search(params)
+    //       .then((response) => {
+    //         this.logs = response.data.blogs;
+    //         this.totalItems = response.data.totalItems;
+    //         this.page = response.data.page;
+    //       })
+    //       .catch((error) => {
+    //         console.log(error);
+    //       });
+    // },
   },
 };
 </script>
+<style>
+/* The switch - the box around the slider */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+</style>

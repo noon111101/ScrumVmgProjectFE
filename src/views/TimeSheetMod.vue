@@ -1,6 +1,7 @@
 <template>
-  <div className="container">
-    <div className="block" class="text-end">
+  <div className="container" style="text-align: center; width: 90%;margin: auto">
+
+    <div className="block" class="text-start">
       <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
       <el-date-picker
           style="width: 20%"
@@ -12,11 +13,14 @@
           @change="getAll">
       </el-date-picker>
       <br /><br />
+      <h5 style="font-weight: 600;">
+        Phòng ban: {{departmentName}}&emsp;
+      </h5>
     </div>
     <div class="text-end" >
-      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 40%"/>
+      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 20%"/>
     </div>
-    <br /><br />
+    <br />
     <div>
 <!--      <div >-->
 <!--        <p v-if="date!=''" style="color: cadetblue">-->
@@ -34,11 +38,13 @@
               data.user.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
-          style="width: 100%;border: solid 1px; display: inline-block"
+                :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
+                border="true"
+                :cell-style="{border: '1px solid'}"
+                :row-style="{border: '1px solid'}"
+                style="width: 100%; display: inline-block"
       >
-        <el-table-column label="ID" prop="id"></el-table-column>
+        <el-table-column label="ID" type="index"></el-table-column>
         <el-table-column label="Mã nhân viên" prop="user.code"> </el-table-column>
         <el-table-column label="Họ và tên" prop="user.fullName"> </el-table-column>
         <el-table-column label="Phòng ban" prop="user.departments.name"> </el-table-column>
@@ -47,7 +53,7 @@
         <el-table-column label="Giờ ra" prop="timeOut"> </el-table-column>
         <el-table-column label="" prop="" v-slot:="data">
           <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
-            <el-button>Xem chi tiết</el-button>
+            <el-button type="info">Xem chi tiết</el-button>
 <!--            <el-button type="primary" icon="el-icon-edit" circle></el-button>-->
           </router-link>
 
@@ -82,11 +88,11 @@ export default {
       logs: [],
       search: "",
       departmentId: 0,
-
+      departmentName: "",
 
       totalItems: 0,
       page: 0,
-      pageSize: 30,
+      pageSize: 10,
     };
   },
   computed: {
@@ -98,11 +104,11 @@ export default {
     },
   },
   created() {
-    this.getUserCode();
-    this.getDepartmentId();
+    this.getDepartment();
   },
   mounted() {
     this.getAll();
+    this.getUserCode();
   },
   methods: {
     getUserCode() {
@@ -111,18 +117,21 @@ export default {
       console.log("user code" + this.user_code);
       },
 
-    getDepartmentId() {
+    getDepartment() {
       this.departmentId = this.currentUser.user.departments.id
+      this.departmentName = this.currentUser.user.departments.name
     },
     getAll() {
       const params = {
+        "page": this.page,
+        "size": this.pageSize,
         "id" : this.departmentId,
         "date": this.date
       };
       LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
             this.logs = response.data.content;
-            this.page = response.data.pageable;
+            this.page = response.data.pageable.pageNumber;
             this.totalItems = response.data.totalElements;
             console.log(this.departmentId + "fdafdsafsd")
           })
@@ -135,15 +144,16 @@ export default {
     },
     handlePageChange(value) {
       this.page = value - 1;
-      this.getAll();
-      // if (this.search !== null) {
-      //   this.searchBlogs();
-      // }
+      // this.getAll();
+      if (this.departmentId !== null) {
+        this.getAll();
+      }
       // if (this.category !== null) {
       //   this.getBlogs();
-      // }else {
-      //   this.getBlogs();
       // }
+      else {
+        this.getAll();
+      }
     },
     searchLogs() {
       const params = {

@@ -2,40 +2,40 @@
   <div class="container register">
     <div class="row">
       <div class="col-md-3 register-left">
-        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
         <img
-          style="width: 200px; line-height: 100%"
-          src="../assets/vmg_logo.png"
+            style="width: 200px; line-height: 100%"
+            src="../assets/vmg_logo.png"
         />
       </div>
       <div class="col-md-9 register-right">
         <ul
-          class="nav nav-tabs nav-justified"
-          id="myTab"
-          role="tablist"
-          style="background-color: #e24146"
+            class="nav nav-tabs nav-justified"
+            id="myTab"
+            role="tablist"
+            style="background-color: #e24146"
         >
           <li class="nav-item">
             <a
-              class="nav-link active"
-              id="home-tab"
-              data-toggle="tab"
-              href="#home"
-              role="tab"
-              aria-controls="home"
-              aria-selected="true"
-              >Tạo</a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                href="#home"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+            >Tạo</a
             >
           </li>
           <li class="nav-item">
             <a
-              class="nav-link"
-              id="profile-tab"
-              data-toggle="tab"
-              href="#profile"
-              role="tab"
-              aria-controls="profile"
-              aria-selected="false"
+                class="nav-link"
+                id="profile-tab"
+                data-toggle="tab"
+                href="#profile"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
             >
               Nhân viên
             </a>
@@ -43,18 +43,17 @@
         </ul>
         <div class="tab-content" id="myTabContent">
           <div
-            class="tab-pane fade show active"
-            id="home"
-            role="tabpanel"
-            aria-labelledby="home-tab"
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
           >
             <form id="formRegister" @submit.prevent="sendForm">
               <div class="row register-form">
                 <div
-                  class="col-md-4"
-     
+                    class="col-md-4"
                 >
-         <input type="file" name="cover" class="form-control" placeholder="Title">
+                  <input type="file" name="cover" class="form-control" placeholder="Title">
                 </div>
                 <div class="col-md-8">
                   <table class="text-start">
@@ -65,18 +64,18 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                            v-model="user.fullName"
-                            type="text"
-                            class="form-control"
-                            name="fullName"
-                            placeholder="Họ và tên"
-                            value=""
-                            v-validate="{ required: true, min: 6 }"
+                              v-model="user.fullName"
+                              type="text"
+                              class="form-control"
+                              name="fullName"
+                              placeholder="Họ và tên"
+                              value=""
+                              v-validate="{ required: true, min: 6 }"
                           />
                           <div
-                            v-if="errors.has('fullName')"
-                            class="alert alert-danger"
-                            role="alert"
+                              v-if="errors.has('fullName')"
+                              class="alert alert-danger"
+                              role="alert"
                           >
                             Nhập họ và tên
                           </div>
@@ -91,19 +90,19 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                            v-model="user.username"
-                            type="email"
-                            class="form-control"
-                            placeholder="Email *"
-                            value=""
-                            v-validate="{ required: true, min: 5 }"
-                            name="username"
+                              v-model="user.username"
+                              type="email"
+                              class="form-control"
+                              placeholder="Email *"
+                              value=""
+                              v-validate="{ required: true, min: 5 }"
+                              name="username"
                           />
                         </div>
                         <div
-                          v-if="errors.has('username')"
-                          class="alert alert-danger"
-                          role="alert"
+                            v-if="errors.has('username')"
+                            class="alert alert-danger"
+                            role="alert"
                         >
                           Nhập email
                         </div>
@@ -117,18 +116,18 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                            v-model="user.code"
-                            type=""
-                            class="form-control"
-                            placeholder="Employee ID *"
-                            v-validate="{ required: true, min: 2 }"
-                            name="code"
+                              v-model="user.code"
+                              type=""
+                              class="form-control"
+                              placeholder="Employee ID *"
+                              v-validate="{ required: true, min: 2 }"
+                              name="code"
                           />
                         </div>
                         <div
-                          v-if="errors.has('code')"
-                          class="alert alert-danger"
-                          role="alert"
+                            v-if="errors.has('code')"
+                            class="alert alert-danger"
+                            role="alert"
                         >
                           Nhập mã nhân viên
                         </div>
@@ -141,20 +140,22 @@
                       </td>
                       <td style="width: 300px">
                         <el-radio
-                          v-model="user.gender"
-                          name="gender"
-                          value="Nam"
-                          label="Nam"
-                          border
-                          >&nbsp; Nam</el-radio
+                            v-model="user.gender"
+                            name="gender"
+                            value="Nam"
+                            label="Nam"
+                            border
+                        >&nbsp; Nam
+                        </el-radio
                         >
                         <el-radio
-                          v-model="user.gender"
-                          name="gender"
-                          value="Nữ"
-                          label="Nữ"
-                          border
-                          >&nbsp; Nữ</el-radio
+                            v-model="user.gender"
+                            name="gender"
+                            value="Nữ"
+                            label="Nữ"
+                            border
+                        >&nbsp; Nữ
+                        </el-radio
                         >
                       </td>
                     </tr>
@@ -166,10 +167,10 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <select
-                            name="department"
-                            v-validate="{ required: true }"
-                            class="form-control"
-                            v-model="user.department"
+                              name="department"
+                              v-validate="{ required: true }"
+                              class="form-control"
+                              v-model="user.department"
                           >
                             <option>Phòng nhân sự</option>
                             <option>Thuc tap PTPM</option>
@@ -177,9 +178,9 @@
                           </select>
                         </div>
                         <div
-                          v-if="errors.has('department')"
-                          class="alert alert-danger"
-                          role="alert"
+                            v-if="errors.has('department')"
+                            class="alert alert-danger"
+                            role="alert"
                         >
                           Chọn phòng ban
                         </div>
@@ -191,13 +192,13 @@
                         Chức vụ<span style="color: red">*</span>
                       </td>
                       <td style="width: 300px">
-               
+
                         <input
-                          type="checkbox"
-                          id="admin"
-                          value="admin"
-                          v-model="user.role"
-                          name="role"
+                            type="checkbox"
+                            id="admin"
+                            value="admin"
+                            v-model="user.role"
+                            name="role"
                         />
                         <label for="admin">&nbsp; Admin</label>
                       </td>
@@ -206,11 +207,11 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                          type="checkbox"
-                          id="manage"
-                          value="manage"
-                          v-model="user.role"
-                          name="role"
+                            type="checkbox"
+                            id="manage"
+                            value="manage"
+                            v-model="user.role"
+                            name="role"
                         />
                         <label for="manage">&nbsp; Manage</label>
                       </td>
@@ -219,11 +220,11 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                          type="checkbox"
-                          id="user"
-                          value="user"
-                          v-model="user.role"
-                          name="role"
+                            type="checkbox"
+                            id="user"
+                            value="user"
+                            v-model="user.role"
+                            name="role"
                         />
                         <label for="user">&nbsp; User</label>
                       </td>
@@ -240,14 +241,14 @@
                       </td>
                     </tr>
                   </table>
-                  <br />
+                  <br/>
                 </div>
               </div>
             </form>
             <div
-              v-if="message"
-              class="alert"
-              :class="successful ? 'alert-success' : 'alert-danger'"
+                v-if="message"
+                class="alert"
+                :class="successful ? 'alert-success' : 'alert-danger'"
             >
               {{ message }}
 
@@ -280,22 +281,20 @@ export default {
       submitted: false,
       successful: false,
       message: "",
-      cover: {
-        
-      },
+      cover: {},
     };
   },
   mounted() {
     UserService.getAdminBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
+        (response) => {
+          this.content = response.data;
+        },
+        (error) => {
+          this.content =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
+        }
     );
   },
   methods: {
@@ -303,24 +302,41 @@ export default {
       this.submitted = true;
       let form = document.querySelector("#formRegister");
       console.log(form);
-         let response = authService.register(form);
-          if (response) {
-            // this.$swal.fire(
-            //     'Đăng ký thành công!',
-            //     '',
-            //     'success'
-            // )
-            return this.$router.push('/add-user')
-
-          }
-          else {
-            this.$swal.fire(
-                'Đăng ký thất bại!',
-                '',
-                'success'
-            )
-            return this.$router.push('/add-user')
-          }
+      authService.register(form).then(response => {
+        if(response.data.message=="User registered successfully!"){
+          this.$swal.fire(
+              'Đăng ký thành công!',
+              '',
+              'success'
+          )
+          return this.$router.push('/add-user')
+        }
+        else {
+          this.$swal.fire(
+              'Đăng ký thất bại!',
+              '',
+              'success'
+          )
+          return this.$router.push('/add-user')
+        }
+      })
+      // let response = authService.register(form);
+      // if (response) {
+      //   this.$swal.fire(
+      //       'Đăng ký thành công!',
+      //       '',
+      //       'success'
+      //   )
+      //   return this.$router.push('/add-user')
+      //
+      // } else {
+      //   this.$swal.fire(
+      //       'Đăng ký thất bại!',
+      //       '',
+      //       'success'
+      //   )
+      //   return this.$router.push('/add-user')
+      // }
     },
     handleRegister() {
       this.message = "";
@@ -330,18 +346,18 @@ export default {
       this.$validator.validate().then((isValid) => {
         if (isValid) {
           this.$store.dispatch("auth/register", this.user).then(
-            (data) => {
-              this.message = data.message;
-              this.successful = true;
+              (data) => {
+                this.message = data.message;
+                this.successful = true;
 
-            },
-            (error) => {
-              this.message =
-                (error.response && error.response.data) ||
-                error.message ||
-                error.toString();
-              this.successful = false;
-            }
+              },
+              (error) => {
+                this.message =
+                    (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
+                this.successful = false;
+              }
           );
         }
       });

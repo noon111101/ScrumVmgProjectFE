@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div className="container" style="text-align: center; width: 90%;margin: auto">
     <div class="row mt-5">
       <div class="col-3">
         <label-wrap>Bộ phận:</label-wrap>
@@ -35,8 +35,8 @@
         </el-select>
       </div>
       <div class="col-3" >
-        <el-button v-if="!editMod" type="warning" @click="inEditMode" class="el-icon-edit-outline" round>Chỉnh sửa</el-button>
-        <el-button v-if="!editMod" @click="exportExcel"  type="danger" class="el-icon-upload2" round> Xuất File</el-button>
+        <el-button v-if="!editMod" type="warning" @click="inEditMode" class="el-icon-edit-outline" round> Chỉnh sửa</el-button>
+        <el-button v-if="!editMod" @click="exportExcel"  type="danger" class="el-icon-download" round> Xuất File</el-button>
         <el-button v-if="editMod" @click="outEditMode"  type="primary" class="el-icon-upload2" round> Cập nhật</el-button>
       </div>
     </div>
@@ -189,7 +189,11 @@ export default {
     },
     // Call API method
     exportExcel(){
-      ExcelService.exportExcel();
+      const params = {
+        "id": this.department,
+        "month": this.currentMonth
+      }
+      ExcelService.exportExcel(params);
     },
     getDepartment(){
       LogService.getDepartment().then(respone => {
