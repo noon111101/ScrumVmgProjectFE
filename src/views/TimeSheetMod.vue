@@ -153,23 +153,7 @@ export default {
       this.page = value - 1;
       this.getAll()
     },
-    searchLogs() {
-      const params = {
-        page: this.page,
-        pageSize: this.pageSize,
-        key: this.search,
-        date: this.search,
-      };
-      LogdetailService.search(params)
-          .then((response) => {
-            this.logs = response.data.blogs;
-            this.totalItems = response.data.totalItems;
-            // this.page = response.data.page;
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-    },
+
   },
 };
 </script>
