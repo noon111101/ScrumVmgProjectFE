@@ -26,7 +26,7 @@
 <!--          Tìm kiếm tên: {{search}}-->
 <!--        </p>-->
 <!--      </div>-->
-      <el-table class="text-center"
+      <el-table  class="text-center "
           :data="
           logs.filter(
             (data) =>
