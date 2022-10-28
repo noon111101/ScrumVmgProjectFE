@@ -133,17 +133,18 @@ export default {
       }
     },
     getAllByDate(){
-      this.from = this.dateRange.at(0);
-      this.to = this.dateRange.at(1);
-      console.log(this.from,this.to)
+      this.from = this.dateRange !== null ? this.dateRange.at(0): null;
+      this.to = this.dateRange !== null ? this.dateRange.at(1): null;
       const params ={
+        "page": this.page,
+        "size": this.size,
         'code': this.user_code,
         'from': this.from,
         'to': this.to
       }
         LogdetailService.getByDate_UserCode(params).then(response => {
           this.logs = response.data.content;
-          this.page = response.data.pageable;
+          // this.page = response.data.pageable;
           this.totalItems = response.data.totalElements;
         }).catch(error => {
           console.log(error);

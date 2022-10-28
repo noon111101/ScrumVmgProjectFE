@@ -1,6 +1,6 @@
 <template>
   <div className="container" style="text-align: center; width: 90%;margin: auto">
-    <div className="block">
+    <div className="block" class="text-start">
 
       <el-select
           v-model="departmentId"
@@ -51,13 +51,14 @@
         <el-table-column label="Phòng ban" prop="departments.name">
         </el-table-column>
         <el-table-column label="Email" prop="username"> </el-table-column>
-        <el-table-column label="Ảnh" prop="cover"> </el-table-column>
+        <el-table-column label="Ảnh" v-slot:="data">
+          <img v-bind:src="`http://localhost:8080/uploads/images/` + data.cover" width="50px">
+        </el-table-column>
 <!--        <el-table-column label="Chức vụ" v-slot:="data">-->
 <!--          <p  v-for="(role,index) in data.roles.name" :key="index" >-->
 <!--            <span v-if="role=='ROLE_USER'">Nhân viên</span>-->
 <!--            <span v-if="role=='ROLE_MANAGE'">Trưởng phòng</span>-->
 <!--            <span v-if="role=='ROLE_ADMIN'">Phòng nhân sự</span>-->
-<!--            &lt;!&ndash;                  {{role}}&ndash;&gt;-->
 <!--          </p>-->
 <!--        </el-table-column>-->
         <el-table-column label="Chỉnh sửa">

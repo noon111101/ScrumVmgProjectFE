@@ -2,18 +2,15 @@
   <div className="container" style="text-align: center; width: 90%;margin: auto">
     <div className="block" class="text-start">
       <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker
-          style="width: 20%"
-          v-model="date"
-          placeholder="Ngày"
-          type="date"
-          range-separator="To"
-          start-placeholder="Start date"
-          end-placeholder="End date"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-          @change="getAll"
-      >
+      <el-date-picker style="width: 30%"
+                      v-model="dateRange"
+                      type="daterange"
+                      format="yyyy-MM-dd"
+                      value-format="yyyy-MM-dd"
+                      range-separator=""
+                      start-placeholder="Start date"
+                      end-placeholder="End date"
+                      @change="getAll">
       </el-date-picker>
       <br /><br />
       <el-select
@@ -59,14 +56,15 @@
         </el-table-column>
         <el-table-column label="Name" prop="user.fullName" header-align="center"> </el-table-column>
         <el-table-column label="Phòng ban" prop="user.departments.name" header-align="center"> </el-table-column>
+        <el-table-column label="Email" prop="user.username" header-align="center"> </el-table-column>
         <el-table-column label="Date" prop="date_log" align="center" width="150px"> </el-table-column>
         <el-table-column label="In" prop="timeIn" align="center" width="150px"> </el-table-column>
         <el-table-column label="Out" prop="timeOut" align="center" width="150px"> </el-table-column>
-        <el-table-column v-slot:="data" align="center">
-          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
-            <el-button type="info">Xem chi tiết</el-button>
-          </router-link>
-        </el-table-column>
+<!--        <el-table-column v-slot:="data" align="center">-->
+<!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
+<!--            <el-button type="info">Xem chi tiết</el-button>-->
+<!--          </router-link>-->
+<!--        </el-table-column>-->
         </template>
       </el-table>
     </div>
@@ -92,7 +90,10 @@ export default {
   data() {
     return {
       user_code: "",
-      date: "",
+      dateRange: "",
+      from: "",
+      to: "",
+
       logs: [],
       search: "",
       totalItems: 0,
@@ -125,7 +126,6 @@ export default {
           console.log(e);
         });
   },
-
   methods: {
     getUserCode() {
       this.user_code = this.currentUser.user.code;
@@ -133,21 +133,21 @@ export default {
       // console.log("user code"+curr)
     },
     getAll() {
-      const params = {
-        // page: this.page,
-        // size: this.pageSize,
-        "date": this.date,
-        "id": this.departmentId,
-      };
+      this.from = this.dateRange !== null ? this.dateRange.at(0): null;
+      this.to = this.dateRange !== null ? this.dateRange.at(1): null;
+      const params ={
+        "page": this.page,
+        "size": this.size,
+        "id" : this.departmentId,
+        'from': this.from,
+        'to': this.to
+      }
       LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
             this.logs = response.data.content;
-            this.page = response.data.pageable;
+            this.page = response.data.pageable.pageNumber;
             this.totalItems = response.data.totalElements;
-            // console.log(response.data.content);
-            console.log(this.logs);
-            console.log(this.date);
-            console.log(this.id);
+            console.log(this.departmentId + "fdafdsafsd")
           })
           .catch((error) => {
             console.log(error);
@@ -180,7 +180,7 @@ export default {
           .then((response) => {
             this.logs = response.data.blogs;
             this.totalItems = response.data.totalItems;
-            this.page = response.data.page;
+            // this.page = response.data.page;
           })
           .catch((error) => {
             console.log(error);

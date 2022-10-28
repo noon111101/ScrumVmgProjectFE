@@ -3,14 +3,15 @@
 
     <div className="block" class="text-start">
       <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker
-          style="width: 20%"
-          v-model="date"
-          placeholder="Ngày"
-          type="date"
-          format="yyyy-MM-dd"
-          value-format="yyyy-MM-dd"
-          @change="getAll">
+      <el-date-picker style="width: 30%"
+                      v-model="dateRange"
+                      type="daterange"
+                      format="yyyy-MM-dd"
+                      value-format="yyyy-MM-dd"
+                      range-separator=""
+                      start-placeholder="Start date"
+                      end-placeholder="End date"
+                      @change="getAll">
       </el-date-picker>
       <br /><br />
       <h5 style="font-weight: 600;">
@@ -44,14 +45,15 @@
                 :row-style="{border: '1px solid'}"
                 style="width: 100%; display: inline-block"
       >
-        <el-table-column label="ID" type="index"></el-table-column>
-        <el-table-column label="Mã nhân viên" prop="user.code"> </el-table-column>
-        <el-table-column label="Họ và tên" prop="user.fullName"> </el-table-column>
-        <el-table-column label="Phòng ban" prop="user.departments.name"> </el-table-column>
-        <el-table-column label="Ngày" prop="date_log"> </el-table-column>
-        <el-table-column label="Giờ vào" prop="timeIn"> </el-table-column>
-        <el-table-column label="Giờ ra" prop="timeOut"> </el-table-column>
-        <el-table-column label="" prop="" v-slot:="data">
+        <el-table-column label="ID" type="index"  align="center"></el-table-column>
+        <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"> </el-table-column>
+        <el-table-column label="Họ và tên" prop="user.fullName" header-align="center"> </el-table-column>
+        <el-table-column label="Phòng ban" prop="user.departments.name" header-align="center"> </el-table-column>
+        <el-table-column label="Email" prop="user.username" header-align="center"> </el-table-column>
+        <el-table-column label="Ngày" prop="date_log" width="150px" align="center"> </el-table-column>
+        <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"> </el-table-column>
+        <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"> </el-table-column>
+        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">
           <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
             <el-button type="info">Xem chi tiết</el-button>
 <!--            <el-button type="primary" icon="el-icon-edit" circle></el-button>-->
@@ -84,7 +86,9 @@ export default {
     return {
       stt: 1,
       user_code: "",
-      date: "",
+      dateRange: "",
+      from: "",
+      to: "",
       logs: [],
       search: "",
       departmentId: 0,
@@ -92,7 +96,7 @@ export default {
 
       totalItems: 0,
       page: 0,
-      pageSize: 10,
+      pageSize: 30,
     };
   },
   computed: {
@@ -122,12 +126,15 @@ export default {
       this.departmentName = this.currentUser.user.departments.name
     },
     getAll() {
-      const params = {
+      this.from = this.dateRange !== null ? this.dateRange.at(0): null;
+      this.to = this.dateRange !== null ? this.dateRange.at(1): null;
+      const params ={
         "page": this.page,
-        "size": this.pageSize,
+        "size": this.size,
         "id" : this.departmentId,
-        "date": this.date
-      };
+        'from': this.from,
+        'to': this.to
+      }
       LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
             this.logs = response.data.content;
@@ -144,16 +151,7 @@ export default {
     },
     handlePageChange(value) {
       this.page = value - 1;
-      // this.getAll();
-      if (this.departmentId !== null) {
-        this.getAll();
-      }
-      // if (this.category !== null) {
-      //   this.getBlogs();
-      // }
-      else {
-        this.getAll();
-      }
+      this.getAll()
     },
     searchLogs() {
       const params = {
@@ -166,7 +164,7 @@ export default {
           .then((response) => {
             this.logs = response.data.blogs;
             this.totalItems = response.data.totalItems;
-            this.page = response.data.page;
+            // this.page = response.data.page;
           })
           .catch((error) => {
             console.log(error);
