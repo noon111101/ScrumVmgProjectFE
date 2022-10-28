@@ -32,10 +32,20 @@
 <!--      </div>-->
       <el-table
           :data="logs"
-          style="width: 60%; border: solid 1px; display: inline-block"
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
+          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
+          border="true"
+          :cell-style="{border: '1px solid'}"
+          :row-style="{border: '1px solid'}"
+          style="width: 100%; display: inline-block"
           :row-class-name="tableRowClassName">
+        <el-table-column
+            prop="user.code"
+            label="Mã nhân viên">
+        </el-table-column>
+        <el-table-column
+            prop="user.fullName"
+            label="Họ và tên">
+        </el-table-column>
         <el-table-column
             prop="date_log"
             label="Ngày">
@@ -121,7 +131,7 @@ export default {
       this.to = this.dateRange.at(1);
       console.log(this.from,this.to)
       const params ={
-        'code': this.currentUser.user.code,
+        'code': this.user_code,
         'from': this.from,
         'to': this.to
       }
