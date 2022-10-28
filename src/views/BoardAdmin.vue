@@ -50,11 +50,23 @@
           >
             <form id="formRegister" @submit.prevent="sendForm">
               <div class="row register-form">
-                <div
-                  class="col-md-4"
-     
-                >
-         <input type="file" name="cover" class="form-control" placeholder="Title">
+                <div class="col-md-4">
+                  <input
+                    type="file"
+                    name="cover"
+                    class="form-control"
+                    placeholder="Title"
+                    @change="previewFiles($event)"
+                  />
+                  <br><br/>
+                  <img
+                    alt=""
+                    :src="
+                      newImage ||
+                      'https://www.namepros.com/attachments/empty-png.89209/'
+                    " 
+                    style="width:270px"
+                  />
                 </div>
                 <div class="col-md-8">
                   <table class="text-start">
@@ -191,7 +203,6 @@
                         Chức vụ<span style="color: red">*</span>
                       </td>
                       <td style="width: 300px">
-               
                         <input
                           type="checkbox"
                           id="admin"
@@ -260,7 +271,7 @@
 <script>
 import UserService from "../services/user.service";
 import ExcelService from "@/services/excel-service";
-import authService from '@/services/auth.service';
+import authService from "@/services/auth.service";
 
 export default {
   name: "AdminVue",
@@ -279,9 +290,8 @@ export default {
       submitted: false,
       successful: false,
       message: "",
-      cover: {
-        
-      },
+      cover: {},
+      newImage: "",
     };
   },
   mounted() {
@@ -302,13 +312,12 @@ export default {
       this.submitted = true;
       let form = document.querySelector("#formRegister");
       console.log(form);
-         let response = authService.register(form);
-          if (response) {
-            return this.$router.push('/admin')
-          }
-          else {
-            return this.$router.push('/admin')
-          }
+      let response = authService.register(form);
+      if (response) {
+        return this.$router.push("/admin");
+      } else {
+        return this.$router.push("/admin");
+      }
     },
     handleRegister() {
       this.message = "";
@@ -335,6 +344,15 @@ export default {
     },
     exportExcel() {
       ExcelService.exportExcel();
+    },
+    previewFiles(event) {
+      const file = event.target.files[0];
+
+      const theReader = new FileReader();
+      theReader.onloadend = async () => {
+        this.newImage = await theReader.result;
+      };
+      theReader.readAsDataURL(file);
     },
   },
 };
