@@ -14,4 +14,18 @@
     background: none !important;
     border: none !important;
 }
-
+.note-wrapper{
+    width: fit-content;
+    height: fit-content;
+    background-color: #F4F4F4;
+    padding: 15px;
+    box-sizing: content-box;
+    border-radius: 10px;
+}
+.el-calendar-day{
+    padding: 0 !important;
+}
+.el-calendar-table td{
+    border-bottom: none !important;
+    border-right:none !important; ;
+}

@@ -97,7 +97,7 @@
 
       <div class="col-3 " >
         <el-button @click="exportExcel"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
-        <el-button type="primary" class="el-icon-edit-outline float-end " @click="handelUpdate" round> Cập nhật</el-button>
+        <el-button v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end " round> Cập nhật</el-button>
       </div>
     </div>
 <!--   BẢNG CHẤM CÔNG-->
@@ -123,7 +123,7 @@
           <td  v-b-modal="'my-modal'" class="fix text-center position-relative" :class="{'edited':log.status , 'weekend':checkWeekend(index+1) && !log.status}" v-on:click="infoEdit(index,user.code,log.sign,log.reason)" v-for="(log,index) in user.log " :key="index">
             {{log.sign}}
             <el-tooltip popper-class="reason-popper" v-if="log.reason!=null" placement="right" effect="light">
-              <div slot="content"><div style="background-color: darkgrey">{{log.reason}}</div></div>
+              <div slot="content"><div class="note-wrapper">{{log.reason}}</div></div>
               <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
                    viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 10px;fill: #A843A8FF " xml:space="preserve">
               <g>
@@ -186,6 +186,22 @@
         <b-button size="sm" variant="success" @click="handleDayEarn(dayEarn,codeEdit),ok()">
           OK
         </b-button>
+      </template>
+    </b-modal>
+<!--    MODAL Lưu chỉnh sửa -->
+    <b-modal id="save-modal" centered style="width: 100px" size="md" >
+      <template #modal-header="{}">
+        <!-- Emulate built in modal header close button action -->
+        <h5>Xác nhận lưu tất cả chỉnh sửa</h5>
+      </template>
+      <span style="color: #75C4C0">Lưu</span><span> hoặc</span><span style="color:#FF0000;"> Xóa</span><span> tất cả chỉnh sửa</span>
+      <template #modal-footer="{ok}">
+        <b-button variant="danger" @click="getLog(),ok()">Xoá</b-button>
+        <b-button @click="ok()">Tiếp tục chỉnh sửa</b-button>
+        <b-button style="background-color: #75C4C0" @click="handelUpdate(),ok()">
+          Lưu
+        </b-button>
+
       </template>
     </b-modal>
   </div>
@@ -414,12 +430,5 @@ export default {
   border: #a843a8 1px;
 }
 
-.note-wrapper{
-  width: fit-content;
-  height: fit-content;
-  background-color: #F4F4F4;
-  padding: 15px;
-  box-sizing: content-box;
-  border-radius: 10px;
-}
+
 </style>
