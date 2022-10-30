@@ -1,9 +1,20 @@
 <template>
   <div>
-    <div class="row mt-5 ms-0 ">
-      <div class="col-3">
-        <label-wrap class="mx-3">Bộ phận:</label-wrap>
-        <el-select v-model="department" @change="getLog" placeholder="Chọn Bộ phận">
+
+<!--    bread crum-->
+
+    <el-breadcrumb separator-class="el-icon-arrow-right" class="ms-3">
+      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
+      <el-breadcrumb-item>promotion management</el-breadcrumb-item>
+      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
+      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
+    </el-breadcrumb>
+
+<!--     Thanh chọn-->
+
+    <div class="d-flex flex-row mt-3 ms-0 ">
+      <div class="col-9  ">
+        <el-select class="mx-3" v-model="department" @change="getLog" placeholder="Chọn Bộ phận">
           <el-option
               label="Tất cả"
               value=""
@@ -18,18 +29,17 @@
           >
           </el-option>
         </el-select>
-      </div>
-      <div class="col-4">
         <el-input
+            class="mx-3"
             size="medium"
             placeholder="Tìm kiếm nhân viên"
             v-model="search"
+            clearable
             @input="handelSearch"
+            style="width: 200px"
         >
         </el-input>
-      </div>
-      <div class="col-2 ">
-        <el-select v-model="currentMonth" @change="getLog" placeholder="Tháng">
+        <el-select class="mx-3" v-model="currentMonth" @change="getLog" placeholder="Tháng">
           <el-option
               v-for="item in 12"
               :key="item"
@@ -39,13 +49,58 @@
             Tháng {{item}}
           </el-option>
         </el-select>
+
+<!--        Tooltip chú thích-->
+
+
+          <el-tooltip placement="right" effect="light"  >
+            <el-button type="primary" class="el-icon-info el-button--info " style="border-radius: 10px" > Chú thích</el-button>
+            <div class="note-wrapper" slot="content">
+              <div class="d-flex flex-column" >
+                <div style="font-weight: bold;">Chú thích</div>
+                <div>
+                  <div class="d-flex flex-row">
+                    <el-button round class="h-25 me-3" ></el-button>
+                    <div style="text-align: justify">
+                      <p><span style="font-weight: bold">KL/H,H/KL</span>: Nghỉ nửa ngày</p>
+                      <p><span style="font-weight: bold">KL</span>: Nghỉ không lương</p>
+                      <p><span style="font-weight: bold">H</span>: Làm hành chính</p>
+                      <p><span style="font-weight: bold">__</span> : Không đi làm</p>
+                    </div>
+                  </div>
+                  <div class="d-flex flex-row">
+                    <el-button round class="h-25 me-3" style="background-color:#F8CBAD " ></el-button>
+                    <p><span style="font-weight: bold">NT</span>: Nghỉ tuần</p>
+                  </div>
+                  <div class="d-flex flex-row">
+                    <el-button round class="h-25 me-3" style="background-color:#e24146" ></el-button>
+                    <p>Chỉnh sửa</p>
+                  </div>
+                  <div class="d-flex flex-row">
+                    <el-button round class="h-25 me-3 position-relative" >
+                      <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
+                           viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 10px;fill: #A843A8FF " xml:space="preserve">
+              <g>
+                <polygon points="5.8,0.6 0,6.4 0,378.3 5.8,384 384,384 512,512 512,5.8 506.3,0 6.4,0 	"/>
+              </g>
+          </svg>
+                    </el-button>
+                    <p>Comment</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </el-tooltip>
       </div>
-      <div class="col-3" >
-        <el-button @click="exportExcel"  type="danger" class="el-icon-upload2" round> Xuất File</el-button>
-        <el-button type="primary" class="el-icon-edit-outline float-end " @click="handelUpdate" round>Cập nhật</el-button>
+
+<!--     Nút chọn-->
+
+      <div class="col-3 " >
+        <el-button @click="exportExcel"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
+        <el-button type="primary" class="el-icon-edit-outline float-end " @click="handelUpdate" round> Cập nhật</el-button>
       </div>
     </div>
-
+<!--   BẢNG CHẤM CÔNG-->
     <div class="table-responsive-xxl" style="margin-top:50px">
       <table class="table table-bordered align-middle  ">
         <thead style="background-color: #C2C2C2">
@@ -60,37 +115,44 @@
           <th class="text-center" v-for="(n,index) in 31 " :key="index">{{n}}</th>
         </tr>
         </thead>
+
         <tbody v-if="!checkNone">
           <tr  v-for="(user,indexLog) in users " :key="indexLog">
           <td>{{indexLog+1}}</td>
           <td style="white-space: pre">{{user.name}}</td>
-          <td  v-b-modal="'my-modal'" class="fix text-center position-relative" :class="{'edited':log.status , 'weekend':checkWeekend(index+1) && !log.status}" v-on:click="infoEdit(index,user.code,log.sign)" v-for="(log,index) in user.log " :key="index">
+          <td  v-b-modal="'my-modal'" class="fix text-center position-relative" :class="{'edited':log.status , 'weekend':checkWeekend(index+1) && !log.status}" v-on:click="infoEdit(index,user.code,log.sign,log.reason)" v-for="(log,index) in user.log " :key="index">
             {{log.sign}}
             <el-tooltip popper-class="reason-popper" v-if="log.reason!=null" placement="right" effect="light">
-              <div style="border: #a843a8 1px;" slot="content">multiple lines<br/>second line</div>
-              <div class="el-icon-s-comment position-absolute top-0 end-0 "></div>
+              <div slot="content"><div style="background-color: darkgrey">{{log.reason}}</div></div>
+              <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
+                   viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 10px;fill: #A843A8FF " xml:space="preserve">
+              <g>
+                <polygon points="5.8,0.6 0,6.4 0,378.3 5.8,384 384,384 512,512 512,5.8 506.3,0 6.4,0 	"/>
+              </g>
+              </svg>
             </el-tooltip>
           </td>
           <td class="text-center">{{user.dayWork}}</td>
           <td class="fix text-center" @click="infoDayEdit(user.dayEarn,user.code)" v-b-modal="'my-modal1'">{{user.dayEarn}}</td>
         </tr>
         </tbody>
+
+<!--      Check không có dữ liệu hiện "NO DATA"-->
+
         <tbody v-if="checkNone">
         <tr>
           <td colspan="35" class="text-center">No data</td>
         </tr>
         </tbody>
+
       </table>
     </div>
-    <div class="flex-column" style="margin-top:20px">
-      <div style="font-weight: bold;">Chú thích</div>
-      <div style="text-align: justify">
-        <p>KL/H,H/KL: Nghỉ nửa ngày</p>
-        <p>KL: Nghỉ không lương</p>
-        <p>H: Làm hành chính</p>
-        <p>NT: Nghỉ tuần</p>
-      </div>
+    <div>
+
     </div>
+
+<!--   MODAL Chỉnh sửa chấm công-->
+
     <b-modal id="my-modal" centered size="sm" >
       <template #modal-header="{ close }">
         <!-- Emulate built in modal header close button action -->
@@ -102,14 +164,16 @@
       <div v-if="signs.includes(selected)" class="mt-2 my-2 ">
         Nhập lý do :
       </div>
-      <b-form-input v-if="signs.includes(selected)" v-model="reason"  size="sm" autofocus="true" type="text">}</b-form-input>
+      <b-form-input v-if="signs.includes(selected)" v-model="currenReason"  size="sm" autofocus type="text">}</b-form-input>
       <template #modal-footer="{ok}">
-        <b-button size="sm" variant="success" @click="handleEdit(dateEdit,codeEdit,selected,reason),ok()">
+        <b-button size="sm" variant="success" @click="handleEdit(dateEdit,codeEdit,selected,currenReason),ok()">
           OK
         </b-button>
 
       </template>
     </b-modal>
+
+<!--    MODAL Chỉnh sửa số ngày hưởng lương-->
     <b-modal id="my-modal1" centered size="sm" >
       <template #modal-header="{ close }">
         <!-- Emulate built in modal header close button action -->
@@ -139,7 +203,7 @@ export default {
       users:[],
       checkNone:false,
       search: '',
-      department:'',
+      department:null,
       departments:[],
       signs:["H","KL","NT","H_KL","KL_H"],
       selected: '',
@@ -147,7 +211,7 @@ export default {
       codeEdit:'',
       logsEdit:[],
       dayEarn:0,
-      reason:'',
+      currenReason:'',
       currentMonth:new Date().getMonth()+1,
       currentYear:'',
       currentDepartment:'',
@@ -156,10 +220,12 @@ export default {
 
   methods: {
     //event handler
-    infoEdit(date,code,sign){
+    infoEdit(date,code,sign,reason){
       this.dateEdit=date;
       this.codeEdit=code;
       this.selected=sign
+      this.currenReason=reason
+      console.log(date,code,sign,reason)
     },
     infoDayEdit(dayEarn,code){
       this.codeEdit=code;
@@ -181,17 +247,24 @@ export default {
     handleEdit(date, code,sign,reason) {
       for (let user of this.users) {
             if(user.code==code){
-              if(user.log[date].sign==sign)
+              if(user.log[date].sign==sign && user.log[date].status===false)
                 return
-              console.log(user,user.log[date],sign)
+              if(reason=='')
+                reason=null
+              if(user.log[date].sign==sign && user.log[date].status===true)
+                user.log[date].reason=reason
               user.log[date].sign=sign
               user.log[date].status=true
               user.dayEarn=this.caculateDayWork(user.log)
               user.log[date].reason=reason
+              this.logsEdit = this.logsEdit.filter(log => {
+                  return log.code==code && log.date!==user.log[date].date || log.code!=code
+              })
               this.logsEdit.push({
                 date:user.log[date].date,
                 code:code,
-                sign:sign
+                sign:sign,
+                reason:reason
               });
             }
         }
@@ -201,6 +274,13 @@ export default {
     handelUpdate(){
       LogService.updateLog(this.logsEdit).then(respone =>{
         console.log(respone)
+      })
+      this.users.map(user =>{
+        user.log.map(
+            sign =>{
+              sign.status=false
+            }
+        )
       })
       this.logsEdit=[]
     }
@@ -300,12 +380,15 @@ export default {
       });
     },
   },
-  computed:{
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    }
   },
   mounted(){
     this.getDepartment();
     this.getLog();
-
+    console.log(this.currentUser.user.fullName)
   },
 };
 </script>
@@ -329,5 +412,14 @@ export default {
 }
 .reason-popper{
   border: #a843a8 1px;
+}
+
+.note-wrapper{
+  width: fit-content;
+  height: fit-content;
+  background-color: #F4F4F4;
+  padding: 15px;
+  box-sizing: content-box;
+  border-radius: 10px;
 }
 </style>
