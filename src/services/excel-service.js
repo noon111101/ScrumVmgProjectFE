@@ -13,7 +13,7 @@ class ExcelService{
             link.href = url
             link.setAttribute(
                 'download',
-                `Employee-${new Date().toLocaleDateString()}.xlsx`
+                `Bảng Chấm Công-${new Date().toLocaleDateString()}.xlsx`
             )
             document.body.appendChild(link)
             link.click()

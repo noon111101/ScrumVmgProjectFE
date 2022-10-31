@@ -367,6 +367,11 @@ export default {
     // Call API method
     exportExcel(){
       ExcelService.exportExcel();
+      const params = {
+        "id": this.department,
+        "month": this.currentMonth
+      }
+      ExcelService.exportExcel(params);
     },
     getDepartment(){
       LogService.getDepartment().then(respone => {
