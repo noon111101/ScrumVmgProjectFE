@@ -49,7 +49,7 @@ export const router = new Router({
     {
       path: '/report',
       name: 'report',
-      component: () => import('./views/TimeSheets.vue'),
+      component: () => import('./views/Report.vue'),
       beforeEnter: (to, from, next) => {
         const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
         const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
