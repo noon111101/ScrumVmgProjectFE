@@ -14,7 +14,7 @@
 
     <div class="d-flex flex-row mt-3 ms-0 ">
       <div class="col-9  ">
-        <el-select class="mx-3" v-model="department" @change="getLog" placeholder="Chọn Bộ phận">
+        <el-select v-if="showAdminBoard" class="mx-3" v-model="department" @change="getLog" placeholder="Chọn Bộ phận">
           <el-option
               label="Tất cả"
               value=""
@@ -29,6 +29,7 @@
           >
           </el-option>
         </el-select>
+        <span v-if="showModeratorBoard" class="mx-3 fw-bold" >Phòng {{accountDepartment.name}}</span>
         <el-input
             class="mx-3"
             size="medium"
@@ -97,12 +98,12 @@
 
       <div class="col-3 " >
         <el-button @click="exportExcel"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
-        <el-button v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end " round> Cập nhật</el-button>
+        <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end " round> Cập nhật</el-button>
       </div>
     </div>
 <!--   BẢNG CHẤM CÔNG-->
     <div class="table-responsive-xxl" style="margin-top:50px">
-      <table class="table table-bordered align-middle  ">
+      <table v-if="showAdminBoard" class="table table-bordered align-middle  ">
         <thead style="background-color: #C2C2C2">
         <tr>
           <th rowspan="2">TT</th>
@@ -146,11 +147,51 @@
         </tbody>
 
       </table>
-    </div>
-    <div>
+        <table  v-if="showModeratorBoard" class="table table-bordered align-middle  ">
+          <thead style="background-color: #C2C2C2">
+          <tr>
+            <th rowspan="2">TT</th>
+            <th rowspan="2" style="white-space: pre">Họ tên</th>
+            <th colspan="31" class="text-center">Ngày trong tháng</th>
+            <th rowspan="2" style="white-space: pre" >Tổng số <br>ngày làm <br>việc</th>
+            <th rowspan="2" style="white-space: pre" >Tổng số <br>ngày hưởng <br>lương</th>
+          </tr>
+          <tr>
+            <th class="text-center" v-for="(n,index) in 31 " :key="index">{{n}}</th>
+          </tr>
+          </thead>
 
-    </div>
+          <tbody v-if="!checkNone">
+          <tr  v-for="(user,indexLog) in users " :key="indexLog">
+            <td>{{indexLog+1}}</td>
+            <td style="white-space: pre">{{user.name}}</td>
+            <td  class="fix text-center position-relative" :class="{'weekend':checkWeekend(index+1)}" v-for="(log,index) in user.log " :key="index">
+              {{log.sign}}
+              <el-tooltip popper-class="reason-popper" v-if="log.reason!=null" placement="right" effect="light">
+                <div slot="content"><div class="note-wrapper">{{log.reason}}</div></div>
+                <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
+                     viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 10px;fill: #A843A8FF " xml:space="preserve">
+              <g>
+                <polygon points="5.8,0.6 0,6.4 0,378.3 5.8,384 384,384 512,512 512,5.8 506.3,0 6.4,0 	"/>
+              </g>
+              </svg>
+              </el-tooltip>
+            </td>
+            <td class="text-center">{{user.dayWork}}</td>
+            <td class="fix text-center" >{{user.dayEarn}}</td>
+          </tr>
+          </tbody>
 
+          <!--      Check không có dữ liệu hiện "NO DATA"-->
+
+          <tbody v-if="checkNone">
+          <tr>
+            <td colspan="35" class="text-center">No data</td>
+          </tr>
+          </tbody>
+
+        </table>
+      </div>
 <!--   MODAL Chỉnh sửa chấm công-->
 
     <b-modal id="my-modal" centered size="sm" >
@@ -213,9 +254,10 @@
 import ExcelService from "@/services/excel-service";
 import LogService from "@/services/logdetail-service"
 export default {
-  name: 'HomeVue',
+  name: 'ReportAdmin',
   data() {
     return {
+      accountDepartment:'',
       users:[],
       checkNone:false,
       search: '',
@@ -404,12 +446,25 @@ export default {
   computed: {
     currentUser() {
       return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_ADMIN");
+      }
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_MANAGE");
+      }
+      return false;
     }
   },
   mounted(){
     this.getDepartment();
     this.getLog();
     console.log(this.currentUser.user.fullName)
+    this.accountDepartment=this.currentUser.user.departments
   },
 };
 </script>

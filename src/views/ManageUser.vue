@@ -1,49 +1,53 @@
 <template>
-  <div className="container" style="text-align: center; width: 90%;margin: auto">
+  <div
+    className="container"
+    style="text-align: center; width: 90%; margin: auto"
+  >
     <div className="block" class="text-start">
-
       <el-select
-          v-model="departmentId"
-          @change="getAll"
-          placeholder="Chon Phòng ban"
+        v-model="departmentId"
+        @change="getAll"
+        placeholder="Chon Phòng ban"
       >
         <el-option value="0" label="All Users"></el-option>
         <el-option
-            v-for="item in departments"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
+          v-for="item in departments"
+          :key="item.id"
+          :label="item.name"
+          :value="item.id"
         >
         </el-option>
       </el-select>
       <br /><br />
 
       <router-link to="/add-user" class="nav-link sel">
-        <el-button type="danger" round><i class="el-icon-plus"></i> Thêm nhân viên </el-button>
+        <el-button type="danger" round
+          ><i class="el-icon-plus"></i> Thêm nhân viên
+        </el-button>
       </router-link>
-
     </div>
     <div style="float: right">
       <el-input v-model="search" size="medium" placeholder="Tên nhân viên" />
     </div>
     <br /><br />
-
-
     <div>
-
       <el-table
-          :data="
+        :data="
           users.filter(
             (data) =>
               !search ||
               data.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
-          border="true"
-          :cell-style="{border: '1px solid'}"
-          :row-style="{border: '1px solid'}"
-          style="width: 100%; display: inline-block"
+        :header-cell-style="{
+          background: '#909399',
+          color: 'white',
+          align: 'center',
+        }"
+        border="true"
+        :cell-style="{ border: '1px solid' }"
+        :row-style="{ border: '1px solid' }"
+        style="width: 100%; display: inline-block"
       >
         <el-table-column label="STT" type="index"> </el-table-column>
         <el-table-column label="Mã NV" prop="code"> </el-table-column>
@@ -52,34 +56,32 @@
         </el-table-column>
         <el-table-column label="Email" prop="username"> </el-table-column>
         <el-table-column label="Ảnh" v-slot:="data">
-          <img v-bind:src="`http://localhost:8080/uploads/images/` + data.cover" width="50px">
+          <img 
+            v-bind:src="
+              `http://localhost:8080/uploads/images/` + data.row.cover
+            "
+            width="150px"
+          />
         </el-table-column>
-<!--        <el-table-column label="Chức vụ" v-slot:="data">-->
-<!--          <p  v-for="(role,index) in data.roles.name" :key="index" >-->
-<!--            <span v-if="role=='ROLE_USER'">Nhân viên</span>-->
-<!--            <span v-if="role=='ROLE_MANAGE'">Trưởng phòng</span>-->
-<!--            <span v-if="role=='ROLE_ADMIN'">Phòng nhân sự</span>-->
-<!--          </p>-->
-<!--        </el-table-column>-->
-        <el-table-column label="Chỉnh sửa">
-          <router-link :to="`/edit`">
+        <el-table-column v-slot:="data" label="Chỉnh sửa">
+          <router-link :to="`/users/${data.row.id}`">
             <el-button type="info">Chỉnh sửa</el-button>
           </router-link>
         </el-table-column>
         <el-table-column label="Trạng thái">
           <label class="switch">
-            <input type="checkbox" checked>
+            <input type="checkbox" checked />
             <span class="slider round"></span>
           </label>
         </el-table-column>
       </el-table>
     </div>
     <el-pagination
-        small
-        layout="prev, pager, next"
-        :total="totalItems"
-        :page-size="pageSize"
-        @current-change="handlePageChange"
+      small
+      layout="prev, pager, next"
+      :total="totalItems"
+      :page-size="pageSize"
+      @current-change="handlePageChange"
     >
     </el-pagination>
   </div>
@@ -115,19 +117,18 @@ export default {
   },
   mounted() {
     this.getAll();
-
   },
 
   created() {
     this.getAll();
     this.getUserCode();
     DepartmentService.getAllDepartment()
-        .then((response) => {
-          this.departments = response.data;
-        })
-        .catch((e) => {
-          console.log(e);
-        });
+      .then((response) => {
+        this.departments = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 
   methods: {
@@ -137,21 +138,21 @@ export default {
     },
     getAll() {
       const params = {
-        "page": this.page,
-        "size": this.pageSize,
-        "departid": this.departmentId
+        page: this.page,
+        size: this.pageSize,
+        departid: this.departmentId,
       };
       UserService.getUser_Department(params)
-          .then((response) => {
-            this.users = response.data.content;
-            this.page = response.data.pageable.pageNumber;
-            console.log(response.data.pageable.pageNumber)
-            this.totalItems = response.data.totalElements;
-            console.log(response.data.content+"fdasfds");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((response) => {
+          this.users = response.data.content;
+          this.page = response.data.pageable.pageNumber;
+          console.log(response.data.pageable.pageNumber);
+          this.totalItems = response.data.totalElements;
+          console.log(response.data.content + "fdasfds");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     exportExcel() {
       ExcelService.exportExcel();
@@ -206,8 +207,8 @@ export default {
   right: 0;
   bottom: 0;
   background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 .slider:before {
@@ -218,16 +219,16 @@ export default {
   left: 4px;
   bottom: 4px;
   background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color: #2196f3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px #2196f3;
 }
 
 input:checked + .slider:before {
