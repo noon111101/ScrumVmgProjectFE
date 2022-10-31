@@ -24,12 +24,6 @@ export const router = new Router({
       component: Register
     },
     {
-      path: '/manage',
-      name: 'manage',
-      // lazy-loaded
-      component: () => import('./views/ManageUser.vue')
-    },
-    {
       path: '/add-user',
 
       name: '',
@@ -43,7 +37,6 @@ export const router = new Router({
       component: () => import('./views/BoardModerator.vue')
 
       name: 'add-user',
-      // lazy-loaded
       component: () => import('./views/Add-User.vue')
 
     },
@@ -51,25 +44,34 @@ export const router = new Router({
     {
       path: '/user',
       name: 'user',
-      // lazy-loaded
       component: () => import('./views/BoardUser.vue')
     },
     {
       path: '/user/:code/:departmentName/:fullName',
       name: 'user',
-      // lazy-loaded
-      component: () => import('./views/ViewDetailLogs.vue')
+      component: () => import('./views/ViewDetailLogs.vue'),
+      beforeEnter: (to, from, next) => {
+        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+        const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
+        if(admin || manage)
+          next()
+        else next('/calender')
+      }
     },
     {
-      path: '/timesheet',
-      name: 'timesheet',
-      // lazy-loaded
-      component: () => import('./views/TimeSheets.vue')
-    },
+      path: '/reportAdmin',
+      name: 'report',
+      component: () => import('./views/TimeSheets.vue'),
+      beforeEnter: (to, from, next) => {
+        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+        if(admin)
+          next()
+        else next('/calender')
+      }
+      },
     {
       path: '/changepassword',
       name: 'changepassword',
-      // lazy-loaded
       component: () => import('./views/ChangePassword.vue')
     },
     {
@@ -80,23 +82,39 @@ export const router = new Router({
     {
       path: '/timesheetmod',
       name: 'timesheetmod',
-      component: () => import('./views/TimeSheetMod.vue')
+      component: () => import('./views/TimeSheetMod.vue'),
+      beforeEnter: (to, from, next) => {
+        const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
+        if(manage)
+          next()
+        else next('/calender')
+      }
     },
     {
       path: '/timesheetadmin',
       name: 'timesheetadmin',
-      component: () => import('./views/TimeSheetsAdmin.vue')
+      component: () => import('./views/TimeSheetsAdmin.vue'),
+      beforeEnter: (to, from, next) => {
+        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+        if(admin)
+          next()
+        else next('/calender')
+      }
     },
     {
       path: '/manage',
       name: 'manage',
-      // lazy-loaded
-      component: () => import('./views/ManageUser.vue')
+      component: () => import('./views/ManageUser.vue'),
+      beforeEnter: (to, from, next) => {
+        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+        if(admin)
+          next()
+        else next('/calender')
+      }
     },
     {
       path: '/profile',
       name: '',
-      // lazy-loaded
       component: () => import('./views/Profile.vue')
     },
   ]
@@ -107,13 +125,11 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register', '/home'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
-
   // trying to access a restricted page + not logged in
   // redirect to login page
   if (authRequired && !loggedIn) {
     next('/login');
   } else {
-    next();
+    next()
   }
-
 });
