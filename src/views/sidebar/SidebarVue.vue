@@ -1,6 +1,6 @@
 <template>
 
-  <nav class="navbar fixed-top">
+  <nav class="navbar fixed-top container-fluid">
     <div class="user-detail nav-item dropdown " v-if="currentUser">
       <a
           class="nav-link dropdown-toggle"
@@ -12,7 +12,7 @@
         <font-awesome-icon icon="user" />
         {{ currentUser.user.fullName }}
       </a>
-      <ul class="dropdown-menu">
+      <ul class="dropdown-menu" style="left: -90px">
         <li>
           <a class="dropdown-item">
             <router-link to="/profile" class="nav-link sel">
@@ -271,7 +271,7 @@ export default {
 .user-detail{
   position: fixed;
   top: 10px;
-  right: 20px;
+  right: 10px;
   z-index: 1030;
 }
 </style>
