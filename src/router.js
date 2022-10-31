@@ -25,22 +25,15 @@ export const router = new Router({
     },
     {
       path: '/add-user',
-
       name: '',
-      // lazy-loaded
-      component: () => import('./views/Add-User.vue')
+      component: () => import('./views/Add-User.vue'),
+      beforeEnter: (to, from, next) => {
+        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+        if(admin)
+          next()
+        else next('/calender')
+      }
     },
-    {
-      path: '/mod',
-      name: 'moderator',
-      // lazy-loaded
-      component: () => import('./views/BoardModerator.vue')
-
-      name: 'add-user',
-      component: () => import('./views/Add-User.vue')
-
-    },
-
     {
       path: '/user',
       name: 'user',
