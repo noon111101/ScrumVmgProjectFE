@@ -31,9 +31,21 @@ export const router = new Router({
     },
     {
       path: '/add-user',
+
+      name: '',
+      // lazy-loaded
+      component: () => import('./views/Add-User.vue')
+    },
+    {
+      path: '/mod',
+      name: 'moderator',
+      // lazy-loaded
+      component: () => import('./views/BoardModerator.vue')
+
       name: 'add-user',
       // lazy-loaded
       component: () => import('./views/Add-User.vue')
+
     },
 
     {
