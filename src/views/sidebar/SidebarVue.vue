@@ -1,79 +1,47 @@
 <template>
-  <!--  <div class="sidebar" :style="{ width: sidebarWidth }">-->
-  <!--    <h1>-->
-  <!--      <span v-if="collapsed">-->
-  <!--        &lt;!&ndash; <div style="color:red">V</div>-->
-  <!--        <div style="color:red">M</div>-->
-  <!--        <div style="color:red">G</div> &ndash;&gt;-->
-  <!--      </span>-->
-  <!--      <img-->
-  <!--          src="../../assets/vmg_logo.png"-->
-  <!--          style="width: 125px"-->
-  <!--          v-else-->
-  <!--      />-->
-  <!--    </h1>-->
-  <!--    <br/>-->
-  <!--    <div class="text-start">-->
-  <!--      <router-link to="/home" v-if="currentUser" class="nav-link sel">-->
-  <!--        <font-awesome-icon icon="home"/>-->
-  <!--        Home-->
-  <!--      </router-link>-->
-  <!--      <br/>-->
-  <!--      <router-link to="/user" v-if="currentUser" class="nav-link sel">-->
-  <!--        <i class="el-icon-question"></i>-->
-  <!--        Chi tiết chấm công-->
-  <!--      </router-link>-->
 
-  <!--      <router-link v-if="!currentUser" to="/login" class="nav-link">-->
-  <!--        <font-awesome-icon icon="sign-in-alt"/>-->
-  <!--        Login-->
-  <!--      </router-link>-->
-  <!--      <br/>-->
-
-  <!--      <div v-if="showAdminBoard">-->
-  <!--        <router-link to="/admin" class="nav-link sel">-->
-  <!--          <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên-->
-  <!--        </router-link>-->
-  <!--        <br/>-->
-  <!--      </div>-->
-  <!--      <div v-if="showAdminBoard">-->
-
-  <!--        <router-link to="/timesheet" class="nav-link sel">-->
-  <!--          <i class="el-icon-document-copy"> </i> Bảng Chấm Công-->
-  <!--        </router-link>-->
-
-  <!--        <br/>-->
-  <!--      </div>-->
-
-  <!--      <router-link v-if="showModeratorBoard" to="/mod" class="nav-link sel">-->
-  <!--        Moderator Board-->
-  <!--      </router-link>-->
-  <!--      &lt;!&ndash;      <br />&ndash;&gt;-->
-  <!--      &lt;!&ndash;      <router-link v-if="currentUser" to="/user" class="nav-link"&ndash;&gt;-->
-  <!--      &lt;!&ndash;        >User</router-link&ndash;&gt;-->
-  <!--      &lt;!&ndash;      >&ndash;&gt;-->
-  <!--      <router-link v-if="currentUser" to="/profile" class="nav-link sel">-->
-  <!--        <font-awesome-icon icon="user"/>-->
-  <!--        {{ currentUser.user.fullName }}-->
-  <!--      </router-link>-->
-
-  <!--      -->
-  <!--      <br/>-->
-  <!--      <a v-if="currentUser" class="nav-link sel" href @click.prevent="logOut">-->
-  <!--        <font-awesome-icon icon="sign-out-alt"/>-->
-  <!--        LogOut-->
-  <!--      </a>-->
-  <!--    </div>-->
-  <!--    <span-->
-  <!--        class="collapse-icon"-->
-  <!--        :class="{ 'rotate-180': collapsed }"-->
-  <!--        @click="toggleSidebar"-->
-  <!--    >-->
-  <!--      <i class="fas fa-angle-double-left"/>-->
-  <!--    </span>-->
-  <!--  </div>-->
-
-  <nav class="navbar fixed-top">
+  <nav class="navbar fixed-top container-fluid">
+    <div class="user-detail nav-item dropdown " v-if="currentUser">
+      <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+      >
+        <font-awesome-icon icon="user" />
+        {{ currentUser.user.fullName }}
+      </a>
+      <ul class="dropdown-menu" style="left: -90px">
+        <li>
+          <a class="dropdown-item">
+            <router-link to="/profile" class="nav-link sel">
+              <font-awesome-icon icon="user" />
+              Thông tin cá nhân
+            </router-link>
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item">
+            <router-link to="/changepassword" class="nav-link">
+              <i class="el-icon-refresh-left"></i>
+              Thay đổi mật khẩu
+            </router-link>
+          </a>
+        </li>
+        <li>
+          <hr class="dropdown-divider" />
+        </li>
+        <li>
+          <a class="dropdown-item" href="#">
+            <a class="nav-link sel" href @click.prevent="logOut">
+              <font-awesome-icon icon="sign-out-alt" />
+              LogOut
+            </a>
+          </a>
+        </li>
+      </ul>
+    </div>
     <div class="container-fluid">
       <button
         class="navbar-toggler"
@@ -140,7 +108,7 @@
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile">
-                <router-link to="/home" v-if="currentUser" class="nav-link sel">
+                <router-link to="/calender" v-if="currentUser" class="nav-link sel">
                   <font-awesome-icon icon="home" />
                   Home
                 </router-link>
@@ -165,27 +133,23 @@
               </a>
             </li>
 
+            <li class="nav-item" v-if="showModeratorBoard">
+              <a class="nav-link">
+                <router-link to="/timesheetmod" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)
+                </router-link>
+              </a>
+            </li>
+
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
                 <router-link to="/manage" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Quản lý nhân viên
-                           </router-link>
-       
-
-                <router-link to="/timesheetmod" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công(mod)
-
                 </router-link>
               </a>
             </li>
 
-            <li class="nav-item" v-if="showAdminBoard">
-              <a class="nav-link">
-                <router-link to="/admin" class="nav-link sel">
-                  <i class="el-icon-circle-plus-outline"> </i> Thêm Nhân Viên
-                </router-link>
-              </a>
-            </li>
+
 
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
@@ -201,49 +165,6 @@
                   <i class="el-icon-document-copy"> </i> Bảng Chấm Công
                 </router-link>
               </a>
-            </li>
-
-
-            <li class="nav-item dropdown" v-if="currentUser">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                <font-awesome-icon icon="user" />
-                {{ currentUser.user.fullName }}
-              </a>
-              <ul class="dropdown-menu">
-                <li>
-                  <a class="dropdown-item">
-                    <router-link to="/profile" class="nav-link sel">
-                      <font-awesome-icon icon="user" />
-                      Thông tin cá nhân
-                    </router-link>
-                  </a>
-                </li>
-                <li>
-                  <a class="dropdown-item">
-                    <router-link to="/changepassword" class="nav-link">
-                      <i class="el-icon-refresh-left"></i>
-                      Thay đổi mật khẩu
-                    </router-link>
-                  </a>
-                </li>
-                <li>
-                  <hr class="dropdown-divider" />
-                </li>
-                <li>
-                  <a class="dropdown-item" href="#">
-                    <a class="nav-link sel" href @click.prevent="logOut">
-                      <font-awesome-icon icon="sign-out-alt" />
-                      LogOut
-                    </a>
-                  </a>
-                </li>
-              </ul>
             </li>
           </ul>
         </div>
@@ -277,7 +198,7 @@ export default {
     },
     showModeratorBoard() {
       if (this.currentUser.roles) {
-        return this.currentUser.roles.includes("ROLE_MODERATOR");
+        return this.currentUser.roles.includes("ROLE_MANAGE");
       }
       return false;
     },
@@ -346,5 +267,11 @@ export default {
 .navbar {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.user-detail{
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1030;
 }
 </style>

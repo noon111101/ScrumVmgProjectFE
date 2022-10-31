@@ -1,5 +1,5 @@
 <template>
-  <div className="container" style="text-align: center">
+  <div style="text-align: center; width: 90%;margin: auto">
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -22,27 +22,52 @@
     </div>
     </form>
 
-    <p> {{ from }} </p>
-    <p> {{ to }} </p>
+<!--    <p> {{ from }} </p>-->
+<!--    <p> {{ to }} </p>-->
     <br><br>
     <div >
       <el-table
           :data="logs"
-          style="width: 60%; border: solid 1px; display: inline-block"
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
+          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
+          border="true"
+          :cell-style="{border: '1px solid'}"
+          :row-style="{border: '1px solid'}"
+          style="width: 100%; display: inline-block"
           :row-class-name="tableRowClassName">
         <el-table-column
+            prop="user.code"
+            label="Mã nhân viên"
+            width="120px"
+            align="center">
+        </el-table-column>
+        <el-table-column
+            prop="user.fullName"
+            label="Họ và tên"
+            header-align="center">
+        </el-table-column>
+        <el-table-column
+            prop="user.departments.name"
+            label="Bộ phận"
+            header-align="center"
+            >
+        </el-table-column>
+        <el-table-column
             prop="date_log"
-            label="Ngày">
+            label="Ngày"
+            width="150px"
+            align="center">
         </el-table-column>
         <el-table-column
             prop="timeIn"
-            label="Giờ vào">
+            label="Giờ vào"
+            width="150px"
+            align="center">
         </el-table-column>
         <el-table-column
             prop="timeOut"
-            label="Giờ ra">
+            label="Giờ ra"
+            width="150px"
+            align="center">
         </el-table-column>
       </el-table>
     </div>
@@ -108,17 +133,18 @@ export default {
       }
     },
     getAllByDate(){
-      this.from = this.dateRange.at(0);
-      this.to = this.dateRange.at(1);
-      console.log(this.from,this.to)
+      this.from = this.dateRange !== null ? this.dateRange.at(0): null;
+      this.to = this.dateRange !== null ? this.dateRange.at(1): null;
       const params ={
+        "page": this.page,
+        "size": this.size,
         'code': this.user_code,
         'from': this.from,
         'to': this.to
       }
         LogdetailService.getByDate_UserCode(params).then(response => {
           this.logs = response.data.content;
-          this.page = response.data.pageable;
+          // this.page = response.data.pageable;
           this.totalItems = response.data.totalElements;
         }).catch(error => {
           console.log(error);

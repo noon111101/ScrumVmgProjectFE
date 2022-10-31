@@ -41,105 +41,6 @@
             </a>
           </li>
         </ul>
-<!--                <div class="tab-content" id="myTabContent">-->
-<!--                  <div-->
-<!--                      class="tab-pane fade show active"-->
-<!--                      id="home"-->
-<!--                      role="tabpanel"-->
-<!--                      aria-labelledby="home-tab">-->
-<!--                    <form name="form" @submit.prevent="changePassword" :rules="rules" ref="changePass">-->
-<!--                      &lt;!&ndash;              <h3 class="register-heading">Create an account</h3>&ndash;&gt;-->
-<!--                      <div class="row register-form">-->
-<!--                        <div class="col-md-8">-->
-
-<!--                          <table class="text-start">-->
-
-
-<!--                            <tr style="height: 70px">-->
-
-<!--                              <td style="width: 200px">Mật khẩu hiện tại<span style="color: red">*</span></td>-->
-<!--                              <td style="width: 300px">-->
-<!--                                <div class="form-group">-->
-<!--                                  <input-->
-<!--                                      type="password"-->
-<!--                                      class="form-control"-->
-<!--                                      v-validate="{ required: true,message: 'Please enter current password again', min: 8 ,trigger: 'blur'}"-->
-
-<!--                                  />-->
-<!--                                  <div-->
-<!--                                      v-if="errors.has('')"-->
-<!--                                      class="alert alert-danger"-->
-<!--                                      role="alert"-->
-<!--                                  >-->
-<!--                                    Nhập mật khẩu hiện tại-->
-<!--                                  </div>-->
-<!--                                </div>-->
-<!--                              </td>-->
-<!--                            </tr>-->
-
-
-<!--                            <tr style="height: 70px">-->
-<!--                              <td style="width: 100px">Mật khẩu mới<span style="color: red">*</span></td>-->
-<!--                              <td style="width: 300px">-->
-<!--                                <div class="form-group">-->
-<!--                                  <input-->
-<!--                                      type="password"-->
-<!--                                      class="form-control"-->
-<!--                                      v-validate="{ required: true,message: 'Please enter new password', min: 8 ,trigger: 'blur'}"-->
-<!--                                      name="username"/>-->
-<!--                                </div>-->
-<!--                                <div-->
-<!--                                    v-if="errors.has('')"-->
-<!--                                    class="alert alert-danger"-->
-<!--                                    role="alert">-->
-<!--                                  Nhập mật khẩu mới-->
-<!--                                </div>-->
-<!--                              </td>-->
-<!--                            </tr>-->
-
-<!--                            <tr style="height: 70px">-->
-<!--                              <td style="width: 100px">Nhập lại mật khẩu mới<span style="color: red">*</span></td>-->
-<!--                              <td style="width: 300px">-->
-<!--                                <div class="form-group">-->
-<!--                                  <input-->
-<!--                                      type="password"-->
-<!--                                      class="form-control"-->
-<!--                                      v-validate="{ required: true,message: 'Please enter new password again', min: 8 ,trigger: 'blur'}"-->
-<!--                                      name="username"/>-->
-<!--                                </div>-->
-<!--                                <div-->
-<!--                                    v-if="errors.has('')"-->
-<!--                                    class="alert alert-danger"-->
-<!--                                    role="alert">-->
-<!--                                  Nhập lại mật khẩu mới-->
-<!--                                </div>-->
-<!--                              </td>-->
-<!--                            </tr>-->
-
-
-<!--                            <tr style="height: 60px">-->
-<!--                              <td style="width: 100px"></td>-->
-<!--                              <td style="width: 300px">-->
-<!--                                <div class="form-group">-->
-<!--                                  <button class="btn btn-block btn-signup" @click="submit('changePass')">Change Password-->
-<!--                                  </button>-->
-<!--                                </div>-->
-<!--                              </td>-->
-<!--                            </tr>-->
-<!--                          </table>-->
-<!--                          <br/>-->
-
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </form>-->
-<!--                    <div-->
-<!--                        v-if="message"-->
-<!--                        class="alert"-->
-<!--                        :class="successful ? 'alert-success' : 'alert-danger'"-->
-<!--                    >{{ message }}-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
 
         <div class="tab-content" id="myTabContent">
           <div
@@ -147,7 +48,7 @@
               id="home"
               role="tabpanel"
               aria-labelledby="home-tab">
-            <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form" class="text-start" style="">
+            <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form" class="text-start">
 
               <!--              <h3 class="register-heading">Create an account</h3>-->
               <div class="row register-form">
@@ -158,8 +59,9 @@
 
                     <tr style="height: 70px">
                       <td style="width: 300px">
-                        <el-form-item label="Mật khẩu hiện tại" prop="old_password"  label-width="200px" label-position="left">
-                          <el-input type="password" v-model="form.old_password" autocomplete="off"  ></el-input>
+                        <el-form-item label="Mật khẩu hiện tại" prop="old_password" label-width="200px"
+                                      label-position="left">
+                          <el-input type="password" v-model="form.old_password" autocomplete="off"></el-input>
                         </el-form-item>
                       </td>
                     </tr>
@@ -167,8 +69,9 @@
 
                     <tr style="height: 70px">
                       <td style="width: 300px">
-                        <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px" >
-                          <el-input type="password" v-model="form.new_password" autocomplete="off" style="width: 200px"></el-input>
+                        <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px">
+                          <el-input type="password" v-model="form.new_password" autocomplete="off"
+                                    style="width: 200px"></el-input>
                         </el-form-item>
                       </td>
                     </tr>
@@ -176,7 +79,7 @@
                     <tr style="height: 70px">
                       <td style="width: 300px">
                         <el-form-item label="Nhập lại mật khẩu mới" prop="new_password_confirm" label-width="200px">
-                          <el-input type="password" v-model="form.new_password_confirm" autocomplete="off" ></el-input>
+                          <el-input type="password" v-model="form.new_password_confirm" autocomplete="off"></el-input>
                         </el-form-item>
                       </td>
                     </tr>
@@ -201,30 +104,32 @@
 
           </div>
         </div>
-<!--        <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form" class="text-start" style="">-->
+        <!--        <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form" class="text-start" style="">-->
 
 
-<!--            <el-form-item label="Current Password" prop="old_password" >-->
-<!--              <el-input type="password" v-model="form.old_password" autocomplete="off"></el-input>-->
-<!--            </el-form-item>-->
+        <!--            <el-form-item label="Current Password" prop="old_password" >-->
+        <!--              <el-input type="password" v-model="form.old_password" autocomplete="off"></el-input>-->
+        <!--            </el-form-item>-->
 
-<!--            <el-form-item label="New Password" prop="new_password">-->
-<!--              <el-input type="password" v-model="form.new_password" autocomplete="off"></el-input>-->
-<!--            </el-form-item>-->
-<!--            <el-form-item label="re-enter New Password" prop="new_password_confirm">-->
-<!--              <el-input type="password" v-model="form.new_password_confirm" autocomplete="off"></el-input>-->
-<!--            </el-form-item>-->
+        <!--            <el-form-item label="New Password" prop="new_password">-->
+        <!--              <el-input type="password" v-model="form.new_password" autocomplete="off"></el-input>-->
+        <!--            </el-form-item>-->
+        <!--            <el-form-item label="re-enter New Password" prop="new_password_confirm">-->
+        <!--              <el-input type="password" v-model="form.new_password_confirm" autocomplete="off"></el-input>-->
+        <!--            </el-form-item>-->
 
-<!--            <el-form-item>-->
-<!--              <el-button type="primary" @click="submit('user')">Submit</el-button>-->
-<!--            </el-form-item>-->
+        <!--            <el-form-item>-->
+        <!--              <el-button type="primary" @click="submit('user')">Submit</el-button>-->
+        <!--            </el-form-item>-->
 
-<!--        </el-form>-->
+        <!--        </el-form>-->
       </div>
     </div>
   </div>
 </template>
 <script>
+import AuthService from "@/services/auth.service";
+
 export default {
   name: "ChangePassword",
   data() {
@@ -245,24 +150,63 @@ export default {
         new_password: "",
         new_password_confirm: "",
       },
-
-
+      formData: {
+        id: "",
+        oldPassword: "",
+        newPassword: ""
+      },
       message: "",
     };
   },
-  components: {},
-  mounted() {
 
+  created() {
+    this.formData.id = this.currentUser.user.id
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
   },
   methods: {
     submit(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid && this.new_password === this.new_password_confirm) {
-          console.log(this.new_password)
-          // AuthService.registerUser(this.user)
-          alert('Đổi mật khẩu thành công!');
+        if (valid && this.form.new_password === this.form.new_password_confirm) {
+          this.formData.oldPassword = this.form.old_password;
+          this.formData.newPassword = this.form.new_password;
+          AuthService.changePassword(this.formData).then(response => {
+            if (response.data == true) {
+              this.$refs[formName].resetFields();
+              this.$swal.fire(
+                  {
+                    title: 'Đổi mật khẩu thành công!',
+                    icon: 'success',
+                    timer: 2000,
+                    timerProgressBar: true,
+                  }
+              )
+            } else {
+              this.$swal.fire({
+                title: 'Thay đổi mật khẩu thất bại!',
+                icon: "error",
+                timer: 2000,
+                timerProgressBar: true,
+              })
+            }
+          })
+
           // this.$router.push('/login')
         } else {
+          this.$swal.fire(
+              {
+                title: 'Mật khẩu mới không khớp!',
+                icon: 'error',
+                timer: 2000,
+                timerProgressBar: true,
+              }
+          )
           console.log('error submit!!');
           return false;
         }

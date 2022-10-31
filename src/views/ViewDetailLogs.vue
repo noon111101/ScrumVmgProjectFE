@@ -3,9 +3,6 @@
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-
-      Nhân viên: {{fullname}}
-
       Nhân viên: {{fullName}}
 
     </h5>
@@ -35,10 +32,20 @@
 <!--      </div>-->
       <el-table
           :data="logs"
-          style="width: 60%; border: solid 1px; display: inline-block"
-          cell-style="border: solid 1px"
-          row-style="border: solid 1px"
+          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
+          border="true"
+          :cell-style="{border: '1px solid'}"
+          :row-style="{border: '1px solid'}"
+          style="width: 100%; display: inline-block"
           :row-class-name="tableRowClassName">
+        <el-table-column
+            prop="user.code"
+            label="Mã nhân viên">
+        </el-table-column>
+        <el-table-column
+            prop="user.fullName"
+            label="Họ và tên">
+        </el-table-column>
         <el-table-column
             prop="date_log"
             label="Ngày">
@@ -65,7 +72,6 @@
 </template>
 
 <script>
-
 import LogdetailService from "@/services/logdetail-service";
 export default {
   name: 'HomeVue',
@@ -81,7 +87,6 @@ export default {
       totalItems: 0,
       page: 0,
       pageSize: 30,
-      fullname:"",
     }
   },
   computed: {
@@ -120,17 +125,13 @@ export default {
         console.log(this.$route.params.code)
       }
     },
-    // getParams(){
-    //   this.fullname = this.$route.params.fullName
-    //   this.departmentName = this.$route.params.departmentName
-    //    console.log(this.fullname+"dahfkdsh"+this.departmentName)
-    // },
+
     getAllByDate(){
       this.from = this.dateRange.at(0);
       this.to = this.dateRange.at(1);
       console.log(this.from,this.to)
       const params ={
-        'code': this.currentUser.user.code,
+        'code': this.user_code,
         'from': this.from,
         'to': this.to
       }

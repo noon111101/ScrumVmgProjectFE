@@ -1,4 +1,5 @@
 import httpCommon from "@/http-common";
+import axios from "axios";
 
 class LogdtailService{
     getAll(params){
@@ -25,7 +26,7 @@ class LogdtailService{
     getDepartment() {
         return httpCommon.get("department");
     }
-    
+
     getLogsByDate_Department(params){
         return httpCommon.get("/log/byDate_Department", {params});
     }
@@ -36,6 +37,9 @@ class LogdtailService{
 
     getAllBySearch(params){
         return httpCommon.get("/log/search", {params});
+    }
+    updateLog(logEdit){
+        return axios.post("http://localhost:8080/api/log/edit",logEdit);
     }
 
 }
