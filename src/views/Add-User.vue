@@ -193,7 +193,7 @@
                       <td style="width: 300px">
 
                         <input
-                            type="checkbox"
+                            type="radio"
                             id="admin"
                             value="admin"
                             v-model="user.role"
@@ -206,7 +206,7 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                            type="checkbox"
+                            type="radio"
                             id="manage"
                             value="manage"
                             v-model="user.role"
@@ -219,7 +219,7 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                            type="checkbox"
+                            type="radio"
                             id="user"
                             value="user"
                             v-model="user.role"
