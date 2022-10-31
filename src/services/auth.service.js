@@ -25,6 +25,11 @@ class AuthService {
       return axios.post(API_URL + 'signup', userForm);
     }
 
+    changePassword(data){
+        // let formData = new FormData(data);
+        return axios.post(API_URL + 'changePassword', data)
+    }
+
   }
   
   export default new AuthService();
