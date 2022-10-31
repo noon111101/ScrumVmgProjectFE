@@ -59,12 +59,13 @@ export const router = new Router({
       }
     },
     {
-      path: '/reportAdmin',
+      path: '/report',
       name: 'report',
       component: () => import('./views/TimeSheets.vue'),
       beforeEnter: (to, from, next) => {
         const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        if(admin)
+        const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
+        if(admin || manage )
           next()
         else next('/calender')
       }
