@@ -184,7 +184,7 @@
                       </td>
                       <td style="width: 300px">
                         <input
-                          type="checkbox"
+                          type="radio"
                           id="admin"
                           value="admin"
                           :checked="checkRole('ROLE_ADMIN')"
@@ -197,7 +197,7 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                          type="checkbox"
+                          type="radio"
                           id="manage"
                           value="manage"
                           :checked="checkRole('ROLE_MANAGE')"
@@ -210,7 +210,7 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                          type="checkbox"
+                          type="radio"
                           id="user"
                           value="user"
                           name="role"
