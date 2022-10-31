@@ -173,43 +173,57 @@ export default {
   methods: {
     submit(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid && this.form.new_password === this.form.new_password_confirm) {
-          this.formData.oldPassword = this.form.old_password;
-          this.formData.newPassword = this.form.new_password;
-          AuthService.changePassword(this.formData).then(response => {
-            if (response.data == true) {
-              this.$refs[formName].resetFields();
-              this.$swal.fire(
-                  {
-                    title: 'Đổi mật khẩu thành công!',
-                    icon: 'success',
-                    timer: 2000,
-                    timerProgressBar: true,
-                  }
-              )
-            } else {
-              this.$swal.fire({
-                title: 'Thay đổi mật khẩu thất bại!',
-                icon: "error",
-                timer: 2000,
-                timerProgressBar: true,
-              })
-            }
-          })
-
-          // this.$router.push('/login')
-        } else {
+        if(this.form.new_password=="" ||this.form.new_password_confirm =="" || this.form.old_password == "" ){
           this.$swal.fire(
               {
-                title: 'Mật khẩu mới không khớp!',
-                icon: 'error',
+                title: 'Chưa nhập đủ thông tin!',
+                icon: 'info',
                 timer: 2000,
                 timerProgressBar: true,
               }
           )
-          console.log('error submit!!');
-          return false;
         }
+        else{
+          if (valid && this.form.new_password === this.form.new_password_confirm) {
+            this.formData.oldPassword = this.form.old_password;
+            this.formData.newPassword = this.form.new_password;
+            AuthService.changePassword(this.formData).then(response => {
+              if (response.data == true) {
+                this.$refs[formName].resetFields();
+                this.$swal.fire(
+                    {
+                      title: 'Đổi mật khẩu thành công!',
+                      icon: 'success',
+                      timer: 2000,
+                      timerProgressBar: true,
+                    }
+                )
+              } else {
+                this.$refs[formName].resetFields();
+                this.$swal.fire({
+                  title: 'Thay đổi mật khẩu thất bại!',
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                })
+              }
+            })
+
+            // this.$router.push('/login')
+          } else {
+            this.$swal.fire(
+                {
+                  title: 'Mật khẩu mới không khớp!',
+                  icon: 'error',
+                  timer: 2000,
+                  timerProgressBar: true,
+                }
+            )
+            console.log('error submit!!');
+            return false;
+          }
+        }
+
       });
     },
 

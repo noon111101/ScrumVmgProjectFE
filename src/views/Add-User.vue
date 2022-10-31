@@ -315,7 +315,7 @@ export default {
           this.$swal.fire(
               'Đăng ký thất bại!',
               '',
-              'success'
+              'error'
           )
           return this.$router.push('/add-user')
         }
