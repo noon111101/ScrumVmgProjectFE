@@ -44,7 +44,7 @@ export default {
 </script>
 <style scoped>
 #app {
-  margin-top: 100px;
+  margin-top: 80px;
 
   font-family:'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
