@@ -97,7 +97,7 @@
 <!--     Nút chọn-->
 
       <div class="col-3 " >
-        <el-button v-if="showAdminBoard" @click="exportExcel(department)"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
+        <el-button v-if="showAdminBoard" @click="exportExcel(department)"  type="danger" class="el-icon-bottom float-end ms-3" round> Xuất File</el-button>
         <el-button v-if="showModeratorBoard" @click="exportExcel(accountDepartment.id)"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
         <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end " round> Cập nhật</el-button>
       </div>

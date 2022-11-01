@@ -1,85 +1,97 @@
 <template>
-  <div style="text-align: center; width: 90%;margin: auto">
-    <br>
-    <h5 style="font-weight: 600;">
-      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
-      Nhân viên: {{currentUser.user.fullName}}
-    </h5>
-    <br><br>
-    <form ac>
-    <div className="block">
-      <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker style="width: 30%"
-                      v-model="dateRange"
-                      type="daterange"
-                      format="yyyy-MM-dd"
-                      value-format="yyyy-MM-dd"
-                      range-separator=""
-                      start-placeholder="Start date"
-                      end-placeholder="End date"
-                      @change="getAllByDate">
-      </el-date-picker>
-    </div>
-    </form>
 
-<!--    <p> {{ from }} </p>-->
-<!--    <p> {{ to }} </p>-->
-    <br><br>
-    <div >
-      <el-table
-          :data="logs"
-          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
-          border="true"
-          :cell-style="{border: '1px solid'}"
-          :row-style="{border: '1px solid'}"
-          style="width: 100%; display: inline-block"
-          :row-class-name="tableRowClassName">
-        <el-table-column
-            prop="user.code"
-            label="Mã nhân viên"
-            width="120px"
-            align="center">
-        </el-table-column>
-        <el-table-column
-            prop="user.fullName"
-            label="Họ và tên"
-            header-align="center">
-        </el-table-column>
-        <el-table-column
-            prop="user.departments.name"
-            label="Bộ phận"
-            header-align="center"
-            >
-        </el-table-column>
-        <el-table-column
-            prop="date_log"
-            label="Ngày"
-            width="150px"
-            align="center">
-        </el-table-column>
-        <el-table-column
-            prop="timeIn"
-            label="Giờ vào"
-            width="150px"
-            align="center">
-        </el-table-column>
-        <el-table-column
-            prop="timeOut"
-            label="Giờ ra"
-            width="150px"
-            align="center">
-        </el-table-column>
-      </el-table>
-    </div>
 
-    <el-pagination
-        small
-        layout="prev, pager, next"
-        :total="totalItems"
-        :page-size="pageSize"
-        @current-change="handlePageChange">
-    </el-pagination>
-  </div>
+    <div style="text-align: center; width: 90%;margin: auto">
+      <br>
+      <!--    <h5 style="font-weight: 600;">-->
+      <!--      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-->
+      <!--      Nhân viên: {{currentUser.user.fullName}}-->
+      <!--    </h5>-->
+
+      <form ac>
+        <div className="block" class="text-end">
+          <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
+          <el-date-picker style="width: 30%;font-size: 16px;margin-right: 100px"
+                          v-model="dateRange"
+                          type="daterange"
+                          format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd"
+                          range-separator=""
+                          start-placeholder="Start date"
+                          end-placeholder="End date"
+                          @change="getAllByDate">
+          </el-date-picker>
+        </div>
+      </form>
+
+      <!--    <p> {{ from }} </p>-->
+      <!--    <p> {{ to }} </p>-->
+      <br><br>
+      <div class="text-center ">
+        <el-table
+            :data="logs"
+            :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+
+            style="width: 88%; display: inline-block; font-size: 16px"
+            :row-class-name="tableRowClassName">
+          <el-table-column
+              type="index"
+              label="STT"
+              width="80px"
+              align="center">
+          </el-table-column>
+
+          <el-table-column
+              prop="user.code"
+              label="Mã nhân viên"
+              width="150px"
+              align="center">
+          </el-table-column>
+          <el-table-column
+              prop="user.fullName"
+              label="Họ và tên"
+              align="center"
+              width="300px"
+          >
+          </el-table-column>
+          <el-table-column
+              prop="user.departments.name"
+              label="Bộ phận"
+              align="center"
+              width="300px"
+          >
+          </el-table-column>
+
+          <el-table-column
+              prop="date_log"
+              label="Ngày"
+              width="200px"
+              align="center">
+          </el-table-column>
+          <el-table-column
+              prop="timeIn"
+              label="Giờ vào"
+              width="200px"
+              align="center">
+          </el-table-column>
+          <el-table-column
+              prop="timeOut"
+              label="Giờ ra"
+              width="200px"
+              align="center">
+          </el-table-column>
+        </el-table>
+      </div>
+
+      <el-pagination class="text-end" style="margin-right: 100px"
+          background
+          layout="prev, pager, next"
+          :total="totalItems"
+          :page-size="pageSize"
+          @current-change="handlePageChange">
+      </el-pagination>
+
+    </div>
 </template>
 
 <script>
@@ -91,7 +103,7 @@ export default {
   name: 'HomeVue',
   data() {
     return {
-      user_code:  "",
+      user_code: "",
       dateRange: [],
       from: "",
       to: "",
@@ -122,33 +134,32 @@ export default {
     this.getAllByDate()
   },
   methods: {
-    getUserCode(){
-      if(this.$route.params.code == null){
+    getUserCode() {
+      if (this.$route.params.code == null) {
         this.user_code = this.currentUser.user.code;
         console.log(this.$route.params.code)
-      }
-      else{
+      } else {
         this.user_code = this.$route.params.code
         console.log(this.$route.params.code)
       }
     },
-    getAllByDate(){
-      this.from = this.dateRange !== null ? this.dateRange.at(0): null;
-      this.to = this.dateRange !== null ? this.dateRange.at(1): null;
-      const params ={
+    getAllByDate() {
+      this.from = this.dateRange !== null ? this.dateRange.at(0) : null;
+      this.to = this.dateRange !== null ? this.dateRange.at(1) : null;
+      const params = {
         "page": this.page,
         "size": this.size,
         'code': this.user_code,
         'from': this.from,
         'to': this.to
       }
-        LogdetailService.getByDate_UserCode(params).then(response => {
-          this.logs = response.data.content;
-          // this.page = response.data.pageable;
-          this.totalItems = response.data.totalElements;
-        }).catch(error => {
-          console.log(error);
-        })
+      LogdetailService.getByDate_UserCode(params).then(response => {
+        this.logs = response.data.content;
+        // this.page = response.data.pageable;
+        this.totalItems = response.data.totalElements;
+      }).catch(error => {
+        console.log(error);
+      })
 
     },
     a() {
@@ -167,12 +178,12 @@ export default {
       //   this.getBlogs();
       // }
     },
-    tableRowClassName() {
-      // if (rowIndex % 2 === 1) {
-      //   return 'warning-row';
-      // } else if (rowIndex % 2 === 0) {
-      //   return 'success-row';
-      // }
+    tableRowClassName({rowIndex}) {
+      if (rowIndex % 2 === 1) {
+        return 'warning-row';
+      } else if (rowIndex % 2 === 0) {
+        return 'success-row';
+      }
       return 'success-row';
     }
   },
@@ -180,12 +191,12 @@ export default {
 </script>
 
 <style>
-/*.el-table .warning-row {*/
-/*  background: oldlace;*/
-/*}*/
+.el-table .warning-row {
+  background: #EDEDED;
+}
 
 
-/*.el-table .success-row {*/
-/*  !*background: #f3a8aa;*!*/
-/*}*/
+.el-table .success-row {
+  background: #F5F5F5;
+}
 </style>

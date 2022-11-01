@@ -1,5 +1,5 @@
 <template>
-  <div className="container" style="text-align: center">
+  <div className="container" style="text-align: center;">
     <br>
     <h5 style="font-weight: 600;">
       Phòng ban: {{departmentName}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -8,9 +8,9 @@
     </h5>
     <br><br>
     <form ac>
-      <div className="block">
+      <div className="block" class="text-end">
         <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-        <el-date-picker style="width: 30%"
+        <el-date-picker style="width: 30%; margin-right: 140px"
                         v-model="dateRange"
                         type="daterange"
                         format="yyyy-MM-dd"
@@ -32,11 +32,8 @@
 <!--      </div>-->
       <el-table
           :data="logs"
-          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
-          border="true"
-          :cell-style="{border: '1px solid'}"
-          :row-style="{border: '1px solid'}"
-          style="width: 100%; display: inline-block"
+          :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+          style="width: 85%; display: inline-block"
           :row-class-name="tableRowClassName">
         <el-table-column
             prop="user.code"
@@ -61,8 +58,8 @@
       </el-table>
     </div>
 
-    <el-pagination
-        small
+    <el-pagination class="text-end" style=" margin-right: 140px"
+        background
         layout="prev, pager, next"
         :total="totalItems"
         :page-size="pageSize"
@@ -147,7 +144,12 @@ export default {
       this.page = value - 1;
       this.getAllByDate();
     },
-    tableRowClassName() {
+    tableRowClassName({rowIndex}) {
+      if (rowIndex % 2 === 1) {
+        return 'warning-row';
+      } else if (rowIndex % 2 === 0) {
+        return 'success-row';
+      }
       return 'success-row';
     }
   },
@@ -155,4 +157,12 @@ export default {
 </script>
 
 <style>
+.el-table .warning-row {
+  background: #EDEDED;
+}
+
+
+.el-table .success-row {
+  background: #F5F5F5;
+}
 </style>

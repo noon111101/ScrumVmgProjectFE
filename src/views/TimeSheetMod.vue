@@ -1,4 +1,4 @@
-<template>
+<template style="font-size: 16px">
   <div className="container" style="text-align: center; width: 90%;margin: auto">
 
     <div className="block" class="text-start">
@@ -23,14 +23,6 @@
     </div>
     <br />
     <div>
-<!--      <div >-->
-<!--        <p v-if="date!=''" style="color: cadetblue">-->
-<!--          Tìm kiếm ngày: {{date}}-->
-<!--        </p>-->
-<!--        <p v-if="search!=''" style="color: cadetblue">-->
-<!--          Tìm kiếm tên: {{search}}-->
-<!--        </p>-->
-<!--      </div>-->
       <el-table  class="text-center "
           :data="
           logs.filter(
@@ -39,11 +31,9 @@
               data.user.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-                :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
-                border="true"
-                :cell-style="{border: '1px solid'}"
-                :row-style="{border: '1px solid'}"
-                style="width: 100%; display: inline-block"
+                 :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+                 style="width: 100%; display: inline-block; font-size: 16px"
+                 :row-class-name="tableRowClassName"
       >
         <el-table-column label="ID" type="index"  align="center"></el-table-column>
         <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"> </el-table-column>
@@ -53,18 +43,18 @@
         <el-table-column label="Ngày" prop="date_log" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"> </el-table-column>
-        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">
-          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
-            <el-button type="info">Xem chi tiết</el-button>
-<!--            <el-button type="primary" icon="el-icon-edit" circle></el-button>-->
-          </router-link>
+<!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->
+<!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
+<!--            <el-button type="info">Xem chi tiết</el-button>-->
+<!--&lt;!&ndash;            <el-button type="primary" icon="el-icon-edit" circle></el-button>&ndash;&gt;-->
+<!--          </router-link>-->
 
-        </el-table-column>
+<!--        </el-table-column>-->
       </el-table>
     </div>
 
-    <el-pagination
-        small
+    <el-pagination class="text-end"
+        background
         layout="prev, pager, next"
         :total="totalItems"
         :page-size="pageSize"
@@ -84,7 +74,6 @@ export default {
   name: "HomeVue",
   data() {
     return {
-      stt: 1,
       user_code: "",
       dateRange: "",
       from: "",
@@ -153,7 +142,29 @@ export default {
       this.page = value - 1;
       this.getAll()
     },
+    tableRowClassName({rowIndex}) {
+      if (rowIndex % 2 === 1) {
+        return 'warning-row';
+      } else if (rowIndex % 2 === 0) {
+        return 'success-row';
+      }
+      return 'success-row';
+    }
 
   },
 };
 </script>
+
+<style>
+*{
+  font-size: 16px;
+}
+.el-table .warning-row {
+  background: #EDEDED;
+}
+
+
+.el-table .success-row {
+  background: #F5F5F5;
+}
+</style>

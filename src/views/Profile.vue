@@ -132,9 +132,7 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  created() {
 
-  },
   mounted() {
     if (!this.currentUser) {
       this.$router.push('/login');
