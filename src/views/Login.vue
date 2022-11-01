@@ -43,10 +43,21 @@
             role="alert"
           >Password is required!</div>
                   <div class="text-center pt-1 mb-5 pb-1">
+
+                    <button
+                      class="btn btn-danger btn-block"
+                      :disabled="loading"
+                    >
+                      Log in
+                    </button>
+                    <br />
+                    <a class="text-muted" href="http://localhost:8081/forgotPassword">Forgot password?</a>
+
                     <button class="btn btn-danger btn-block" :disabled="loading">Log
                       in</button>
                       <br>
                     <a class="text-muted" href="#!">Forgot password?</a>
+
                   </div>
                 </form>
 
