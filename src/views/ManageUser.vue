@@ -1,4 +1,4 @@
-<template>
+<template style="font-size: 16px">
   <div
       className="container"
       style=" width: 90%; margin: auto"
@@ -46,12 +46,10 @@
           )
         "
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-          :cell-style="{border: 'solid 1px'}"
-          :row-style="{border: 'solid 1px'}"
           style="width: 100%; display: inline-block;font-size: 16px"
           :row-class-name="tableRowClassName">
         >
-        <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
+        <el-table-column label="STT" type="index" align="center" width="100px"  ></el-table-column>
         <el-table-column label="Mã NV" prop="code" align="center" width="100px"></el-table-column>
         <el-table-column label="Ho và tên" prop="fullName" header-align="center"></el-table-column>
         <el-table-column label="Phòng ban" prop="departments.name" header-align="center">
@@ -65,17 +63,29 @@
               width="150px"
           />
         </el-table-column>
+        <el-table-column v-slot:="data" label="Chức vụ"  width="150px" align="center" >
+          <p class="text-muted mb-0"   v-for="(role,index) in data.row.roles" :key="index" >
+            <span v-if="role.id==1">Nhân viên</span>
+            <span v-if="role.id==2">Trưởng phòng</span>
+            <span v-if="role.id==3">Phòng nhân sự</span>
+            <!--                  {{role}}-->
+          </p>
+        </el-table-column>
+        <el-table-column v-slot:="data" label="Trạng thái" width="150px" align="center">
+          <button v-if="data.row.avalible==true"  class="tt1">Có hiệu lực</button>
+          <button v-if="data.row.avalible!=true"  class="tt2">Vô hiệu lực</button>
+        </el-table-column>
         <el-table-column v-slot:="data" label="Chỉnh sửa" width="150px" align="center" >
+          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />
           <router-link :to="`/users/${data.row.id}`">
-            <el-button type="info">Chỉnh sửa</el-button>
+            <i class="el-icon-edit-outline"></i>
           </router-link>
+          <a>
+            <b-icon icon="unlock-fill" class="rounded bg-primary p-1" variant="light" ></b-icon>
+          </a>
+
         </el-table-column>
-        <el-table-column label="Trạng thái" width="100px">
-          <label class="switch">
-            <input type="checkbox" checked/>
-            <span class="slider round"></span>
-          </label>
-        </el-table-column>
+
       </el-table>
     </div>
     <el-pagination class="text-end"
@@ -203,6 +213,24 @@ export default {
 .el-table .success-row {
   background: #F5F5F5;
 }
+
+.el-table .tt1{
+  color: black;
+  background-color: #75C4C0;
+  border: none;
+  border-radius: 5px;
+  padding: 3px 20px;
+}
+
+.el-table .tt2{
+  color: black;
+  background-color: #ED9696;
+  border: none;
+  border-radius: 5px;
+  padding: 3px 20px;
+}
+
+
 
 /* The switch - the box around the slider */
 .switch {

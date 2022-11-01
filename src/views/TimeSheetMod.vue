@@ -1,4 +1,4 @@
-<template>
+<template style="font-size: 16px">
   <div className="container" style="text-align: center; width: 90%;margin: auto">
 
     <div className="block" class="text-start">
@@ -23,14 +23,6 @@
     </div>
     <br />
     <div>
-<!--      <div >-->
-<!--        <p v-if="date!=''" style="color: cadetblue">-->
-<!--          Tìm kiếm ngày: {{date}}-->
-<!--        </p>-->
-<!--        <p v-if="search!=''" style="color: cadetblue">-->
-<!--          Tìm kiếm tên: {{search}}-->
-<!--        </p>-->
-<!--      </div>-->
       <el-table  class="text-center "
           :data="
           logs.filter(
@@ -40,7 +32,7 @@
           )
         "
                  :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-                 style="width: 100%; display: inline-block"
+                 style="width: 100%; display: inline-block; font-size: 16px"
                  :row-class-name="tableRowClassName"
       >
         <el-table-column label="ID" type="index"  align="center"></el-table-column>
@@ -82,7 +74,6 @@ export default {
   name: "HomeVue",
   data() {
     return {
-      stt: 1,
       user_code: "",
       dateRange: "",
       from: "",
@@ -165,6 +156,9 @@ export default {
 </script>
 
 <style>
+*{
+  font-size: 16px;
+}
 .el-table .warning-row {
   background: #EDEDED;
 }
