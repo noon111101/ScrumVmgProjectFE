@@ -1,15 +1,6 @@
 <template>
   <div>
 
-<!--    bread crum-->
-
-    <el-breadcrumb separator-class="el-icon-arrow-right" class="ms-3">
-      <el-breadcrumb-item :to="{ path: '/' }">homepage</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion management</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion list</el-breadcrumb-item>
-      <el-breadcrumb-item>promotion detail</el-breadcrumb-item>
-    </el-breadcrumb>
-
 <!--     Thanh chọn-->
 
     <div class="d-flex flex-row mt-3 ms-0 ">
@@ -202,11 +193,11 @@
         <b-icon-x-circle-fill style="color: #d8363a" size="sm" @click="close()">
         </b-icon-x-circle-fill>
       </template>
-      <b-form-radio v-model="selected" v-for="(sign,index) in signs" :disabled="!signs.includes(selected)?true:false" :key="index"  :name="sign" :value="sign">{{ sign }}</b-form-radio>
+      <b-form-radio v-model="selected" v-for="(sign,index) in signs" :key="index"  :name="sign" :value="sign">{{ sign }}</b-form-radio>
       <div v-if="signs.includes(selected)" class="mt-2 my-2 ">
         Nhập lý do :
       </div>
-      <b-form-input v-if="signs.includes(selected)" v-model="currenReason"  size="sm" autofocus type="text">}</b-form-input>
+      <b-form-input v-model="currenReason"  size="sm" autofocus type="text"></b-form-input>
       <template #modal-footer="{ok}">
         <b-button size="sm" variant="success" @click="handleEdit(dateEdit,codeEdit,selected,currenReason),ok()">
           OK
@@ -238,7 +229,7 @@
       </template>
       <span style="color: #75C4C0">Lưu</span><span> hoặc</span><span style="color:#FF0000;"> Xóa</span><span> tất cả chỉnh sửa</span>
       <template #modal-footer="{ok}">
-        <b-button variant="danger" @click="getLog(),ok()">Xoá</b-button>
+        <b-button variant="danger" @click="handleDeleteEdit(),ok()">Xoá</b-button>
         <b-button @click="ok()">Tiếp tục chỉnh sửa</b-button>
         <b-button style="background-color: #75C4C0" @click="handelUpdate(),ok()">
           Lưu
@@ -272,7 +263,7 @@ export default {
       dayEarn:0,
       currenReason:'',
       currentMonth:new Date().getMonth()+1,
-      currentYear:'',
+      currentYear:new Date().getFullYear(),
       currentDepartment:'',
     }
   },
@@ -306,8 +297,9 @@ export default {
     handleEdit(date, code,sign,reason) {
       for (let user of this.users) {
             if(user.code==code){
-              if(user.log[date].sign==sign && user.log[date].status===false)
+              if(user.log[date].sign==sign && user.log[date].status===false && user.log[date].reason ==null){
                 return
+              }
               if(reason=='')
                 reason=null
               if(user.log[date].sign==sign && user.log[date].status===true)
@@ -316,6 +308,7 @@ export default {
               user.log[date].status=true
               user.dayEarn=this.caculateDayWork(user.log)
               user.log[date].reason=reason
+
               this.logsEdit = this.logsEdit.filter(log => {
                   return log.code==code && log.date!==user.log[date].date || log.code!=code
               })
@@ -330,10 +323,35 @@ export default {
 
       console.log(this.logsEdit)
     },
+    handleDeleteEdit(){
+      this.getLog();
+      this.$swal.fire({
+        title:'Xóa chỉnh sửa thành công',
+        type:'success',
+        icon:'success',
+        showCloseButton: true,
+      })
+    },
     handelUpdate(){
       LogService.updateLog(this.logsEdit).then(respone =>{
         console.log(respone)
-      })
+        this.$swal.fire({
+              title:'Cập nhật thành công',
+              type:'success',
+              icon:'success',
+              showCloseButton: true,
+            }
+        )
+      }).catch(error=>{
+        console.log(error)
+        this.$swal.fire({
+              title:'Cập nhật thất bại',
+              type:'error',
+              text:error.response.data.message,
+              icon:'error',
+              showCloseButton: true,
+            }
+        )          })
       this.users.map(user =>{
         user.log.map(
             sign =>{
@@ -367,12 +385,15 @@ export default {
     },
     // Call API method
     exportExcel(department){
-      ExcelService.exportExcel();
       const params = {
         "id": department,
         "month": this.currentMonth
       }
-      ExcelService.exportExcel(params);
+      ExcelService.exportExcel(params).then(respone =>{
+        console.log(respone.data)
+      }).catch(error=>{
+        console.log(error)
+      });
     },
     getDepartment(){
       LogService.getDepartment().then(respone => {
@@ -397,8 +418,6 @@ export default {
               let dates=[]
               for(let user of users.logDetail){
                 let date = Number(user.date_log.split("-")[2])
-                let year = user.date_log.split("-")[0]
-                this.currentYear=year
                 dates.push(date)
                 if(date==i){
                   signs.push(
@@ -411,8 +430,11 @@ export default {
                   )
                 }
                 }
-              let formDate=this.currentYear+"-"+this.currentMonth+"-"+i;
               if(!dates.includes(i)){
+                if(i<10)
+                  i='0'+i;
+                let formDate=this.currentYear+"-"+this.currentMonth+"-"+i;
+                console.log(formDate)
                 signs.push(
                     {
                       sign: '_',

@@ -1,35 +1,50 @@
 <template>
+
   <div>
-    <div class="mounthSelect ">
-      <span class="demonstration mx-4">Month</span>
-      <el-date-picker
-          v-model="mounth"
-          type="month"
-          placeholder="Pick a month"
-          format="yyyy/MM"
-          value-format="yyyy-MM">
-      </el-date-picker>
-    </div>
+
     <div class="d-flex flex-row ">
-      <el-calendar  style="width: 70% ; margin-top: 50px" v-model="value">
-        <template  slot="dateCell" slot-scope="{date}">
-          <div :class="{
-              weekend:getSign(date.getDate(),date.getMonth()).weekend,
-              halfOff:getSign(date.getDate(),date.getMonth()).halfOff,
-              off:getSign(date.getDate(),date.getMonth()).off,
-              allDay:getSign(date.getDate(),date.getMonth()).allDay,
-              cellSign:true
-        }">
-            <p style="font-size: 18px; margin-left: 2px">
-              {{ date.getDate() }}
-              <br>
-            </p>
-            <p class="sign-calender text-center align-middle" >
-              {{getSign(date.getDate(),date.getMonth()).name}}
-            </p>
-          </div>
-        </template>
-      </el-calendar>
+        <el-calendar  style="width: 70% ; margin-top: 50px" v-model="value">
+          <template  slot="dateCell" slot-scope="{date,data,Sign=getSign(data.day)}">
+            <div :class="{
+              weekend:getSign(data.day).weekend,
+              halfOff:Sign.halfOff,
+              off:Sign.off,
+              allDay:Sign.allDay,
+              cellSign:true,
+              'position-relative':true
+
+        }"
+                 v-b-modal="'my-modal'"
+                 @click="setCell(data.day,Sign)"
+            >
+              <p style="font-size: 18px; margin-left: 2px">
+                {{ date.getDate() }}
+                <br>
+              </p>
+              <div class="sign-calender text-center align-middle " >
+                {{Sign.name}}
+                <el-tooltip popper-class="reason-popper" v-if="Sign.reason!=null" placement="right" effect="light">
+                  <div slot="content"><div class="note-wrapper">{{Sign.reason}}</div></div>
+                  <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
+                       viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 15px;fill: #A843A8FF " xml:space="preserve">
+              <g>
+                <polygon points="5.8,0.6 0,6.4 0,378.3 5.8,384 384,384 512,512 512,5.8 506.3,0 6.4,0 	"/>
+              </g>
+              </svg>
+                </el-tooltip>
+              </div>
+            </div>
+          </template>
+        </el-calendar>
+        <div class="mounthSelect ">
+          <el-date-picker
+              v-model="mounth"
+              type="month"
+              placeholder="Pick a month"
+              format="yyyy/MM"
+              value-format="yyyy-MM">
+          </el-date-picker>
+        </div>
       <div class="note-wrapper " style="margin-left: 80px ;margin-top: 100px" >
         <div class="d-flex flex-column" >
           <div style="font-weight: bold;">Chú thích</div>
@@ -50,14 +65,46 @@
               <p><span style="font-weight: bold">H</span>: Làm hành chính</p>
             </div>
             <div class="d-flex flex-row">
-              <el-button round class="h-25 me-3" style="background-color: #C2C2C2"></el-button>
+              <el-button round class="h-25 me-3" style="background-color: #F8CBAD"></el-button>
               <p><span style="font-weight: bold">NT</span>: Nghỉ tuần</p>
+            </div>
+            <div class="d-flex flex-row">
+              <el-button round class="h-25 me-3 position-relative" >
+                <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
+                     viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 10px;fill: #A843A8FF " xml:space="preserve">
+              <g>
+                <polygon points="5.8,0.6 0,6.4 0,378.3 5.8,384 384,384 512,512 512,5.8 506.3,0 6.4,0 	"/>
+              </g>
+          </svg>
+              </el-button>
+              <p>Comment</p>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
+    </div>
+<!--    MODAL-->
+    <b-modal id="my-modal" centered size="sm" >
+      <template #modal-header="{ close }">
+        <!-- Emulate built in modal header close button action -->
+        <h5>Chi tiết ngày {{cellDate}}</h5>
+        <b-icon-x-circle-fill style="color: #d8363a" size="sm" @click="close()">
+        </b-icon-x-circle-fill>
+      </template>
+      <div class="text-center" style="font-size: 16px;line-height: 19.5px;letter-spacing: 1px;">
+        <div v-if="cellSign.timeIn!=null">{{cellSign.timeIn}}</div>
+        <div v-if="cellSign.timeIn==null">None</div>
+        <div>...</div>
+        <div v-if="cellSign.timeOut!=null">{{cellSign.timeOut}}</div>
+        <div v-if="cellSign.timeOut==null">None</div>
+      </div>
+
+      <template #modal-footer="{ok}">
+        <b-button size="sm" variant="success" style="display:none;" @click="ok()">
+        </b-button>
+      </template>
+    </b-modal>
   </div>
 
 </template>
@@ -72,6 +119,8 @@ export default {
       value: new Date(),
       logs:[],
       mounth:"",
+      cellDate:'',
+      cellSign:{}
     }
   },
   methods: {
@@ -88,19 +137,28 @@ export default {
           })
 
     },
-   getSign(date,month){
+    setCell(date,sign){
+      date = date.split("-").reverse().join("/");
+      this.cellDate=date;
+      this.cellSign=sign
+    },
+   getSign(date){
      let sign={
        name:'',
        weekend:false,
        halfOff:false,
        off:false,
-       allDay:false
+       allDay:false,
+       timeIn:null,
+       timeOut:null,
+       reason:null
      };
      for (let log of this.logs) {
-       let dateLog = log.date_log.split("-")[2]
-       let monthLog =log.date_log.split("-")[1]
-       if(dateLog==date && monthLog==month ){
+       if(log.date_log==date){
          sign.name= log.signs.name
+         sign.timeIn= log.timeIn
+         sign.timeOut= log.timeOut
+         sign.reason= log.reason
          if(sign.name.includes("_"))
            sign.halfOff=true;
          if(sign.name.includes("H") && !sign.name.includes("_"))
@@ -138,19 +196,13 @@ export default {
 .sign-calender{
   font-weight: bold;
 }
-.green{
-  color: #42b983;
-}
-.red{
-  color: #e24146;
-}
 .mounthSelect{
   position: absolute;
-  left: 10px;
-  top:60px;
+  right: 30%;
+  top: 130px;
 }
 .weekend{
-  background-color: #C2C2C2 ;
+  background-color: #F8CBAD ;
 }
 .halfOff{
   background-color: #ECC376 ;
@@ -167,6 +219,9 @@ export default {
   border-radius: 10px;
   height: inherit;
   width: inherit;
+}
+.reason-popper{
+  border: #a843a8 1px;
 }
 
 </style>
