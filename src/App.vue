@@ -43,7 +43,7 @@ export default {
 <style scoped>
 #app {
   margin-top: 80px;
-
+  font-size: 16px;
   font-family:'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
