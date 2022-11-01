@@ -60,7 +60,7 @@
                       Log in
                     </button>
                     <br />
-                    <a class="text-muted" href="http://localhost:8081/login/forgotPassword">Forgot password?</a>
+                    <a class="text-muted" href="http://localhost:8081/forgotPassword">Forgot password?</a>
                   </div>
                 </form>
               </div>

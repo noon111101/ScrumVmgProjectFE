@@ -41,11 +41,9 @@
               data.user.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-          :header-cell-style="{ background: '#909399', color: 'white', align: 'center'}"
-          border="true"
-          :cell-style="{border: '1px solid'}"
-          :row-style="{border: '1px solid'}"
-         style="width: 100%; display: inline-block">
+          :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+         style="width: 100%; display: inline-block"
+          :row-class-name="tableRowClassName">
         <!--   border: solid 1px;-->
         <template>
 
@@ -68,8 +66,8 @@
         </template>
       </el-table>
     </div>
-    <el-pagination
-        small
+    <el-pagination class="text-end"
+        background
         layout="prev, pager, next"
         :total="totalItems"
         :page-size="pageSize"
@@ -186,11 +184,24 @@ export default {
             console.log(error);
           });
     },
+    tableRowClassName({rowIndex}) {
+      if (rowIndex % 2 === 1) {
+        return 'warning-row';
+      } else if (rowIndex % 2 === 0) {
+        return 'success-row';
+      }
+      return 'success-row';
+    }
   },
 };
 </script>
 <style>
-el-table .cell-style{
+.el-table .warning-row {
+  background: #EDEDED;
+}
 
+
+.el-table .success-row {
+  background: #F5F5F5;
 }
 </style>

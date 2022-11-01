@@ -1,87 +1,89 @@
 <template>
   <div
-    className="container"
-    style="text-align: center; width: 90%; margin: auto"
+      className="container"
+      style=" width: 90%; margin: auto"
   >
-    <div className="block" class="text-start">
+    <div style="">
+      <div style="width: 200px">
       <el-select
-        v-model="departmentId"
-        @change="getAll"
-        placeholder="Chon Phòng ban"
+          v-model="departmentId"
+          @change="getAll"
+          placeholder="Chọn Phòng ban"
       >
         <el-option value="0" label="All Users"></el-option>
         <el-option
-          v-for="item in departments"
-          :key="item.id"
-          :label="item.name"
-          :value="item.id"
+            v-for="item in departments"
+            :key="item.id"
+            :label="item.name"
+            :value="item.id"
         >
         </el-option>
       </el-select>
-      <br /><br />
+      </div>
 
-      <router-link to="/add-user" class="nav-link sel">
-        <el-button type="danger" round
+      <div style="width: 200px">
+        <el-input v-model="search" size="medium" placeholder="Tên nhân viên"/>
+      </div>
+
+      <div style="float: right;margin-bottom: 20px">
+        <router-link to="/add-user" style="width: 200px">
+          <el-button type="danger" round
           ><i class="el-icon-plus"></i> Thêm nhân viên
-        </el-button>
-      </router-link>
+          </el-button>
+        </router-link>
+      </div>
+
     </div>
-    <div style="float: right">
-      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" />
-    </div>
-    <br /><br />
+
+    <br/>
     <div>
       <el-table
-        :data="
+          :data="
           users.filter(
             (data) =>
               !search ||
               data.fullName.toLowerCase().includes(search.toLowerCase())
           )
         "
-        :header-cell-style="{
-          background: '#909399',
-          color: 'white',
-          align: 'center',
-        }"
-        border="true"
-        :cell-style="{ border: '1px solid' }"
-        :row-style="{ border: '1px solid' }"
-        style="width: 100%; display: inline-block"
-      >
-        <el-table-column label="STT" type="index"> </el-table-column>
-        <el-table-column label="Mã NV" prop="code"> </el-table-column>
-        <el-table-column label="Ho và tên" prop="fullName"> </el-table-column>
-        <el-table-column label="Phòng ban" prop="departments.name">
+          :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+          :cell-style="{border: 'solid 1px'}"
+          :row-style="{border: 'solid 1px'}"
+          style="width: 100%; display: inline-block;font-size: 16px"
+          :row-class-name="tableRowClassName">
+        >
+        <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
+        <el-table-column label="Mã NV" prop="code" align="center" width="100px"></el-table-column>
+        <el-table-column label="Ho và tên" prop="fullName" header-align="center"></el-table-column>
+        <el-table-column label="Phòng ban" prop="departments.name" header-align="center">
         </el-table-column>
-        <el-table-column label="Email" prop="username"> </el-table-column>
-        <el-table-column label="Ảnh" v-slot:="data">
-          <img 
-            v-bind:src="
+        <el-table-column label="Email" prop="username" header-align="center"></el-table-column>
+        <el-table-column label="Ảnh" v-slot:="data" align="center"  width="210px">
+          <img
+              v-bind:src="
               `http://localhost:8080/uploads/images/` + data.row.cover
             "
-            width="150px"
+              width="150px"
           />
         </el-table-column>
-        <el-table-column v-slot:="data" label="Chỉnh sửa">
+        <el-table-column v-slot:="data" label="Chỉnh sửa" width="150px" align="center" >
           <router-link :to="`/users/${data.row.id}`">
             <el-button type="info">Chỉnh sửa</el-button>
           </router-link>
         </el-table-column>
-        <el-table-column label="Trạng thái">
+        <el-table-column label="Trạng thái" width="100px">
           <label class="switch">
-            <input type="checkbox" checked />
+            <input type="checkbox" checked/>
             <span class="slider round"></span>
           </label>
         </el-table-column>
       </el-table>
     </div>
-    <el-pagination
-      small
-      layout="prev, pager, next"
-      :total="totalItems"
-      :page-size="pageSize"
-      @current-change="handlePageChange"
+    <el-pagination class="text-end"
+                   background
+                   layout="prev, pager, next"
+                   :total="totalItems"
+                   :page-size="pageSize"
+                   @current-change="handlePageChange"
     >
     </el-pagination>
   </div>
@@ -92,6 +94,7 @@ import ExcelService from "@/services/excel-service";
 // import LogdetailService from "@/services/logdetail-service";
 import DepartmentService from "@/services/department.service";
 import UserService from "@/services/user.service";
+
 export default {
   name: "HomeVue",
   data() {
@@ -123,12 +126,12 @@ export default {
     this.getAll();
     this.getUserCode();
     DepartmentService.getAllDepartment()
-      .then((response) => {
-        this.departments = response.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then((response) => {
+          this.departments = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   },
 
   methods: {
@@ -143,16 +146,16 @@ export default {
         departid: this.departmentId,
       };
       UserService.getUser_Department(params)
-        .then((response) => {
-          this.users = response.data.content;
-          this.page = response.data.pageable.pageNumber;
-          console.log(response.data.pageable.pageNumber);
-          this.totalItems = response.data.totalElements;
-          console.log(response.data.content + "fdasfds");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((response) => {
+            this.users = response.data.content;
+            this.page = response.data.pageable.pageNumber;
+            console.log(response.data.pageable.pageNumber);
+            this.totalItems = response.data.totalElements;
+            console.log(response.data.content + "fdasfds");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     exportExcel() {
       ExcelService.exportExcel();
@@ -179,10 +182,28 @@ export default {
     //         console.log(error);
     //       });
     // },
+    tableRowClassName({rowIndex}) {
+      if (rowIndex % 2 === 1) {
+        return 'warning-row';
+      } else if (rowIndex % 2 === 0) {
+        return 'success-row';
+      }
+      return 'success-row';
+    }
   },
+
 };
 </script>
 <style>
+.el-table .warning-row {
+  background: #EDEDED;
+}
+
+
+.el-table .success-row {
+  background: #F5F5F5;
+}
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
