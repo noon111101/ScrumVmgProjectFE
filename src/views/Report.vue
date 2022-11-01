@@ -272,6 +272,7 @@
       </template>
     </b-modal>
   </div>
+  </div>
 
 </template>
 
@@ -403,12 +404,6 @@ export default {
       }else{
         params = {
         "id": this.department,
-
-    exportExcel(department){
-      ExcelService.exportExcel();
-      const params = {
-        "id": department,
-        "month": this.currentMonth
       }
       }
       ExcelService.exportExcel(params);
