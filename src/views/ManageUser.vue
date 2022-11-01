@@ -71,14 +71,14 @@
             <!--                  {{role}}-->
           </p>
         </el-table-column>
-        <el-table-column v-slot:="data" label="Trạng thái" width="150px" align="center">
+        <el-table-column v-slot:="data" label="Trạng thái" width="150px" align="center" >
           <button v-if="data.row.avalible==true"  class="tt1">Có hiệu lực</button>
           <button v-if="data.row.avalible!=true"  class="tt2">Vô hiệu lực</button>
         </el-table-column>
         <el-table-column v-slot:="data" label="Chỉnh sửa" width="150px" align="center" >
-          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />
+<!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
           <router-link :to="`/users/${data.row.id}`">
-            <i class="el-icon-edit-outline"></i>
+            <i class="el-icon-edit-outline" style="width: 30px;"></i>
           </router-link>
           <a>
             <b-icon icon="unlock-fill" class="rounded bg-primary p-1" variant="light" ></b-icon>

@@ -50,14 +50,14 @@
           <el-table-column
               prop="user.fullName"
               label="Họ và tên"
-              header-align="center"
+              align="center"
               width="300px"
           >
           </el-table-column>
           <el-table-column
               prop="user.departments.name"
               label="Bộ phận"
-              header-align="center"
+              align="center"
               width="300px"
           >
           </el-table-column>

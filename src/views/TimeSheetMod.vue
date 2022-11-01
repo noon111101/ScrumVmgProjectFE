@@ -43,13 +43,13 @@
         <el-table-column label="Ngày" prop="date_log" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"> </el-table-column>
-        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">
-          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">
-            <el-button type="info">Xem chi tiết</el-button>
-<!--            <el-button type="primary" icon="el-icon-edit" circle></el-button>-->
-          </router-link>
+<!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->
+<!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
+<!--            <el-button type="info">Xem chi tiết</el-button>-->
+<!--&lt;!&ndash;            <el-button type="primary" icon="el-icon-edit" circle></el-button>&ndash;&gt;-->
+<!--          </router-link>-->
 
-        </el-table-column>
+<!--        </el-table-column>-->
       </el-table>
     </div>
 
