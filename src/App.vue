@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-
-<!--      <button @click="toggleSidebar"> <font-awesome-icon icon="home" /></button>-->
     <Sidebar />
     <div class="container-fluid">
       <router-view />  

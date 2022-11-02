@@ -91,7 +91,7 @@
         tabindex="-1"
         id="offcanvasDarkNavbar"
         aria-labelledby="offcanvasDarkNavbarLabel"
-        style="width: 14%"
+        style="width: 16%"
       >
         <div class="offcanvas-header" style="margin: auto">
           <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">
@@ -118,7 +118,7 @@
               <a class="nav-link">
                 <router-link to="/user" v-if="currentUser" class="nav-link sel">
                   <i class="el-icon-question"></i>
-                  Chi tiết chấm công
+                  Chi tiết chấm công cá nhân
                 </router-link>
               </a>
             </li>
@@ -127,7 +127,7 @@
               <a class="nav-link">
 
                 <router-link to="/timesheetadmin" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công
+                  <i class="el-icon-date"> </i> Chi tiết chấm công công ty
                 </router-link>
               </a>
             </li>
@@ -135,7 +135,7 @@
             <li class="nav-item" v-if="showModeratorBoard">
               <a class="nav-link">
                 <router-link to="/timesheetmod" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Chi tiết chấm công
+                  <i class="el-icon-date"> </i> Chi tiết chấm công bộ phận
                 </router-link>
               </a>
             </li>
@@ -143,7 +143,7 @@
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
                 <router-link to="/manage" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Quản lý nhân viên
+                  <i class="el-icon-files"> </i> Quản lý nhân viên
                 </router-link>
               </a>
             </li>
