@@ -124,6 +124,11 @@ export default {
     },
   },
   created() {},
+
+    }
+  },
+
+
   mounted() {
     if (!this.currentUser) {
       this.$router.push("/login");
