@@ -1,145 +1,240 @@
 <template>
-  <section style="background-color: #eee;">
-  <div class="container py-5">
-    <div class="row">
-      <div class="col-lg-4">
-        <div class="card mb-4">
-          <div class="card-body text-center">
+  <section class="section about-section gray-bg" id="about" style="margin-top: 150px;" >
+    <div style="border: 2px solid black;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" class="container">
+      <div class="row align-items-center flex-row-reverse">
+        <p
+            style="
+            text-align: center;
+            background-color: #d9d9d9;
+            padding: 20px;
+            font-weight: bold;
 
-            <img v-if="currentUser.user.cover!=null" v-bind:src="`http://localhost:8080/uploads/images/` + currentUser.user.cover"
-              class="rounded-circle img-fluid" style="width: 120px">
-            <img v-if="currentUser.user.cover==null" src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                 class="rounded-circle img-fluid" style="width: 120px">
-            <h5 class="my-3">{{currentUser.user.fullName}}</h5>
-            <p class="text-muted mb-4">{{currentUser.user.code}}</p>
-
-<!--            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar"-->
-<!--              class="rounded-circle img-fluid" style="width: 150px;">-->
-            <h5 class="my-3">{{currentUser.user.username}}</h5>
-            <p class="text-muted mb-4">{{currentUser.code}}</p>
-
-            <div class="d-flex justify-content-center mb-2">
-            <img src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg" style="width: 100px;" >
+          "
+        >
+          THÔNG TIN NHÂN VIÊN
+        </p>
+        <div class="col-lg-6">
+          <div class="about-text go-to">
+            <div class="row about-list">
+              <div
+                  style="border-bottom: 1px solid black; width: 500px"
+                  class="media"
+              >
+                <span style="font-size: 20px"> Họ và tên nhân viên: </span>
+                <span style="float: right; margin-right: 6px; font-size: 20px">
+                  {{ currentUser.user.fullName }}
+                </span>
+              </div>
+              <div
+                  style="border-bottom: 1px solid black; width: 500px"
+                  class="media"
+              >
+                <span style="font-size: 20px"> Giới tính: </span>
+                <span style="float: right; margin-right: 6px; font-size: 20px">
+                  {{ currentUser.user.gender }}
+                </span>
+              </div>
+              <div
+                  style="border-bottom: 1px solid black; width: 500px"
+                  class="media"
+              >
+                <span style="font-size: 20px"> Chức vụ: </span>
+                <span
+                    class="text-muted mb-0"
+                    v-for="(role, index) in currentUser.roles"
+                    :key="index"
+                >
+                  <span
+                      style="float: right; margin-right: 6px; font-size: 20px"
+                      v-if="role == 'ROLE_USER'"
+                  >Nhân viên</span
+                  >
+                  <span
+                      style="float: right; margin-right: 6px; font-size: 20px"
+                      v-if="role == 'ROLE_MANAGE'"
+                  >Trưởng phòng</span
+                  >
+                  <span
+                      style="float: right; margin-right: 6px; font-size: 20px"
+                      v-if="role == 'ROLE_ADMIN'"
+                  >Phòng nhân sự</span
+                  >
+                </span>
+              </div>
+              <div
+                  style="border-bottom: 1px solid black; width: 500px"
+                  class="media"
+              >
+                <span style="font-size: 20px"> Email: </span>
+                <span style="float: right; margin-right: 6px; font-size: 20px">
+                  {{ currentUser.user.username }}
+                </span>
+              </div>
+              <div
+                  style="border-bottom: 1px solid black; width: 500px"
+                  class="media"
+              >
+                <span style="font-size: 20px"> Phòng ban: </span>
+                <span style="float: right; margin-right: 6px; font-size: 20px">
+{{ currentUser.user.departments.name }}
+                </span>
+              </div>
+              <div
+                  style="border-bottom: 1px solid black; width: 500px; margin-bottom: 50px"
+                  class="media"
+              >
+                <span style="font-size: 20px"> Mã nhân viên: </span>
+                <span style="float: right; margin-right: 6px; font-size: 20px">
+                  {{ currentUser.user.code }}
+                </span>
+              </div>
             </div>
           </div>
         </div>
-        <div class="card mb-4 mb-lg-0">
-            <div class="card mb-4 mb-md-0">
-              <div class="card-body">
-                <p class="mb-4"><span class="text-primary font-italic me-1">Thống kê ngày nghỉ</span>
-                </p>
-                <p class="mb-1" style="font-size: .77rem;">Tổng số ngày yêu cầu đi làm</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="80"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Tổng số ngày đi làm</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 72%" aria-valuenow="72"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <p class="mt-4 mb-1" style="font-size: .77rem;">Số ngày nghỉ lễ</p>
-                <div class="progress rounded" style="height: 5px;">
-                  <div class="progress-bar" role="progressbar" style="width: 89%" aria-valuenow="89"
-                    aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-
-              </div>
-            </div>
-        </div>
-      </div>
-      <div class="col-lg-8">
-        <div class="card mb-4">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Họ và tên</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{currentUser.user.fullName}}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Email</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{currentUser.user.username}}</p>
-              </div>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Chức vụ</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0"  v-for="(role,index) in currentUser.roles" :key="index" >
-                  <span v-if="role=='ROLE_USER'">Nhân viên</span>
-                  <span v-if="role=='ROLE_MANAGE'">Trưởng phòng</span>
-                  <span v-if="role=='ROLE_ADMIN'">Phòng nhân sự</span>
-                  <!--                  {{role}}-->
-                </p>
-              </div>
-            </div>
-            <hr>
-                   <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Giới tính</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{currentUser.user.gender}}</p>
-              </div>
-            </div>
-              <hr>
-                   <div class="row">
-              <div class="col-sm-3">
-                <p class="mb-0">Phòng ban</p>
-              </div>
-              <div class="col-sm-9">
-                <p class="text-muted mb-0">{{currentUser.user.departments.name}}</p>
-              </div>
-            </div>
-
-              </div>
-            </div>
-            <hr>
-
-
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6">
+        <div class="col-lg-6">
+          <div style="margin-left: 100px" class="about-avatar">
+<!--            currentUser.user.cover-->
+            <img v-if="currentUser.user.cover!=null"
+                 v-bind:src="
+              `http://localhost:8080/uploads/images/` + currentUser.user.cover
+            "
+                 width="250px"
+            />
+            <img v-if="currentUser.user.cover==null"
+                 src="../assets/user.jpg"
+                 width="250px"
+            />
           </div>
         </div>
       </div>
-
-</section>
+    </div>
+  </section>
 </template>
-
 <script>
-
 export default {
-  name: 'ProfileVue',
-  data(){
-    return{
-    }
+  name: "ProfileVue",
+  data() {
+    return {};
   },
   computed: {
     currentUser() {
-
       // return JSON.parse(localStorage.getItem('user'));
       return this.$store.state.auth.user;
-    }
+    },
   },
-  created() {
-
-  },
+  created() {},
   mounted() {
     if (!this.currentUser) {
-      this.$router.push('/login');
+      this.$router.push("/login");
     }
-
-  }
+  },
 };
- </script>
+</script>
+<style scoped>
+.about-text h3 {
+  font-size: 45px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+@media (max-width: 767px) {
+  .about-text h3 {
+    font-size: 35px;
+  }
+}
+.about-text h6 {
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+@media (max-width: 767px) {
+  .about-text h6 {
+    font-size: 18px;
+  }
+}
+.about-text p {
+  font-size: 18px;
+  max-width: 450px;
+}
+.about-text p mark {
+  font-weight: 600;
+  color: #20247b;
+}
+
+.about-list {
+  padding-top: 10px;
+}
+.about-list .media {
+  padding: 5px 0;
+}
+.about-list label {
+  color: #20247b;
+  font-weight: 600;
+  width: 88px;
+  margin: 0;
+  position: relative;
+}
+.about-list label:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 11px;
+  width: 1px;
+  height: 12px;
+  background: #20247b;
+  -moz-transform: rotate(15deg);
+  -o-transform: rotate(15deg);
+  -ms-transform: rotate(15deg);
+  -webkit-transform: rotate(15deg);
+  transform: rotate(15deg);
+  margin: auto;
+  opacity: 0.5;
+}
+.about-list p {
+  margin: 0;
+  font-size: 15px;
+}
+
+@media (max-width: 991px) {
+  .about-avatar {
+    margin-top: 30px;
+  }
+}
+
+.about-section .counter {
+  padding: 22px 20px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(31, 45, 61, 0.125);
+}
+.about-section .counter .count-data {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.about-section .counter .count {
+  font-weight: 700;
+  color: #20247b;
+  margin: 0 0 5px;
+}
+.about-section .counter p {
+  font-weight: 600;
+  margin: 0;
+}
+mark {
+  background-image: linear-gradient(
+      rgba(252, 83, 86, 0.6),
+      rgba(252, 83, 86, 0.6)
+  );
+  background-size: 100% 3px;
+  background-repeat: no-repeat;
+  background-position: 0 bottom;
+  background-color: transparent;
+  padding: 0;
+  color: currentColor;
+}
+.theme-color {
+  color: #fc5356;
+}
+.dark-color {
+  color: #20247b;
+}
+</style>

@@ -65,6 +65,16 @@ export const router = new Router({
       }
       },
     {
+      path: '/forgotPassword',
+      name: 'forgotPassword',
+      component: () => import('./views/ForgotPassword.vue'),
+    },
+    {
+      path: '/confirmForgot',
+      name: 'confirmForgot',
+      component: () => import('./views/ConfirmForgot.vue'),
+    },
+    {
       path: '/changepassword',
       name: 'changepassword',
       component: () => import('./views/ChangePassword.vue')
@@ -85,6 +95,19 @@ export const router = new Router({
         else next('/calender')
       }
     },
+
+    {
+      path: '/user/:id',
+      name: 'edit',
+      component: () => import('./views/EditUser.vue'),
+      beforeEnter: (to, from, next) => {
+        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+        if(admin)
+          next()
+        else next('/calender')
+      }
+    },
+
     {
       path: '/timesheetadmin',
       name: 'timesheetadmin',
@@ -117,15 +140,11 @@ export const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (authRequired && !loggedIn) {
-    if (to.path=='/forgotPassword') {
-      next('/forgotPassword')
-    }
-    else
-      next('/login');
+    next('/login');
   }
   else {
     next()

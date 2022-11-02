@@ -54,7 +54,22 @@
                     class="col-md-4"
 
                 >
-                  <input type="file" name="cover" class="form-control" placeholder="Title">
+                  <input
+                      type="file"
+                      name="cover"
+                      class="form-control"
+                      placeholder="Title"
+                      @change="previewFiles($event)"
+                  />
+                  <br /><br />
+                  <img
+                      alt=""
+                      :src="
+                      newImage ||
+                      'https://www.namepros.com/attachments/empty-png.89209/'
+                    "
+                      style="width: 270px"
+                  />
                 </div>
                 <div class="col-md-8">
                   <table class="text-start">
@@ -236,6 +251,7 @@
                           <button class="btn btn-block btn-signup">
                             Sign Up
                           </button>
+
                         </div>
                       </td>
                     </tr>
@@ -280,6 +296,7 @@ export default {
       submitted: false,
       successful: false,
       message: "",
+      newImage:"",
       cover: {
 
       },
@@ -302,25 +319,37 @@ export default {
     sendForm() {
       this.submitted = true;
       let form = document.querySelector("#formRegister");
-      console.log(form);
-      let response = authService.register(form);
-      if (response) {
-        // this.$swal.fire(
-        //     'Đăng ký thành công!',
-        //     '',
-        //     'success'
-        // )
-        return this.$router.push('/add-user')
+      if(this.user.code==""||this.user.username==""||this.user.fullName==""||this.user.department==""
+          ||this.user.gender==""){
+        this.$swal.fire({
+          title: 'Chưa nhập đủ thông tin!',
+          icon: "info",
+          timer: 2000,
+          timerProgressBar: true,
+        })
+      }else{
+        let response = authService.register(form);
+        if (response) {
+          this.$swal.fire({
+            title: 'Tạo tài khoản thành công!',
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          })
+          return this.$router.push('/add-user')
 
+        }
+        else {
+          this.$swal.fire({
+            title: 'Tạo tài khoản thất bại!',
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          })
+          return this.$router.push('/add-user')
+        }
       }
-      else {
-        this.$swal.fire(
-            'Đăng ký thất bại!',
-            '',
-            'success'
-        )
-        return this.$router.push('/add-user')
-      }
+
     },
     handleRegister() {
       this.message = "";
@@ -345,6 +374,15 @@ export default {
           );
         }
       });
+    },
+    previewFiles(event) {
+      const file = event.target.files[0];
+
+      const theReader = new FileReader();
+      theReader.onloadend = async () => {
+        this.newImage = await theReader.result;
+      };
+      theReader.readAsDataURL(file);
     },
     exportExcel() {
       ExcelService.exportExcel();
