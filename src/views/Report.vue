@@ -99,7 +99,7 @@
       <!--     Nút chọn-->
 
       <div class="col-3 ">
-        <el-button @click="exportExcel" type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File
+        <el-button @click="exportExcel()" type="danger" class="el-icon-download float-end ms-3" round> Xuất File
         </el-button>
         <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end "
                    round> Cập nhật
@@ -272,6 +272,7 @@
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
 import LogService from "@/services/logdetail-service"
+// import AuthService from "@/services/auth.service";
 
 export default {
   name: 'ReportAdmin',
@@ -386,19 +387,51 @@ export default {
     },
     // Call API method
     exportExcel() {
-      let params=null;
-      if(this.showModeratorBoard){
-        params = {
-          "id": this.accountDepartment.id,
-          "month": this.currentMonth
+      this.$swal.fire({
+        title: 'Xuất bảng chấm công?',
+        showDenyButton: true,
+        confirmButtonColor: "#75C4C0",
+        confirmButtonText: 'Xuất',
+        denyButtonColor: "#ED9696",
+        denyButtonText: 'Hủy',
+        customClass: {
+          actions: 'my-actions',
+          cancelButton: 'order-1 right-gap',
+          confirmButton: 'order-2',
+          denyButton: 'order-3',
         }
-      }else{
-        params = {
-          "id": this.department,
-          "month": this.currentMonth
+      }).then(result => {
+        if (result.isConfirmed) {
+          let params=null;
+          if(this.showModeratorBoard){
+            params = {
+              "id": this.accountDepartment.id,
+              "month": this.currentMonth
+            }
+          }else{
+            params = {
+              "id": this.department,
+              "month": this.currentMonth
+            }
+          }
+          ExcelService.exportExcel(params);
+
+        } else if (result.isDenied) {
+          this.$swal.fire(
+              {
+                title: "Hủy xuất file",
+                icon: 'error',
+                timer: 2000,
+                timerProgressBar: true,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                width: '24em',
+              }
+          )
         }
-      }
-      ExcelService.exportExcel(params);
+      })
+
     },
     getDepartment() {
       LogService.getDepartment().then(respone => {
