@@ -30,6 +30,10 @@ class AuthService {
         return axios.post(API_URL + 'changePassword', data)
     }
 
+    lockAccount(id){
+        return axios.put(API_URL + `lockAccount/${id}`)
+    }
+
   }
   
   export default new AuthService();

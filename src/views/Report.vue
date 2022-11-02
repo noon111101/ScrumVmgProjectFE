@@ -85,12 +85,16 @@
           </el-tooltip>
       </div>
 
-<!--     Nút chọn-->
+      <!--     Nút chọn-->
 
-      <div class="col-3 " >
-        <el-button v-if="showAdminBoard" @click="exportExcel(department)"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
-        <el-button v-if="showModeratorBoard" @click="exportExcel(accountDepartment.id)"  type="danger" class="el-icon-upload2 float-end ms-3" round> Xuất File</el-button>
-        <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end " round> Cập nhật</el-button>
+      <div class="col-3 ">
+        <el-button @click="exportExcel()" type="danger" class="el-icon-download float-end ms-3" round> Xuất File
+        </el-button>
+        <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end "
+                   round> Cập nhật
+        </el-button>
+
+
       </div>
     </div>
 <!--   BẢNG CHẤM CÔNG-->
@@ -245,6 +249,7 @@
 // import UserService from '../services/user.service';
 import ExcelService from "@/services/excel-service";
 import LogService from "@/services/logdetail-service"
+
 export default {
   name: 'ReportAdmin',
   data() {
@@ -384,16 +389,54 @@ export default {
       else return false
     },
     // Call API method
-    exportExcel(department){
-      const params = {
-        "id": department,
-        "month": this.currentMonth
-      }
-      ExcelService.exportExcel(params).then(respone =>{
-        console.log(respone.data)
-      }).catch(error=>{
-        console.log(error)
-      });
+
+    exportExcel() {
+      this.$swal.fire({
+        title: 'Xuất bảng chấm công?',
+        showDenyButton: true,
+        confirmButtonColor: "#75C4C0",
+        confirmButtonText: 'Xuất',
+        denyButtonColor: "#ED9696",
+        denyButtonText: 'Hủy',
+        customClass: {
+          actions: 'my-actions',
+          cancelButton: 'order-1 right-gap',
+          confirmButton: 'order-2',
+          denyButton: 'order-3',
+        }
+      }).then(result => {
+        if (result.isConfirmed) {
+          let params=null;
+          if(this.showModeratorBoard){
+            params = {
+              "id": this.accountDepartment.id,
+              "month": this.currentMonth
+            }
+          }else{
+            params = {
+              "id": this.department,
+              "month": this.currentMonth
+            }
+          }
+          ExcelService.exportExcel(params);
+
+        } else if (result.isDenied) {
+          this.$swal.fire(
+              {
+                title: "Hủy xuất file",
+                icon: 'error',
+                timer: 2000,
+                timerProgressBar: true,
+                toast: true,
+                position: 'top-end',
+                showConfirmButton: false,
+                width: '24em',
+              }
+          )
+        }
+      })
+
+
     },
     getDepartment(){
       LogService.getDepartment().then(respone => {
@@ -485,13 +528,10 @@ export default {
   },
   mounted(){
     this.getDepartment();
-    this.accountDepartment=this.currentUser.user.departments
-
-    if(this.showModeratorBoard){
-      this.department=this.accountDepartment.id
-    }
     this.getLog();
     console.log(this.currentUser.user.fullName)
+    this.accountDepartment = this.currentUser.user.departments
+
   },
 };
 </script>

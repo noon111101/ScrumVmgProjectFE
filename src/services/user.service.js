@@ -3,6 +3,8 @@ import authHeader from './auth-header';
 
 import httpCommon from "@/http-common";
 
+import axios from 'axios';
+
 class UserService {
   getUser_Department(params){
     return httpCommon.get("/user-management/users", {params})
@@ -22,6 +24,19 @@ class UserService {
 
   getAdminBoard() {
     return httpCommon.get("/user-management" + 'admin', { headers: authHeader() });
+  }
+
+  editUser(id, data){
+    let formData = new FormData(data);
+    console.log(formData)
+    return axios.put("http://localhost:8080/api"+`/user-management/user/${id}`, formData)
+  }
+
+  getUserById(id) {
+    return httpCommon.get(`/user-management/users/${id}`);
+  }
+  forgotPassword(params){
+    return axios.post("http://localhost:8080/api/mail/reset_password",{}, {params})
   }
 }
 
