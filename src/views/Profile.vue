@@ -93,7 +93,7 @@
         </div>
         <div class="col-lg-6">
           <div style="margin-left: 100px" class="about-avatar">
-<!--            currentUser.user.cover-->
+            <!--            currentUser.user.cover-->
             <img v-if="currentUser.user.cover!=null"
                  v-bind:src="
               `http://localhost:8080/uploads/images/` + currentUser.user.cover
@@ -124,10 +124,6 @@ export default {
     },
   },
   created() {},
-
-    }
-  },
-
 
   mounted() {
     if (!this.currentUser) {

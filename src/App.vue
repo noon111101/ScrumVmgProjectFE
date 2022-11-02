@@ -2,7 +2,7 @@
   <div id="app">
     <Sidebar />
     <div class="container-fluid">
-      <router-view />  
+      <router-view />
     </div>
   </div>
 </template>

@@ -165,10 +165,10 @@
                           >
                             <option
                                 :selected="
-                                user.departments.id == 'Thuc tap PTDN'
+                                user.departments.name == 'Phòng kế toán'
                               "
                             >
-                              Thuc tap PTDN
+                              Phòng kế toán
                             </option>
                             <option
                                 :selected="
@@ -177,6 +177,14 @@
                             >
                               Thuc tap PTPM
                             </option>
+                            <option
+                                :selected="
+                                user.departments.name == 'Phòng phát triển phần mềm'
+                              "
+                            >
+                              Phòng phát triển phần mềm
+                            </option>
+
                             <option>Phòng kế toán</option>
                           </select>
                         </div>
