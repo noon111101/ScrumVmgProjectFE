@@ -42,7 +42,7 @@
 
 
         <el-table-column label="STT" type="index" align="center" > </el-table-column>
-        <el-table-column label="Mã nhân viên" prop="user.code" align="center"   width="120px">
+        <el-table-column label="Mã nhân viên" prop="user.code" align="center"   width="150px">
 <!--          <span>{{log.row.user.code}}</span>-->
         </el-table-column>
         <el-table-column label="Name" prop="user.fullName" header-align="center"> </el-table-column>
