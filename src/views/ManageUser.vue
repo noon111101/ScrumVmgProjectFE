@@ -1,10 +1,8 @@
 <template style="font-size: 16px">
-  <div
-      className="container"
-      style=" width: 90%; margin: auto"
-  >
-    <div style="" class="d-flex flex-row mt-3 ms-0 ">
-      <div style="width: 200px" class="col-9  ">
+  <div className="container" style=" width: 90%; margin: auto">
+    <div class="d-flex">
+      <div className="block" class="text-start col-10">
+        <span>Bộ phận</span> &ensp;
         <el-select
             v-model="departmentId"
             @change="getAll"
@@ -19,20 +17,28 @@
           >
           </el-option>
         </el-select>
-      </div>
+<!--        <div style="width: 200px" class="">-->
+        <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
+          <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
 
-      <div style="width: 200px" class="mx-3 fw-bold">
-        <el-input v-model="search" size="medium" placeholder="Tên nhân viên"/>
-      </div>
-
-
-      <div style="float: right;margin-bottom: 20px" class="mx-3">
-        <router-link to="/add-user" style="width: 200px;">
+        <router-link to="/add-user" style="width: 200px; margin-left: 100px">
           <el-button type="danger" round
           ><i class="el-icon-plus"></i> Thêm nhân viên
           </el-button>
         </router-link>
+<!--        </div>-->
       </div>
+
+
+
+
+<!--      <div style="float: right;margin-bottom: 20px" class="mx-3">-->
+<!--        <router-link to="/add-user" style="width: 200px;">-->
+<!--          <el-button type="danger" round-->
+<!--          ><i class="el-icon-plus"></i> Thêm nhân viên-->
+<!--          </el-button>-->
+<!--        </router-link>-->
+<!--      </div>-->
 
     </div>
 
