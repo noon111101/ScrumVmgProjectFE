@@ -2,14 +2,13 @@
   <div className="container" style="text-align: center; width: 90%;margin: auto">
     <div className="block" class="text-start">
       <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker style="width: 30%"
+      <el-date-picker style="width: 15%;font-size: 16px;margin-right: 180px"
                       v-model="dateRange"
                       type="daterange"
                       format="yyyy-MM-dd"
                       value-format="yyyy-MM-dd"
                       range-separator=""
-                      start-placeholder="Start date"
-                      end-placeholder="End date"
+                      start-placeholder="Chọn thời gian"
                       @change="getAll">
       </el-date-picker>
       <br /><br />
@@ -29,18 +28,12 @@
       </el-select>
     </div>
     <div class="text-end" >
-      <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 20%"/>
+      <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%"/>
     </div>
     <br />
     <div>
       <el-table
-          :data="
-          logs.filter(
-            (data) =>
-              !search ||
-              data.user.fullName.toLowerCase().includes(search.toLowerCase())
-          )
-        "
+          :data="logs"
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
          style="width: 100%; display: inline-block"
           :row-class-name="tableRowClassName">
@@ -138,7 +131,8 @@ export default {
         "size": this.size,
         "id" : this.departmentId,
         'from': this.from,
-        'to': this.to
+        'to': this.to,
+        'search': this.search
       }
       LogdetailService.getLogsByDate_Department(params)
           .then((response) => {
@@ -196,6 +190,10 @@ export default {
 };
 </script>
 <style>
+
+*{
+  font-size: 16px;
+}
 .el-table .warning-row {
   background: #EDEDED;
 }

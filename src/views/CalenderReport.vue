@@ -181,8 +181,10 @@ export default {
   },
   watch:{
   mounth :function (){
+
     const mounth = this.mounth.split("-")[1]
-    this.value=new Date().setMonth(mounth,1)
+    var int = parseInt(mounth)-1
+    this.value=new Date().setMonth(int.toString(),1)
   }
   },
   mounted(){

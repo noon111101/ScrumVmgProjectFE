@@ -185,7 +185,14 @@
                               Phòng phát triển phần mềm
                             </option>
 
-                            <option>Phòng kế toán</option>
+                            <option
+                                :selected="
+                                user.departments.name == 'Phòng nhân sự'
+                              "
+                            >
+                              Phòng nhân sự
+                            </option>
+
                           </select>
                         </div>
                         <div
@@ -243,7 +250,7 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                            Sign Up
+                            Edit
                           </button>
                         </div>
                       </td>
@@ -305,7 +312,7 @@ export default {
             timer: 2000,
             timerProgressBar: true,
           });
-          return this.$router.push(`/user/${this.$route.params.id}`);
+          return this.$router.push(`/manage`);
         } else {
           this.$swal.fire({
             title: "Chỉnh sửa thất bại!",

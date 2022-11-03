@@ -80,12 +80,13 @@
           <button v-if="data.row.avalible==true" class="tt1">Có hiệu lực</button>
           <button v-if="data.row.avalible!=true" class="tt2">Vô hiệu lực</button>
         </el-table-column>
-        <el-table-column v-slot:="data" label="Chỉnh sửa" width="150px" align="center">
+        <el-table-column v-slot:="data" label="Chỉnh sửa" width="200px" align="center">
           <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
           <router-link :to="`/user/${data.row.id}`">
+<!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
             <button
-                style="border: none;padding: 5px 5px; background-color: #F8CBAD; margin-right: 10px;border-radius: 50%">
-              <i class="el-icon-edit-outline " style="width: 30px;"></i>
+                style="margin-right: 10px;" class="btn-action">
+              <i class="el-icon-edit-outline" style="width: 30px;"></i>
             </button>
 
           </router-link>
@@ -368,7 +369,7 @@ export default {
   border: none;
   padding: 5px 5px;
   background-color: #F8CBAD;
-  border-radius: 50%
+  border-radius: 5px
 }
 
 

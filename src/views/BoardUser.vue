@@ -1,7 +1,7 @@
 <template>
 
 
-    <div style="text-align: center; width: 90%;margin: auto">
+    <div className="container" style="text-align: center; width: 90%;margin: auto">
       <br>
       <!--    <h5 style="font-weight: 600;">-->
       <!--      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-->
@@ -11,14 +11,13 @@
       <form ac>
         <div className="block" class="text-end">
           <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-          <el-date-picker style="width: 30%;font-size: 16px;margin-right: 100px"
+          <el-date-picker style="width: 15%;font-size: 16px;margin-right: 180px"
                           v-model="dateRange"
                           type="daterange"
                           format="yyyy-MM-dd"
                           value-format="yyyy-MM-dd"
                           range-separator=""
-                          start-placeholder="Start date"
-                          end-placeholder="End date"
+                          start-placeholder="Chọn thời gian"
                           @change="getAllByDate">
           </el-date-picker>
         </div>
@@ -31,8 +30,7 @@
         <el-table
             :data="logs"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-
-            style="width: 88%; display: inline-block; font-size: 16px"
+            style="width: 80%; display: inline-block"
             :row-class-name="tableRowClassName">
           <el-table-column
               type="index"
@@ -51,7 +49,7 @@
               prop="user.fullName"
               label="Họ và tên"
               align="center"
-              width="300px"
+
           >
           </el-table-column>
           <el-table-column
@@ -83,7 +81,7 @@
         </el-table>
       </div>
 
-      <el-pagination class="text-end" style="margin-right: 100px"
+      <el-pagination class="text-end" style="margin-right: 180px"
           background
           layout="prev, pager, next"
           :total="totalItems"

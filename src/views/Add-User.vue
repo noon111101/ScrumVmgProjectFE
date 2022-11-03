@@ -186,9 +186,10 @@
                               class="form-control"
                               v-model="user.department"
                           >
-                            <option>Phòng nhân sự</option>
-                            <option>Thuc tap PTPM</option>
+                            <option>Thực tập PTPM</option>
                             <option>Phòng kế toán</option>
+                            <option>Phòng phát triển phần mềm</option>
+                            <option>Phòng nhân sự</option>
                           </select>
                         </div>
                         <div
@@ -328,26 +329,26 @@ export default {
           timerProgressBar: true,
         })
       }else{
-        let response = authService.register(form);
-        if (response) {
+        authService.register(form).then(response =>{
+          console.log(response)
           this.$swal.fire({
             title: 'Tạo tài khoản thành công!',
             icon: "success",
             timer: 2000,
             timerProgressBar: true,
           })
-          return this.$router.push('/add-user')
-
-        }
-        else {
+          return this.$router.push('/manage')
+        }).catch(error => {
           this.$swal.fire({
             title: 'Tạo tài khoản thất bại!',
-            icon: "success",
+            icon: "error",
             timer: 2000,
             timerProgressBar: true,
+            text:error.response.data.error.message
           })
           return this.$router.push('/add-user')
-        }
+        });
+
       }
 
     },
