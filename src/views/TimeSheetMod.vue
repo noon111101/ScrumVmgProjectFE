@@ -1,25 +1,29 @@
 <template style="font-size: 16px">
   <div className="container" style="text-align: center; width: 90%;margin: auto">
+    <div style="" class="d-flex">
+      <div className="block" class="text-start col-10">
+        <h5 style="font-weight: 600;">
+          Phòng ban: {{departmentName}}&emsp;
+        </h5>
+        <span className="demonstration">Ngày</span> &ensp;
+        <el-date-picker style="width: 20%;font-size: 16px;margin-right: 180px"
+                        v-model="dateRange"
+                        type="daterange"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        range-separator=""
+                        start-placeholder="Chọn thời gian"
+                        @change="getAll">
+        </el-date-picker>
+        <span style="">Tìm kiếm</span> &ensp;
+        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
+      </div>
 
-    <div className="block" class="text-start">
-      <span className="demonstration">Ngày</span> &ensp;&ensp;&ensp;&ensp;
-      <el-date-picker style="width: 15%;font-size: 16px;margin-right: 180px"
-                      v-model="dateRange"
-                      type="daterange"
-                      format="yyyy-MM-dd"
-                      value-format="yyyy-MM-dd"
-                      range-separator=""
-                      start-placeholder="Chọn thời gian"
-                      @change="getAll">
-      </el-date-picker>
-      <br /><br />
-      <h5 style="font-weight: 600;">
-        Phòng ban: {{departmentName}}&emsp;
-      </h5>
+<!--      <div class="text-end col-2" >-->
+<!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
+<!--      </div>-->
     </div>
-    <div class="text-end" >
-      <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%"/>
-    </div>
+
     <br />
     <div>
       <el-table  class="text-center " :data="logs"
