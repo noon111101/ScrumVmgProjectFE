@@ -9,9 +9,9 @@
       <!--    </h5>-->
 
       <form ac>
-        <div className="block" class="text-end">
+        <div className="block" class="text-start">
           <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-          <el-date-picker style="width: 15%;font-size: 16px;margin-right: 180px"
+          <el-date-picker style="width: 15%;font-size: 16px;"
                           v-model="dateRange"
                           type="daterange"
                           format="yyyy-MM-dd"
@@ -30,13 +30,14 @@
         <el-table
             :data="logs"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-            style="width: 80%; display: inline-block"
+            style="width: 100%; display: inline-block"
             :row-class-name="tableRowClassName">
           <el-table-column
               type="index"
               label="STT"
               width="80px"
-              align="center">
+              align="center"
+              >
           </el-table-column>
 
           <el-table-column
@@ -55,6 +56,13 @@
           <el-table-column
               prop="user.departments.name"
               label="Bộ phận"
+              align="center"
+              width="300px"
+          >
+          </el-table-column>
+          <el-table-column
+              prop="user.username"
+              label="Email"
               align="center"
               width="300px"
           >
@@ -81,7 +89,7 @@
         </el-table>
       </div>
 
-      <el-pagination class="text-end" style="margin-right: 180px"
+      <el-pagination class="text-end"
           background
           layout="prev, pager, next"
           :total="totalItems"

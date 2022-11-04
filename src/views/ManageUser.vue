@@ -2,13 +2,13 @@
   <div className="container" style=" width: 90%; margin: auto">
     <div class="d-flex">
       <div className="block" class="text-start col-10">
-        <span>Bộ phận</span> &ensp;
+        <span>Phòng ban</span> &ensp;
         <el-select
             v-model="departmentId"
             @change="getAll"
             placeholder="Chọn Phòng ban"
         >
-          <el-option value="0" label="All Users"></el-option>
+          <el-option value="0" label="Tất cả các phòng ban"></el-option>
           <el-option
               v-for="item in departments"
               :key="item.id"
@@ -19,7 +19,14 @@
         </el-select>
 <!--        <div style="width: 200px" class="">-->
         <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
-          <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
+          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
+
+        <span style=" margin-left: 100px">Bộ phận</span> &ensp;
+        <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
+          <el-option value="" label="Tất cả"></el-option>
+          <el-option label= "Có hiệu lực" value="1" ></el-option>
+          <el-option label= "Vô hiệu lực" value="0" ></el-option>
+        </el-select>
 
         <router-link to="/add-user" style="width: 200px; margin-left: 100px">
           <el-button type="danger" round
@@ -45,23 +52,17 @@
     <br/>
     <div>
       <el-table
-          :data="
-          users.filter(
-            (data) =>
-              !search ||
-              data.fullName.toLowerCase().includes(search.toLowerCase())
-          )
-        "
+          :data="users"
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
           style="width: 100%; display: inline-block;font-size: 16px"
           :row-class-name="tableRowClassName">
         >
         <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
         <el-table-column label="Mã NV" prop="code" align="center" width="100px"></el-table-column>
-        <el-table-column label="Ho và tên" prop="fullName" header-align="center"></el-table-column>
-        <el-table-column label="Phòng ban" prop="departments.name" header-align="center">
+        <el-table-column label="Ho và tên" prop="fullName" align="center"></el-table-column>
+        <el-table-column label="Phòng ban" prop="departments.name" align="center">
         </el-table-column>
-        <el-table-column label="Email" prop="username" header-align="center"></el-table-column>
+        <el-table-column label="Email" prop="username" align="center"></el-table-column>
         <el-table-column label="Ảnh" v-slot:="data" align="center" width="210px">
           <img v-if="data.row.cover!=null"
                v-bind:src="
@@ -96,14 +97,27 @@
             </button>
 
           </router-link>
-          <button v-if="data.row.avalible==1" class="btn-action"
-                  @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)">
-            <i class="el-icon-unlock " style="width: 30px;"></i>
-          </button>
-          <button v-if="data.row.avalible==0" class="btn-action"
-                  @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)">
-            <i class="el-icon-lock " style="width: 30px;"></i>
-          </button>
+<!--          <div v-if="data.row.id == currentUser.user.id">-->
+            <button v-if="data.row.avalible==1 && data.row.id == currentUser.user.id" class="btn-action"
+                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)" disabled>
+              <i class="el-icon-unlock " style="width: 30px;"></i>
+            </button>
+            <button v-if="data.row.avalible==0 && data.row.id == currentUser.user.id" class="btn-action"
+                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)" disabled>
+              <i class="el-icon-lock " style="width: 30px;"></i>
+            </button>
+<!--          </div>-->
+<!--          <div v-if="data.row.id != currentUser.user.id">-->
+            <button v-if="data.row.avalible==1 && data.row.id != currentUser.user.id" class="btn-action"
+                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)">
+              <i class="el-icon-unlock " style="width: 30px;"></i>
+            </button>
+            <button v-if="data.row.avalible==0 && data.row.id != currentUser.user.id" class="btn-action"
+                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)">
+              <i class="el-icon-lock " style="width: 30px;"></i>
+            </button>
+<!--          </div>-->
+
 
 
         </el-table-column>
@@ -143,6 +157,7 @@ export default {
       pageSize: 10,
       departments: [],
       departmentId: "",
+      status: ''
     };
   },
   computed: {
@@ -179,6 +194,8 @@ export default {
         page: this.page,
         size: this.pageSize,
         departid: this.departmentId,
+        search: this.search,
+        status: this.status
       };
       UserService.getUser_Department(params)
           .then((response) => {
@@ -186,7 +203,8 @@ export default {
             this.page = response.data.pageable.pageNumber;
             console.log(response.data.pageable.pageNumber);
             this.totalItems = response.data.totalElements;
-            console.log(response.data.content + "fdasfds");
+            console.log(this.status + "fdasfds");
+
           })
           .catch((error) => {
             console.log(error);

@@ -16,7 +16,7 @@
                         @change="getAll">
         </el-date-picker>
         <span style="">Tìm kiếm</span> &ensp;
-        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
+        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
       </div>
 
 <!--      <div class="text-end col-2" >-->
@@ -33,9 +33,9 @@
       >
         <el-table-column label="ID" type="index"  align="center"></el-table-column>
         <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"> </el-table-column>
-        <el-table-column label="Họ và tên" prop="user.fullName" header-align="center"> </el-table-column>
-        <el-table-column label="Phòng ban" prop="user.departments.name" header-align="center"> </el-table-column>
-        <el-table-column label="Email" prop="user.username" header-align="center"> </el-table-column>
+        <el-table-column label="Họ và tên" prop="user.fullName" align="center"> </el-table-column>
+        <el-table-column label="Phòng ban" prop="user.departments.name" align="center"> </el-table-column>
+        <el-table-column label="Email" prop="user.username" align="center"> </el-table-column>
         <el-table-column label="Ngày" prop="date_log" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"> </el-table-column>

@@ -28,7 +28,7 @@
           </el-option>
         </el-select>
         <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
-        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
+        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
 
       </div>
 <!--      <div class="">-->
@@ -51,9 +51,9 @@
           <el-table-column label="Mã nhân viên" prop="user.code" align="center" width="150px">
             <!--          <span>{{log.row.user.code}}</span>-->
           </el-table-column>
-          <el-table-column label="Name" prop="user.fullName" header-align="center"></el-table-column>
-          <el-table-column label="Phòng ban" prop="user.departments.name" header-align="center"></el-table-column>
-          <el-table-column label="Email" prop="user.username" header-align="center"></el-table-column>
+          <el-table-column label="Name" prop="user.fullName" align="center"></el-table-column>
+          <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
+          <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
           <el-table-column label="Ngày" prop="date_log" align="center" width="150px"></el-table-column>
           <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
           <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>

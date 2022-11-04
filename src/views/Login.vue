@@ -59,10 +59,13 @@
                     >
                       Log in
                     </button>
-                    <br />
+                    <br /><br />
                     <a class="text-muted" href="http://localhost:8081/forgotPassword">Forgot password?</a>
+                    <br /><br />
+                    <span style="color: red">{{message}}</span>
                   </div>
                 </form>
+
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
