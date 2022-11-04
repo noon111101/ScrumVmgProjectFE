@@ -1,33 +1,29 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Login from './views/Login.vue';
-import Register from './views/ManageUser.vue';
 
 
 Vue.use(Router);
 
-export const router = new Router({
+const router = new Router({
   mode: 'history',
   routes: [
     {
       path: '/login',
-      component: Login
+      component: () => import('./views/Login.vue')
+    },
+    {
+      path: '/',
+      redirect:'/login',
     },
     {
       path: '/register',
-      component: Register
+      component:  () => import('./views/ManageUser.vue')
     },
 
     {
       path: '/add-user',
       name: '',
       component: () => import('./views/Add-User.vue'),
-      beforeEnter: (to, from, next) => {
-        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        if(admin)
-          next()
-        else next('/calender')
-      }
     },
     {
       path: '/user',
@@ -38,25 +34,11 @@ export const router = new Router({
       path: '/user/:code/:departmentName/:fullName',
       name: 'user',
       component: () => import('./views/ViewDetailLogs.vue'),
-      beforeEnter: (to, from, next) => {
-        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
-        if(admin || manage)
-          next()
-        else next('/calender')
-      }
     },
     {
       path: '/report',
       name: 'report',
       component: () => import('./views/Report.vue'),
-      beforeEnter: (to, from, next) => {
-        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
-        if(admin || manage )
-          next()
-        else next('/calender')
-      }
       },
     {
       path: '/forgotPassword',
@@ -82,65 +64,58 @@ export const router = new Router({
       path: '/timesheetmod',
       name: 'timesheetmod',
       component: () => import('./views/TimeSheetMod.vue'),
-      beforeEnter: (to, from, next) => {
-        const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
-        if(manage)
-          next()
-        else next('/calender')
-      }
     },
 
     {
       path: '/user/:id',
       name: 'edit',
       component: () => import('./views/EditUser.vue'),
-      beforeEnter: (to, from, next) => {
-        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        if(admin)
-          next()
-        else next('/calender')
-      }
     },
 
     {
       path: '/timesheetadmin',
       name: 'timesheetadmin',
       component: () => import('./views/TimeSheetsAdmin.vue'),
-      beforeEnter: (to, from, next) => {
-        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        if(admin)
-          next()
-        else next('/calender')
-      }
     },
     {
       path: '/manage',
       name: 'manage',
       component: () => import('./views/ManageUser.vue'),
-      beforeEnter: (to, from, next) => {
-        const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
-        if(admin)
-          next()
-        else next('/calender')
-      }
     },
     {
       path: '/profile',
       name: '',
       component: () => import('./views/Profile.vue')
     },
+    {
+      path: '/unpermist',
+      name: 'unpermist',
+      component: () => import('./views/UnPermist.vue')
+    },
   ]
 }
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/'];
+  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
+  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/user/:id','/user/:code/:departmentName/:fullName','/report'];
+  const managePages = [ '/timesheetmod','/user/:id','/user/:code/:departmentName/:fullName','/report'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (authRequired && !loggedIn) {
     next('/login');
   }
-  else {
+  if(!authRequired && !loggedIn){
     next()
   }
+  else {
+    const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
+    const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
+    if(adminPages.includes(to.path) && admin || managePages.includes(to.path) && manage || userPages.includes(to.path) || publicPages.includes(to.path))
+      next();
+    else
+      next('/unpermist')
+  }
 });
+export default router;

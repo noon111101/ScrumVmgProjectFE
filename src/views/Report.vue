@@ -99,12 +99,12 @@
     </div>
 <!--   BẢNG CHẤM CÔNG-->
     <div class="table-responsive-xxl" style="margin-top:50px">
-      <table v-if="showAdminBoard" class="table table-bordered align-middle  ">
+      <table v-if="showAdminBoard" class="table table-bordered align-middle" >
         <thead style="background-color: #C2C2C2">
         <tr>
-          <th rowspan="2">TT</th>
-          <th rowspan="2" style="white-space: pre">Họ tên</th>
-          <th colspan="31" class="text-center">Ngày trong tháng</th>
+          <th rowspan="2" class="text-center">TT</th>
+          <th rowspan="2" class="text-center" style="white-space: pre">Họ tên</th>
+          <th colspan="31" class="text-center">Ngày trong tháng {{currentMonth}}</th>
           <th rowspan="2" style="white-space: pre" >Tổng số <br>ngày làm <br>việc</th>
           <th rowspan="2" style="white-space: pre" >Tổng số <br>ngày hưởng <br>lương</th>
         </tr>
@@ -311,6 +311,7 @@ export default {
                 user.log[date].reason=reason
               user.log[date].sign=sign
               user.log[date].status=true
+              user.dayWork=this.caculateDayWork(user.log)
               user.dayEarn=this.caculateDayWork(user.log)
               user.log[date].reason=reason
 

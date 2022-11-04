@@ -55,13 +55,14 @@
         <el-table-column label="Ho và tên" prop="fullName" header-align="center"></el-table-column>
         <el-table-column label="Phòng ban" prop="departments.name" header-align="center">
         </el-table-column>
-        <el-table-column label="Email" prop="username" header-align="center"></el-table-column>
-        <el-table-column label="Ảnh" v-slot:="data" align="center" width="210px">
+        <el-table-column label="Email" prop="username" header-align="center" width="210px"></el-table-column>
+        <el-table-column label="Ảnh" v-slot:="data" align="center" width="150px">
           <img v-if="data.row.cover!=null"
                v-bind:src="
               `http://localhost:8080/uploads/images/` + data.row.cover
             "
-               width="150px"
+               width="90px"
+               height="90px"
           />
           <img v-if="data.row.cover==null"
                src="../assets/user.jpg"
