@@ -35,7 +35,7 @@
 <!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
 <!--      </div>-->
     </div>
-<<<<<<<<< Temporary merge branch 1
+
 
     <br/>
     <div>
@@ -49,7 +49,7 @@
         <template>
 
 
-<<<<<<<<< Temporary merge branch 1
+
           <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
           <el-table-column label="Mã nhân viên" prop="user.code" align="center" width="150px">
             <!--          <span>{{log.row.user.code}}</span>-->
@@ -71,6 +71,7 @@
                    @current-change="handlePageChange"
     >
     </el-pagination>
+  </div>
   </div>
 </template>
 
