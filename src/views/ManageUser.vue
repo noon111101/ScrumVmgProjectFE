@@ -1,10 +1,9 @@
 <template style="font-size: 16px">
-
+<<<<<<<<< Temporary merge branch 1
   <div className="container" style=" width: 90%; margin: auto">
     <div class="d-flex">
       <div className="block" class="text-start col-10">
         <span>Phòng ban</span> &ensp;
-
         <el-select
           v-model="departmentId"
           @change="getAll"
@@ -33,18 +32,10 @@
 
 <!--        </div>-->
       </div>
-      <div class="col-2 text-end">
-        <router-link to="/add-user" style="width: 200px; margin-left: 100px;">
-          <el-button type="danger" round
-      </div>
 
-      <div style="width: 200px" class="mx-3 fw-bold">
-        <el-input v-model="search" size="medium" placeholder="Tên nhân viên" />
-      </div>
 
       <div style="float: right; margin-bottom: 20px" class="mx-3">
         <el-button type="danger" round @click="dialogFormVisible = true"
-
           ><i class="el-icon-plus"></i> Thêm nhân viên
         </el-button>
       </div>
@@ -272,6 +263,7 @@
         <el-table-column label="Ảnh" v-slot:="data" align="center" width="210px">
           <img v-if="data.row.cover!=null"
                v-bind:src="
+
               `http://localhost:8080/uploads/images/` + data.row.cover
             "
             width="150px"
@@ -311,7 +303,6 @@
             Vô hiệu lực
           </button>
         </el-table-column>
-
         <el-table-column v-slot:="data" label="Chỉnh sửa" width="200px" align="center">
           <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
 
@@ -323,6 +314,7 @@
 
             </button>
           </router-link>
+<<<<<<<<< Temporary merge branch 1
 <!--          <div v-if="data.row.id == currentUser.user.id">-->
             <button v-if="data.row.avalible==1 && data.row.id == currentUser.user.id" class="btn-action"
                     @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)" disabled>
@@ -343,9 +335,6 @@
               <i class="el-icon-lock " style="width: 30px;"></i>
             </button>
 <!--          </div>-->
-
-
-
 
         </el-table-column>
       </el-table>
@@ -380,7 +369,7 @@ export default {
       pageSize: 10,
       departments: [],
       departmentId: "",
-      status: ''
+      status: '',
       dialogFormVisible: false,
       user: {
         username: "",
@@ -557,16 +546,16 @@ export default {
       };
       UserService.getUser_Department(params)
 
-        .then((response) => {
-          this.users = response.data.content;
-          this.page = response.data.pageable.pageNumber;
-          console.log(response.data.pageable.pageNumber);
-          this.totalItems = response.data.totalElements;
-          console.log(response.data.content + "fdasfds");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((response) => {
+            this.users = response.data.content;
+            this.page = response.data.pageable.pageNumber;
+            console.log(response.data.pageable.pageNumber);
+            this.totalItems = response.data.totalElements;
+            console.log(response.data.content + "fdasfds");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     previewFiles(event) {
       const file = event.target.files[0];

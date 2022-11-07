@@ -99,6 +99,7 @@
     </div>
 <!--   BẢNG CHẤM CÔNG-->
     <div class="table-responsive-xxl" style="margin-top:50px">
+
       <table v-if="showAdminBoard" class="table table-bordered align-middle  " >
 
         <thead style="background-color: #C2C2C2">

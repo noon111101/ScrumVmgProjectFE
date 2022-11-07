@@ -49,15 +49,11 @@
                     >
                       Log in
                     </button>
+                    <br /><br />
+                    <a class="text-muted" href="http://localhost:8081/forgotPassword">Forgot password?</a>
+                    <br /><br />
+                    <span style="color: red">{{message}}</span>
 
-                    <br />
-                    <a
-                      class="text-muted"
-                      href="http://localhost:8081/forgotPassword"
-                      >Forgot password?</a
-                    >
-                    <br>
-                    <small style="color: red" v-if="message">{{ message }}</small>
                   </div>
                 </form>
 

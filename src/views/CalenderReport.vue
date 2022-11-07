@@ -183,7 +183,6 @@ export default {
 
     const mounth = this.mounth.split("-")[1]-1
     this.value=new Date().setMonth(mounth,1)
-
   }
   },
   mounted(){

@@ -176,7 +176,6 @@
                               :label="item.name"
                               :value="item.name"
                             >
-
                             </el-option>
                           </el-select>
 
