@@ -261,7 +261,7 @@
           <img v-if="data.row.cover!=null"
                v-bind:src="
 
-              `http://localhost:8080/uploads/images/` + data.row.cover
+              `http://localhost:8080/` + data.row.cover
             "
             width="150px"
           />
