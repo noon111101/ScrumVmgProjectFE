@@ -8,9 +8,9 @@
               <div class="card-body p-md-5 mx-md-4">
                 <div class="text-center">
                   <img
-                      src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
-                      style="width: 185px"
-                      alt="logo"
+                    src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
+                    style="width: 185px"
+                    alt="logo"
                   />
                   <h4 class="mt-1 mb-5 pb-1">PHÁT TRIỂN CÙNG CÔNG NGHỆ</h4>
                 </div>
@@ -18,51 +18,46 @@
                   <p>Please login to your account</p>
                   <div class="form-outline mb-4">
                     <input
-                        placeholder="Enter Your Email"
-                        v-model="user.username"
-                        v-validate="{ required: true }"
-                        type="email"
-                        class="form-control"
-                        name="username"
+                      placeholder="Enter Your Email"
+                      v-model="user.username"
+                      v-validate="'required'"
+                      type="text"
+                      class="form-control"
+                      name="username"
                     />
-                    <!-- <label class="form-label" for="form2Example11">Email</label> -->
+                    <small style="color: red" v-if="errors.has('username')">
+                      Email is required!
+                    </small>
                   </div>
-                  <div
-                      v-if="errors.has('username')"
-                      class="alert alert-danger"
-                      role="alert"
-                  >
-                    Email is required and correct email format!
-                  </div>
-                  <div class="form-outline mb-4">
+                  <div class="form-group">
                     <input
-                        placeholder="Enter Your Password"
-                        v-model="user.password"
-                        v-validate="{ required: true }"
-                        type="password"
-                        class="form-control"
-                        name="password"
+                      placeholder="Enter Your Password"
+                      v-model="user.password"
+                      v-validate="'required'"
+                      type="password"
+                      class="form-control"
+                      name="password"
                     />
-                    <!-- <label class="form-label" for="form2Example22">Password</label> -->
-                  </div>
-                  <div
-                      v-if="errors.has('password')"
-                      class="alert alert-danger"
-                      role="alert"
-                  >
-                    Password is required!
+                    <small style="color: red" v-if="errors.has('password')">
+                      Password is required!
+                    </small>
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button
-                        class="btn btn-danger btn-block"
-                        :disabled="loading"
+                      class="btn btn-danger btn-block"
+                      :disabled="loading"
                     >
                       Log in
                     </button>
-                    <br /><br />
-                    <a class="text-muted" href="http://localhost:8081/forgotPassword">Forgot password?</a>
-                    <br /><br />
-                    <span style="color: red">{{message}}</span>
+
+                    <br />
+                    <a
+                      class="text-muted"
+                      href="http://localhost:8081/forgotPassword"
+                      >Forgot password?</a
+                    >
+                    <br>
+                    <small style="color: red" v-if="message">{{ message }}</small>
                   </div>
                 </form>
 
@@ -82,6 +77,7 @@
 
 <script>
 import User from "../models/user";
+
 export default {
   name: "LoginVue",
   data() {
@@ -89,6 +85,7 @@ export default {
       user: new User("", ""),
       loading: false,
       message: "",
+      a: "",
     };
   },
   computed: {
@@ -112,18 +109,14 @@ export default {
         }
         if (this.user.username && this.user.password) {
           this.$store.dispatch("auth/login", this.user).then(
-              () => {
-                this.$router.push("/calender");
-              },
-              (error) => {
-                this.loading = false;
-                this.message =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-              }
+            () => {
+              this.$router.push("/calender");
+            },
+            (error) => {
+              this.loading = false;
+              this.a = error.response && error.response.data;
+              this.message = "Email hoặc mật khẩu không chính xác";
+            }
           );
         }
       });
@@ -133,17 +126,6 @@ export default {
 </script>
 
 <style scoped>
-.gradient-custom-2 {
-  /* fallback for old browsers */
-  /* background: #fccb90; */
-
-  /* Chrome 10-25, Safari 5.1-6 */
-  /* background: -webkit-linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593); */
-
-  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  /* background: linear-gradient(to right, #ee7724, #d8363a, #dd3675, #b44593); */
-}
-
 @media (min-width: 768px) {
   .gradient-form {
     height: 100vh !important;

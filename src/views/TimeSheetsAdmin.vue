@@ -36,14 +36,17 @@
 <!--      </div>-->
     </div>
 
+
     <br/>
     <div>
       <el-table
+      height="400"
+          :default-sort = "{prop: 'date_log', order: 'descending'}"
           :data="logs"
+
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
           style="width: 100%; display: inline-block"
           :row-class-name="tableRowClassName">
-        <!--   border: solid 1px;-->
         <template>
 
 
@@ -62,9 +65,9 @@
           <!--            <el-button type="info">Xem chi tiết</el-button>-->
           <!--          </router-link>-->
           <!--        </el-table-column>-->
+
         </template>
       </el-table>
-    </div>
     <el-pagination class="text-end"
                    background
                    layout="prev, pager, next"
