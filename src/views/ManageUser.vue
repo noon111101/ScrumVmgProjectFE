@@ -1,5 +1,4 @@
 <template style="font-size: 16px">
-<<<<<<<<< Temporary merge branch 1
   <div className="container" style=" width: 90%; margin: auto">
     <div class="d-flex">
       <div className="block" class="text-start col-10">
@@ -32,8 +31,6 @@
 
 <!--        </div>-->
       </div>
-
-
       <div style="float: right; margin-bottom: 20px" class="mx-3">
         <el-button type="danger" round @click="dialogFormVisible = true"
           ><i class="el-icon-plus"></i> Thêm nhân viên
@@ -314,7 +311,7 @@
 
             </button>
           </router-link>
-<<<<<<<<< Temporary merge branch 1
+
 <!--          <div v-if="data.row.id == currentUser.user.id">-->
             <button v-if="data.row.avalible==1 && data.row.id == currentUser.user.id" class="btn-action"
                     @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)" disabled>
