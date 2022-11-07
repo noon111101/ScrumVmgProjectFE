@@ -178,6 +178,7 @@
                             >
                             </el-option>
                           </el-select>
+
                         </div>
                         <div
                           v-if="errors.has('department')"
@@ -234,7 +235,7 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                            Sign Up
+                            Edit
                           </button>
                         </div>
                       </td>
@@ -341,7 +342,7 @@ export default {
             timer: 2000,
             timerProgressBar: true,
           });
-          return this.$router.push(`/user/${this.$route.params.id}`);
+          return this.$router.push(`/manage`);
         } else {
           this.$swal.fire({
             title: "Chỉnh sửa thất bại!",
