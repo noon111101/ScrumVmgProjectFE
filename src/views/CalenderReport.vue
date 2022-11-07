@@ -2,7 +2,7 @@
 
   <div>
 
-    <div class="d-flex flex-row ">
+    <div class="d-flex flex-row justify-content-center ">
         <el-calendar  style="width: 70% ; margin-top: 50px" v-model="value">
           <template  slot="dateCell" slot-scope="{date,data,Sign=getSign(data.day)}">
             <div :class="{
@@ -82,7 +82,6 @@
           </div>
         </div>
       </div>
-
     </div>
 <!--    MODAL-->
     <b-modal id="my-modal" centered size="sm" >
@@ -181,7 +180,7 @@ export default {
   },
   watch:{
   mounth :function (){
-    const mounth = this.mounth.split("-")[1]
+    const mounth = this.mounth.split("-")[1]-1
     this.value=new Date().setMonth(mounth,1)
   }
   },

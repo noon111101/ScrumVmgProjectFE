@@ -32,8 +32,9 @@
       <el-input v-model="search" size="medium" placeholder="Tên nhân viên" style="width: 20%"/>
     </div>
     <br />
-    <div>
       <el-table
+          height="400"
+          :default-sort = "{prop: 'date_log', order: 'descending'}"
           :data="
           logs.filter(
             (data) =>
@@ -44,7 +45,6 @@
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
          style="width: 100%; display: inline-block"
           :row-class-name="tableRowClassName">
-        <!--   border: solid 1px;-->
         <template>
 
 
@@ -55,17 +55,11 @@
         <el-table-column label="Name" prop="user.fullName" header-align="center"> </el-table-column>
         <el-table-column label="Phòng ban" prop="user.departments.name" header-align="center"> </el-table-column>
         <el-table-column label="Email" prop="user.username" header-align="center"> </el-table-column>
-        <el-table-column label="Date" prop="date_log" align="center" width="150px"> </el-table-column>
+        <el-table-column label="Date" prop="date_log" sortable align="center" width="150px"> </el-table-column>
         <el-table-column label="In" prop="timeIn" align="center" width="150px"> </el-table-column>
         <el-table-column label="Out" prop="timeOut" align="center" width="150px"> </el-table-column>
-<!--        <el-table-column v-slot:="data" align="center">-->
-<!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
-<!--            <el-button type="info">Xem chi tiết</el-button>-->
-<!--          </router-link>-->
-<!--        </el-table-column>-->
         </template>
       </el-table>
-    </div>
     <el-pagination class="text-end"
         background
         layout="prev, pager, next"
