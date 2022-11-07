@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
 
 <!--     Thanh chọn-->
 
@@ -99,7 +99,8 @@
     </div>
 <!--   BẢNG CHẤM CÔNG-->
     <div class="table-responsive-xxl" style="margin-top:50px">
-      <table v-if="showAdminBoard" class="table table-bordered align-middle" >
+      <table v-if="showAdminBoard" class="table table-bordered align-middle  " >
+
         <thead style="background-color: #C2C2C2">
         <tr>
           <th rowspan="2" class="text-center">TT</th>
@@ -537,6 +538,9 @@ export default {
 };
 </script>
 <style>
+*{
+  font-size: 16px;
+}
 .boder-round{
   border-radius: 6px;
 }

@@ -49,6 +49,7 @@
                     >
                       Log in
                     </button>
+
                     <br />
                     <a
                       class="text-muted"
@@ -59,6 +60,7 @@
                     <small style="color: red" v-if="message">{{ message }}</small>
                   </div>
                 </form>
+
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">

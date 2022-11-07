@@ -133,6 +133,9 @@ export default {
 };
 </script>
 <style scoped>
+*{
+  font-size: 16px;
+}
 .about-text h3 {
   font-size: 45px;
   font-weight: 700;
