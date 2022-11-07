@@ -21,19 +21,22 @@
         <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
           <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
 
-        <span style=" margin-left: 100px">Bộ phận</span> &ensp;
+        <span style=" margin-left: 100px">Trạng thái</span> &ensp;
         <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
           <el-option value="" label="Tất cả"></el-option>
           <el-option label= "Có hiệu lực" value="1" ></el-option>
           <el-option label= "Vô hiệu lực" value="0" ></el-option>
         </el-select>
 
-        <router-link to="/add-user" style="width: 200px; margin-left: 100px">
+
+<!--        </div>-->
+      </div>
+      <div class="col-2 text-end">
+        <router-link to="/add-user" style="width: 200px; margin-left: 100px;">
           <el-button type="danger" round
           ><i class="el-icon-plus"></i> Thêm nhân viên
           </el-button>
         </router-link>
-<!--        </div>-->
       </div>
 
 
