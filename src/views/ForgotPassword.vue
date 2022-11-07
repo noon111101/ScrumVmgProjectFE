@@ -8,36 +8,32 @@
               <div class="card-body p-md-5 mx-md-4">
                 <div class="text-center">
                   <img
-                      src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
-                      style="width: 185px"
-                      alt="logo"
+                    src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
+                    style="width: 185px"
+                    alt="logo"
                   />
                   <h4 class="mt-1 mb-5 pb-1">QUÊN MÂT KHẨU</h4>
                 </div>
-                <form   accept-charset="utf-8">
+                <form accept-charset="utf-8">
                   <p>Vui lòng nhập email để lấy lại mật khẩu</p>
                   <div class="form-outline mb-4">
                     <input
-                        placeholder="Enter Your Email"
-                        v-model="email"
-                        v-validate="{ required: true }"
-                        type="email"
-                        class="form-control"
-                        name="email"
+                      placeholder="Enter Your Email"
+                      v-model="email"
+                      v-validate="{ required: true }"
+                      type="email"
+                      class="form-control"
+                      name="email"
                     />
-                  </div>
-                  <div
-                      v-if="errors.has('email')"
-                      class="alert alert-danger"
-                      role="alert"
-                  >
-                    Email is required and correct email format!
+                    <small v-if="errEmail !== null" style="color: red">
+                      {{ errEmail }}
+                    </small>
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button
-                        @click="handleForgot"
-                        class="btn btn-danger btn-block"
-                        :disabled="loading"
+                      @click="handleForgot"
+                      class="btn btn-danger btn-block"
+                      :disabled="loading"
                     >
                       Tiếp tuc
                     </button>
@@ -65,7 +61,10 @@ export default {
     return {
       loading: false,
       message: "",
-      email: '',
+      email: "",
+      errEmail: "",
+      checkEmail: true,
+      users: [],
     };
   },
   computed: {
@@ -76,37 +75,50 @@ export default {
       return this.$store.state.auth.user;
     },
   },
-  mounted() {
-  },
+  mounted() {},
   methods: {
-    handleForgot() {
-      (this.loading = true);
-      this.$validator.validateAll().then((isValid) => {
-        if (!isValid) {
-          this.loading = false;
-          return;
-        }
-        if (this.email) {
-          const params={
-            'email':this.email
+    async handleForgot() {
+      // let response = await UserService.getAllUser();
+      // this.users = response.data;
+      // for (let i = 0; i < this.users.length; i++) {
+      //   if (this.email === this.users[i].username) {
+      //     this.errEmail = "";
+      //     this.checkEmail = true;
+      //     break;
+      //   } else {
+      //     this.errEmail = "Email không tồn tại";
+      //     this.checkEmail = false;
+      //   }
+      // }
+      // if (this.checkEmail === true) {
+        this.loading = true; 
+        this.$validator.validateAll().then((isValid) => {
+          if (!isValid) {
+            this.loading = false;
+            return;
           }
-          UserService.forgotPassword(params).then((response) => {
-            if (response.data == true) {
-              this.$router.push("/confirmForgot");
-            } else {
-              (error) => {
-                this.loading = false;
-                this.message =
+          if (this.email) {
+            const params = {
+              email: this.email,
+            };
+            UserService.forgotPassword(params).then((response) => {
+              if (response.data == true) {
+                this.$router.push("/confirmForgot");
+              } else {
+                (error) => {
+                  this.loading = false;
+                  this.message =
                     (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
+                      error.response.data &&
+                      error.response.data.message) ||
                     error.message ||
                     error.toString();
-              };
-            }
-          });
-        }
-      });
+                };
+              }
+            });
+          }
+        });
+      // }
     },
   },
 };
