@@ -22,6 +22,7 @@ class AuthService {
   
     register(user) {
       let userForm = new FormData(user)
+      console.log(12, user.value);
       return axios.post(API_URL + 'signup', userForm);
     }
 

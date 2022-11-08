@@ -99,7 +99,7 @@
                         <div class="form-group">
                           <input
                             v-model="user.username"
-                            type="email"
+                            type=""
                             class="form-control"
                             placeholder="Email *"
                             value=""
@@ -178,7 +178,6 @@
                             >
                             </el-option>
                           </el-select>
-
                         </div>
                         <div
                           v-if="errors.has('department')"
@@ -235,7 +234,7 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                            Edit
+                            Sign Up
                           </button>
                         </div>
                       </td>
@@ -299,6 +298,22 @@ export default {
       });
   },
   methods: {
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+    validCode: function (code) {
+      var re = /^(\\-)?[0-9]+(.[0-9]+)?$/;
+      return re.test(code);
+    },
+
+    validName: function (name) {
+      var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      return re.test(name);
+    },
+
     previewFiles(event) {
       const file = event.target.files[0];
 
@@ -311,15 +326,35 @@ export default {
     async sendForm() {
       let response = await UserService.getAllUser();
       this.users = response.data;
-     
-      if (!this.user.code) {
-        this.errId = "Hãy nhập mã nhân sự";
+
+if (!this.user.code) {
+        this.errId = "Vui lòng nhập mã nhân viên";
         this.checkId = false;
+      } else if (!this.validCode(this.user.code)) {
+        this.errId = "Vui lòng nhập đúng định dạng code";
+        this.checkId = false;
+      } else if (
+        this.validCode(this.user.code) &&
+        this.user.code &&
+        this.checkId === true
+      ) {
+        this.errId = "";
+        this.checkId = true;
       }
 
       if (!this.user.username) {
         this.errEmail = "Hãy nhập email";
         this.checkEmail = false;
+      } else if (!this.validEmail(this.user.username)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else if (
+        this.validEmail(this.user.username) &&
+        this.user.username &&
+        this.checkEmail === true
+      ) {
+        this.errEmail = "";
+        this.checkEmail = true;
       }
 
       if (!this.user.fullName) {
