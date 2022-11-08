@@ -27,6 +27,8 @@
     <br />
     <div>
       <el-table  class="text-center " :data="logs"
+                 height="900px"
+                 :default-sort = "{prop: 'date_log', order: 'descending'}"
                  :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
                  style="width: 100%; display: inline-block; font-size: 16px"
                  :row-class-name="tableRowClassName"
@@ -36,7 +38,7 @@
         <el-table-column label="Họ và tên" prop="user.fullName" align="center"> </el-table-column>
         <el-table-column label="Phòng ban" prop="user.departments.name" align="center"> </el-table-column>
         <el-table-column label="Email" prop="user.username" align="center"> </el-table-column>
-        <el-table-column label="Ngày" prop="date_log" width="150px" align="center"> </el-table-column>
+        <el-table-column label="Ngày" prop="date_log" sortable width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"> </el-table-column>
         <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"> </el-table-column>
 <!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->

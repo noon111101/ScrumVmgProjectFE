@@ -61,7 +61,7 @@
                       <td style="width: 300px">
                         <el-form-item label="Mật khẩu hiện tại" prop="old_password" label-width="200px"
                                       label-position="left">
-                          <el-input type="password" v-model="form.old_password" autocomplete="off"></el-input>
+                          <el-input type="password" v-model="form.old_password" autocomplete="off" show-password></el-input>
                         </el-form-item>
                       </td>
                     </tr>
@@ -70,7 +70,7 @@
                     <tr style="height: 70px">
                       <td style="width: 300px">
                         <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px" >
-                          <el-input type="password" v-model="form.new_password" autocomplete="off"
+                          <el-input type="password" v-model="form.new_password" autocomplete="off" show-password
                                     style="width: 200px"></el-input>
                         </el-form-item>
                       </td>
@@ -79,7 +79,7 @@
                     <tr style="height: 70px">
                       <td style="width: 300px">
                         <el-form-item label="Nhập lại mật khẩu mới" prop="new_password_confirm" label-width="200px">
-                          <el-input type="password" v-model="form.new_password_confirm" autocomplete="off"></el-input>
+                          <el-input type="password" v-model="form.new_password_confirm" autocomplete="off" show-password></el-input>
                         </el-form-item>
                       </td>
                     </tr>
@@ -89,7 +89,7 @@
                       <td style="width: 200px">
 
                         <el-form-item style="margin-left: 80px">
-                          <span style="color: orangered">{{message}}</span>
+                          <span style="color: orangered" >{{message}}</span>
                           <el-button type="" @click="submit('user')" class="btn btn-signup" col>Submit</el-button>
                         </el-form-item>
                       </td>
@@ -176,14 +176,6 @@ export default {
     submit(formName) {
       this.$refs[formName].validate((valid) => {
         if(this.form.new_password=="" ||this.form.new_password_confirm =="" || this.form.old_password == "" ){
-          // this.$swal.fire(
-          //     {
-          //       title: 'Chưa nhập đủ thông tin!',
-          //       icon: 'info',
-          //       timer: 2000,
-          //       timerProgressBar: true,
-          //     }
-          // )
           this.message = 'Chưa nhập đủ thông tin!'
         }
         else{
@@ -191,37 +183,41 @@ export default {
             this.formData.oldPassword = this.form.old_password;
             this.formData.newPassword = this.form.new_password;
             AuthService.changePassword(this.formData).then(response => {
-              if (response.data == true) {
+              if (response.data.message === "Thay đổi mật khẩu thành công!") {
                 this.$refs[formName].resetFields();
                 this.$swal.fire(
                     {
-                      title: 'Đổi mật khẩu thành công!',
+                      title: response.data.message,
                       icon: 'success',
                       timer: 2000,
                       timerProgressBar: true,
                     }
                 )
-              } else {
-                this.$refs[formName].resetFields();
-                this.$swal.fire({
-                  title: 'Thay đổi mật khẩu thất bại!',
-                  icon: "error",
-                  timer: 2000,
-                  timerProgressBar: true,
-                })
+                this.message = ''
               }
-            })
+              // else {
+              //   this.$refs[formName].resetFields();
+              //   this.$swal.fire({
+              //     title: response.data.error,
+              //     icon: "error",
+              //     timer: 2000,
+              //     timerProgressBar: true,
+              //   })
+              // }
+            }).catch(error => {
+              this.$refs[formName].resetFields();
+              this.$swal.fire({
 
-            // this.$router.push('/login')
+                title: "Lỗi",
+                text: error.response.data.error.message,
+                icon: "error",
+                timer: 2000,
+                timerProgressBar: true,
+              })
+              this.message = ''
+            })
           } else {
-            this.$swal.fire(
-                {
-                  title: 'Mật khẩu mới không khớp!',
-                  icon: 'error',
-                  timer: 2000,
-                  timerProgressBar: true,
-                }
-            )
+            this.message = 'Mật khẩu mới không khớp!'
             console.log('error submit!!');
             return false;
           }
