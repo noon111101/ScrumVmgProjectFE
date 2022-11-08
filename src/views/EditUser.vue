@@ -85,9 +85,9 @@
                             value=""
                             v-validate="{ required: true, min: 6 }"
                           />
-                          <small v-if="errName !== null" style="color: red">
-                            {{ errName }}
-                          </small>
+                      <small v-if="errName !== null" style="color: red">
+                        {{ errName }}
+                      </small>
                         </div>
                       </td>
                     </tr>
@@ -107,9 +107,9 @@
                             name="username"
                           />
                         </div>
-                        <small v-if="errEmail !== null" style="color: red">
-                          {{ errEmail }}
-                        </small>
+                    <small v-if="errEmail !== null" style="color: red">
+                      {{ errEmail }}
+                    </small>
                       </td>
                     </tr>
 
@@ -128,11 +128,12 @@
                             name="code"
                           />
                         </div>
-                        <small v-if="errId !== null" style="color: red">
-                          {{ errId }}
-                        </small>
+                      <small v-if="errId !== null" style="color: red">
+                        {{ errId }}
+                      </small>
                       </td>
                     </tr>
+
                     <tr style="height: 70px">
                       <td style="width: 150px">
                         Giới tính<span style="color: red">*</span>
@@ -233,7 +234,7 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                           Chỉnh sửa
+                            Sign Up
                           </button>
                         </div>
                       </td>
@@ -340,8 +341,9 @@ if (!this.user.code) {
         this.errId = "";
         this.checkId = true;
       }
- if (!this.user.username) {
-        this.errEmail = "Vui lòng nhập email nhân viên";
+
+      if (!this.user.username) {
+        this.errEmail = "Hãy nhập email";
         this.checkEmail = false;
       } else if (!this.validEmail(this.user.username)) {
         this.errEmail = "Vui lòng nhập đúng định dạng email";
@@ -359,33 +361,33 @@ if (!this.user.code) {
         this.errName = "Hãy nhập Ho và tên";
         this.checkName = false;
       }
-      if (
+       if (
         this.checkId === true &&
         this.checkEmail === true &&
         this.checkName === true
       ) {
-        this.submitted = true;
-        let form = document.querySelector("#formEdit");
-        console.log(form);
-        UserService.editUser(this.user.id, form).then((response) => {
-          if (response.data != null) {
-            this.$swal.fire({
-              title: "Chỉnh sửa thành công!",
-              icon: "success",
-              timer: 2000,
-              timerProgressBar: true,
-            });
-            return this.$router.push(`/user/${this.$route.params.id}`);
-          } else {
-            this.$swal.fire({
-              title: "Chỉnh sửa thất bại!",
-              icon: "error",
-              timer: 2000,
-              timerProgressBar: true,
-            });
-            return this.$router.push(`/user/${this.$route.params.id}`);
-          }
-        });
+      this.submitted = true;
+      let form = document.querySelector("#formEdit");
+      console.log(form);
+      UserService.editUser(this.user.id, form).then((response) => {
+        if (response.data != null) {
+          this.$swal.fire({
+            title: "Chỉnh sửa thành công!",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          return this.$router.push(`/user/${this.$route.params.id}`);
+        } else {
+          this.$swal.fire({
+            title: "Chỉnh sửa thất bại!",
+            icon: "error",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          return this.$router.push(`/user/${this.$route.params.id}`);
+        }
+      });
       }
     },
     checkRole(role) {

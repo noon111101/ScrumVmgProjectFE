@@ -54,7 +54,7 @@
               <div class="row register-form">
                 <div class="col-md-8">
 
-                  <table class="text-start" style="margin-left: 150px">
+                  <table class="text-start" style="margin-left: 150px;" >
 
 
                     <tr style="height: 70px">
@@ -69,7 +69,7 @@
 
                     <tr style="height: 70px">
                       <td style="width: 300px">
-                        <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px">
+                        <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px" >
                           <el-input type="password" v-model="form.new_password" autocomplete="off"
                                     style="width: 200px"></el-input>
                         </el-form-item>
@@ -87,7 +87,9 @@
 
                     <tr style="height: 60px">
                       <td style="width: 200px">
+
                         <el-form-item style="margin-left: 80px">
+                          <span style="color: orangered">{{message}}</span>
                           <el-button type="" @click="submit('user')" class="btn btn-signup" col>Submit</el-button>
                         </el-form-item>
                       </td>
@@ -136,13 +138,13 @@ export default {
     return {
       rules: {
         old_password: [
-          {required: true, message: 'Please enter current password', trigger: 'blur'}
+          {required: true, message: 'Nhập mật khẩu hiện tại', trigger: 'blur'}
         ],
         new_password: [
-          {required: true, message: 'Please enter new password', trigger: 'blur'}
+          {required: true, message: 'Nhập mật khẩu mới', trigger: 'blur'}
         ],
         new_password_confirm: [
-          {required: true, message: 'Please enter new password again', trigger: 'blur'}
+          {required: true, message: 'Nhập lại mật khẩu mới', trigger: 'blur'}
         ]
       },
       form: {
@@ -174,14 +176,15 @@ export default {
     submit(formName) {
       this.$refs[formName].validate((valid) => {
         if(this.form.new_password=="" ||this.form.new_password_confirm =="" || this.form.old_password == "" ){
-          this.$swal.fire(
-              {
-                title: 'Chưa nhập đủ thông tin!',
-                icon: 'info',
-                timer: 2000,
-                timerProgressBar: true,
-              }
-          )
+          // this.$swal.fire(
+          //     {
+          //       title: 'Chưa nhập đủ thông tin!',
+          //       icon: 'info',
+          //       timer: 2000,
+          //       timerProgressBar: true,
+          //     }
+          // )
+          this.message = 'Chưa nhập đủ thông tin!'
         }
         else{
           if (valid && this.form.new_password === this.form.new_password_confirm) {

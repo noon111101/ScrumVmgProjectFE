@@ -179,9 +179,10 @@
                             class="form-control"
                             v-model="user.department"
                           >
-                            <option>Phòng nhân sự</option>
-                            <option>Thuc tap PTPM</option>
+                            <option>Thực tập PTPM</option>
                             <option>Phòng kế toán</option>
+                            <option>Phòng phát triển phần mềm</option>
+                            <option>Phòng nhân sự</option>
                           </select>
                         </div>
                         <div
@@ -363,6 +364,7 @@ export default {
           });
           return this.$router.push("/add-user");
         }
+
       }
       }
     },

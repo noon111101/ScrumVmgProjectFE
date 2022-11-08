@@ -96,7 +96,7 @@
             <!--            currentUser.user.cover-->
             <img v-if="currentUser.user.cover!=null"
                  v-bind:src="
-              `http://localhost:8080/uploads/images/` + currentUser.user.cover
+              `http://localhost:8080/` + currentUser.user.cover
             "
                  width="250px"
             />
@@ -133,6 +133,9 @@ export default {
 };
 </script>
 <style scoped>
+*{
+  font-size: 16px;
+}
 .about-text h3 {
   font-size: 45px;
   font-weight: 700;

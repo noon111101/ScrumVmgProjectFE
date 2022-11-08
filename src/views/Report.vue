@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div >
 
 <!--     Thanh chọn-->
 
@@ -99,7 +99,9 @@
     </div>
 <!--   BẢNG CHẤM CÔNG-->
     <div class="table-responsive-xxl" style="margin-top:50px">
-      <table v-if="showAdminBoard" class="table table-bordered align-middle" >
+
+      <table v-if="showAdminBoard" class="table table-bordered align-middle  " >
+
         <thead style="background-color: #C2C2C2">
         <tr>
           <th rowspan="2" class="text-center">TT</th>
@@ -294,9 +296,6 @@ export default {
       }
     },
     handelSearch(){
-      if(this.search!='')
-        this.users=this.users.filter(data => !this.search || data.name.toLowerCase().includes(this.search.toLowerCase()))
-      if(this.search=='')
         this.getLog();
         },
     handleEdit(date, code,sign,reason) {
@@ -446,10 +445,14 @@ export default {
       });
     },
     getLog(){
+      if(this.showModeratorBoard){
+        this.department=this.currentUser.user.departments.id
+      }
       LogService.getAllByMonthAndDepartment(
           {
             month : this.currentMonth,
-            id:this.department
+            id:this.department,
+            search:this.search
           }
       ).then(respone => {
         let dataCall=[]
@@ -532,11 +535,14 @@ export default {
     this.getLog();
     console.log(this.currentUser.user.fullName)
     this.accountDepartment = this.currentUser.user.departments
-
   },
+
 };
 </script>
 <style>
+*{
+  font-size: 16px;
+}
 .boder-round{
   border-radius: 6px;
 }
