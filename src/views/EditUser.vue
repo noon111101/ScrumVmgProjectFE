@@ -234,7 +234,7 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                            Sign Up
+                           Chỉnh sửa
                           </button>
                         </div>
                       </td>
@@ -341,9 +341,8 @@ if (!this.user.code) {
         this.errId = "";
         this.checkId = true;
       }
-
-      if (!this.user.username) {
-        this.errEmail = "Hãy nhập email";
+ if (!this.user.username) {
+        this.errEmail = "Vui lòng nhập email nhân viên";
         this.checkEmail = false;
       } else if (!this.validEmail(this.user.username)) {
         this.errEmail = "Vui lòng nhập đúng định dạng email";

@@ -34,6 +34,13 @@
                       >Xác nhân</el-button
                     >
                     <br />
+                    <div style="margin-top: 20px">
+                      <a style="color:#33ACFF;" href="http://localhost:8081/login"
+                        >Quay lại trang Đăng nhập</a
+                      >
+                    </div>
+
+                    <br />
                   </div>
                 </form>
               </div>
@@ -105,40 +112,40 @@ export default {
         this.validEmail(this.email) &&
         this.email &&
         this.checkEmail === true
-      ){
+      ) {
         this.errEmail = "";
         this.checkEmail = true;
       }
-      
-        if (this.checkEmail === true) {
-          this.loading = true;
-          this.$validator.validateAll().then((isValid) => {
-            if (!isValid) {
-              this.loading = false;
-              return;
-            }
-            if (this.email) {
-              const params = {
-                email: this.email,
-              };
-              UserService.forgotPassword(params).then((response) => {
-                if (response.data == true) {
-                  this.$router.push("/confirmForgot");
-                } else {
-                  (error) => {
-                    this.loading = false;
-                    this.message =
-                      (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                      error.message ||
-                      error.toString();
-                  };
-                }
-              });
-            }
-          });
-        }
+
+      if (this.checkEmail === true) {
+        this.loading = true;
+        this.$validator.validateAll().then((isValid) => {
+          if (!isValid) {
+            this.loading = false;
+            return;
+          }
+          if (this.email) {
+            const params = {
+              email: this.email,
+            };
+            UserService.forgotPassword(params).then((response) => {
+              if (response.data == true) {
+                this.$router.push("/confirmForgot");
+              } else {
+                (error) => {
+                  this.loading = false;
+                  this.message =
+                    (error.response &&
+                      error.response.data &&
+                      error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+                };
+              }
+            });
+          }
+        });
+      }
     },
   },
 };

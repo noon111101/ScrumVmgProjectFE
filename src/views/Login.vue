@@ -44,6 +44,7 @@
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button
+                      style="margin-top: 20px;margin-bottom: 20px;"
                       class="btn btn-danger btn-block"
                       :disabled="loading"
                     >
@@ -51,10 +52,15 @@
                     </button>
                     <br />
                     <a
+                      style="margin-top: 20px;color:#33ACFF;"
+                      href="http://localhost:8081/forgotPassword"
+                      >Quên mât khẩu</a
+                    >
+                    <!-- <a style="padding-top:20px"
                       class="text-muted"
                       href="http://localhost:8081/forgotPassword"
                       >Forgot password?</a
-                    >
+                    > -->
                     <br />
                     <small style="color: red" v-if="message">{{
                       message
