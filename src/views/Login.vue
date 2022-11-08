@@ -15,7 +15,7 @@
                   <h4 class="mt-1 mb-5 pb-1">PHÁT TRIỂN CÙNG CÔNG NGHỆ</h4>
                 </div>
                 <form name="form" @submit.prevent="handleLogin">
-                  <p>Please login to your account</p>
+                  <p>Nhập thông tin đăng nhập</p>
                   <div class="form-outline mb-4">
                     <input
                       placeholder="Enter Your Email"
@@ -48,7 +48,7 @@
                       class="btn btn-danger btn-block"
                       :disabled="loading"
                     >
-                      Log in
+                      Đăng nhập
                     </button>
                     <br />
                     <a

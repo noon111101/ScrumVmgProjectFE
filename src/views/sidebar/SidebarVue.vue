@@ -36,7 +36,7 @@
           <a class="dropdown-item" href="#">
             <a class="nav-link sel" href @click.prevent="logOut">
               <font-awesome-icon icon="sign-out-alt" />
-              LogOut
+              Đăng xuất
             </a>
           </a>
         </li>
@@ -80,7 +80,7 @@
           <a class="dropdown-item" href="#">
             <a class="nav-link sel" href @click.prevent="logOut">
               <font-awesome-icon icon="sign-out-alt" />
-              LogOut
+              Đăng xuất
             </a>
           </a>
         </li>
@@ -110,7 +110,7 @@
               <a class="nav-link active" aria-current="page" href="/profile">
                 <router-link to="/calender" v-if="currentUser" class="nav-link sel">
                   <font-awesome-icon icon="home" />
-                  Home
+                  Trang chủ
                 </router-link>
               </a>
             </li>
@@ -118,7 +118,7 @@
               <a class="nav-link">
                 <router-link to="/user" v-if="currentUser" class="nav-link sel">
                   <i class="el-icon-question"></i>
-                  Chi tiết chấm công cá nhân
+                  Chấm công của tôi
                 </router-link>
               </a>
             </li>
@@ -127,7 +127,7 @@
               <a class="nav-link">
 
                 <router-link to="/timesheetadmin" class="nav-link sel">
-                  <i class="el-icon-date"> </i> Chi tiết chấm công công ty
+                  <i class="el-icon-date"> </i> Quản lý chấm công
                 </router-link>
               </a>
             </li>
@@ -135,7 +135,7 @@
             <li class="nav-item" v-if="showModeratorBoard">
               <a class="nav-link">
                 <router-link to="/timesheetmod" class="nav-link sel">
-                  <i class="el-icon-date"> </i> Chi tiết chấm công bộ phận
+                  <i class="el-icon-date"> </i> Quản lý chấm công
                 </router-link>
               </a>
             </li>
@@ -153,7 +153,7 @@
             <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
               <a class="nav-link">
                 <router-link to="/report" class="nav-link sel">
-                  <i class="el-icon-document-copy"> </i> Bảng Chấm Công
+                  <i class="el-icon-document-copy"> </i> Thống kê chấm công
                 </router-link>
               </a>
             </li>

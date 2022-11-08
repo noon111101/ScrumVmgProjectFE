@@ -2,40 +2,40 @@
   <div class="container register">
     <div class="row">
       <div class="col-md-3 register-left">
-        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+        <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>
         <img
-          style="width: 200px; line-height: 100%"
-          src="../assets/vmg_logo.png"
+            style="width: 200px; line-height: 100%"
+            src="../assets/vmg_logo.png"
         />
       </div>
       <div class="col-md-9 register-right">
         <ul
-          class="nav nav-tabs nav-justified"
-          id="myTab"
-          role="tablist"
-          style="background-color: #e24146"
+            class="nav nav-tabs nav-justified"
+            id="myTab"
+            role="tablist"
+            style="background-color: #e24146"
         >
           <li class="nav-item">
             <a
-              class="nav-link active"
-              id="home-tab"
-              data-toggle="tab"
-              href="#home"
-              role="tab"
-              aria-controls="home"
-              aria-selected="true"
-              >Tạo</a
+                class="nav-link active"
+                id="home-tab"
+                data-toggle="tab"
+                href="#home"
+                role="tab"
+                aria-controls="home"
+                aria-selected="true"
+            >Tạo</a
             >
           </li>
           <li class="nav-item">
             <a
-              class="nav-link"
-              id="profile-tab"
-              data-toggle="tab"
-              href="#profile"
-              role="tab"
-              aria-controls="profile"
-              aria-selected="false"
+                class="nav-link"
+                id="profile-tab"
+                data-toggle="tab"
+                href="#profile"
+                role="tab"
+                aria-controls="profile"
+                aria-selected="false"
             >
               Nhân viên
             </a>
@@ -43,29 +43,26 @@
         </ul>
         <div class="tab-content" id="myTabContent">
           <div
-            class="tab-pane fade show active"
-            id="home"
-            role="tabpanel"
-            aria-labelledby="home-tab"
+              class="tab-pane fade show active"
+              id="home"
+              role="tabpanel"
+              aria-labelledby="home-tab"
           >
             <form id="formEdit" @submit.prevent="sendForm">
               <div class="row register-form">
                 <div class="col-md-4">
                   <input
-                    type="file"
-                    name="cover"
-                    class="form-control"
-                    placeholder="Title"
-                    @change="previewFiles($event)"
+                      type="file"
+                      name="cover"
+                      class="form-control"
+                      placeholder="Title"
+                      @change="previewFiles($event)"
                   />
-                  <br /><br />
+                  <br/><br/>
                   <img
-                    alt=""
-                    :src="
-                      newImage ||
-                      'https://www.namepros.com/attachments/empty-png.89209/'
-                    "
-                    style="width: 270px"
+                      alt=""
+                      :src="newImage"
+                      style="width: 270px"
                   />
                 </div>
                 <div class="col-md-8">
@@ -77,17 +74,17 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                            v-model="user.fullName"
-                            type="text"
-                            class="form-control"
-                            name="fullName"
-                            placeholder="Họ và tên"
-                            value=""
-                            v-validate="{ required: true, min: 6 }"
+                              v-model="user.fullName"
+                              type="text"
+                              class="form-control"
+                              name="fullName"
+                              placeholder="Họ và tên"
+                              value=""
+                              v-validate="{ required: true, min: 6 }"
                           />
-                      <small v-if="errName !== null" style="color: red">
-                        {{ errName }}
-                      </small>
+                          <small v-if="errName !== null" style="color: red">
+                            {{ errName }}
+                          </small>
                         </div>
                       </td>
                     </tr>
@@ -98,18 +95,18 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                            v-model="user.username"
-                            type=""
-                            class="form-control"
-                            placeholder="Email *"
-                            value=""
-                            v-validate="{ required: true, min: 5 }"
-                            name="username"
+                              v-model="user.username"
+                              type=""
+                              class="form-control"
+                              placeholder="Email *"
+                              value=""
+                              v-validate="{ required: true, min: 5 }"
+                              name="username"
                           />
                         </div>
-                    <small v-if="errEmail !== null" style="color: red">
-                      {{ errEmail }}
-                    </small>
+                        <small v-if="errEmail !== null" style="color: red">
+                          {{ errEmail }}
+                        </small>
                       </td>
                     </tr>
 
@@ -120,43 +117,44 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <input
-                            v-model="user.code"
-                            type="number"
-                            class="form-control"
-                            placeholder="Employee ID *"
-                            v-validate="{ required: true, min: 2 }"
-                            name="code"
+                              v-model="user.code"
+                              type="number"
+                              class="form-control"
+                              placeholder="Employee ID *"
+                              v-validate="{ required: true, min: 2 }"
+                              name="code"
                           />
                         </div>
-                      <small v-if="errId !== null" style="color: red">
-                        {{ errId }}
-                      </small>
+                        <small v-if="errId !== null" style="color: red">
+                          {{ errId }}
+                        </small>
                       </td>
                     </tr>
 
-                    <tr style="height: 70px">
+                    <tr style="height: 70px" >
                       <td style="width: 150px">
                         Giới tính<span style="color: red">*</span>
                       </td>
                       <td style="width: 300px">
                         <el-radio
-                          v-model="user.gender"
-                          name="gender"
-                          value="Nam"
-                          label="Nam"
-                          border
-                          >&nbsp; Nam
+                            v-model="user.gender"
+                            name="gender"
+                            value="Nam"
+                            label="Nam"
+                            border
+                        >&nbsp; Nam
                         </el-radio>
                         <el-radio
-                          v-model="user.gender"
-                          name="gender"
-                          value="Nữ"
-                          label="Nữ"
-                          border
-                          >&nbsp; Nữ
+                            v-model="user.gender"
+                            name="gender"
+                            value="Nữ"
+                            label="Nữ"
+                            border
+                        >&nbsp; Nữ
                         </el-radio>
                       </td>
                     </tr>
+
 
                     <tr style="height: 70px">
                       <td style="width: 100px">
@@ -165,53 +163,75 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <el-select
-                            name="department"
-                            v-model="user.departments.name"
-                            @change="getAll"
-                            placeholder="Chon Phòng ban"
+                              name="department"
+                              v-model="user.departments.name"
+                              @change="getAll"
+                              placeholder="Chon Phòng ban"
                           >
                             <el-option
-                              v-for="item in departments"
-                              :key="item.id"
-                              :label="item.name"
-                              :value="item.name"
+                                v-for="item in departments"
+                                :key="item.id"
+                                :label="item.name"
+                                :value="item.name"
                             >
                             </el-option>
                           </el-select>
                         </div>
                         <div
-                          v-if="errors.has('department')"
-                          class="alert alert-danger"
-                          role="alert"
+                            v-if="errors.has('department')"
+                            class="alert alert-danger"
+                            role="alert"
                         >
                           Chọn phòng ban
                         </div>
                       </td>
                     </tr>
-                    <tr style="height: 40px">
-                      <td style="width: 100px">
-                        Chức vụ<span style="color: red">*</span>
-                      </td>
-                      <td style="width: 300px">
-                        <input
-                          type="radio"
-                          id="admin"
-                          value="admin"
-                          :checked="checkRole('ROLE_ADMIN')"
-                          name="role"
-                        />
-                        <label for="admin">&nbsp; Admin</label>
-                      </td>
-                    </tr>
+
+                    <template v-if="user.code == currentUser.user.code">
+                      <tr style="height: 40px" disabled="" >
+                        <td style="width: 100px">
+                          Chức vụ<span style="color: red">*</span>
+                        </td>
+                        <td style="width: 300px">
+                          <input
+                              disabled
+                              type="radio"
+                              id="admin"
+                              value="admin"
+                              :checked="checkRole('ROLE_ADMIN')"
+                              name="role"
+                          />
+                          <label for="admin">&nbsp; Admin</label>
+                        </td>
+                      </tr>
+                    </template>
+
+                    <template v-if="user.code != currentUser.user.code">
+                      <tr style="height: 40px"  >
+                        <td style="width: 100px">
+                          Chức vụ<span style="color: red">*</span>
+                        </td>
+                        <td style="width: 300px">
+                          <input
+                              type="radio"
+                              id="admin"
+                              value="admin"
+                              :checked="checkRole('ROLE_ADMIN')"
+                              name="role"
+                          />
+                          <label for="admin">&nbsp; Admin</label>
+                        </td>
+                      </tr>
+                    </template>
                     <tr style="height: 40px">
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                          type="radio"
-                          id="manage"
-                          value="manage"
-                          :checked="checkRole('ROLE_MANAGE')"
-                          name="role"
+                            type="radio"
+                            id="manage"
+                            value="manage"
+                            :checked="checkRole('ROLE_MANAGE')"
+                            name="role"
                         />
                         <label for="manage">&nbsp; Manage</label>
                       </td>
@@ -220,11 +240,11 @@
                       <td style="width: 100px"></td>
                       <td style="width: 300px">
                         <input
-                          type="radio"
-                          id="user"
-                          value="user"
-                          name="role"
-                          :checked="checkRole('ROLE_USER')"
+                            type="radio"
+                            id="user"
+                            value="user"
+                            name="role"
+                            :checked="checkRole('ROLE_USER')"
                         />
                         <label for="user">&nbsp; User</label>
                       </td>
@@ -234,20 +254,20 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                           Chỉnh sửa
+                            Chỉnh sửa
                           </button>
                         </div>
                       </td>
                     </tr>
                   </table>
-                  <br />
+                  <br/>
                 </div>
               </div>
             </form>
             <div
-              v-if="message"
-              class="alert"
-              :class="successful ? 'alert-success' : 'alert-danger'"
+                v-if="message"
+                class="alert"
+                :class="successful ? 'alert-success' : 'alert-danger'"
             >
               {{ message }}
             </div>
@@ -260,6 +280,7 @@
 <script>
 import UserService from "@/services/user.service";
 import DepartmentService from "@/services/department.service";
+
 export default {
   name: "EditVue",
   data() {
@@ -270,7 +291,7 @@ export default {
       submitted: false,
       successful: false,
       message: "",
-      newImage: "",
+      newImage: null,
       cover: {},
       departments: [],
       departmentId: "",
@@ -283,24 +304,34 @@ export default {
       users: [],
     };
   },
-  created() {},
+  created() {
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+  },
   mounted() {
     UserService.getUserById(this.$route.params.id).then((response) => {
       this.user = response.data;
-      console.log(this.user);
+      console.log(this.user.cover);
+      this.newImage = this.user.cover !== null ? 'http://localhost:8080/' + this.user.cover : 'https://www.namepros.com/attachments/empty-png.89209/';
     });
     DepartmentService.getAllDepartment()
-      .then((response) => {
-        this.departments = response.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then((response) => {
+          this.departments = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   },
   methods: {
     validEmail: function (email) {
       var re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
 
@@ -309,10 +340,10 @@ export default {
       return re.test(code);
     },
 
-    validName: function (name) {
-      var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
-      return re.test(name);
-    },
+    // validName: function (name) {
+    //   var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    //   return re.test(name);
+    // },
 
     previewFiles(event) {
       const file = event.target.files[0];
@@ -327,66 +358,66 @@ export default {
       let response = await UserService.getAllUser();
       this.users = response.data;
 
-if (!this.user.code) {
+      if (!this.user.code) {
         this.errId = "Vui lòng nhập mã nhân viên";
         this.checkId = false;
       } else if (!this.validCode(this.user.code)) {
         this.errId = "Vui lòng nhập đúng định dạng code";
         this.checkId = false;
       } else if (
-        this.validCode(this.user.code) &&
-        this.user.code &&
-        this.checkId === true
+          this.validCode(this.user.code) &&
+          this.user.code &&
+          this.checkId === true
       ) {
         this.errId = "";
         this.checkId = true;
       }
- if (!this.user.username) {
-        this.errEmail = "Vui lòng nhập email nhân viên";
-        this.checkEmail = false;
-      } else if (!this.validEmail(this.user.username)) {
-        this.errEmail = "Vui lòng nhập đúng định dạng email";
-        this.checkEmail = false;
-      } else if (
-        this.validEmail(this.user.username) &&
-        this.user.username &&
-        this.checkEmail === true
-      ) {
-        this.errEmail = "";
-        this.checkEmail = true;
-      }
+      // if (!this.user.username) {
+      //        this.errEmail = "Vui lòng nhập email nhân viên";
+      //        this.checkEmail = false;
+      //      } else if (!this.validEmail(this.user.username)) {
+      //        this.errEmail = "Vui lòng nhập đúng định dạng email";
+      //        this.checkEmail = false;
+      //      } else if (
+      //        this.validEmail(this.user.username) &&
+      //        this.user.username &&
+      //        this.checkEmail === true
+      //      ) {
+      //        this.errEmail = "";
+      //        this.checkEmail = true;
+      //      }
 
       if (!this.user.fullName) {
         this.errName = "Hãy nhập Ho và tên";
         this.checkName = false;
       }
-       if (
-        this.checkId === true &&
-        this.checkEmail === true &&
-        this.checkName === true
+      if (
+          this.checkId === true &&
+          this.checkEmail === true &&
+          this.checkName === true
       ) {
-      this.submitted = true;
-      let form = document.querySelector("#formEdit");
-      console.log(form);
-      UserService.editUser(this.user.id, form).then((response) => {
-        if (response.data != null) {
-          this.$swal.fire({
-            title: "Chỉnh sửa thành công!",
-            icon: "success",
-            timer: 2000,
-            timerProgressBar: true,
-          });
-          return this.$router.push(`/manage`);
-        } else {
-          this.$swal.fire({
-            title: "Chỉnh sửa thất bại!",
-            icon: "error",
-            timer: 2000,
-            timerProgressBar: true,
-          });
-          return this.$router.push(`/user/${this.$route.params.id}`);
-        }
-      });
+        this.submitted = true;
+        let form = document.querySelector("#formEdit");
+        console.log(form);
+        UserService.editUser(this.user.id, form).then((response) => {
+          if (response.data != null) {
+            this.$swal.fire({
+              title: "Chỉnh sửa thành công!",
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            return this.$router.push(`/manage`);
+          } else {
+            this.$swal.fire({
+              title: "Chỉnh sửa thất bại!",
+              icon: "error",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            return this.$router.push(`/user/${this.$route.params.id}`);
+          }
+        });
       }
     },
     checkRole(role) {
