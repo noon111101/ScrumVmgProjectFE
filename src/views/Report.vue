@@ -200,7 +200,7 @@
         </b-icon-x-circle-fill>
       </template>
       <b-form-radio v-model="selected" v-for="(sign,index) in signs" :key="index"  :name="sign" :value="sign">{{ sign }}</b-form-radio>
-      <div v-if="signs.includes(selected)" class="mt-2 my-2 ">
+      <div class="mt-2 my-2 ">
         Nhập lý do :
       </div>
       <b-form-input v-model="currenReason"  size="sm" autofocus type="text"></b-form-input>
@@ -262,7 +262,7 @@ export default {
       search: '',
       department:null,
       departments:[],
-      signs:["H","KL","NT","H_KL","KL_H"],
+      signs:["H","KL","NT","H_KL","KL_H","_"],
       selected: '',
       dateEdit:'',
       codeEdit:'',
@@ -308,6 +308,7 @@ export default {
                 reason=null
               if(user.log[date].sign==sign && user.log[date].status===true)
                 user.log[date].reason=reason
+
               user.log[date].sign=sign
               user.log[date].status=true
               user.dayWork=this.caculateDayWork(user.log)
@@ -317,7 +318,15 @@ export default {
               this.logsEdit = this.logsEdit.filter(log => {
                   return log.code==code && log.date!==user.log[date].date || log.code!=code
               })
-              this.logsEdit.push({
+              if(sign=="_")
+                this.logsEdit.push({
+                  date:user.log[date].date,
+                  code:code,
+                  sign:null,
+                  reason:reason
+                });
+              else
+                this.logsEdit.push({
                 date:user.log[date].date,
                 code:code,
                 sign:sign,
@@ -347,6 +356,14 @@ export default {
               showCloseButton: true,
             }
         )
+        this.users.map(user =>{
+          user.log.map(
+              sign =>{
+                sign.status=false
+              }
+          )
+        })
+        this.logsEdit=[]
       }).catch(error=>{
         console.log(error)
         this.$swal.fire({
@@ -357,14 +374,7 @@ export default {
               showCloseButton: true,
             }
         )          })
-      this.users.map(user =>{
-        user.log.map(
-            sign =>{
-              sign.status=false
-            }
-        )
-      })
-      this.logsEdit=[]
+
     }
    ,
     //CaculateDayWork
@@ -467,6 +477,16 @@ export default {
                 let date = Number(user.date_log.split("-")[2])
                 dates.push(date)
                 if(date==i){
+                  if(user.signs==null)
+                    signs.push(
+                        {
+                          sign: '_',
+                          status:false,
+                          date:user.date_log,
+                          reason:user.reason
+                        }
+                    )
+                  else 
                   signs.push(
                       {
                         sign: user.signs.name,
