@@ -207,7 +207,9 @@ export default {
             }).catch(error => {
               this.$refs[formName].resetFields();
               this.$swal.fire({
-                title: error.response.data.error.message,
+
+                title: "Lỗi",
+                text: error.response.data.error.message,
                 icon: "error",
                 timer: 2000,
                 timerProgressBar: true,
