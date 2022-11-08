@@ -31,18 +31,19 @@
 
 <!--        </div>-->
       </div>
+
       <div style="float: right; margin-bottom: 20px" class="mx-3">
         <el-button type="danger" round @click="dialogFormVisible = true"
           ><i class="el-icon-plus"></i> Thêm nhân viên
         </el-button>
       </div>
 
-
       <el-dialog title="Thêm nhân viên" :visible.sync="dialogFormVisible">
         <form id="formRegister">
           <div class="row register-form">
             <div class="col-md-4">
               <input
+                id="fileUser"
                 type="file"
                 name="cover"
                 class="form-control"
@@ -222,9 +223,9 @@
                   </td>
                 </tr>
                 <tr>
-                <small v-if="errRole !== null" style="color: red">
-                  {{ errRole }}
-                </small>
+                  <small v-if="errRole !== null" style="color: red">
+                    {{ errRole }}
+                  </small>
                 </tr>
                 
               </table>
@@ -380,7 +381,7 @@ export default {
       successful: false,
       message: "",
       newImage: "",
-      cover: {},
+      cover: null,
       formLabelWidth: "120px",
 
       errId: "",
@@ -453,12 +454,12 @@ export default {
       this.user.code = "";
       this.user.department = "";
       this.user.username = "";
+      this.cover = "";
     },
 
     async sendForm() {
       let response = await UserService.getAllUser();
       this.users = response.data;
-
       for (let i = 0; i < this.users.length; i++) {
         if (this.user.code == this.users[i].code) {
           this.errId = "Mã nhân sự đã tồn tại";
@@ -472,7 +473,10 @@ export default {
       }
 
       if (!this.user.code) {
-        this.errId = "Hãy nhập mã nhân sự";
+        this.errId = "Vui lòng nhập mã nhân viên";
+        this.checkId = false;
+      } else if (!this.validCode(this.user.code)) {
+        this.errId = "Vui lòng nhập đúng định dạng code";
         this.checkId = false;
       }
 
@@ -489,13 +493,33 @@ export default {
       }
 
       if (!this.user.username) {
-        this.errEmail = "Hãy nhập email";
+        this.errEmail = "Vui lòng nhập email nhân viên";
         this.checkEmail = false;
+      } else if (!this.validEmail(this.user.username)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else if (
+        this.validEmail(this.user.username) &&
+        this.user.username &&
+        this.checkEmail === true
+      ) {
+        this.errEmail = "";
+        this.checkEmail = true;
       }
 
       if (!this.user.fullName) {
-        this.errName = "Hãy nhập Ho và tên";
+        this.errName = "Vui lòng nhập ho và tên";
         this.checkName = false;
+      } else if (!this.validName(this.user.fullName)) {
+        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+        this.checkName = false;
+      } else if (
+        this.validName(this.user.fullName) &&
+        this.user.fullName &&
+        this.checkName === true
+      ) {
+        this.errName = "";
+        this.checkName = true;
       }
 
       if (!this.user.department) {
@@ -517,13 +541,20 @@ export default {
         this.checkId === true &&
         this.checkEmail === true &&
         this.checkName === true &&
-        this.checkGender === true
+        this.checkGender === true &&
+        this.checkDepartment === true
       ) {
         this.submitted = true;
         let form = document.querySelector("#formRegister");
+        console.log(14, form.cover.value)
         let response = AuthService.register(form);
         if (response) {
-          this.message = "Đăng ký thành công";
+         this.$swal.fire({
+            title: "Tạo tài khoản thành công!",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
         } else {
           this.message = "";
         }
@@ -542,17 +573,15 @@ export default {
         status: this.status
       };
       UserService.getUser_Department(params)
-
-          .then((response) => {
-            this.users = response.data.content;
-            this.page = response.data.pageable.pageNumber;
-            console.log(response.data.pageable.pageNumber);
-            this.totalItems = response.data.totalElements;
-            console.log(response.data.content + "fdasfds");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
+        .then((response) => {
+          this.users = response.data.content;
+          this.page = response.data.pageable.pageNumber;
+          console.log(response.data.pageable.pageNumber);
+          this.totalItems = response.data.totalElements;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
     previewFiles(event) {
       const file = event.target.files[0];
@@ -667,6 +696,16 @@ export default {
       return "success-row";
     },
   },
+  watch: {
+    dialogFormVisible: function() {
+      console.log(1212)
+      console.log(document.getElementById('fileUser').value)
+      if (!this.dialogFormVisible) {
+        document.getElementById('fileUser').removeAttribute('value');
+      }
+      console.log(this.cover)
+    }
+  }
 };
 </script>
 <style>

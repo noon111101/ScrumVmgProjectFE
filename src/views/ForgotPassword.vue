@@ -30,13 +30,9 @@
                     </small>
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
-                    <button
-                      @click="handleForgot"
-                      class="btn btn-danger btn-block"
-                      :disabled="loading"
+                    <el-button type="danger" @click="handleForgot"
+                      >Xác nhân</el-button
                     >
-                      Tiếp tuc
-                    </button>
                     <br />
                   </div>
                 </form>
@@ -65,6 +61,7 @@ export default {
       errEmail: "",
       checkEmail: true,
       users: [],
+      a: "",
     };
   },
   computed: {
@@ -77,53 +74,75 @@ export default {
   },
   mounted() {},
   methods: {
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
     async handleForgot() {
-      // let response = await UserService.getAllUser();
-      // this.users = response.data;
-      // for (let i = 0; i < this.users.length; i++) {
-      //   if (this.email === this.users[i].username) {
-      //     this.errEmail = "";
-      //     this.checkEmail = true;
-      //     break;
-      //   } else {
-      //     this.errEmail = "Email không tồn tại";
-      //     this.checkEmail = false;
-      //   }
-      // }
-      // if (this.checkEmail === true) {
-        this.loading = true; 
-        this.$validator.validateAll().then((isValid) => {
-          if (!isValid) {
-            this.loading = false;
-            return;
-          }
-          if (this.email) {
-            const params = {
-              email: this.email,
-            };
-            UserService.forgotPassword(params).then((response) => {
-              if (response.data == true) {
-                this.$router.push("/confirmForgot");
-              } else {
-                (error) => {
-                  this.loading = false;
-                  this.message =
-                    (error.response &&
-                      error.response.data &&
-                      error.response.data.message) ||
-                    error.message ||
-                    error.toString();
-                };
-              }
-            });
-          }
-        });
-      // }
+      let response = await UserService.getAllUser();
+      this.users = response.data;
+
+      for (let i = 0; i < this.users.length; i++) {
+        if (this.email === this.users[i].username) {
+          this.errEmail = "";
+          this.checkEmail = true;
+          break;
+        } else {
+          this.errEmail = "Email không tồn tại";
+          this.checkEmail = false;
+        }
+      }
+
+      if (!this.email) {
+        this.errEmail = "Vui lòng nhập email nhân viên";
+        this.checkEmail = false;
+      } else if (!this.validEmail(this.email)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else if (
+        this.validEmail(this.email) &&
+        this.email &&
+        this.checkEmail === true
+      ){
+        this.errEmail = "";
+        this.checkEmail = true;
+      }
+      
+        if (this.checkEmail === true) {
+          this.loading = true;
+          this.$validator.validateAll().then((isValid) => {
+            if (!isValid) {
+              this.loading = false;
+              return;
+            }
+            if (this.email) {
+              const params = {
+                email: this.email,
+              };
+              UserService.forgotPassword(params).then((response) => {
+                if (response.data == true) {
+                  this.$router.push("/confirmForgot");
+                } else {
+                  (error) => {
+                    this.loading = false;
+                    this.message =
+                      (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                      error.message ||
+                      error.toString();
+                  };
+                }
+              });
+            }
+          });
+        }
     },
   },
 };
 </script>
-
 <style scoped>
 @media (min-width: 768px) {
   .gradient-form {
