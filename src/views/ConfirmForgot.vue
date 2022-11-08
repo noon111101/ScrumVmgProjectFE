@@ -8,15 +8,20 @@
               <div class="card-body p-md-5 mx-md-4">
                 <div class="text-center">
                   <img
-                      src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
-                      style="width: 185px"
-                      alt="logo"
+                    src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
+                    style="width: 185px"
+                    alt="logo"
                   />
                   <h4 class="mt-1 mb-5 pb-1">PHÁT TRIỂN CÙNG CÔNG NGHỆ</h4>
                 </div>
-                Hệ thống đã gửi mật khẩu mới về email của bạn KIỂM TRA EMAIL và sử dụng mật khẩu mới để đăng nhập
-                <br><br/>
-                <i style="color:blue" class="el-icon-right"><a href="http://localhost:8081/login">Đi đến trang Đăng nhập</a></i>
+                Hệ thống đã gửi mật khẩu mới về email của bạn KIỂM TRA EMAIL và
+                sử dụng mật khẩu mới để đăng nhập
+                <br /><br />
+                <a
+                  style="margin-top: 20px;color:#33ACFF;"
+                  href="http://localhost:8081/login"
+                  >Trở lai trang đăng nhâp</a
+                >
               </div>
             </div>
             <div class="col-lg-6 d-flex align-items-center gradient-custom-2">

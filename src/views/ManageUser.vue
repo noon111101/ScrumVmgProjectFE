@@ -1,5 +1,5 @@
 <template style="font-size: 16px">
-  <div className="container" style=" width: 90%; margin: auto">
+  <div className="container" style="width: 90%; margin: auto">
     <div class="d-flex">
       <div className="block" class="text-start col-10">
         <span>Phòng ban</span> &ensp;
@@ -17,19 +17,24 @@
           >
           </el-option>
         </el-select>
-<!--        <div style="width: 200px" class="">-->
-        <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
-          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 20%;"/>
+        <!--        <div style="width: 200px" class="">-->
+        <span style="margin-left: 100px">Tìm kiếm</span> &ensp;
+        <el-input
+          v-model="search"
+          @input="getAll"
+          size="medium"
+          placeholder="Tên nhân viên"
+          style="width: 20%"
+        />
 
-        <span style=" margin-left: 100px">Trạng thái</span> &ensp;
+        <span style="margin-left: 100px">Trạng thái</span> &ensp;
         <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
           <el-option value="" label="Tất cả"></el-option>
-          <el-option label= "Có hiệu lực" value="1" ></el-option>
-          <el-option label= "Vô hiệu lực" value="0" ></el-option>
+          <el-option label="Có hiệu lực" value="1"></el-option>
+          <el-option label="Vô hiệu lực" value="0"></el-option>
         </el-select>
 
-
-<!--        </div>-->
+        <!--        </div>-->
       </div>
 
       <div style="float: right; margin-bottom: 20px" class="mx-3">
@@ -227,7 +232,6 @@
                     {{ errRole }}
                   </small>
                 </tr>
-                
               </table>
               <br />
             </div>
@@ -246,24 +250,53 @@
     <br />
     <div>
       <el-table
-
-          :data="users"
-          :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-          style="width: 100%; display: inline-block;font-size: 16px"
-          :row-class-name="tableRowClassName">
+        :data="users"
+        :header-cell-style="{
+          background: '#D9D9D9',
+          color: 'black',
+          align: 'center',
+        }"
+        style="width: 100%; display: inline-block; font-size: 16px"
+        :row-class-name="tableRowClassName"
+      >
         >
-        <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
-        <el-table-column label="Mã NV" prop="code" align="center" width="100px"></el-table-column>
-        <el-table-column label="Ho và tên" prop="fullName" align="center"></el-table-column>
-        <el-table-column label="Phòng ban" prop="departments.name" align="center">
+        <el-table-column
+          label="STT"
+          type="index"
+          align="center"
+          width="100px"
+        ></el-table-column>
+        <el-table-column
+          label="Mã NV"
+          prop="code"
+          align="center"
+          width="100px"
+        ></el-table-column>
+        <el-table-column
+          label="Ho và tên"
+          prop="fullName"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          label="Phòng ban"
+          prop="departments.name"
+          align="center"
+        >
         </el-table-column>
-        <el-table-column label="Email" prop="username" align="center"></el-table-column>
-        <el-table-column label="Ảnh" v-slot:="data" align="center" width="210px">
-          <img v-if="data.row.cover!=null"
-               v-bind:src="
-
-              `http://localhost:8080/` + data.row.cover
-            "
+        <el-table-column
+          label="Email"
+          prop="username"
+          align="center"
+        ></el-table-column>
+        <el-table-column
+          label="Ảnh"
+          v-slot:="data"
+          align="center"
+          width="210px"
+        >
+          <img
+            v-if="data.row.cover != null"
+            v-bind:src="`http://localhost:8080/` + data.row.cover"
             width="150px"
           />
           <img
@@ -301,39 +334,63 @@
             Vô hiệu lực
           </button>
         </el-table-column>
-        <el-table-column v-slot:="data" label="Chỉnh sửa" width="200px" align="center">
+        <el-table-column
+          v-slot:="data"
+          label="Chỉnh sửa"
+          width="200px"
+          align="center"
+        >
           <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
 
           <router-link :to="`/user/${data.row.id}`">
-<!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
-            <button
-                style="margin-right: 10px;" class="btn-action">
-              <i class="el-icon-edit-outline" style="width: 30px;"></i>
-
+            <!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
+            <button style="margin-right: 10px" class="btn-action">
+              <i class="el-icon-edit-outline" style="width: 30px"></i>
             </button>
           </router-link>
 
-<!--          <div v-if="data.row.id == currentUser.user.id">-->
-            <button v-if="data.row.avalible==1 && data.row.id == currentUser.user.id" class="btn-action"
-                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)" disabled>
-              <i class="el-icon-unlock " style="width: 30px;"></i>
-            </button>
-            <button v-if="data.row.avalible==0 && data.row.id == currentUser.user.id" class="btn-action"
-                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)" disabled>
-              <i class="el-icon-lock " style="width: 30px;"></i>
-            </button>
-<!--          </div>-->
-<!--          <div v-if="data.row.id != currentUser.user.id">-->
-            <button v-if="data.row.avalible==1 && data.row.id != currentUser.user.id" class="btn-action"
-                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)">
-              <i class="el-icon-unlock " style="width: 30px;"></i>
-            </button>
-            <button v-if="data.row.avalible==0 && data.row.id != currentUser.user.id" class="btn-action"
-                    @click="changeStatus(data.row.id,data.row.fullName,data.row.avalible)">
-              <i class="el-icon-lock " style="width: 30px;"></i>
-            </button>
-<!--          </div>-->
-
+          <!--          <div v-if="data.row.id == currentUser.user.id">-->
+          <button
+            v-if="data.row.avalible == 1 && data.row.id == currentUser.user.id"
+            class="btn-action"
+            @click="
+              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
+            "
+            disabled
+          >
+            <i class="el-icon-unlock" style="width: 30px"></i>
+          </button>
+          <button
+            v-if="data.row.avalible == 0 && data.row.id == currentUser.user.id"
+            class="btn-action"
+            @click="
+              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
+            "
+            disabled
+          >
+            <i class="el-icon-lock" style="width: 30px"></i>
+          </button>
+          <!--          </div>-->
+          <!--          <div v-if="data.row.id != currentUser.user.id">-->
+          <button
+            v-if="data.row.avalible == 1 && data.row.id != currentUser.user.id"
+            class="btn-action"
+            @click="
+              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
+            "
+          >
+            <i class="el-icon-unlock" style="width: 30px"></i>
+          </button>
+          <button
+            v-if="data.row.avalible == 0 && data.row.id != currentUser.user.id"
+            class="btn-action"
+            @click="
+              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
+            "
+          >
+            <i class="el-icon-lock" style="width: 30px"></i>
+          </button>
+          <!--          </div>-->
         </el-table-column>
       </el-table>
     </div>
@@ -367,7 +424,7 @@ export default {
       pageSize: 10,
       departments: [],
       departmentId: "",
-      status: '',
+      status: "",
       dialogFormVisible: false,
       user: {
         username: "",
@@ -445,10 +502,10 @@ export default {
       return re.test(code);
     },
 
-    validName: function (name) {
-      var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
-      return re.test(name);
-    },
+    // validName: function (name) {
+    //   var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+    //   return re.test(name);
+    // },
 
     removeValidate(check) {
       (this.dialogFormVisible = check),
@@ -476,6 +533,22 @@ export default {
     async sendForm() {
       let response = await UserService.getAllUser();
       this.users = response.data;
+
+      if (!this.user.fullName) {
+        this.errName = "Vui lòng nhập ho và tên";
+        this.checkName = false;
+      } else if (!this.validName(this.user.fullName)) {
+        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+        this.checkName = false;
+      } else if (
+        this.validName(this.user.fullName) &&
+        this.user.fullName &&
+        this.checkName === true
+      ) {
+        this.errName = "";
+        this.checkName = true;
+      }
+
       for (let i = 0; i < this.users.length; i++) {
         if (this.user.code == this.users[i].code) {
           this.errId = "Mã nhân sự đã tồn tại";
@@ -530,21 +603,6 @@ export default {
         this.checkEmail = true;
       }
 
-      if (!this.user.fullName) {
-        this.errName = "Vui lòng nhập ho và tên";
-        this.checkName = false;
-      } else if (!this.validName(this.user.fullName)) {
-        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
-        this.checkName = false;
-      } else if (
-        this.validName(this.user.fullName) &&
-        this.user.fullName &&
-        this.checkName === true
-      ) {
-        this.errName = "";
-        this.checkName = true;
-      }
-
       if (!this.user.department) {
         this.errDepartment = "Hãy chon phòng ban";
         this.checkDepartment = false;
@@ -569,10 +627,10 @@ export default {
       ) {
         this.submitted = true;
         let form = document.querySelector("#formRegister");
-        console.log(14, form.cover.value)
+        console.log(14, form.cover.value);
         let response = AuthService.register(form);
         if (response) {
-         this.$swal.fire({
+          this.$swal.fire({
             title: "Tạo tài khoản thành công!",
             icon: "success",
             timer: 2000,
@@ -593,7 +651,7 @@ export default {
         size: this.pageSize,
         departid: this.departmentId,
         search: this.search,
-        status: this.status
+        status: this.status,
       };
       UserService.getUser_Department(params)
         .then((response) => {
@@ -720,15 +778,15 @@ export default {
     },
   },
   watch: {
-    dialogFormVisible: function() {
-      console.log(1212)
-      console.log(document.getElementById('fileUser').value)
+    dialogFormVisible: function () {
+      console.log(1212);
+      console.log(document.getElementById("fileUser").value);
       if (!this.dialogFormVisible) {
-        document.getElementById('fileUser').removeAttribute('value');
+        document.getElementById("fileUser").removeAttribute("value");
       }
-      console.log(this.cover)
-    }
-  }
+      console.log(this.cover);
+    },
+  },
 };
 </script>
 <style>
@@ -759,9 +817,8 @@ export default {
 .el-table .btn-action {
   border: none;
   padding: 5px 5px;
-  background-color: #F8CBAD;
-  border-radius: 5px
-
+  background-color: #f8cbad;
+  border-radius: 5px;
 }
 
 /* The switch - the box around the slider */
