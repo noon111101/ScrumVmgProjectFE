@@ -85,9 +85,9 @@
                             value=""
                             v-validate="{ required: true, min: 6 }"
                           />
-                      <small v-if="errName !== null" style="color: red">
-                        {{ errName }}
-                      </small>
+                          <small v-if="errName !== null" style="color: red">
+                            {{ errName }}
+                          </small>
                         </div>
                       </td>
                     </tr>
@@ -99,7 +99,7 @@
                         <div class="form-group">
                           <input
                             v-model="user.username"
-                            type="email"
+                            type=""
                             class="form-control"
                             placeholder="Email *"
                             value=""
@@ -107,9 +107,9 @@
                             name="username"
                           />
                         </div>
-                    <small v-if="errEmail !== null" style="color: red">
-                      {{ errEmail }}
-                    </small>
+                        <small v-if="errEmail !== null" style="color: red">
+                          {{ errEmail }}
+                        </small>
                       </td>
                     </tr>
 
@@ -128,12 +128,11 @@
                             name="code"
                           />
                         </div>
-                      <small v-if="errId !== null" style="color: red">
-                        {{ errId }}
-                      </small>
+                        <small v-if="errId !== null" style="color: red">
+                          {{ errId }}
+                        </small>
                       </td>
                     </tr>
-
                     <tr style="height: 70px">
                       <td style="width: 150px">
                         Giới tính<span style="color: red">*</span>
@@ -234,7 +233,7 @@
                       <td style="width: 300px">
                         <div class="form-group">
                           <button class="btn btn-block btn-signup">
-                            Sign Up
+                           Chỉnh sửa
                           </button>
                         </div>
                       </td>
@@ -298,6 +297,22 @@ export default {
       });
   },
   methods: {
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+    validCode: function (code) {
+      var re = /^(\\-)?[0-9]+(.[0-9]+)?$/;
+      return re.test(code);
+    },
+
+    validName: function (name) {
+      var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      return re.test(name);
+    },
+
     previewFiles(event) {
       const file = event.target.files[0];
 
@@ -310,48 +325,67 @@ export default {
     async sendForm() {
       let response = await UserService.getAllUser();
       this.users = response.data;
-     
-      if (!this.user.code) {
-        this.errId = "Hãy nhập mã nhân sự";
-        this.checkId = false;
-      }
 
-      if (!this.user.username) {
-        this.errEmail = "Hãy nhập email";
+if (!this.user.code) {
+        this.errId = "Vui lòng nhập mã nhân viên";
+        this.checkId = false;
+      } else if (!this.validCode(this.user.code)) {
+        this.errId = "Vui lòng nhập đúng định dạng code";
+        this.checkId = false;
+      } else if (
+        this.validCode(this.user.code) &&
+        this.user.code &&
+        this.checkId === true
+      ) {
+        this.errId = "";
+        this.checkId = true;
+      }
+ if (!this.user.username) {
+        this.errEmail = "Vui lòng nhập email nhân viên";
         this.checkEmail = false;
+      } else if (!this.validEmail(this.user.username)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else if (
+        this.validEmail(this.user.username) &&
+        this.user.username &&
+        this.checkEmail === true
+      ) {
+        this.errEmail = "";
+        this.checkEmail = true;
       }
 
       if (!this.user.fullName) {
         this.errName = "Hãy nhập Ho và tên";
         this.checkName = false;
       }
-       if (
+      if (
         this.checkId === true &&
         this.checkEmail === true &&
         this.checkName === true
       ) {
-      this.submitted = true;
-      let form = document.querySelector("#formEdit");
-      console.log(form);
-      UserService.editUser(this.user.id, form).then((response) => {
-        if (response.data != null) {
-          this.$swal.fire({
-            title: "Chỉnh sửa thành công!",
-            icon: "success",
-            timer: 2000,
-            timerProgressBar: true,
-          });
-          return this.$router.push(`/user/${this.$route.params.id}`);
-        } else {
-          this.$swal.fire({
-            title: "Chỉnh sửa thất bại!",
-            icon: "error",
-            timer: 2000,
-            timerProgressBar: true,
-          });
-          return this.$router.push(`/user/${this.$route.params.id}`);
-        }
-      });
+        this.submitted = true;
+        let form = document.querySelector("#formEdit");
+        console.log(form);
+        UserService.editUser(this.user.id, form).then((response) => {
+          if (response.data != null) {
+            this.$swal.fire({
+              title: "Chỉnh sửa thành công!",
+              icon: "success",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            return this.$router.push(`/user/${this.$route.params.id}`);
+          } else {
+            this.$swal.fire({
+              title: "Chỉnh sửa thất bại!",
+              icon: "error",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            return this.$router.push(`/user/${this.$route.params.id}`);
+          }
+        });
       }
     },
     checkRole(role) {

@@ -33,6 +33,7 @@
           <div class="row register-form">
             <div class="col-md-4">
               <input
+                id="fileUser"
                 type="file"
                 name="cover"
                 class="form-control"
@@ -212,11 +213,10 @@
                   </td>
                 </tr>
                 <tr>
-                <small v-if="errRole !== null" style="color: red">
-                  {{ errRole }}
-                </small>
+                  <small v-if="errRole !== null" style="color: red">
+                    {{ errRole }}
+                  </small>
                 </tr>
-                
               </table>
               <br />
             </div>
@@ -410,7 +410,7 @@ export default {
       successful: false,
       message: "",
       newImage: "",
-      cover: {},
+      cover: null,
       formLabelWidth: "120px",
 
       errId: "",
@@ -463,6 +463,22 @@ export default {
   },
 
   methods: {
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+    validCode: function (code) {
+      var re = /^(\\-)?[0-9]+(.[0-9]+)?$/;
+      return re.test(code);
+    },
+
+    validName: function (name) {
+      var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      return re.test(name);
+    },
+
     removeValidate(check) {
       (this.dialogFormVisible = check),
         (this.errId = ""),
@@ -483,12 +499,12 @@ export default {
       this.user.code = "";
       this.user.department = "";
       this.user.username = "";
+      this.cover = "";
     },
 
     async sendForm() {
       let response = await UserService.getAllUser();
       this.users = response.data;
-
       for (let i = 0; i < this.users.length; i++) {
         if (this.user.code == this.users[i].code) {
           this.errId = "Mã nhân sự đã tồn tại";
@@ -502,8 +518,18 @@ export default {
       }
 
       if (!this.user.code) {
-        this.errId = "Hãy nhập mã nhân sự";
+        this.errId = "Vui lòng nhập mã nhân viên";
         this.checkId = false;
+      } else if (!this.validCode(this.user.code)) {
+        this.errId = "Vui lòng nhập đúng định dạng code";
+        this.checkId = false;
+      } else if (
+        this.validCode(this.user.code) &&
+        this.user.code &&
+        this.checkId === true
+      ) {
+        this.errId = "";
+        this.checkId = true;
       }
 
       for (let i = 0; i < this.users.length; i++) {
@@ -519,13 +545,33 @@ export default {
       }
 
       if (!this.user.username) {
-        this.errEmail = "Hãy nhập email";
+        this.errEmail = "Vui lòng nhập email nhân viên";
         this.checkEmail = false;
+      } else if (!this.validEmail(this.user.username)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else if (
+        this.validEmail(this.user.username) &&
+        this.user.username &&
+        this.checkEmail === true
+      ) {
+        this.errEmail = "";
+        this.checkEmail = true;
       }
 
       if (!this.user.fullName) {
-        this.errName = "Hãy nhập Ho và tên";
+        this.errName = "Vui lòng nhập ho và tên";
         this.checkName = false;
+      } else if (!this.validName(this.user.fullName)) {
+        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+        this.checkName = false;
+      } else if (
+        this.validName(this.user.fullName) &&
+        this.user.fullName &&
+        this.checkName === true
+      ) {
+        this.errName = "";
+        this.checkName = true;
       }
 
       if (!this.user.department) {
@@ -547,13 +593,20 @@ export default {
         this.checkId === true &&
         this.checkEmail === true &&
         this.checkName === true &&
-        this.checkGender === true
+        this.checkGender === true &&
+        this.checkDepartment === true
       ) {
         this.submitted = true;
         let form = document.querySelector("#formRegister");
+        console.log(14, form.cover.value)
         let response = AuthService.register(form);
         if (response) {
-          this.message = "Đăng ký thành công";
+         this.$swal.fire({
+            title: "Tạo tài khoản thành công!",
+            icon: "success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
         } else {
           this.message = "";
         }
@@ -575,7 +628,6 @@ export default {
           this.page = response.data.pageable.pageNumber;
           console.log(response.data.pageable.pageNumber);
           this.totalItems = response.data.totalElements;
-          console.log(response.data.content + "fdasfds");
         })
         .catch((error) => {
           console.log(error);
@@ -694,6 +746,16 @@ export default {
       return "success-row";
     },
   },
+  watch: {
+    dialogFormVisible: function() {
+      console.log(1212)
+      console.log(document.getElementById('fileUser').value)
+      if (!this.dialogFormVisible) {
+        document.getElementById('fileUser').removeAttribute('value');
+      }
+      console.log(this.cover)
+    }
+  }
 };
 </script>
 <style>

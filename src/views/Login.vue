@@ -25,8 +25,8 @@
                       class="form-control"
                       name="username"
                     />
-                    <small style="color: red" v-if="errors.has('username')">
-                      Email is required!
+                    <small v-if="errEmail !== null" style="color: red">
+                      {{ errEmail }}
                     </small>
                   </div>
                   <div class="form-group">
@@ -38,8 +38,8 @@
                       class="form-control"
                       name="password"
                     />
-                    <small style="color: red" v-if="errors.has('password')">
-                      Password is required!
+                    <small v-if="errPass !== null" style="color: red">
+                      {{ errPass }}
                     </small>
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
@@ -55,8 +55,10 @@
                       href="http://localhost:8081/forgotPassword"
                       >Forgot password?</a
                     >
-                    <br>
-                    <small style="color: red" v-if="message">{{ message }}</small>
+                    <br />
+                    <small style="color: red" v-if="message">{{
+                      message
+                    }}</small>
                   </div>
                 </form>
               </div>
@@ -84,6 +86,12 @@ export default {
       loading: false,
       message: "",
       a: "",
+      errAvail: "",
+      checkAvail: true,
+      errEmail: "",
+      checkEmail: true,
+      errPass: "",
+      checkPass: true,
     };
   },
   computed: {
@@ -98,26 +106,57 @@ export default {
     }
   },
   methods: {
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
     handleLogin() {
-      this.loading = true;
-      this.$validator.validateAll().then((isValid) => {
-        if (!isValid) {
-          this.loading = false;
-          return;
-        }
-        if (this.user.username && this.user.password) {
-          this.$store.dispatch("auth/login", this.user).then(
-            () => {
-              this.$router.push("/calender");
-            },
-            (error) => {
+      if (!this.user.password) {
+        this.errPass = "Vui lòng nhập mât khẩu";
+        this.checkPass = false;
+      }
+
+      if (!this.user.username) {
+        this.errEmail = "Vui lòng nhập email nhân viên";
+        this.checkEmail = false;
+      } else if (!this.validEmail(this.user.username)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else if (
+        this.validEmail(this.user.username) &&
+        this.user.username &&
+        this.checkEmail === true
+      )
+        if (this.checkEmail === true && this.checkPass === true) {
+          this.loading = true;
+          this.$validator.validateAll().then((isValid) => {
+            if (!isValid) {
               this.loading = false;
-              this.a = error.response && error.response.data;
-              this.message = "Email hoặc mật khẩu không chính xác";
+              return;
             }
-          );
+            if (this.user.username && this.user.password) {
+              this.$store.dispatch("auth/login", this.user).then(
+                () => {
+                  this.$router.push("/calender");
+                },
+                (error) => {
+                  this.loading = false;
+                  this.a = error.response && error.response.data;
+                  if (
+                    error.response.data.message ==
+                    "Account have been lock by admin"
+                  ) {
+                    this.message =
+                      "Tài khoản của bạn bị khóa hiện tại chưa thể đăng nhập";
+                  } else {
+                    this.message = "Email hoặc mật khẩu không chính xác";
+                  }
+                }
+              );
+            }
+          });
         }
-      });
     },
   },
 };
