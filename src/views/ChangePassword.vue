@@ -176,14 +176,6 @@ export default {
     submit(formName) {
       this.$refs[formName].validate((valid) => {
         if(this.form.new_password=="" ||this.form.new_password_confirm =="" || this.form.old_password == "" ){
-          // this.$swal.fire(
-          //     {
-          //       title: 'Chưa nhập đủ thông tin!',
-          //       icon: 'info',
-          //       timer: 2000,
-          //       timerProgressBar: true,
-          //     }
-          // )
           this.message = 'Chưa nhập đủ thông tin!'
         }
         else{
@@ -191,36 +183,38 @@ export default {
             this.formData.oldPassword = this.form.old_password;
             this.formData.newPassword = this.form.new_password;
             AuthService.changePassword(this.formData).then(response => {
-              if (response.data == true) {
+              if (response.data.message === "Thay đổi mật khẩu thành công!") {
                 this.$refs[formName].resetFields();
                 this.$swal.fire(
                     {
-                      title: 'Đổi mật khẩu thành công!',
+                      title: response.data.message,
                       icon: 'success',
                       timer: 2000,
                       timerProgressBar: true,
                     }
                 )
                 this.message = ''
-              } else {
-                this.$refs[formName].resetFields();
-                this.$swal.fire({
-                  title: 'Thay đổi mật khẩu thất bại!',
-                  icon: "error",
-                  timer: 2000,
-                  timerProgressBar: true,
-                })
               }
+              // else {
+              //   this.$refs[formName].resetFields();
+              //   this.$swal.fire({
+              //     title: response.data.error,
+              //     icon: "error",
+              //     timer: 2000,
+              //     timerProgressBar: true,
+              //   })
+              // }
+            }).catch(error => {
+              this.$refs[formName].resetFields();
+              this.$swal.fire({
+                title: error.response.data.error.message,
+                icon: "error",
+                timer: 2000,
+                timerProgressBar: true,
+              })
+              this.message = ''
             })
           } else {
-            // this.$swal.fire(
-            //     {
-            //       title: 'Mật khẩu mới không khớp!',
-            //       icon: 'error',
-            //       timer: 2000,
-            //       timerProgressBar: true,
-            //     }
-            // )
             this.message = 'Mật khẩu mới không khớp!'
             console.log('error submit!!');
             return false;
