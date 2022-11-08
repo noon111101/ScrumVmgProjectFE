@@ -2,7 +2,7 @@
 
 
     <div className="container" style="text-align: center; width: 90%;margin: auto">
-      <br>
+
       <!--    <h5 style="font-weight: 600;">-->
       <!--      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-->
       <!--      Nhân viên: {{currentUser.user.fullName}}-->
@@ -29,7 +29,7 @@
       <div class="text-center ">
         <el-table
             :data="logs"
-            height="400"
+            height="900px"
             :default-sort = "{prop: 'date_log', order: 'descending'}"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
             style="width: 100%; display: inline-block"

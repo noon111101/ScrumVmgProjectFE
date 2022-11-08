@@ -40,7 +40,7 @@
     <br/>
     <div>
       <el-table
-          height="400"
+          height="900px"
           :default-sort = "{prop: 'date_log', order: 'descending'}"
           :data="logs"
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"

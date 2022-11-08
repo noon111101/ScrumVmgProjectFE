@@ -31,7 +31,7 @@
 
 <!--        </div>-->
       </div>
-      <div style="float: right; margin-bottom: 20px" class="mx-3">
+      <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
         <el-button type="danger" round @click="dialogFormVisible = true"
           ><i class="el-icon-plus"></i> Thêm nhân viên
         </el-button>
@@ -264,6 +264,7 @@
               `http://localhost:8080/` + data.row.cover
             "
             width="150px"
+               height="150px"
           />
           <img
             v-if="data.row.cover == null"
