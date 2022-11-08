@@ -377,7 +377,7 @@ if (!this.user.code) {
             timer: 2000,
             timerProgressBar: true,
           });
-          return this.$router.push(`/user/${this.$route.params.id}`);
+          return this.$router.push(`/manage`);
         } else {
           this.$swal.fire({
             title: "Chỉnh sửa thất bại!",

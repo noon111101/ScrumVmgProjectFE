@@ -434,6 +434,22 @@ export default {
   },
 
   methods: {
+    validEmail: function (email) {
+      var re =
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    },
+
+    validCode: function (code) {
+      var re = /^(\\-)?[0-9]+(.[0-9]+)?$/;
+      return re.test(code);
+    },
+
+    validName: function (name) {
+      var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
+      return re.test(name);
+    },
+
     removeValidate(check) {
       (this.dialogFormVisible = check),
         (this.errId = ""),
@@ -478,6 +494,13 @@ export default {
       } else if (!this.validCode(this.user.code)) {
         this.errId = "Vui lòng nhập đúng định dạng code";
         this.checkId = false;
+      } else if (
+        this.validCode(this.user.code) &&
+        this.user.code &&
+        this.checkId === true
+      ) {
+        this.errId = "";
+        this.checkId = true;
       }
 
       for (let i = 0; i < this.users.length; i++) {
