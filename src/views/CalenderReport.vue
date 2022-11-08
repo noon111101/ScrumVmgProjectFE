@@ -40,7 +40,7 @@
           <el-date-picker
               v-model="mounth"
               type="month"
-              placeholder="Pick a month"
+              placeholder="Chọn tháng"
               format="yyyy/MM"
               value-format="yyyy-MM">
           </el-date-picker>
@@ -50,22 +50,22 @@
           <div style="font-weight: bold;">Chú thích</div>
           <div>
             <div class="d-flex flex-row">
-              <el-button round class="h-25 me-3" style="background-color: #EAB756" ></el-button>
+              <el-button round class="h-25 me-3" style="background-color: #ecc376" ></el-button>
               <div style="text-align: justify">
                 <p><span style="font-weight: bold">KL/H,H/KL</span>: Nghỉ nửa ngày</p>
               </div>
             </div>
             <div class="d-flex flex-row">
-              <el-button round class="h-25 me-3" style="background-color:#e24146" ></el-button>
+              <el-button round class="h-25 me-3" style="background-color:#E97C7C" ></el-button>
               <p><span style="font-weight: bold">KL</span>: Nghỉ không lương</p>
             </div>
             <div class="d-flex flex-row">
-              <el-button round class="h-25 me-3 position-relative" style="background-color: #92C88D" >
+              <el-button round class="h-25 me-3 position-relative" style="background-color: #c9e3c6" >
               </el-button>
               <p><span style="font-weight: bold">H</span>: Làm hành chính</p>
             </div>
             <div class="d-flex flex-row">
-              <el-button round class="h-25 me-3" style="background-color: #F8CBAD"></el-button>
+              <el-button round class="h-25 me-3" style="background-color: #f8cbad"></el-button>
               <p><span style="font-weight: bold">NT</span>: Nghỉ tuần</p>
             </div>
             <div class="d-flex flex-row">
@@ -77,7 +77,7 @@
               </g>
           </svg>
               </el-button>
-              <p>Comment</p>
+              <p>Ghi chú</p>
             </div>
           </div>
         </div>

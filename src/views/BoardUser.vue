@@ -11,7 +11,7 @@
       <form ac>
         <div className="block" class="text-start">
           <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-          <el-date-picker style="width: 15%;font-size: 16px;"
+          <el-date-picker style="width: 20%;font-size: 16px;"
                           v-model="dateRange"
                           type="daterange"
                           format="yyyy-MM-dd"
@@ -25,7 +25,7 @@
 
       <!--    <p> {{ from }} </p>-->
       <!--    <p> {{ to }} </p>-->
-      <br><br>
+      <br>
       <div class="text-center ">
         <el-table
             :data="logs"

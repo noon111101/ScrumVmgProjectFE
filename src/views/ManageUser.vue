@@ -100,7 +100,7 @@
                         v-model="user.username"
                         type="email"
                         class="form-control"
-                        placeholder="Email *"
+                        placeholder="Email"
                         value=""
                         name="username"
                         autocomplete="off"
@@ -121,7 +121,7 @@
                       <input
                         v-model="user.code"
                         class="form-control"
-                        placeholder="Employee ID *"
+                        placeholder="Mã nhân viên"
                         name="code"
                         autocomplete="off"
                       />
@@ -199,7 +199,7 @@
                       v-model="user.role"
                       name="role"
                     />
-                    <label for="admin">&nbsp; Admin</label>
+                    <label for="admin">&nbsp; Nhân sự</label>
                   </td>
                 </tr>
                 <tr style="height: 40px">
@@ -212,7 +212,7 @@
                       v-model="user.role"
                       name="role"
                     />
-                    <label for="manage">&nbsp; Manage</label>
+                    <label for="manage">&nbsp; Trưởng phòng</label>
                   </td>
                 </tr>
                 <tr style="height: 40px">
@@ -225,7 +225,7 @@
                       v-model="user.role"
                       name="role"
                     />
-                    <label for="user">&nbsp; User</label>
+                    <label for="user">&nbsp; Nhân viên</label>
                   </td>
                 </tr>
                 <tr>
@@ -504,10 +504,10 @@ export default {
       return re.test(code);
     },
 
-    // validName: function (name) {
-    //   var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
-    //   return re.test(name);
-    // },
+    validName: function (name) {
+      var re = /[A-Za-z]+/;
+      return re.test(name);
+    },
 
     removeValidate(check) {
       (this.dialogFormVisible = check),
@@ -539,14 +539,14 @@ export default {
       if (!this.user.fullName) {
         this.errName = "Vui lòng nhập ho và tên";
         this.checkName = false;
-      } else if (!this.validName(this.user.fullName)) {
-        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
-        this.checkName = false;
-      } else if (
-        this.validName(this.user.fullName) &&
-        this.user.fullName &&
-        this.checkName === true
-      ) {
+        } else if (!this.validName(this.user.fullName)) {
+          this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+          this.checkName = false;
+        } else if (
+          this.validName(this.user.fullName) &&
+          this.user.fullName &&
+          this.checkName === true
+        ){
         this.errName = "";
         this.checkName = true;
       }
@@ -608,18 +608,35 @@ export default {
       if (!this.user.department) {
         this.errDepartment = "Hãy chon phòng ban";
         this.checkDepartment = false;
+      }else{
+        this.errDepartment = "";
+        this.checkDepartment = true;
       }
 
-      if (!this.user.gender) {
+      console.log(20, this.user.gender)
+
+      if (this.user.gender === '') {
         this.errGender = "Hãy chon giới tính";
         this.checkGender = false;
+      }else{
+        console.log(21)
+        this.errGender= "";
+        this.checkGender = true;
       }
 
       if (!this.user.role) {
         this.errRole = "Hãy chon chức vu";
         this.checkRole = false;
+      }else{
+        this.errRole = "";
+        this.checkRole = true;
       }
 
+      console.log(11, this.checkId)
+      console.log(12, this.checkEmail)
+      console.log(13, this.checkGender)
+      console.log(14, this.checkDepartment)
+      // console.log(15, this.checkDepartment)
       if (
         this.checkId === true &&
         this.checkEmail === true &&
@@ -632,15 +649,16 @@ export default {
         console.log(14, form.cover.value);
         let response = AuthService.register(form);
         if (response) {
-          this.$swal.fire({
-            title: "Tạo tài khoản thành công!",
-            icon: "success",
+          this.$notify.success({
+            message: 'Tạo tài khoản thành công',
+            title: 'Success',
             timer: 2000,
             timerProgressBar: true,
           });
         } else {
           this.message = "";
         }
+        this.getAll()
       }
     },
     getUserCode() {
