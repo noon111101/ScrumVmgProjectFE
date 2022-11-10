@@ -486,7 +486,7 @@ export default {
                           reason:user.reason
                         }
                     )
-                  else 
+                  else
                   signs.push(
                       {
                         sign: user.signs.name,
