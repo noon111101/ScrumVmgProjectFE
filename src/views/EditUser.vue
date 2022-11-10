@@ -1,6 +1,6 @@
 <template>
-  <div style="padding-bottom: 95px">
-    <div class="container register">
+  <div style="padding-bottom: 175px">
+    <div class="container register" style="border-radius: 10px">
       <div class="row">
         <div class="col-md-3 register-left">
           <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt=""/>

@@ -14,6 +14,7 @@
                           value-format="yyyy-MM-dd"
                           range-separator=""
                           start-placeholder="Chọn thời gian"
+                          :editable="false"
                           @change="getAll">
           </el-date-picker>
           <span style="">Tìm kiếm</span> &ensp;

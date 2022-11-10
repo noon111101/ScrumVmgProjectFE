@@ -1,7 +1,7 @@
 <template>
   <div style="padding-bottom: 500px">
     <section class="section about-section gray-bg" id="about" style="margin-top: 150px;" >
-      <div style="border: 2px solid black;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" class="container">
+      <div style="border: 2px solid black;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);border-radius: 10px" class="container">
         <div class="row align-items-center flex-row-reverse">
           <p
               style="

@@ -98,7 +98,7 @@
       </div>
     </div>
 <!--   BẢNG CHẤM CÔNG-->
-    <div class="table-responsive-xxl" style="margin-top:50px">
+    <div class="table-responsive-xxl" style="margin-top:50px; background-color: white">
 
       <table v-if="showAdminBoard" class="table table-bordered align-middle  " >
 

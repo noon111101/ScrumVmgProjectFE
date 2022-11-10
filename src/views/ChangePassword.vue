@@ -5,9 +5,9 @@
     </header>
   </div> -->
   <div style="padding-bottom: 430px">
-    <div class="container register">
+    <div class="container register" style="border-radius: 10px">
 
-      <div class="row">
+      <div class="row" >
         <div class="col-md-3 register-left">
           <img style="width: 200px; line-height: 100%" src="../assets/new_logo.png"/>
         </div>

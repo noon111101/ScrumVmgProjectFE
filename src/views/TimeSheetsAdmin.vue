@@ -11,6 +11,7 @@
                           value-format="yyyy-MM-dd"
                           range-separator=""
                           start-placeholder="Chọn thời gian"
+                          :editable="false"
                           @change="getAll">
           </el-date-picker>
 
@@ -233,7 +234,9 @@ export default {
 /*  background-color: #75c4c0 !important;*/
 /*}*/
 
-
+ .el-date-picker:focus {
+   cursor: default;
+ }
 .el-table .warning-row {
   background: #EDEDED;
 }
