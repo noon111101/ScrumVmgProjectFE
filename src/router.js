@@ -99,8 +99,8 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
-  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/user/','/report'];
-  const managePages = [ '/timesheetmod','/user/','/report'];
+  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
+  const managePages = [ '/timesheetmod','/report'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (authRequired && !loggedIn) {
@@ -112,7 +112,7 @@ router.beforeEach((to, from, next) => {
   else {
     const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
     const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
-    if(adminPages.includes(to.path) && admin || managePages.includes(to.path) && manage || userPages.includes(to.path) || publicPages.includes(to.path))
+    if((adminPages.includes(to.path) || to.path.startsWith("/user/")) && admin  || managePages.includes(to.path) && manage || userPages.includes(to.path) || publicPages.includes(to.path))
       next();
     else
       next('/unpermist')
