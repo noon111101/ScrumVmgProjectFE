@@ -4,27 +4,27 @@
       <div className="block" class="text-start col-10">
         <span>Phòng ban</span> &ensp;
         <el-select
-          v-model="departmentId"
-          @change="getAll"
-          placeholder="Chọn Phòng ban"
+            v-model="departmentId"
+            @change="getAll"
+            placeholder="Chọn Phòng ban"
         >
           <el-option value="0" label="Tất cả các phòng ban"></el-option>
           <el-option
-            v-for="item in departments"
-            :key="item.id"
-            :label="item.name"
-            :value="item.id"
+              v-for="item in departments"
+              :key="item.id"
+              :label="item.name"
+              :value="item.id"
           >
           </el-option>
         </el-select>
         <!--        <div style="width: 200px" class="">-->
         <span style="margin-left: 100px">Tìm kiếm</span> &ensp;
         <el-input
-          v-model="search"
-          @input="getAll"
-          size="medium"
-          placeholder="Tên nhân viên"
-          style="width: 20%"
+            v-model="search"
+            @input="getAll"
+            size="medium"
+            placeholder="Tên nhân viên"
+            style="width: 20%"
         />
 
         <span style="margin-left: 100px">Trạng thái</span> &ensp;
@@ -40,7 +40,7 @@
       <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
 
         <el-button type="danger" round @click="dialogFormVisible = true"
-          ><i class="el-icon-plus"></i> Thêm nhân viên
+        ><i class="el-icon-plus"></i> Thêm nhân viên
         </el-button>
       </div>
 
@@ -49,21 +49,21 @@
           <div class="row register-form">
             <div class="col-md-4">
               <input
-                id="fileUser"
-                type="file"
-                name="cover"
-                class="form-control"
-                placeholder="Title"
-                @change="previewFiles($event)"
+                  id="fileUser"
+                  type="file"
+                  name="cover"
+                  class="form-control"
+                  placeholder="Title"
+                  @change="previewFiles($event)"
               />
-              <br /><br />
+              <br/><br/>
               <img
-                alt=""
-                :src="
+                  alt=""
+                  :src="
                   newImage ||
                   'https://www.namepros.com/attachments/empty-png.89209/'
                 "
-                style="width: 270px"
+                  style="width: 270px"
               />
             </div>
             <div class="col-md-8">
@@ -75,13 +75,13 @@
                   <td style="width: 300px">
                     <div class="form-group">
                       <input
-                        v-model="user.fullName"
-                        type="text"
-                        class="form-control"
-                        name="fullName"
-                        placeholder="Họ và tên"
-                        value=""
-                        autocomplete="off"
+                          v-model="user.fullName"
+                          type="text"
+                          class="form-control"
+                          name="fullName"
+                          placeholder="Họ và tên"
+                          value=""
+                          autocomplete="off"
                       />
                       <small v-if="errName !== null" style="color: red">
                         {{ errName }}
@@ -97,13 +97,13 @@
                   <td style="width: 300px">
                     <div class="form-group">
                       <input
-                        v-model="user.username"
-                        type="email"
-                        class="form-control"
-                        placeholder="Email"
-                        value=""
-                        name="username"
-                        autocomplete="off"
+                          v-model="user.username"
+                          type="email"
+                          class="form-control"
+                          placeholder="Email"
+                          value=""
+                          name="username"
+                          autocomplete="off"
                       />
                     </div>
                     <small v-if="errEmail !== null" style="color: red">
@@ -119,11 +119,11 @@
                   <td style="width: 300px">
                     <div class="form-group">
                       <input
-                        v-model="user.code"
-                        class="form-control"
-                        placeholder="Mã nhân viên"
-                        name="code"
-                        autocomplete="off"
+                          v-model="user.code"
+                          class="form-control"
+                          placeholder="Mã nhân viên"
+                          name="code"
+                          autocomplete="off"
                       />
                       <small v-if="errId !== null" style="color: red">
                         {{ errId }}
@@ -138,22 +138,24 @@
                   </td>
                   <td style="width: 300px">
                     <el-radio
-                      v-model="user.gender"
-                      name="gender"
-                      value="Nam"
-                      label="Nam"
-                      border
-                      >&nbsp; Nam</el-radio
+                        v-model="user.gender"
+                        name="gender"
+                        value="Nam"
+                        label="Nam"
+                        border
+                    >&nbsp; Nam
+                    </el-radio
                     >
                     <el-radio
-                      v-model="user.gender"
-                      name="gender"
-                      value="Nữ"
-                      label="Nữ"
-                      border
-                      >&nbsp; Nữ</el-radio
+                        v-model="user.gender"
+                        name="gender"
+                        value="Nữ"
+                        label="Nữ"
+                        border
+                    >&nbsp; Nữ
+                    </el-radio
                     >
-                    <br />
+                    <br/>
                     <small v-if="errGender !== null" style="color: red">
                       {{ errGender }}
                     </small>
@@ -167,16 +169,16 @@
                   <td style="width: 300px">
                     <div class="form-group">
                       <el-select
-                        name="department"
-                        v-model="user.department"
-                        @change="getAll"
-                        placeholder="Chon phòng ban"
+                          name="department"
+                          v-model="user.department"
+                          @change="getAll"
+                          placeholder="Chon phòng ban"
                       >
                         <el-option
-                          v-for="item in departments"
-                          :key="item.id"
-                          :label="item.name"
-                          :value="item.name"
+                            v-for="item in departments"
+                            :key="item.id"
+                            :label="item.name"
+                            :value="item.name"
                         >
                         </el-option>
                       </el-select>
@@ -193,11 +195,11 @@
                   </td>
                   <td style="width: 300px">
                     <input
-                      type="radio"
-                      id="admin"
-                      value="admin"
-                      v-model="user.role"
-                      name="role"
+                        type="radio"
+                        id="admin"
+                        value="admin"
+                        v-model="user.role"
+                        name="role"
                     />
                     <label for="admin">&nbsp; Nhân sự</label>
                   </td>
@@ -206,11 +208,11 @@
                   <td style="width: 100px"></td>
                   <td style="width: 300px">
                     <input
-                      type="radio"
-                      id="manage"
-                      value="manage"
-                      v-model="user.role"
-                      name="role"
+                        type="radio"
+                        id="manage"
+                        value="manage"
+                        v-model="user.role"
+                        name="role"
                     />
                     <label for="manage">&nbsp; Trưởng phòng</label>
                   </td>
@@ -219,11 +221,11 @@
                   <td style="width: 100px"></td>
                   <td style="width: 300px">
                     <input
-                      type="radio"
-                      id="user"
-                      value="user"
-                      v-model="user.role"
-                      name="role"
+                        type="radio"
+                        id="user"
+                        value="user"
+                        v-model="user.role"
+                        name="role"
                     />
                     <label for="user">&nbsp; Nhân viên</label>
                   </td>
@@ -234,7 +236,7 @@
                   </small>
                 </tr>
               </table>
-              <br />
+              <br/>
             </div>
             <small style="color: green">
               {{ message }}
@@ -248,75 +250,75 @@
       </el-dialog>
     </div>
 
-    <br />
+    <br/>
     <div>
       <el-table
-        :data="users"
-        :header-cell-style="{
+          :data="users"
+          :header-cell-style="{
           background: '#D9D9D9',
           color: 'black',
           align: 'center',
         }"
-        style="width: 100%; display: inline-block; font-size: 16px"
-        :row-class-name="tableRowClassName"
+          style="width: 100%; display: inline-block; font-size: 16px"
+          :row-class-name="tableRowClassName"
       >
         >
         <el-table-column
-          label="STT"
-          type="index"
-          align="center"
-          width="100px"
+            label="STT"
+            type="index"
+            align="center"
+            width="100px"
         ></el-table-column>
         <el-table-column
-          label="Mã NV"
-          prop="code"
-          align="center"
-          width="100px"
+            label="Mã NV"
+            prop="code"
+            align="center"
+            width="100px"
         ></el-table-column>
         <el-table-column
-          label="Ho và tên"
-          prop="fullName"
-          align="center"
+            label="Ho và tên"
+            prop="fullName"
+            align="center"
         ></el-table-column>
         <el-table-column
-          label="Phòng ban"
-          prop="departments.name"
-          align="center"
+            label="Phòng ban"
+            prop="departments.name"
+            align="center"
         >
         </el-table-column>
         <el-table-column
-          label="Email"
-          prop="username"
-          align="center"
+            label="Email"
+            prop="username"
+            align="center"
         ></el-table-column>
         <el-table-column
-          label="Ảnh"
-          v-slot:="data"
-          align="center"
-          width="210px"
+            label="Ảnh"
+            v-slot:="data"
+            align="center"
+            width="210px"
         >
           <img
-            v-if="data.row.cover != null"
-            v-bind:src="`http://localhost:8080/` + data.row.cover"
-            width="150px"
-               height="150px"
+              v-if="data.row.cover != null"
+              v-bind:src="`http://localhost:8080/` + data.row.cover"
+              width="150px"
+              height="150px"
           />
           <img
-            v-if="data.row.cover == null"
-            src="../assets/user.jpg"
-            width="150px"
+              v-if="data.row.cover == null"
+              src="../assets/user.jpg"
+              width="150px"
           />
         </el-table-column>
         <el-table-column
-          v-slot:="data"
-          label="Chức vụ"
-          width="150px"
-          align="center"
+            v-slot:="data"
+            label="Chức vụ"
+            width="150px"
+            align="center"
         >
           <p
-            class="text-muted mb-0"
-            v-for="(role, index) in data.row.roles"
-            :key="index"
+              class="text-muted mb-0"
+              v-for="(role, index) in data.row.roles"
+              :key="index"
           >
             <span v-if="role.id == 1">Nhân viên</span>
             <span v-if="role.id == 2">Trưởng phòng</span>
@@ -324,10 +326,10 @@
           </p>
         </el-table-column>
         <el-table-column
-          v-slot:="data"
-          label="Trạng thái"
-          width="150px"
-          align="center"
+            v-slot:="data"
+            label="Trạng thái"
+            width="150px"
+            align="center"
         >
           <button v-if="data.row.avalible == true" class="tt1">
             Có hiệu lực
@@ -337,10 +339,10 @@
           </button>
         </el-table-column>
         <el-table-column
-          v-slot:="data"
-          label="Chỉnh sửa"
-          width="200px"
-          align="center"
+            v-slot:="data"
+            label="Chỉnh sửa"
+            width="200px"
+            align="center"
         >
           <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
 
@@ -353,40 +355,40 @@
 
           <!--          <div v-if="data.row.id == currentUser.user.id">-->
           <button
-            v-if="data.row.avalible == 1 && data.row.id == currentUser.user.id"
-            class="btn-action"
-            @click="
+              v-if="data.row.avalible == 1 && data.row.id == currentUser.user.id"
+              class="btn-action"
+              @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
-            disabled
+              disabled
           >
             <i class="el-icon-unlock" style="width: 30px"></i>
           </button>
           <button
-            v-if="data.row.avalible == 0 && data.row.id == currentUser.user.id"
-            class="btn-action"
-            @click="
+              v-if="data.row.avalible == 0 && data.row.id == currentUser.user.id"
+              class="btn-action"
+              @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
-            disabled
+              disabled
           >
             <i class="el-icon-lock" style="width: 30px"></i>
           </button>
           <!--          </div>-->
           <!--          <div v-if="data.row.id != currentUser.user.id">-->
           <button
-            v-if="data.row.avalible == 1 && data.row.id != currentUser.user.id"
-            class="btn-action"
-            @click="
+              v-if="data.row.avalible == 1 && data.row.id != currentUser.user.id"
+              class="btn-action"
+              @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
           >
             <i class="el-icon-unlock" style="width: 30px"></i>
           </button>
           <button
-            v-if="data.row.avalible == 0 && data.row.id != currentUser.user.id"
-            class="btn-action"
-            @click="
+              v-if="data.row.avalible == 0 && data.row.id != currentUser.user.id"
+              class="btn-action"
+              @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
           >
@@ -397,12 +399,12 @@
       </el-table>
     </div>
     <el-pagination
-      class="text-end"
-      background
-      layout="prev, pager, next"
-      :total="totalItems"
-      :page-size="pageSize"
-      @current-change="handlePageChange"
+        class="text-end"
+        background
+        layout="prev, pager, next"
+        :total="totalItems"
+        :page-size="pageSize"
+        @current-change="handlePageChange"
     >
     </el-pagination>
   </div>
@@ -412,9 +414,9 @@
 import DepartmentService from "@/services/department.service";
 import UserService from "@/services/user.service";
 import AuthService from "@/services/auth.service";
-
 export default {
   name: "HomeVue",
+  components:{},
   data() {
     return {
       user_code: "",
@@ -468,15 +470,15 @@ export default {
   mounted() {
     this.getAll();
     UserService.getAdminBoard().then(
-      (response) => {
-        this.content = response.data;
-      },
-      (error) => {
-        this.content =
-          (error.response && error.response.data) ||
-          error.message ||
-          error.toString();
-      }
+        (response) => {
+          this.content = response.data;
+        },
+        (error) => {
+          this.content =
+              (error.response && error.response.data) ||
+              error.message ||
+              error.toString();
+        }
     );
   },
 
@@ -484,18 +486,18 @@ export default {
     this.getAll();
     this.getUserCode();
     DepartmentService.getAllDepartment()
-      .then((response) => {
-        this.departments = response.data;
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+        .then((response) => {
+          this.departments = response.data;
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   },
 
   methods: {
     validEmail: function (email) {
       var re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
     },
 
@@ -511,18 +513,18 @@ export default {
 
     removeValidate(check) {
       (this.dialogFormVisible = check),
-        (this.errId = ""),
-        (this.checkId = false),
-        (this.errEmail = ""),
-        (this.checkEmail = false),
-        (this.errName = ""),
-        (this.checkName = false),
-        (this.errDepartment = ""),
-        (this.checkDepartment = false),
-        (this.errGender = ""),
-        (this.checkGender = false),
-        (this.errRole = ""),
-        (this.checkRole = false);
+          (this.errId = ""),
+          (this.checkId = false),
+          (this.errEmail = ""),
+          (this.checkEmail = false),
+          (this.errName = ""),
+          (this.checkName = false),
+          (this.errDepartment = ""),
+          (this.checkDepartment = false),
+          (this.errGender = ""),
+          (this.checkGender = false),
+          (this.errRole = ""),
+          (this.checkRole = false);
       this.user.gender = "";
       this.user.fullName = "";
       this.user.role = "";
@@ -539,14 +541,14 @@ export default {
       if (!this.user.fullName) {
         this.errName = "Vui lòng nhập ho và tên";
         this.checkName = false;
-        } else if (!this.validName(this.user.fullName)) {
-          this.errName = "Vui lòng nhập đúng định dạng ho và tên";
-          this.checkName = false;
-        } else if (
+      } else if (!this.validName(this.user.fullName)) {
+        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+        this.checkName = false;
+      } else if (
           this.validName(this.user.fullName) &&
           this.user.fullName &&
           this.checkName === true
-        ){
+      ) {
         this.errName = "";
         this.checkName = true;
       }
@@ -570,9 +572,9 @@ export default {
         this.errId = "Vui lòng nhập đúng định dạng code";
         this.checkId = false;
       } else if (
-        this.validCode(this.user.code) &&
-        this.user.code &&
-        this.checkId === true
+          this.validCode(this.user.code) &&
+          this.user.code &&
+          this.checkId === true
       ) {
         this.errId = "";
         this.checkId = true;
@@ -597,9 +599,9 @@ export default {
         this.errEmail = "Vui lòng nhập đúng định dạng email";
         this.checkEmail = false;
       } else if (
-        this.validEmail(this.user.username) &&
-        this.user.username &&
-        this.checkEmail === true
+          this.validEmail(this.user.username) &&
+          this.user.username &&
+          this.checkEmail === true
       ) {
         this.errEmail = "";
         this.checkEmail = true;
@@ -608,7 +610,7 @@ export default {
       if (!this.user.department) {
         this.errDepartment = "Hãy chon phòng ban";
         this.checkDepartment = false;
-      }else{
+      } else {
         this.errDepartment = "";
         this.checkDepartment = true;
       }
@@ -618,16 +620,16 @@ export default {
       if (this.user.gender === '') {
         this.errGender = "Hãy chon giới tính";
         this.checkGender = false;
-      }else{
+      } else {
         console.log(21)
-        this.errGender= "";
+        this.errGender = "";
         this.checkGender = true;
       }
 
       if (!this.user.role) {
         this.errRole = "Hãy chon chức vu";
         this.checkRole = false;
-      }else{
+      } else {
         this.errRole = "";
         this.checkRole = true;
       }
@@ -638,11 +640,11 @@ export default {
       console.log(14, this.checkDepartment)
       // console.log(15, this.checkDepartment)
       if (
-        this.checkId === true &&
-        this.checkEmail === true &&
-        this.checkName === true &&
-        this.checkGender === true &&
-        this.checkDepartment === true
+          this.checkId === true &&
+          this.checkEmail === true &&
+          this.checkName === true &&
+          this.checkGender === true &&
+          this.checkDepartment === true
       ) {
         this.submitted = true;
         let form = document.querySelector("#formRegister");
@@ -674,15 +676,15 @@ export default {
         status: this.status,
       };
       UserService.getUser_Department(params)
-        .then((response) => {
-          this.users = response.data.content;
-          this.page = response.data.pageable.pageNumber;
-          console.log(response.data.pageable.pageNumber);
-          this.totalItems = response.data.totalElements;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((response) => {
+            this.users = response.data.content;
+            this.page = response.data.pageable.pageNumber;
+            console.log(response.data.pageable.pageNumber);
+            this.totalItems = response.data.totalElements;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     previewFiles(event) {
       const file = event.target.files[0];
@@ -696,26 +698,39 @@ export default {
     changeStatus(id, name, status) {
       if (status == 1) {
         this.$swal
-          .fire({
-            title: "Khóa tài khoản " + name + "?",
-            showDenyButton: true,
-            confirmButtonColor: "#ED9696",
-            confirmButtonText: "Khóa",
-            denyButtonColor: "#75C4C0",
-            denyButtonText: "Đóng",
-            customClass: {
-              actions: "my-actions",
-              cancelButton: "order-1 right-gap",
-              confirmButton: "order-2",
-              denyButton: "order-3",
-            },
-          })
-          .then((result) => {
-            if (result.isConfirmed) {
-              AuthService.lockAccount(id).then((response) => {
+            .fire({
+              title: "Khóa tài khoản " + name + "?",
+              showDenyButton: true,
+              confirmButtonColor: "#ED9696",
+              confirmButtonText: "Khóa",
+              denyButtonColor: "#75C4C0",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                AuthService.lockAccount(id).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getAll();
+                });
+              } else if (result.isDenied) {
                 this.$swal.fire({
-                  title: response.data.message,
-                  icon: "success",
+                  title: "Thay đổi thất bại",
+                  icon: "error",
                   timer: 2000,
                   timerProgressBar: true,
                   toast: true,
@@ -723,43 +738,43 @@ export default {
                   showConfirmButton: false,
                   width: "24em",
                 });
-                this.getAll();
-              });
-            } else if (result.isDenied) {
-              this.$swal.fire({
-                title: "Thay đổi thất bại",
-                icon: "error",
-                timer: 2000,
-                timerProgressBar: true,
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                width: "24em",
-              });
-            }
-          });
+              }
+            });
       } else {
         this.$swal
-          .fire({
-            title: "Mở tài khoản " + name + "?",
-            showDenyButton: true,
-            confirmButtonColor: "#75C4C0",
-            confirmButtonText: "Mở",
-            denyButtonColor: "#ED9696",
-            denyButtonText: "Đóng",
-            customClass: {
-              actions: "my-actions",
-              cancelButton: "order-1 right-gap",
-              confirmButton: "order-2",
-              denyButton: "order-3",
-            },
-          })
-          .then((result) => {
-            if (result.isConfirmed) {
-              AuthService.lockAccount(id).then((response) => {
+            .fire({
+              title: "Mở tài khoản " + name + "?",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Mở",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                AuthService.lockAccount(id).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getAll();
+                });
+              } else if (result.isDenied) {
                 this.$swal.fire({
-                  title: response.data.message,
-                  icon: "success",
+                  title: "Thay đổi thất bại",
+                  icon: "error",
                   timer: 2000,
                   timerProgressBar: true,
                   toast: true,
@@ -767,28 +782,15 @@ export default {
                   showConfirmButton: false,
                   width: "24em",
                 });
-                this.getAll();
-              });
-            } else if (result.isDenied) {
-              this.$swal.fire({
-                title: "Thay đổi thất bại",
-                icon: "error",
-                timer: 2000,
-                timerProgressBar: true,
-                toast: true,
-                position: "top-end",
-                showConfirmButton: false,
-                width: "24em",
-              });
-            }
-          });
+              }
+            });
       }
     },
     handlePageChange(value) {
       this.page = value - 1;
       this.getAll();
     },
-    tableRowClassName({ rowIndex }) {
+    tableRowClassName({rowIndex}) {
       if (rowIndex % 2 === 1) {
         return "warning-row";
       } else if (rowIndex % 2 === 0) {
@@ -810,6 +812,9 @@ export default {
 };
 </script>
 <style>
+*{
+  font-size: 16px;
+}
 .el-table .warning-row {
   background: #ededed;
 }
@@ -838,6 +843,13 @@ export default {
   border: none;
   padding: 5px 5px;
   background-color: #f8cbad;
+  border-radius: 5px;
+}
+
+.el-table .btn-action:hover {
+  border: none;
+  padding: 5px 5px;
+  background-color: #f4e4d4;
   border-radius: 5px;
 }
 

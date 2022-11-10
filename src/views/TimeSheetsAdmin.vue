@@ -13,7 +13,7 @@
                         @change="getAll">
         </el-date-picker>
 
-        <span>Bộ phận</span> &ensp;
+        <span>Phòng ban</span> &ensp;
         <el-select
             v-model="departmentId"
             @change="getAll"
@@ -45,6 +45,9 @@
           :data="logs"
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
           style="width: 100%; display: inline-block"
+          :cell-class-name="cellClassName"
+          @cell-mouse-enter="cellMouseEnter"
+          @cell-mouse-leave="cellMouseLeave"
           :row-class-name="tableRowClassName">
         <template>
 
@@ -85,6 +88,7 @@ export default {
   name: "HomeVue",
   data() {
     return {
+      hoverRowIndex: null,
       user_code: "",
       dateRange: "",
       from: "",
@@ -190,6 +194,18 @@ export default {
         return 'success-row';
       }
       return 'success-row';
+    },
+    cellClassName({row,rowIndex}){
+      row.rowIndex = rowIndex
+      if(rowIndex === this.hoverRowIndex){
+        return 'select-row'
+      }
+    },
+    cellMouseEnter(row){
+      this.hoverRowIndex = row.rowIndex
+    },
+    cellMouseLeave(){
+      this.hoverRowIndex = null
     }
   },
 };

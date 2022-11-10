@@ -9,38 +9,7 @@
         />
       </div>
       <div class="col-md-9 register-right">
-        <ul
-            class="nav nav-tabs nav-justified"
-            id="myTab"
-            role="tablist"
-            style="background-color: #e24146"
-        >
-          <li class="nav-item">
-            <a
-                class="nav-link active"
-                id="home-tab"
-                data-toggle="tab"
-                href="#home"
-                role="tab"
-                aria-controls="home"
-                aria-selected="true"
-            >Tạo</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-                class="nav-link"
-                id="profile-tab"
-                data-toggle="tab"
-                href="#profile"
-                role="tab"
-                aria-controls="profile"
-                aria-selected="false"
-            >
-              Nhân viên
-            </a>
-          </li>
-        </ul>
+
         <div class="tab-content" id="myTabContent">
           <div
               class="tab-pane fade show active"
@@ -49,7 +18,7 @@
               aria-labelledby="home-tab"
           >
             <form id="formEdit" @submit.prevent="sendForm">
-              <div class="row register-form">
+              <div class="row register-form ">
                 <div class="col-md-4">
                   <input
                       type="file"

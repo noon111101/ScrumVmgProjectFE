@@ -193,6 +193,10 @@ export default {
 </script>
 
 <style scoped>
+
+.note-wrapper .el-button:hover{
+  cursor: default;
+}
 .sign-calender{
   font-weight: bold;
 }
