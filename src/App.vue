@@ -46,7 +46,7 @@ export default {
   width: 100%;
   padding-top: 80px;
   /*padding-bottom: 80px;*/
-  background-image: url("@/assets/background.jpg") ;
+  background-image: url("@/assets/background4.jpg") ;
   background-position: center; /* Center the image */
   background-repeat: no-repeat; /* Do not repeat the image */
   background-size: cover; /*
