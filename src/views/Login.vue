@@ -8,9 +8,9 @@
               <div class="card-body p-md-5 mx-md-4">
                 <div class="text-center">
                   <img
-                    src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
-                    style="width: 185px"
-                    alt="logo"
+                      src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
+                      style="width: 185px"
+                      alt="logo"
                   />
                   <h4 class="mt-1 mb-5 pb-1">PHÁT TRIỂN CÙNG CÔNG NGHỆ</h4>
                 </div>
@@ -18,53 +18,52 @@
                   <p>Nhập thông tin đăng nhập</p>
                   <div class="form-outline mb-4">
                     <input
-                      placeholder="Enter Your Email"
-                      v-model="user.username"
-                      v-validate="'required'"
-                      type="text"
-                      class="form-control"
-                      name="username"
+                        placeholder="Nhập email"
+                        v-model="user.username"
+                        v-validate="'required'"
+                        type="text"
+                        class="form-control"
+                        name="username"
                     />
-                    <small v-if="errEmail !== null" style="color: red">
-                      {{ errEmail }}
+                    <small v-if="messageEmail !== null" style="color: red">
+                      {{ messageEmail }}
                     </small>
                   </div>
                   <div class="form-group">
                     <input
-                      placeholder="Enter Your Password"
-                      v-model="user.password"
-                      v-validate="'required'"
-                      type="password"
-                      class="form-control"
-                      name="password"
+                        placeholder="Nhập mật khẩu"
+                        v-model="user.password"
+                        v-validate="'required'"
+                        type="password"
+                        class="form-control"
+                        name="password"
                     />
-                    <small v-if="errPass !== null" style="color: red">
-                      {{ errPass }}
+                    <small v-if="messagePass !== null" style="color: red">
+                      {{ messagePass }}
                     </small>
                   </div>
                   <div class="text-center pt-1 mb-5 pb-1">
                     <button
-                      style="margin-top: 20px;margin-bottom: 20px;"
-                      class="btn btn-danger btn-block"
-                      :disabled="loading"
+                        style="margin-top: 20px; margin-bottom: 20px"
+                        class="btn btn-danger btn-block"
+                        :disabled="loading"
                     >
                       Đăng nhập
                     </button>
                     <br />
                     <a
-                      style="margin-top: 20px;color:#33ACFF;"
-                      href="http://localhost:8081/forgotPassword"
-                      >Quên mât khẩu</a
+                        style="margin-top: 20px; color: #33acff"
+                        href="http://localhost:8081/forgotPassword"
+                    >Quên mât khẩu</a
                     >
-                    <!-- <a style="padding-top:20px"
-                      class="text-muted"
-                      href="http://localhost:8081/forgotPassword"
-                      >Forgot password?</a
-                    > -->
+                    <br />
+                    <small v-if="messageForm" style="color: red">{{
+                        messageForm
+                      }}</small>
                     <br />
                     <small style="color: red" v-if="message">{{
-                      message
-                    }}</small>
+                        message
+                      }}</small>
                   </div>
                 </form>
               </div>
@@ -98,6 +97,10 @@ export default {
       checkEmail: true,
       errPass: "",
       checkPass: true,
+      check: true,
+      messageEmail: "",
+      messagePass: "",
+      messageForm: "",
     };
   },
   computed: {
@@ -112,37 +115,53 @@ export default {
     }
   },
   methods: {
-    validEmail: function (email) {
+    validEmail: function (email)
+    {
       var re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+          /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email)
+          ;
     },
     handleLogin() {
-      if (!this.user.password) {
-        this.errPass = "Vui lòng nhập mât khẩu";
-        this.checkPass = false;
+
+      if (!this.user.username && !this.user.password) {
+        this.messageForm = "Vui lòng nhập thông tin tài khoản";
+        this.messageEmail = "";
+        this.messagePass = "";
+        this.message = "";
+        this.check = false;
+      } else {
+        this.messageForm = "";
       }
 
-      if (!this.user.username) {
-        this.errEmail = "Vui lòng nhập email nhân viên";
-        this.checkEmail = false;
-      } else if (!this.validEmail(this.user.username)) {
-        this.errEmail = "Vui lòng nhập đúng định dạng email";
-        this.checkEmail = false;
-      } else if (
-        this.validEmail(this.user.username) &&
-        this.user.username &&
-        this.checkEmail === true
-      )
-        if (this.checkEmail === true && this.checkPass === true) {
-          this.loading = true;
-          this.$validator.validateAll().then((isValid) => {
-            if (!isValid) {
-              this.loading = false;
-              return;
-            }
-            if (this.user.username && this.user.password) {
-              this.$store.dispatch("auth/login", this.user).then(
+      if (!this.user.username && this.user.password) {
+        this.messageEmail = "Vui lòng nhập email";
+        this.messageForm = "";
+        this.message = "";
+        this.check = false;
+      } else {
+        this.messageEmail = "";
+      }
+      if (!this.user.password && this.user.username) {
+        this.messagePass = "Vui lòng nhập mật khẩu";
+        this.messageForm = "";
+        this.message = "";
+        this.check = false;
+      } else {
+        this.messagePass = "";
+      }
+      if (this.user.username && this.user.password) {
+        this.check = true;
+      }
+      if (this.check === true) {
+        this.loading = true;
+        this.$validator.validateAll().then((isValid) => {
+          if (!isValid) {
+            this.loading = false;
+            return;
+          }
+          if (this.user.username && this.user.password) {
+            this.$store.dispatch("auth/login", this.user).then(
                 () => {
                   this.$router.push("/calender");
                 },
@@ -150,19 +169,19 @@ export default {
                   this.loading = false;
                   this.a = error.response && error.response.data;
                   if (
-                    error.response.data.message ==
-                    "Account have been lock by admin"
+                      error.response.data.message ==
+                      "Account have been lock by admin"
                   ) {
                     this.message =
-                      "Tài khoản của bạn bị khóa hiện tại chưa thể đăng nhập";
+                        "Tài khoản của bạn bị khóa hiện tại chưa thể đăng nhập";
                   } else {
                     this.message = "Email hoặc mật khẩu không chính xác";
                   }
                 }
-              );
-            }
-          });
-        }
+            );
+          }
+        });
+      }
     },
   },
 };

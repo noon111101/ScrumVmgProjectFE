@@ -507,7 +507,7 @@ export default {
     },
 
     validName: function (name) {
-      var re = /[A-Za-z]+/;
+      var re = /^[a-zA-Z]{3,}( {1,2}[a-zA-Z]{3,}){0,}$/;
       return re.test(name);
     },
 
@@ -541,14 +541,12 @@ export default {
       if (!this.user.fullName) {
         this.errName = "Vui lòng nhập ho và tên";
         this.checkName = false;
-      } else if (!this.validName(this.user.fullName)) {
-        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
-        this.checkName = false;
-      } else if (
-          this.validName(this.user.fullName) &&
-          this.user.fullName &&
-          this.checkName === true
-      ) {
+
+        } else if (!this.validName(this.user.fullName)) {
+          this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+          this.checkName = false;
+        } else {
+
         this.errName = "";
         this.checkName = true;
       }
@@ -649,18 +647,17 @@ export default {
         this.submitted = true;
         let form = document.querySelector("#formRegister");
         console.log(14, form.cover.value);
-        let response = AuthService.register(form);
-        if (response) {
+        AuthService.register(form).then(() => {
           this.$notify.success({
             message: 'Tạo tài khoản thành công',
             title: 'Success',
             timer: 2000,
             timerProgressBar: true,
           });
-        } else {
+          this.getAll();
+        }).catch(() => {
           this.message = "";
-        }
-        this.getAll()
+        })
       }
     },
     getUserCode() {
