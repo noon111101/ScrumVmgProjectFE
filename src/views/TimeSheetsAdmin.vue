@@ -3,7 +3,7 @@
     <div style="" class="d-flex">
       <div className="block" class="text-start col-10">
         <span>Ngày</span> &ensp;
-        <el-date-picker style="width: 20%;font-size: 16px;margin-right: 100px"
+        <el-date-picker style="width: 22%;font-size: 16px;margin-right: 100px"
                         v-model="dateRange"
                         type="daterange"
                         format="yyyy-MM-dd"
