@@ -112,7 +112,7 @@ router.beforeEach((to, from, next) => {
   else {
     const admin =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_ADMIN");
     const manage =JSON.parse(localStorage.getItem('user')).roles.includes("ROLE_MANAGE");
-    if(adminPages.map(url => {to.path.startsWith(url)}) && admin || managePages.map(url => {to.path.startsWith(url)}) && manage || userPages.includes(to.path) || publicPages.includes(to.path))
+    if(adminPages.includes(to.path) && admin || managePages.includes(to.path) && manage || userPages.includes(to.path) || publicPages.includes(to.path))
       next();
     else
       next('/unpermist')

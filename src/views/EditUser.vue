@@ -166,7 +166,7 @@
                               name="department"
                               v-model="user.departments.name"
                               @change="getAll"
-                              placeholder="Chon Phòng ban"
+                              placeholder="Chọn Phòng ban"
                           >
                             <el-option
                                 v-for="item in departments"
@@ -201,7 +201,7 @@
                               :checked="checkRole('ROLE_ADMIN')"
                               name="role"
                           />
-                          <label for="admin">&nbsp; Admin</label>
+                          <label for="admin">&nbsp; Nhân sự</label>
                         </td>
                       </tr>
                     </template>
@@ -219,7 +219,7 @@
                               :checked="checkRole('ROLE_ADMIN')"
                               name="role"
                           />
-                          <label for="admin">&nbsp; Admin</label>
+                          <label for="admin">&nbsp; Nhân sự</label>
                         </td>
                       </tr>
                     </template>
@@ -233,7 +233,7 @@
                             :checked="checkRole('ROLE_MANAGE')"
                             name="role"
                         />
-                        <label for="manage">&nbsp; Manage</label>
+                        <label for="manage">&nbsp; Trưởng phòng</label>
                       </td>
                     </tr>
                     <tr style="height: 40px">
@@ -246,7 +246,7 @@
                             name="role"
                             :checked="checkRole('ROLE_USER')"
                         />
-                        <label for="user">&nbsp; User</label>
+                        <label for="user">&nbsp; Nhân viên</label>
                       </td>
                     </tr>
                     <tr style="height: 60px">
@@ -372,23 +372,8 @@ export default {
         this.errId = "";
         this.checkId = true;
       }
-      // if (!this.user.username) {
-      //        this.errEmail = "Vui lòng nhập email nhân viên";
-      //        this.checkEmail = false;
-      //      } else if (!this.validEmail(this.user.username)) {
-      //        this.errEmail = "Vui lòng nhập đúng định dạng email";
-      //        this.checkEmail = false;
-      //      } else if (
-      //        this.validEmail(this.user.username) &&
-      //        this.user.username &&
-      //        this.checkEmail === true
-      //      ) {
-      //        this.errEmail = "";
-      //        this.checkEmail = true;
-      //      }
-
       if (!this.user.fullName) {
-        this.errName = "Hãy nhập Ho và tên";
+        this.errName = "Hãy nhập Họ và tên";
         this.checkName = false;
       }
       if (
@@ -399,24 +384,24 @@ export default {
         this.submitted = true;
         let form = document.querySelector("#formEdit");
         console.log(form);
-        UserService.editUser(this.user.id, form).then((response) => {
-          if (response.data != null) {
+        UserService.editUser(this.user.id, form).then(response => {
             this.$swal.fire({
               title: "Chỉnh sửa thành công!",
               icon: "success",
               timer: 2000,
               timerProgressBar: true,
             });
+            console.log(response)
             return this.$router.push(`/manage`);
-          } else {
-            this.$swal.fire({
-              title: "Chỉnh sửa thất bại!",
-              icon: "error",
-              timer: 2000,
-              timerProgressBar: true,
-            });
-            return this.$router.push(`/user/${this.$route.params.id}`);
-          }
+          }).catch(error => {
+          this.$swal.fire({
+            title: "Chỉnh sửa thất bại!",
+            icon: "error",
+            text:error.response.data.error.message,
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          return this.$router.push(`/user/${this.$route.params.id}`);
         });
       }
     },
