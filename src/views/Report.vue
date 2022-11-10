@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div style="padding-bottom: 20px">
 
 <!--     Thanh chọn-->
 

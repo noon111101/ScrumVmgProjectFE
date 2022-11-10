@@ -4,7 +4,7 @@
       <h3><iframe src="https://calendar.google.com/calendar/embed?src=...." style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe></h3>
     </header>
   </div> -->
-  <div style="padding-bottom: 350px">
+  <div style="padding-bottom: 430px">
     <div class="container register">
 
       <div class="row">
