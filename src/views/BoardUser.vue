@@ -52,7 +52,7 @@
               prop="user.fullName"
               label="Họ và tên"
               align="center"
-              width="200px"
+
           >
           </el-table-column>
           <el-table-column
@@ -208,5 +208,4 @@ export default {
 .el-table .success-row {
   background: #F5F5F5;
 }
-
 </style>
