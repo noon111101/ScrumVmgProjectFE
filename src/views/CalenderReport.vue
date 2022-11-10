@@ -1,6 +1,6 @@
 <template>
 
-  <div>
+  <div style="padding-bottom: 225px">
 
     <div class="d-flex flex-row justify-content-center ">
         <el-calendar  style="width: 70% ; margin-top: 50px" v-model="value">

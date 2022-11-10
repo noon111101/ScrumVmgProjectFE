@@ -45,9 +45,7 @@
           :data="logs"
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
           style="width: 100%; display: inline-block"
-          :cell-class-name="cellClassName"
-          @cell-mouse-enter="cellMouseEnter"
-          @cell-mouse-leave="cellMouseLeave"
+
           :row-class-name="tableRowClassName">
         <template>
 
@@ -201,12 +199,15 @@ export default {
         return 'select-row'
       }
     },
-    cellMouseEnter(row){
-      this.hoverRowIndex = row.rowIndex
-    },
-    cellMouseLeave(){
-      this.hoverRowIndex = null
-    }
+//     cellMouseEnter(row){
+//       this.hoverRowIndex = row.rowIndex
+//     },
+//     cellMouseLeave(){
+//       this.hoverRowIndex = null
+//     }
+// :cell-class-name="cellClassName"
+// @cell-mouse-enter="cellMouseEnter"
+// @cell-mouse-leave="cellMouseLeave"
   },
 };
 </script>
@@ -215,6 +216,20 @@ export default {
 * {
   font-size: 16px;
 }
+
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #c9f5eb !important;
+  /*color: white;*/
+}
+
+/*.el-table__body tr:hover>td{*/
+/*  background-color: #75c4c0 !important;*/
+/*}*/
+
+/*.el-table__body tr.current-row>td{*/
+/*  background-color: #75c4c0 !important;*/
+/*}*/
+
 
 .el-table .warning-row {
   background: #EDEDED;

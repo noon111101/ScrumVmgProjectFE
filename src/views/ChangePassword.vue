@@ -4,86 +4,89 @@
       <h3><iframe src="https://calendar.google.com/calendar/embed?src=...." style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe></h3>
     </header>
   </div> -->
+  <div style="padding-bottom: 350px">
+    <div class="container register">
 
-  <div class="container register">
-
-    <div class="row">
-      <div class="col-md-3 register-left">
-        <img style="width: 200px; line-height: 100%" src="../assets/new_logo.png"/>
-      </div>
-      <div class="col-md-9 register-right">
-
-
-        <div class="tab-content" id="myTabContent">
-          <div
-              class="tab-pane fade show active"
-              id="home"
-              role="tabpanel"
-              aria-labelledby="home-tab">
-            <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form" class="text-start">
-
-              <!--              <h3 class="register-heading">Create an account</h3>-->
-              <div class="row register-form">
-                <div class="col-md-8">
-
-                  <table class="text-start" style="margin-left: 150px;">
+      <div class="row">
+        <div class="col-md-3 register-left">
+          <img style="width: 200px; line-height: 100%" src="../assets/new_logo.png"/>
+        </div>
+        <div class="col-md-9 register-right">
 
 
-                    <tr style="height: 70px">
-                      <td style="width: 300px">
-                        <el-form-item label="Mật khẩu hiện tại" prop="old_password" label-width="200px"
-                                      label-position="left">
-                          <el-input type="password" v-model="form.old_password" autocomplete="off"
-                                    show-password></el-input>
-                        </el-form-item>
-                      </td>
-                    </tr>
+          <div class="tab-content" id="myTabContent">
+            <div
+                class="tab-pane fade show active"
+                id="home"
+                role="tabpanel"
+                aria-labelledby="home-tab">
+              <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form"
+                       class="text-start">
+
+                <!--              <h3 class="register-heading">Create an account</h3>-->
+                <div class="row register-form">
+                  <div class="col-md-8">
+
+                    <table class="text-start" style="margin-left: 150px;">
 
 
-                    <tr style="height: 70px">
-                      <td style="width: 300px">
-                        <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px">
-                          <el-input type="password" v-model="form.new_password" autocomplete="off" show-password
-                                    style="width: 200px"></el-input>
-                        </el-form-item>
-                      </td>
-                    </tr>
-
-                    <tr style="height: 70px">
-                      <td style="width: 300px">
-                        <el-form-item label="Nhập lại mật khẩu mới" prop="new_password_confirm" label-width="200px">
-                          <el-input type="password" v-model="form.new_password_confirm" autocomplete="off"
-                                    show-password></el-input>
-                        </el-form-item>
-                      </td>
-                    </tr>
+                      <tr style="height: 70px">
+                        <td style="width: 300px">
+                          <el-form-item label="Mật khẩu hiện tại" prop="old_password" label-width="200px"
+                                        label-position="left">
+                            <el-input type="password" v-model="form.old_password" autocomplete="off"
+                                      show-password></el-input>
+                          </el-form-item>
+                        </td>
+                      </tr>
 
 
-                    <tr style="height: 60px">
-                      <td style="width: 200px">
+                      <tr style="height: 70px">
+                        <td style="width: 300px">
+                          <el-form-item label="Mật khẩu mới" prop="new_password" label-width="200px">
+                            <el-input type="password" v-model="form.new_password" autocomplete="off" show-password
+                                      style="width: 200px"></el-input>
+                          </el-form-item>
+                        </td>
+                      </tr>
 
-                        <el-form-item style="margin-left: 80px">
-                          <span style="color: orangered">{{ message }}</span>
-                          <el-button type="" @click="submit('user')" class="btn btn-signup" col>Thay đổi mật khẩu
-                          </el-button>
-                        </el-form-item>
-                      </td>
-                      <td style="width: 0px" class="text-start">
+                      <tr style="height: 70px">
+                        <td style="width: 300px">
+                          <el-form-item label="Nhập lại mật khẩu mới" prop="new_password_confirm" label-width="200px">
+                            <el-input type="password" v-model="form.new_password_confirm" autocomplete="off"
+                                      show-password></el-input>
+                          </el-form-item>
+                        </td>
+                      </tr>
 
-                      </td>
-                    </tr>
-                  </table>
-                  <br/>
 
+                      <tr style="height: 60px">
+                        <td style="width: 200px">
+
+                          <el-form-item style="margin-left: 80px">
+                            <span style="color: orangered">{{ message }}</span>
+                            <el-button type="" @click="submit('user')" class="btn btn-signup" col>Thay đổi mật khẩu
+                            </el-button>
+                          </el-form-item>
+                        </td>
+                        <td style="width: 0px" class="text-start">
+
+                        </td>
+                      </tr>
+                    </table>
+                    <br/>
+
+                  </div>
                 </div>
-              </div>
-            </el-form>
+              </el-form>
 
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
+
 </template>
 <script>
 import AuthService from "@/services/auth.service";

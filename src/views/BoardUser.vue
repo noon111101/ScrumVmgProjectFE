@@ -200,6 +200,8 @@ export default {
 </script>
 
 <style>
+
+
 .el-table .warning-row {
   background: #EDEDED;
 }

@@ -42,10 +42,13 @@ export default {
 </script>
 <style scoped>
 #app {
-  margin-top: 80px;
+  height: 100%;
+  width: 100%;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  background-image: url("assets/background.jpg");
   font-size: 16px;
   font-family: 'Montserrat', sans-serif;
-
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /*text-align: center;*/

@@ -158,6 +158,7 @@ export default {
 *{
   font-size: 16px;
 }
+
 .el-table .warning-row {
   background: #EDEDED;
 }
