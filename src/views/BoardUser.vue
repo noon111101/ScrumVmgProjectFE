@@ -34,6 +34,10 @@
             style="width: 100%; display: inline-block; border-radius: 10px"
             :editable="false"
             :row-class-name="tableRowClassName">
+          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
+            <h3>Không có dữ liệu</h3>
+          </div>
+          <div slot="append" v-if="logs.length!='0'">
           <el-table-column
               type="index"
               label="STT"
@@ -89,6 +93,7 @@
               width="200px"
               align="center">
           </el-table-column>
+          </div>
         </el-table>
       </div>
 

@@ -41,6 +41,7 @@
 
       <br/>
       <div>
+
         <el-table
             height="900px"
             :default-sort = "{prop: 'date_log', order: 'descending'}"
@@ -49,10 +50,10 @@
             style="width: 100%; display: inline-block; border-radius: 10px"
 
             :row-class-name="tableRowClassName">
-          <template>
-
-
-
+          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto" >
+            <h3>Không có dữ liệu</h3>
+          </div>
+          <div slot="append" v-if="logs.length!='0'">
             <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
             <el-table-column label="Mã nhân viên" prop="user.code" align="center" width="150px">
               <!--          <span>{{log.row.user.code}}</span>-->
@@ -63,8 +64,8 @@
             <el-table-column label="Ngày" prop="date_log" align="center" sortable width="150px"></el-table-column>
             <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
             <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>
+          </div>
 
-          </template>
         </el-table>
         <el-pagination class="text-end"
                        background
