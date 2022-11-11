@@ -1,81 +1,84 @@
 <template>
-  <div className="container" style="text-align: center; width: 90%;margin: auto">
-    <div style="" class="d-flex">
-      <div className="block" class="text-start col-10">
-        <span>Ngày</span> &ensp;
-        <el-date-picker style="width: 22%;font-size: 16px;margin-right: 100px"
-                        v-model="dateRange"
-                        type="daterange"
-                        format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd"
-                        range-separator=""
-                        start-placeholder="Chọn thời gian"
-                        @change="getAll">
-        </el-date-picker>
+  <div style="padding-bottom: 36px">
+    <div className="container" style="text-align: center; width: 90%;margin: auto">
+      <div style="" class="d-flex">
+        <div className="block" class="text-start col-10">
+          <span>Ngày</span> &ensp;
+          <el-date-picker style="width: 22%;font-size: 16px;margin-right: 100px"
+                          v-model="dateRange"
+                          type="daterange"
+                          format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd"
+                          range-separator=""
+                          start-placeholder="Chọn thời gian"
+                          :editable="false"
+                          @change="getAll">
+          </el-date-picker>
 
-        <span>Phòng ban</span> &ensp;
-        <el-select
-            v-model="departmentId"
-            @change="getAll"
-            placeholder="Chon Phòng ban"
-        >
-          <el-option value="0" label="All Users"></el-option>
-          <el-option
-              v-for="item in departments"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id">
-          </el-option>
-        </el-select>
-        <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
-        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
+          <span>Phòng ban</span> &ensp;
+          <el-select
+              v-model="departmentId"
+              @change="getAll"
+              placeholder="Chon Phòng ban"
+          >
+            <el-option value="0" label="All Users"></el-option>
+            <el-option
+                v-for="item in departments"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id">
+            </el-option>
+          </el-select>
+          <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
+          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
 
+        </div>
+        <!--      <div class="">-->
+        <!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
+        <!--      </div>-->
       </div>
-<!--      <div class="">-->
-<!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
-<!--      </div>-->
+
+
+      <br/>
+      <div>
+
+        <el-table
+            height="900px"
+            :default-sort = "{prop: 'date_log', order: 'descending'}"
+            :data="logs"
+            :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+            style="width: 100%; display: inline-block; border-radius: 10px"
+
+            :row-class-name="tableRowClassName">
+          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto" >
+            <h3>Không có dữ liệu</h3>
+          </div>
+          <div slot="append" v-if="logs.length!='0'">
+            <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
+            <el-table-column label="Mã nhân viên" prop="user.code" align="center" width="150px">
+              <!--          <span>{{log.row.user.code}}</span>-->
+            </el-table-column>
+            <el-table-column label="Name" prop="user.fullName" align="center"></el-table-column>
+            <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
+            <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
+            <el-table-column label="Ngày" prop="date_log" align="center" sortable width="150px"></el-table-column>
+            <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
+            <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>
+          </div>
+
+        </el-table>
+        <el-pagination class="text-end"
+                       background
+                       layout="prev, pager, next"
+                       :total="totalItems"
+                       :page-size="pageSize"
+                       @current-change="handlePageChange"
+        >
+        </el-pagination>
+      </div>
     </div>
-
-
-    <br/>
-    <div>
-      <el-table
-          height="900px"
-          :default-sort = "{prop: 'date_log', order: 'descending'}"
-          :data="logs"
-          :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-          style="width: 100%; display: inline-block"
-          :cell-class-name="cellClassName"
-          @cell-mouse-enter="cellMouseEnter"
-          @cell-mouse-leave="cellMouseLeave"
-          :row-class-name="tableRowClassName">
-        <template>
-
-
-
-          <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
-          <el-table-column label="Mã nhân viên" prop="user.code" align="center" width="150px">
-            <!--          <span>{{log.row.user.code}}</span>-->
-          </el-table-column>
-          <el-table-column label="Name" prop="user.fullName" align="center"></el-table-column>
-          <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
-          <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
-          <el-table-column label="Ngày" prop="date_log" align="center" sortable width="150px"></el-table-column>
-          <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
-          <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>
-
-        </template>
-      </el-table>
-    <el-pagination class="text-end"
-                   background
-                   layout="prev, pager, next"
-                   :total="totalItems"
-                   :page-size="pageSize"
-                   @current-change="handlePageChange"
-    >
-    </el-pagination>
   </div>
-  </div>
+
 </template>
 
 <script>
@@ -201,12 +204,15 @@ export default {
         return 'select-row'
       }
     },
-    cellMouseEnter(row){
-      this.hoverRowIndex = row.rowIndex
-    },
-    cellMouseLeave(){
-      this.hoverRowIndex = null
-    }
+//     cellMouseEnter(row){
+//       this.hoverRowIndex = row.rowIndex
+//     },
+//     cellMouseLeave(){
+//       this.hoverRowIndex = null
+//     }
+// :cell-class-name="cellClassName"
+// @cell-mouse-enter="cellMouseEnter"
+// @cell-mouse-leave="cellMouseLeave"
   },
 };
 </script>
@@ -216,6 +222,22 @@ export default {
   font-size: 16px;
 }
 
+.el-table--enable-row-hover .el-table__body tr:hover>td{
+  background-color: #c9f5eb !important;
+  /*color: white;*/
+}
+
+/*.el-table__body tr:hover>td{*/
+/*  background-color: #75c4c0 !important;*/
+/*}*/
+
+/*.el-table__body tr.current-row>td{*/
+/*  background-color: #75c4c0 !important;*/
+/*}*/
+
+ .el-date-picker:focus {
+   cursor: default;
+ }
 .el-table .warning-row {
   background: #EDEDED;
 }

@@ -1,413 +1,416 @@
 <template style="font-size: 16px">
-  <div className="container" style="width: 90%; margin: auto">
-    <div class="d-flex">
-      <div className="block" class="text-start col-10">
-        <span>Phòng ban</span> &ensp;
-        <el-select
-            v-model="departmentId"
-            @change="getAll"
-            placeholder="Chọn Phòng ban"
-        >
-          <el-option value="0" label="Tất cả các phòng ban"></el-option>
-          <el-option
-              v-for="item in departments"
-              :key="item.id"
-              :label="item.name"
-              :value="item.id"
+  <div style="padding-bottom: 20px">
+    <div className="container" style="width: 90%; margin: auto">
+      <div class="d-flex">
+        <div className="block" class="text-start col-10">
+          <span>Phòng ban</span> &ensp;
+          <el-select
+              v-model="departmentId"
+              @change="getAll"
+              placeholder="Chọn Phòng ban"
           >
-          </el-option>
-        </el-select>
-        <!--        <div style="width: 200px" class="">-->
-        <span style="margin-left: 100px">Tìm kiếm</span> &ensp;
-        <el-input
-            v-model="search"
-            @input="getAll"
-            size="medium"
-            placeholder="Tên nhân viên"
-            style="width: 20%"
-        />
+            <el-option value="0" label="Tất cả các phòng ban"></el-option>
+            <el-option
+                v-for="item in departments"
+                :key="item.id"
+                :label="item.name"
+                :value="item.id"
+            >
+            </el-option>
+          </el-select>
+          <!--        <div style="width: 200px" class="">-->
+          <span style="margin-left: 100px">Tìm kiếm</span> &ensp;
+          <el-input
+              v-model="search"
+              @input="getAll"
+              size="medium"
+              placeholder="Tên nhân viên"
+              style="width: 20%"
+          />
 
-        <span style="margin-left: 100px">Trạng thái</span> &ensp;
-        <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
-          <el-option value="" label="Tất cả"></el-option>
-          <el-option label="Có hiệu lực" value="1"></el-option>
-          <el-option label="Vô hiệu lực" value="0"></el-option>
-        </el-select>
+          <span style="margin-left: 100px;">Trạng thái</span> &ensp;
+          <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
+            <el-option value="" label="Tất cả"></el-option>
+            <el-option label="Có hiệu lực" value="1"></el-option>
+            <el-option label="Vô hiệu lực" value="0"></el-option>
+          </el-select>
 
-        <!--        </div>-->
-      </div>
+          <!--        </div>-->
+        </div>
 
-      <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
+        <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
 
-        <el-button type="danger" round @click="dialogFormVisible = true"
-        ><i class="el-icon-plus"></i> Thêm nhân viên
-        </el-button>
-      </div>
+          <el-button type="danger" round @click="dialogFormVisible = true"
+          ><i class="el-icon-plus"></i> Thêm nhân viên
+          </el-button>
+        </div>
 
-      <el-dialog title="Thêm nhân viên" :visible.sync="dialogFormVisible">
-        <form id="formRegister">
-          <div class="row register-form">
-            <div class="col-md-4">
-              <input
-                  id="fileUser"
-                  type="file"
-                  name="cover"
-                  class="form-control"
-                  placeholder="Title"
-                  @change="previewFiles($event)"
-              />
-              <br/><br/>
-              <img
-                  alt=""
-                  :src="
+        <el-dialog title="Thêm nhân viên" :visible.sync="dialogFormVisible">
+          <form id="formRegister">
+            <div class="row register-form">
+              <div class="col-md-4">
+                <input
+                    id="fileUser"
+                    type="file"
+                    name="cover"
+                    class="form-control"
+                    placeholder="Title"
+                    @change="previewFiles($event)"
+                />
+                <br/><br/>
+                <img
+                    alt=""
+                    :src="
                   newImage ||
                   'https://www.namepros.com/attachments/empty-png.89209/'
                 "
-                  style="width: 270px"
-              />
-            </div>
-            <div class="col-md-8">
-              <table class="text-start">
-                <tr style="height: 70px">
-                  <td style="width: 100px">
-                    Họ và tên<span style="color: red">*</span>
-                  </td>
-                  <td style="width: 300px">
-                    <div class="form-group">
-                      <input
-                          v-model="user.fullName"
-                          type="text"
-                          class="form-control"
-                          name="fullName"
-                          placeholder="Họ và tên"
-                          value=""
-                          autocomplete="off"
-                      />
-                      <small v-if="errName !== null" style="color: red">
-                        {{ errName }}
+                    style="width: 270px"
+                />
+              </div>
+              <div class="col-md-8">
+                <table class="text-start">
+                  <tr style="height: 70px">
+                    <td style="width: 100px">
+                      Họ và tên<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 300px">
+                      <div class="form-group">
+                        <input
+                            v-model="user.fullName"
+                            type="text"
+                            class="form-control"
+                            name="fullName"
+                            placeholder="Họ và tên"
+                            value=""
+                            autocomplete="off"
+                        />
+                        <small v-if="errName !== null" style="color: red">
+                          {{ errName }}
+                        </small>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <tr style="height: 70px">
+                    <td style="width: 100px">
+                      Email<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 300px">
+                      <div class="form-group">
+                        <input
+                            v-model="user.username"
+                            type="email"
+                            class="form-control"
+                            placeholder="Email"
+                            value=""
+                            name="username"
+                            autocomplete="off"
+                        />
+                      </div>
+                      <small v-if="errEmail !== null" style="color: red">
+                        {{ errEmail }}
                       </small>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
 
-                <tr style="height: 70px">
-                  <td style="width: 100px">
-                    Email<span style="color: red">*</span>
-                  </td>
-                  <td style="width: 300px">
-                    <div class="form-group">
-                      <input
-                          v-model="user.username"
-                          type="email"
-                          class="form-control"
-                          placeholder="Email"
-                          value=""
-                          name="username"
-                          autocomplete="off"
-                      />
-                    </div>
-                    <small v-if="errEmail !== null" style="color: red">
-                      {{ errEmail }}
-                    </small>
-                  </td>
-                </tr>
+                  <tr style="height: 70px">
+                    <td style="width: 100px">
+                      Mã nhân viên<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 300px">
+                      <div class="form-group">
+                        <input
+                            v-model="user.code"
+                            class="form-control"
+                            placeholder="Mã nhân viên"
+                            name="code"
+                            autocomplete="off"
+                        />
+                        <small v-if="errId !== null" style="color: red">
+                          {{ errId }}
+                        </small>
+                      </div>
+                    </td>
+                  </tr>
 
-                <tr style="height: 70px">
-                  <td style="width: 100px">
-                    Mã nhân viên<span style="color: red">*</span>
-                  </td>
-                  <td style="width: 300px">
-                    <div class="form-group">
-                      <input
-                          v-model="user.code"
-                          class="form-control"
-                          placeholder="Mã nhân viên"
-                          name="code"
-                          autocomplete="off"
-                      />
-                      <small v-if="errId !== null" style="color: red">
-                        {{ errId }}
-                      </small>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr style="height: 70px">
-                  <td style="width: 150px">
-                    Giới tính<span style="color: red">*</span>
-                  </td>
-                  <td style="width: 300px">
-                    <el-radio
-                        v-model="user.gender"
-                        name="gender"
-                        value="Nam"
-                        label="Nam"
-                        border
-                    >&nbsp; Nam
-                    </el-radio
-                    >
-                    <el-radio
-                        v-model="user.gender"
-                        name="gender"
-                        value="Nữ"
-                        label="Nữ"
-                        border
-                    >&nbsp; Nữ
-                    </el-radio
-                    >
-                    <br/>
-                    <small v-if="errGender !== null" style="color: red">
-                      {{ errGender }}
-                    </small>
-                  </td>
-                </tr>
-
-                <tr style="height: 70px">
-                  <td style="width: 100px">
-                    Phòng ban<span style="color: red">*</span>
-                  </td>
-                  <td style="width: 300px">
-                    <div class="form-group">
-                      <el-select
-                          name="department"
-                          v-model="user.department"
-                          @change="getAll"
-                          placeholder="Chon phòng ban"
+                  <tr style="height: 70px">
+                    <td style="width: 150px">
+                      Giới tính<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 300px">
+                      <el-radio
+                          v-model="user.gender"
+                          name="gender"
+                          value="Nam"
+                          label="Nam"
+                          border
+                      >&nbsp; Nam
+                      </el-radio
                       >
-                        <el-option
-                            v-for="item in departments"
-                            :key="item.id"
-                            :label="item.name"
-                            :value="item.name"
-                        >
-                        </el-option>
-                      </el-select>
-                    </div>
-                    <small v-if="errDepartment !== null" style="color: red">
-                      {{ errDepartment }}
-                    </small>
-                  </td>
-                </tr>
+                      <el-radio
+                          v-model="user.gender"
+                          name="gender"
+                          value="Nữ"
+                          label="Nữ"
+                          border
+                      >&nbsp; Nữ
+                      </el-radio
+                      >
+                      <br/>
+                      <small v-if="errGender !== null" style="color: red">
+                        {{ errGender }}
+                      </small>
+                    </td>
+                  </tr>
 
-                <tr style="height: 40px">
-                  <td style="width: 100px">
-                    Chức vụ<span style="color: red">*</span>
-                  </td>
-                  <td style="width: 300px">
-                    <input
-                        type="radio"
-                        id="admin"
-                        value="admin"
-                        v-model="user.role"
-                        name="role"
-                    />
-                    <label for="admin">&nbsp; Nhân sự</label>
-                  </td>
-                </tr>
-                <tr style="height: 40px">
-                  <td style="width: 100px"></td>
-                  <td style="width: 300px">
-                    <input
-                        type="radio"
-                        id="manage"
-                        value="manage"
-                        v-model="user.role"
-                        name="role"
-                    />
-                    <label for="manage">&nbsp; Trưởng phòng</label>
-                  </td>
-                </tr>
-                <tr style="height: 40px">
-                  <td style="width: 100px"></td>
-                  <td style="width: 300px">
-                    <input
-                        type="radio"
-                        id="user"
-                        value="user"
-                        v-model="user.role"
-                        name="role"
-                    />
-                    <label for="user">&nbsp; Nhân viên</label>
-                  </td>
-                </tr>
-                <tr>
-                  <small v-if="errRole !== null" style="color: red">
-                    {{ errRole }}
-                  </small>
-                </tr>
-              </table>
-              <br/>
+                  <tr style="height: 70px">
+                    <td style="width: 100px">
+                      Phòng ban<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 300px">
+                      <div class="form-group">
+                        <el-select
+                            name="department"
+                            v-model="user.department"
+                            @change="getAll"
+                            placeholder="Chon phòng ban"
+                        >
+                          <el-option
+                              v-for="item in departments"
+                              :key="item.id"
+                              :label="item.name"
+                              :value="item.name"
+                          >
+                          </el-option>
+                        </el-select>
+                      </div>
+                      <small v-if="errDepartment !== null" style="color: red">
+                        {{ errDepartment }}
+                      </small>
+                    </td>
+                  </tr>
+
+                  <tr style="height: 40px">
+                    <td style="width: 100px">
+                      Chức vụ<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 300px">
+                      <input
+                          type="radio"
+                          id="admin"
+                          value="admin"
+                          v-model="user.role"
+                          name="role"
+                      />
+                      <label for="admin">&nbsp; Nhân sự</label>
+                    </td>
+                  </tr>
+                  <tr style="height: 40px">
+                    <td style="width: 100px"></td>
+                    <td style="width: 300px">
+                      <input
+                          type="radio"
+                          id="manage"
+                          value="manage"
+                          v-model="user.role"
+                          name="role"
+                      />
+                      <label for="manage">&nbsp; Trưởng phòng</label>
+                    </td>
+                  </tr>
+                  <tr style="height: 40px">
+                    <td style="width: 100px"></td>
+                    <td style="width: 300px">
+                      <input
+                          type="radio"
+                          id="user"
+                          value="user"
+                          v-model="user.role"
+                          name="role"
+                      />
+                      <label for="user">&nbsp; Nhân viên</label>
+                    </td>
+                  </tr>
+                  <tr>
+                    <small v-if="errRole !== null" style="color: red">
+                      {{ errRole }}
+                    </small>
+                  </tr>
+                </table>
+                <br/>
+              </div>
+              <small style="color: green">
+                {{ message }}
+              </small>
             </div>
-            <small style="color: green">
-              {{ message }}
-            </small>
-          </div>
-        </form>
-        <span slot="footer" class="dialog-footer">
+          </form>
+          <span slot="footer" class="dialog-footer">
           <el-button @click="removeValidate(false)">Hủy</el-button>
           <el-button type="primary" @click="sendForm">Thêm nhân viên</el-button>
         </span>
-      </el-dialog>
-    </div>
+        </el-dialog>
+      </div>
 
-    <br/>
-    <div>
-      <el-table
-          :data="users"
-          :header-cell-style="{
+      <br/>
+      <div>
+        <el-table
+            :data="users"
+            :header-cell-style="{
           background: '#D9D9D9',
           color: 'black',
           align: 'center',
         }"
-          style="width: 100%; display: inline-block; font-size: 16px"
-          :row-class-name="tableRowClassName"
-      >
+            style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
+            :row-class-name="tableRowClassName"
         >
-        <el-table-column
-            label="STT"
-            type="index"
-            align="center"
-            width="100px"
-        ></el-table-column>
-        <el-table-column
-            label="Mã NV"
-            prop="code"
-            align="center"
-            width="100px"
-        ></el-table-column>
-        <el-table-column
-            label="Ho và tên"
-            prop="fullName"
-            align="center"
-        ></el-table-column>
-        <el-table-column
-            label="Phòng ban"
-            prop="departments.name"
-            align="center"
-        >
-        </el-table-column>
-        <el-table-column
-            label="Email"
-            prop="username"
-            align="center"
-        ></el-table-column>
-        <el-table-column
-            label="Ảnh"
-            v-slot:="data"
-            align="center"
-            width="210px"
-        >
-          <img
-              v-if="data.row.cover != null"
-              v-bind:src="`http://localhost:8080/` + data.row.cover"
-              width="150px"
-              height="150px"
-          />
-          <img
-              v-if="data.row.cover == null"
-              src="../assets/user.jpg"
-              width="150px"
-          />
-        </el-table-column>
-        <el-table-column
-            v-slot:="data"
-            label="Chức vụ"
-            width="150px"
-            align="center"
-        >
-          <p
-              class="text-muted mb-0"
-              v-for="(role, index) in data.row.roles"
-              :key="index"
           >
-            <span v-if="role.id == 1">Nhân viên</span>
-            <span v-if="role.id == 2">Trưởng phòng</span>
-            <span v-if="role.id == 3">Phòng nhân sự</span>
-          </p>
-        </el-table-column>
-        <el-table-column
-            v-slot:="data"
-            label="Trạng thái"
-            width="150px"
-            align="center"
-        >
-          <button v-if="data.row.avalible == true" class="tt1">
-            Có hiệu lực
-          </button>
-          <button v-if="data.row.avalible != true" class="tt2">
-            Vô hiệu lực
-          </button>
-        </el-table-column>
-        <el-table-column
-            v-slot:="data"
-            label="Chỉnh sửa"
-            width="200px"
-            align="center"
-        >
-          <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
-
-          <router-link :to="`/user/${data.row.id}`">
-            <!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
-            <button style="margin-right: 10px" class="btn-action">
-              <i class="el-icon-edit-outline" style="width: 30px"></i>
+          <el-table-column
+              label="STT"
+              type="index"
+              align="center"
+              width="100px"
+          ></el-table-column>
+          <el-table-column
+              label="Mã NV"
+              prop="code"
+              align="center"
+              width="100px"
+          ></el-table-column>
+          <el-table-column
+              label="Ho và tên"
+              prop="fullName"
+              align="center"
+          ></el-table-column>
+          <el-table-column
+              label="Phòng ban"
+              prop="departments.name"
+              align="center"
+          >
+          </el-table-column>
+          <el-table-column
+              label="Email"
+              prop="username"
+              align="center"
+          ></el-table-column>
+          <el-table-column
+              label="Ảnh"
+              v-slot:="data"
+              align="center"
+              width="210px"
+          >
+            <img
+                v-if="data.row.cover != null"
+                v-bind:src="`http://localhost:8080/` + data.row.cover"
+                width="150px"
+                height="150px"
+            />
+            <img
+                v-if="data.row.cover == null"
+                src="../assets/user.jpg"
+                width="150px"
+            />
+          </el-table-column>
+          <el-table-column
+              v-slot:="data"
+              label="Chức vụ"
+              width="150px"
+              align="center"
+          >
+            <p
+                class="text-muted mb-0"
+                v-for="(role, index) in data.row.roles"
+                :key="index"
+            >
+              <span v-if="role.id == 1">Nhân viên</span>
+              <span v-if="role.id == 2">Trưởng phòng</span>
+              <span v-if="role.id == 3">Phòng nhân sự</span>
+            </p>
+          </el-table-column>
+          <el-table-column
+              v-slot:="data"
+              label="Trạng thái"
+              width="150px"
+              align="center"
+          >
+            <button v-if="data.row.avalible == true" class="tt1">
+              Có hiệu lực
             </button>
-          </router-link>
+            <button v-if="data.row.avalible != true" class="tt2">
+              Vô hiệu lực
+            </button>
+          </el-table-column>
+          <el-table-column
+              v-slot:="data"
+              label="Chỉnh sửa"
+              width="200px"
+              align="center"
+          >
+            <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
 
-          <!--          <div v-if="data.row.id == currentUser.user.id">-->
-          <button
-              v-if="data.row.avalible == 1 && data.row.id == currentUser.user.id"
-              class="btn-action"
-              @click="
+            <router-link :to="`/user/${data.row.id}`">
+              <!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
+              <button style="margin-right: 10px" class="btn-action">
+                <i class="el-icon-edit-outline" style="width: 30px"></i>
+              </button>
+            </router-link>
+
+            <!--          <div v-if="data.row.id == currentUser.user.id">-->
+            <button
+                v-if="data.row.avalible == 1 && data.row.id == currentUser.user.id"
+                class="btn-action"
+                @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
-              disabled
-          >
-            <i class="el-icon-unlock" style="width: 30px"></i>
-          </button>
-          <button
-              v-if="data.row.avalible == 0 && data.row.id == currentUser.user.id"
-              class="btn-action"
-              @click="
+                disabled
+            >
+              <i class="el-icon-unlock" style="width: 30px"></i>
+            </button>
+            <button
+                v-if="data.row.avalible == 0 && data.row.id == currentUser.user.id"
+                class="btn-action"
+                @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
-              disabled
-          >
-            <i class="el-icon-lock" style="width: 30px"></i>
-          </button>
-          <!--          </div>-->
-          <!--          <div v-if="data.row.id != currentUser.user.id">-->
-          <button
-              v-if="data.row.avalible == 1 && data.row.id != currentUser.user.id"
-              class="btn-action"
-              @click="
+                disabled
+            >
+              <i class="el-icon-lock" style="width: 30px"></i>
+            </button>
+            <!--          </div>-->
+            <!--          <div v-if="data.row.id != currentUser.user.id">-->
+            <button
+                v-if="data.row.avalible == 1 && data.row.id != currentUser.user.id"
+                class="btn-action"
+                @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
-          >
-            <i class="el-icon-unlock" style="width: 30px"></i>
-          </button>
-          <button
-              v-if="data.row.avalible == 0 && data.row.id != currentUser.user.id"
-              class="btn-action"
-              @click="
+            >
+              <i class="el-icon-unlock" style="width: 30px"></i>
+            </button>
+            <button
+                v-if="data.row.avalible == 0 && data.row.id != currentUser.user.id"
+                class="btn-action"
+                @click="
               changeStatus(data.row.id, data.row.fullName, data.row.avalible)
             "
-          >
-            <i class="el-icon-lock" style="width: 30px"></i>
-          </button>
-          <!--          </div>-->
-        </el-table-column>
-      </el-table>
+            >
+              <i class="el-icon-lock" style="width: 30px"></i>
+            </button>
+            <!--          </div>-->
+          </el-table-column>
+        </el-table>
+      </div>
+      <el-pagination
+          class="text-end"
+          background
+          layout="prev, pager, next"
+          :total="totalItems"
+          :page-size="pageSize"
+          @current-change="handlePageChange"
+      >
+      </el-pagination>
     </div>
-    <el-pagination
-        class="text-end"
-        background
-        layout="prev, pager, next"
-        :total="totalItems"
-        :page-size="pageSize"
-        @current-change="handlePageChange"
-    >
-    </el-pagination>
   </div>
+
 </template>
 
 <script>

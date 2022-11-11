@@ -1,49 +1,50 @@
 <template>
-  <section class="section about-section gray-bg" id="about" style="margin-top: 150px;" >
-    <div style="border: 2px solid black;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);" class="container">
-      <div class="row align-items-center flex-row-reverse">
-        <p
-            style="
+  <div style="padding-bottom: 500px">
+    <section class="section about-section gray-bg" id="about" style="margin-top: 150px;" >
+      <div style="border: 2px solid black;box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);border-radius: 10px; background-color: white" class="container">
+        <div class="row align-items-center flex-row-reverse">
+          <p
+              style="
             text-align: center;
             background-color: #d9d9d9;
             padding: 20px;
             font-weight: bold;
 
           "
-        >
-          THÔNG TIN NHÂN VIÊN
-        </p>
-        <div class="col-lg-6">
-          <div class="about-text go-to">
-            <div class="row about-list">
-              <div
-                  style="border-bottom: 1px solid black; width: 500px"
-                  class="media"
-              >
-                <span style="font-size: 20px"> Họ và tên nhân viên: </span>
-                <span style="float: right; margin-right: 6px; font-size: 20px">
+          >
+            THÔNG TIN NHÂN VIÊN
+          </p>
+          <div class="col-lg-6">
+            <div class="about-text go-to">
+              <div class="row about-list">
+                <div
+                    style="border-bottom: 1px solid black; width: 500px"
+                    class="media"
+                >
+                  <span style="font-size: 20px"> Họ và tên nhân viên: </span>
+                  <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.user.fullName }}
                 </span>
-              </div>
-              <div
-                  style="border-bottom: 1px solid black; width: 500px"
-                  class="media"
-              >
-                <span style="font-size: 20px"> Giới tính: </span>
-                <span style="float: right; margin-right: 6px; font-size: 20px">
+                </div>
+                <div
+                    style="border-bottom: 1px solid black; width: 500px"
+                    class="media"
+                >
+                  <span style="font-size: 20px"> Giới tính: </span>
+                  <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.user.gender }}
                 </span>
-              </div>
-              <div
-                  style="border-bottom: 1px solid black; width: 500px"
-                  class="media"
-              >
-                <span style="font-size: 20px"> Chức vụ: </span>
-                <span
-                    class="text-muted mb-0"
-                    v-for="(role, index) in currentUser.roles"
-                    :key="index"
+                </div>
+                <div
+                    style="border-bottom: 1px solid black; width: 500px"
+                    class="media"
                 >
+                  <span style="font-size: 20px"> Chức vụ: </span>
+                  <span
+                      class="text-muted mb-0"
+                      v-for="(role, index) in currentUser.roles"
+                      :key="index"
+                  >
                   <span
                       style="float: right; margin-right: 6px; font-size: 20px"
                       v-if="role == 'ROLE_USER'"
@@ -60,55 +61,57 @@
                   >Phòng nhân sự</span
                   >
                 </span>
-              </div>
-              <div
-                  style="border-bottom: 1px solid black; width: 500px"
-                  class="media"
-              >
-                <span style="font-size: 20px"> Email: </span>
-                <span style="float: right; margin-right: 6px; font-size: 20px">
+                </div>
+                <div
+                    style="border-bottom: 1px solid black; width: 500px"
+                    class="media"
+                >
+                  <span style="font-size: 20px"> Email: </span>
+                  <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.user.username }}
                 </span>
-              </div>
-              <div
-                  style="border-bottom: 1px solid black; width: 500px"
-                  class="media"
-              >
-                <span style="font-size: 20px"> Phòng ban: </span>
-                <span style="float: right; margin-right: 6px; font-size: 20px">
+                </div>
+                <div
+                    style="border-bottom: 1px solid black; width: 500px"
+                    class="media"
+                >
+                  <span style="font-size: 20px"> Phòng ban: </span>
+                  <span style="float: right; margin-right: 6px; font-size: 20px">
 {{ currentUser.user.departments.name }}
                 </span>
-              </div>
-              <div
-                  style="border-bottom: 1px solid black; width: 500px; margin-bottom: 50px"
-                  class="media"
-              >
-                <span style="font-size: 20px"> Mã nhân viên: </span>
-                <span style="float: right; margin-right: 6px; font-size: 20px">
+                </div>
+                <div
+                    style="border-bottom: 1px solid black; width: 500px; margin-bottom: 50px"
+                    class="media"
+                >
+                  <span style="font-size: 20px"> Mã nhân viên: </span>
+                  <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.user.code }}
                 </span>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-lg-6">
-          <div style="margin-left: 100px" class="about-avatar">
-            <!--            currentUser.user.cover-->
-            <img v-if="currentUser.user.cover!=null"
-                 v-bind:src="
+          <div class="col-lg-6">
+            <div style="margin-left: 100px" class="about-avatar">
+              <!--            currentUser.user.cover-->
+              <img v-if="currentUser.user.cover!=null"
+                   v-bind:src="
               `http://localhost:8080/` + currentUser.user.cover
             "
-                 width="250px"
-            />
-            <img v-if="currentUser.user.cover==null"
-                 src="../assets/user.jpg"
-                 width="250px"
-            />
+                   width="250px"
+              />
+              <img v-if="currentUser.user.cover==null"
+                   src="../assets/user.jpg"
+                   width="250px"
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  </div>
+
 </template>
 <script>
 export default {

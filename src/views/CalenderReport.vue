@@ -1,9 +1,9 @@
 <template>
 
-  <div>
+  <div style="padding-bottom: 310px">
 
-    <div class="d-flex flex-row justify-content-center ">
-        <el-calendar  style="width: 70% ; margin-top: 50px" v-model="value">
+    <div class="d-flex flex-row justify-content-center">
+        <el-calendar  style="width: 70% ; margin-top: 50px; border-radius: 10px" v-model="value" >
           <template  slot="dateCell" slot-scope="{date,data,Sign=getSign(data.day)}">
             <div :class="{
               weekend:getSign(data.day).weekend,

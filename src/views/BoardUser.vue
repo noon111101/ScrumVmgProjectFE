@@ -1,6 +1,5 @@
 <template>
-
-
+  <div style="padding-bottom: 38px">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
 
       <!--    <h5 style="font-weight: 600;">-->
@@ -30,16 +29,21 @@
         <el-table
             :data="logs"
             height="900px"
-            :default-sort = "{prop: 'date_log', order: 'descending'}"
+            :default-sort="{prop: 'date_log', order: 'descending'}"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-            style="width: 100%; display: inline-block"
+            style="width: 100%; display: inline-block; border-radius: 10px"
+            :editable="false"
             :row-class-name="tableRowClassName">
+          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
+            <h3>Không có dữ liệu</h3>
+          </div>
+          <div slot="append" v-if="logs.length!='0'">
           <el-table-column
               type="index"
               label="STT"
               width="80px"
               align="center"
-              >
+          >
           </el-table-column>
 
           <el-table-column
@@ -89,18 +93,21 @@
               width="200px"
               align="center">
           </el-table-column>
+          </div>
         </el-table>
       </div>
 
       <el-pagination class="text-end"
-          background
-          layout="prev, pager, next"
-          :total="totalItems"
-          :page-size="pageSize"
-          @current-change="handlePageChange">
+                     background
+                     layout="prev, pager, next"
+                     :total="totalItems"
+                     :page-size="pageSize"
+                     @current-change="handlePageChange">
       </el-pagination>
 
     </div>
+  </div>
+
 </template>
 
 <script>
@@ -200,6 +207,8 @@ export default {
 </script>
 
 <style>
+
+
 .el-table .warning-row {
   background: #EDEDED;
 }
