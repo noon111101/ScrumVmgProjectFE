@@ -1,5 +1,5 @@
 <template style="font-size: 16px">
-  <div style="padding-bottom: 4px">
+  <div style="padding-bottom: 4px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
       <div style="" class="d-flex">
         <div className="block" class="text-start col-10">
@@ -36,10 +36,10 @@
                   style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
                   :row-class-name="tableRowClassName"
         >
-          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
-            <h3>Không có dữ liệu</h3>
-          </div>
-          <div slot="append" v-if="logs.length!='0'">
+<!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">-->
+<!--            <h3>Không có dữ liệu</h3>-->
+<!--          </div>-->
+<!--          <div slot="append" v-if="logs.length!='0'">-->
             <el-table-column label="ID" type="index" align="center"></el-table-column>
             <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"></el-table-column>
             <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
@@ -55,7 +55,7 @@
             <!--          </router-link>-->
 
             <!--        </el-table-column>-->
-          </div>
+<!--          </div>-->
         </el-table>
 
     </div>

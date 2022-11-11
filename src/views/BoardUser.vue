@@ -1,5 +1,5 @@
 <template>
-  <div style="padding-bottom: 38px">
+  <div style="padding-bottom: 38px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
 
       <!--    <h5 style="font-weight: 600;">-->
@@ -34,14 +34,14 @@
             style="width: 100%; display: inline-block; border-radius: 10px"
             :editable="false"
             :row-class-name="tableRowClassName">
-          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
-            <h3>Không có dữ liệu</h3>
-          </div>
-          <div slot="append" v-if="logs.length!='0'">
+<!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">-->
+<!--            <h3>Không có dữ liệu</h3>-->
+<!--          </div>-->
+<!--          <div slot="append" v-if="logs.length!='0'">-->
           <el-table-column
               type="index"
               label="STT"
-              width="80px"
+              width="70px"
               align="center"
           >
           </el-table-column>
@@ -93,7 +93,7 @@
               width="200px"
               align="center">
           </el-table-column>
-          </div>
+<!--          </div>-->
         </el-table>
       </div>
 

@@ -187,7 +187,6 @@
             <td colspan="35" class="text-center">No data</td>
           </tr>
           </tbody>
-
         </table>
       </div>
 <!--   MODAL Chỉnh sửa chấm công-->

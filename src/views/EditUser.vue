@@ -88,7 +88,7 @@
                           <div class="form-group">
                             <input
                                 v-model="user.code"
-                                type="number"
+                                type=""
                                 class="form-control"
                                 placeholder="Employee ID *"
                                 v-validate="{ required: true, min: 2 }"
@@ -311,11 +311,11 @@ export default {
       var re = /^(\\-)?[0-9]+(.[0-9]+)?$/;
       return re.test(code);
     },
-
-    // validName: function (name) {
-    //   var re = /^[a-zA-Z]{4,}(?: [a-zA-Z]+){0,2}$/;
-    //   return re.test(name);
-    // },
+    validName: function (name) {
+      var re =
+          /^[\sa-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂẾưăạảấầẩẫậắằẳẵặẹẻẽềềểếỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ\\s\\W|_]+$/;
+      return re.test(name);
+    },
 
     previewFiles(event) {
       const file = event.target.files[0];
@@ -330,24 +330,39 @@ export default {
       let response = await UserService.getAllUser();
       this.users = response.data;
 
+      if (!this.user.fullName) {
+        this.errName = "Vui lòng nhập ho và tên";
+        this.checkName = false;
+      } else if (!this.validName(this.user.fullName)) {
+        this.errName = "Vui lòng nhập đúng định dạng ho và tên";
+        this.checkName = false;
+      } else {
+        this.errName = "";
+        this.checkName = true;
+      }
+
       if (!this.user.code) {
         this.errId = "Vui lòng nhập mã nhân viên";
         this.checkId = false;
       } else if (!this.validCode(this.user.code)) {
         this.errId = "Vui lòng nhập đúng định dạng code";
         this.checkId = false;
-      } else if (
-          this.validCode(this.user.code) &&
-          this.user.code &&
-          this.checkId === true
-      ) {
+      } else {
         this.errId = "";
         this.checkId = true;
       }
-      if (!this.user.fullName) {
-        this.errName = "Hãy nhập Họ và tên";
-        this.checkName = false;
+
+      if (!this.user.username) {
+        this.errEmail = "Vui lòng nhập email nhân viên";
+        this.checkEmail = false;
+      } else if (!this.validEmail(this.user.username)) {
+        this.errEmail = "Vui lòng nhập đúng định dạng email";
+        this.checkEmail = false;
+      } else {
+        this.errEmail = "";
+        this.checkEmail = true;
       }
+
       if (
           this.checkId === true &&
           this.checkEmail === true &&
