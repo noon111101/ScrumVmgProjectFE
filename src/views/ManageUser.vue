@@ -38,9 +38,9 @@
           <!--        </div>-->
         </div>
 
-        <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
-
-          <el-button type="danger" round @click="dialogFormVisible = true"
+      <div style="float: right; margin-bottom: 20px" class="col-3 text-end">
+        <import-excel header="Thêm nhân viên" format=1 @getData="getAll"/>
+        <el-button type="danger" style="margin-left: 20px" round @click="dialogFormVisible = true"
           ><i class="el-icon-plus"></i> Thêm nhân viên
           </el-button>
         </div>
@@ -417,9 +417,11 @@
 import DepartmentService from "@/services/department.service";
 import UserService from "@/services/user.service";
 import AuthService from "@/services/auth.service";
+import ImportExcel from "@/views/ImportExcel";
+
 export default {
   name: "HomeVue",
-  components:{},
+  components: {ImportExcel},
   data() {
     return {
       user_code: "",
@@ -573,9 +575,9 @@ export default {
         this.errId = "Vui lòng nhập đúng định dạng code";
         this.checkId = false;
       } else if (
-          this.validCode(this.user.code) &&
-          this.user.code &&
-          this.checkId === true
+        this.validCode(this.user.code) &&
+        this.user.code &&
+        this.checkId === true
       ) {
         this.errId = "";
         this.checkId = true;

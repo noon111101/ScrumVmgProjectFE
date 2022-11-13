@@ -41,6 +41,9 @@ class LogdtailService{
     updateLog(logEdit){
         return axios.post("http://localhost:8080/api/log/edit",logEdit);
     }
+    save(data) {
+        return axios.post("http://localhost:8080/api/log/create",data);
+    }
 
 }
 

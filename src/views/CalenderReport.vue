@@ -79,6 +79,10 @@
               </el-button>
               <p>Ghi chú</p>
             </div>
+            <div class="d-flex flex-row">
+              <el-button round class="h-25 me-3" ></el-button>
+              <p><span style="font-weight: bold"></span>  Không đi làm</p>
+            </div>
           </div>
         </div>
       </div>
@@ -154,7 +158,8 @@ export default {
      };
      for (let log of this.logs) {
        if(log.date_log==date){
-         sign.name= log.signs.name
+         if(log.signs!=null)
+          sign.name= log.signs.name
          sign.timeIn= log.timeIn
          sign.timeOut= log.timeOut
          sign.reason= log.reason

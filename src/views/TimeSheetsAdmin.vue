@@ -32,11 +32,11 @@
           <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;
           <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
 
-        </div>
-        <!--      <div class="">-->
-        <!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
-        <!--      </div>-->
       </div>
+      <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
+        <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll"/>
+      </div>
+    </div>
 
 
       <br/>
@@ -85,10 +85,11 @@
 import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
 import DepartmentService from "@/services/department.service";
-// import { router } from "@/router";
+import ImportExcel from "@/views/ImportExcel";
 
 export default {
   name: "HomeVue",
+  components: {ImportExcel},
   data() {
     return {
       hoverRowIndex: null,
@@ -163,14 +164,6 @@ export default {
     handlePageChange(value) {
       this.page = value - 1;
       this.getAll();
-      // if (this.search !== null) {
-      //   this.searchBlogs();
-      // }
-      // if (this.category !== null) {
-      //   this.getBlogs();
-      // }else {
-      //   this.getBlogs();
-      // }
     },
     searchLogs() {
       const params = {
@@ -204,15 +197,6 @@ export default {
         return 'select-row'
       }
     },
-//     cellMouseEnter(row){
-//       this.hoverRowIndex = row.rowIndex
-//     },
-//     cellMouseLeave(){
-//       this.hoverRowIndex = null
-//     }
-// :cell-class-name="cellClassName"
-// @cell-mouse-enter="cellMouseEnter"
-// @cell-mouse-leave="cellMouseLeave"
   },
 };
 </script>
@@ -224,17 +208,8 @@ export default {
 
 .el-table--enable-row-hover .el-table__body tr:hover>td{
   background-color: #c9f5eb !important;
-  /*color: white;*/
+
 }
-
-/*.el-table__body tr:hover>td{*/
-/*  background-color: #75c4c0 !important;*/
-/*}*/
-
-/*.el-table__body tr.current-row>td{*/
-/*  background-color: #75c4c0 !important;*/
-/*}*/
-
  .el-date-picker:focus {
    cursor: default;
  }
