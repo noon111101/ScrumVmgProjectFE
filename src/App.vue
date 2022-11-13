@@ -42,9 +42,16 @@ export default {
 </script>
 <style scoped>
 #app {
-  margin-top: 80px;
-  font-size: 18px;
-  font-family:'Montserrat', sans-serif;
+  /*min-height: 100%;*/
+  /*width: 100%;*/
+  /*padding-top: 80px;*/
+  /*!*padding-bottom: 80px;*!*/
+  /*background-image: url("@/assets/background3.jpg") ;*/
+  /*background-position: center; !* Center the image *!*/
+  /*background-repeat: no-repeat; !* Do not repeat the image *!*/
+  /*background-size: cover; !**/
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /*text-align: center;*/

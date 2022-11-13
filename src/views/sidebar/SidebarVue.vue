@@ -255,6 +255,14 @@ export default {
 /*.sel:hover {*/
 /*  color: #e24146;*/
 /*}*/
+.nav-item a:hover{
+  color: #ed9696;
+}
+
+.nav-item a:focus{
+  color: #75c4c0;
+}
+
 .navbar {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);

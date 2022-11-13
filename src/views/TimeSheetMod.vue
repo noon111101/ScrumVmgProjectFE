@@ -1,65 +1,76 @@
 <template style="font-size: 16px">
-  <div className="container" style="text-align: center; width: 90%;margin: auto">
-    <div style="" class="d-flex">
-      <div className="block" class="text-start col-10">
-        <h5 style="font-weight: 600;">
-          Phòng ban: {{departmentName}}&emsp;
-        </h5>
-        <span className="demonstration">Ngày</span> &ensp;
-        <el-date-picker style="width: 20%;font-size: 16px;margin-right: 180px"
-                        v-model="dateRange"
-                        type="daterange"
-                        format="yyyy-MM-dd"
-                        value-format="yyyy-MM-dd"
-                        range-separator=""
-                        start-placeholder="Chọn thời gian"
-                        @change="getAll">
-        </el-date-picker>
-        <span style="">Tìm kiếm</span> &ensp;
-        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
+  <div style="padding-bottom: 4px">
+    <div className="container" style="text-align: center; width: 90%;margin: auto">
+      <div style="" class="d-flex">
+        <div className="block" class="text-start col-10">
+          <h5 style="font-weight: 600;">
+            Phòng ban: {{ departmentName }}&emsp;
+          </h5>
+          <span className="demonstration">Ngày</span> &ensp;
+          <el-date-picker style="width: 20%;font-size: 16px;margin-right: 180px"
+                          v-model="dateRange"
+                          type="daterange"
+                          format="yyyy-MM-dd"
+                          value-format="yyyy-MM-dd"
+                          range-separator=""
+                          start-placeholder="Chọn thời gian"
+                          :editable="false"
+                          @change="getAll">
+          </el-date-picker>
+          <span style="">Tìm kiếm</span> &ensp;
+          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
+                    style="width: 20%;"/>
+        </div>
+
+        <!--      <div class="text-end col-2" >-->
+        <!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
+        <!--      </div>-->
       </div>
 
-<!--      <div class="text-end col-2" >-->
-<!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
-<!--      </div>-->
-    </div>
+      <br/>
+      <div>
+        <el-table class="text-center " :data="logs"
+                  height="900px"
+                  :default-sort="{prop: 'date_log', order: 'descending'}"
+                  :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
+                  style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
+                  :row-class-name="tableRowClassName"
+        >
+          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
+            <h3>Không có dữ liệu</h3>
+          </div>
+          <div slot="append" v-if="logs.length!='0'">
+            <el-table-column label="ID" type="index" align="center"></el-table-column>
+            <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"></el-table-column>
+            <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
+            <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
+            <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
+            <el-table-column label="Ngày" prop="date_log" sortable width="150px" align="center"></el-table-column>
+            <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"></el-table-column>
+            <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"></el-table-column>
+            <!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->
+            <!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
+            <!--            <el-button type="info">Xem chi tiết</el-button>-->
+            <!--&lt;!&ndash;            <el-button type="primary" icon="el-icon-edit" circle></el-button>&ndash;&gt;-->
+            <!--          </router-link>-->
 
-    <br />
-    <div>
-      <el-table  class="text-center " :data="logs"
-                 height="900px"
-                 :default-sort = "{prop: 'date_log', order: 'descending'}"
-                 :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-                 style="width: 100%; display: inline-block; font-size: 16px"
-                 :row-class-name="tableRowClassName"
-      >
-        <el-table-column label="ID" type="index"  align="center"></el-table-column>
-        <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"> </el-table-column>
-        <el-table-column label="Họ và tên" prop="user.fullName" align="center"> </el-table-column>
-        <el-table-column label="Phòng ban" prop="user.departments.name" align="center"> </el-table-column>
-        <el-table-column label="Email" prop="user.username" align="center"> </el-table-column>
-        <el-table-column label="Ngày" prop="date_log" sortable width="150px" align="center"> </el-table-column>
-        <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"> </el-table-column>
-        <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"> </el-table-column>
-<!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->
-<!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
-<!--            <el-button type="info">Xem chi tiết</el-button>-->
-<!--&lt;!&ndash;            <el-button type="primary" icon="el-icon-edit" circle></el-button>&ndash;&gt;-->
-<!--          </router-link>-->
+            <!--        </el-table-column>-->
+          </div>
+        </el-table>
 
-<!--        </el-table-column>-->
-      </el-table>
     </div>
 
     <el-pagination class="text-end"
-        background
-        layout="prev, pager, next"
-        :total="totalItems"
-        :page-size="pageSize"
-        @current-change="handlePageChange"
+                   background
+                   layout="prev, pager, next"
+                   :total="totalItems"
+                   :page-size="pageSize"
+                   @current-change="handlePageChange"
     >
     </el-pagination>
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -106,19 +117,19 @@ export default {
       this.user_code = this.currentUser.user.code;
       // this.user_code = this.currentUser.user.user_code;
       console.log("user code" + this.user_code);
-      },
+    },
 
     getDepartment() {
       this.departmentId = this.currentUser.user.departments.id
       this.departmentName = this.currentUser.user.departments.name
     },
     getAll() {
-      this.from = this.dateRange !== null ? this.dateRange.at(0): null;
-      this.to = this.dateRange !== null ? this.dateRange.at(1): null;
-      const params ={
+      this.from = this.dateRange !== null ? this.dateRange.at(0) : null;
+      this.to = this.dateRange !== null ? this.dateRange.at(1) : null;
+      const params = {
         "page": this.page,
         "size": this.size,
-        "id" : this.departmentId,
+        "id": this.departmentId,
         'from': this.from,
         'to': this.to,
         'search': this.search
@@ -155,9 +166,10 @@ export default {
 </script>
 
 <style>
-*{
+* {
   font-size: 16px;
 }
+
 .el-table .warning-row {
   background: #EDEDED;
 }
