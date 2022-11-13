@@ -31,9 +31,9 @@
         <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban" style="width: 20%;"/>
 
       </div>
-<!--      <div class="">-->
-<!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
-<!--      </div>-->
+      <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
+        <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll"/>
+      </div>
     </div>
 
 
@@ -79,10 +79,12 @@
 import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
 import DepartmentService from "@/services/department.service";
+import ImportExcel from "@/views/ImportExcel";
 // import { router } from "@/router";
 
 export default {
   name: "HomeVue",
+  components: {ImportExcel},
   data() {
     return {
       user_code: "",
@@ -156,14 +158,6 @@ export default {
     handlePageChange(value) {
       this.page = value - 1;
       this.getAll();
-      // if (this.search !== null) {
-      //   this.searchBlogs();
-      // }
-      // if (this.category !== null) {
-      //   this.getBlogs();
-      // }else {
-      //   this.getBlogs();
-      // }
     },
     searchLogs() {
       const params = {

@@ -40,6 +40,9 @@ class UserService {
   getUserById(id) {
     return httpCommon.get(`/user-management/users/${id}`);
   }
+  save(data) {
+    return axios.post("http://localhost:8080/api/user-management/create",data);
+  }
   forgotPassword(params){
     return axios.post("http://localhost:8080/api/mail/reset_password",{}, {params})
   }

@@ -1,7 +1,7 @@
 <template style="font-size: 16px">
   <div className="container" style="width: 90%; margin: auto">
     <div class="d-flex">
-      <div className="block" class="text-start col-10">
+      <div className="block" class="text-start col-9">
         <span>Phòng ban</span> &ensp;
         <el-select
           v-model="departmentId"
@@ -18,7 +18,7 @@
           </el-option>
         </el-select>
         <!--        <div style="width: 200px" class="">-->
-        <span style="margin-left: 100px">Tìm kiếm</span> &ensp;
+        <span style="margin-left: 70px">Tìm kiếm</span> &ensp;
         <el-input
           v-model="search"
           @input="getAll"
@@ -27,7 +27,7 @@
           style="width: 20%"
         />
 
-        <span style="margin-left: 100px">Trạng thái</span> &ensp;
+        <span style="margin-left: 70px">Trạng thái</span> &ensp;
         <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
           <el-option value="" label="Tất cả"></el-option>
           <el-option label="Có hiệu lực" value="1"></el-option>
@@ -37,9 +37,9 @@
         <!--        </div>-->
       </div>
 
-      <div style="float: right; margin-bottom: 20px" class="col-2 text-end">
-
-        <el-button type="danger" round @click="dialogFormVisible = true"
+      <div style="float: right; margin-bottom: 20px" class="col-3 text-end">
+        <import-excel header="Thêm nhân viên" format=1 @getData="getAll"/>
+        <el-button type="danger" style="margin-left: 20px" round @click="dialogFormVisible = true"
           ><i class="el-icon-plus"></i> Thêm nhân viên
         </el-button>
       </div>
@@ -412,9 +412,11 @@
 import DepartmentService from "@/services/department.service";
 import UserService from "@/services/user.service";
 import AuthService from "@/services/auth.service";
+import ImportExcel from "@/views/ImportExcel";
 
 export default {
   name: "HomeVue",
+  components: {ImportExcel},
   data() {
     return {
       user_code: "",
