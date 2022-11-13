@@ -85,10 +85,11 @@
 import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
 import DepartmentService from "@/services/department.service";
-// import { router } from "@/router";
+import ImportExcel from "@/views/ImportExcel";
 
 export default {
   name: "HomeVue",
+  components: {ImportExcel},
   data() {
     return {
       hoverRowIndex: null,
