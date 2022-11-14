@@ -372,8 +372,7 @@ export default {
               icon:'error',
               showCloseButton: true,
             }
-        )          })
-
+        )})
     }
    ,
     //CaculateDayWork

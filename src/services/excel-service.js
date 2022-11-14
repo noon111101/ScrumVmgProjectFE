@@ -4,7 +4,6 @@ import axios from 'axios';
 
 class ExcelService{
     exportExcel(params){
-        // return httpCommon.get("/excel/export");
         axios.get(`http://localhost:8080/api/excel/export`, {params,
             responseType: 'blob',
         }).then((response) => {
@@ -19,10 +18,16 @@ class ExcelService{
             link.click()
         })
     }
-
+    importUser(data){
+        let formData = new FormData(data);
+        console.log(formData)
+        return axios.post("http://localhost:8080/api/excel/import/user", formData)
+    }
+    importLog(data){
+        let formData = new FormData(data);
+        console.log(formData)
+        return axios.post("http://localhost:8080/api/excel/import", formData)
+    }
 }
-
-
-
 
 export default new ExcelService()
