@@ -47,7 +47,8 @@
             :default-sort = "{prop: 'date_log', order: 'descending'}"
             :data="logs"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-            style="width: 100%; display: inline-block; border-radius: 10px"
+            style="width: 100%; display: inline-block; border-radius: 10px;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+"
 
             :row-class-name="tableRowClassName">
 <!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto" >-->
