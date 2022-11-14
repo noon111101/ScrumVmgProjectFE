@@ -98,9 +98,12 @@
       </div>
     </div>
 <!--   BẢNG CHẤM CÔNG-->
-    <div class="table-responsive-xxl" style="margin-top:50px; background-color: white">
+    <div class="table-responsive-xxl" style="margin-top:50px; background-color: white; width: 100%; display: inline-block;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    ">
 
-      <table v-if="showAdminBoard" class="table table-bordered align-middle  " >
+      <table v-if="showAdminBoard"  class="table table-bordered align-middle  "
+
+      >
 
         <thead style="background-color: #C2C2C2">
         <tr>

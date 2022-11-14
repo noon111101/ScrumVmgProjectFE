@@ -2,7 +2,7 @@
   <div style="padding-bottom: 20px">
     <div className="container" style="width: 90%; margin: auto">
       <div class="d-flex">
-        <div className="block" class="text-start col-10">
+        <div className="block" class="text-start col-9">
           <span>Phòng ban</span> &ensp;
           <el-select
               v-model="departmentId"
@@ -38,9 +38,9 @@
           <!--        </div>-->
         </div>
 
-      <div style="float: right; margin-bottom: 20px" class="col-3 text-end">
+      <div style="float: right; margin-bottom: 20px" class="col-4 text-end">
         <import-excel header="Thêm nhân viên" format=1 @getData="getAll"/>
-        <el-button type="danger" style="margin-left: 20px" round @click="dialogFormVisible = true"
+        <el-button type="danger" style="margin-left: 20px;margin-right: 20px" round @click="dialogFormVisible = true"
           ><i class="el-icon-plus"></i> Thêm nhân viên
           </el-button>
         </div>
@@ -260,7 +260,8 @@
           color: 'black',
           align: 'center',
         }"
-            style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
+            style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+"
             :row-class-name="tableRowClassName"
         >
           >
@@ -853,6 +854,7 @@ export default {
   padding: 5px 5px;
   background-color: #f4e4d4;
   border-radius: 5px;
+
 }
 
 /* The switch - the box around the slider */
