@@ -47,13 +47,14 @@
             :default-sort = "{prop: 'date_log', order: 'descending'}"
             :data="logs"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-            style="width: 100%; display: inline-block; border-radius: 10px"
+            style="width: 100%; display: inline-block; border-radius: 10px;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+"
 
             :row-class-name="tableRowClassName">
-          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto" >
-            <h3>Không có dữ liệu</h3>
-          </div>
-          <div slot="append" v-if="logs.length!='0'">
+<!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto" >-->
+<!--            <h3>Không có dữ liệu</h3>-->
+<!--          </div>-->
+<!--          <div slot="append" v-if="logs.length!='0'">-->
             <el-table-column label="STT" type="index" align="center" width="100px"></el-table-column>
             <el-table-column label="Mã nhân viên" prop="user.code" align="center" width="150px">
               <!--          <span>{{log.row.user.code}}</span>-->
@@ -64,7 +65,7 @@
             <el-table-column label="Ngày" prop="date_log" align="center" sortable width="150px"></el-table-column>
             <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
             <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>
-          </div>
+<!--          </div>-->
 
         </el-table>
         <el-pagination class="text-end"

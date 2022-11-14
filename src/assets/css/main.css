@@ -2,11 +2,11 @@ body{
     min-height: 70rem;
     width: 100%;
     padding-top: 80px;
-    /*padding-bottom: 80px;*/
-    background-image: url("@/assets/background3.jpg") ;
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover;
+    /*!*padding-bottom: 80px;*!*/
+    /*background-image: url("@/assets/background3.jpg") ;*/
+    /*background-position: center; !* Center the image *!*/
+    /*background-repeat: no-repeat; !* Do not repeat the image *!*/
+    /*background-size: cover;*/
 }
 
 .el-button-group{
@@ -32,6 +32,7 @@ body{
     padding: 15px;
     box-sizing: content-box;
     border-radius: 10px;
+
 }
 .el-calendar-day{
     padding: 0 !important;
