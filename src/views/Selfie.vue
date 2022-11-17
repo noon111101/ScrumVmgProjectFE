@@ -1,5 +1,6 @@
 <template>
-  <div class="web-camera-container">
+
+  <div class="web-camera-container text-center">
     <div class="camera-button">
       <button type="button" class="button is-rounded" @click="toggleCamera">
         <span v-if="!isCameraOpen">open camera</span>
