@@ -475,7 +475,7 @@ export default {
               //get All LogDetail
               let dates=[]
               for(let user of users.logDetail){
-                let date = Number(user.date_log.split("-")[2])
+                let date = Number(user.dateLog.split("-")[2])
                 dates.push(date)
                 if(date==i){
                   if(user.signs==null)
@@ -483,7 +483,7 @@ export default {
                         {
                           sign: '_',
                           status:false,
-                          date:user.date_log,
+                          date:user.dateLog,
                           reason:user.reason
                         }
                     )
@@ -492,7 +492,7 @@ export default {
                       {
                         sign: user.signs.name,
                         status:false,
-                        date:user.date_log,
+                        date:user.dateLog,
                         reason:user.reason
                       }
                   )

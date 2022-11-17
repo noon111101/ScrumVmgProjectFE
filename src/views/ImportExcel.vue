@@ -18,7 +18,9 @@
           v-if="format==1"
             :hidden="check"
             :data="tableData"
-            style="width: 100%;font-size: 16px">
+          height="500"
+
+          style="width: 100%;font-size: 16px">
       <el-table-column
           prop="fullName"
           label="Họ và tên"
@@ -53,6 +55,7 @@
           v-if="format==2"
             :hidden="check"
             :data="tableData"
+          height="500"
             style="width: 100%;font-size: 16px">
       <el-table-column
           prop="user.fullName"
