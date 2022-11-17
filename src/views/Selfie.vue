@@ -1,58 +1,61 @@
 <template>
+  <div class="container" >
+    <div class="web-camera-container text-center" >
+      <div class="camera-button">
+        <button type="button" class="button is-rounded" @click="toggleCamera">
+          <span v-if="!isCameraOpen">open camera</span>
+          <span v-else>close camera</span>
+        </button>
+      </div>
+      <div class="camera-loading" v-show="isCameraOpen && isLoading">
+        <ul class="loader-circle">
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>
+      </div>
 
-  <div class="web-camera-container text-center">
-    <div class="camera-button">
-      <button type="button" class="button is-rounded" @click="toggleCamera">
-        <span v-if="!isCameraOpen">open camera</span>
-        <span v-else>close camera</span>
-      </button>
-    </div>
-    <div class="camera-loading" v-show="isCameraOpen && isLoading">
-      <ul class="loader-circle">
-        <li></li>
-        <li></li>
-        <li></li>
-      </ul>
-    </div>
-
-    <div
-        v-if="isCameraOpen"
-        v-show="!isLoading"
-        class="camera-box"
-        :class="{ flash: isShotPhoto }"
-    >
-      <div class="camera-shutter" :class="{ flash: isShotPhoto }"></div>
-      <video v-show="!isPhotoTaken" ref="camera" :width="450" :height="337.5" autoplay></video>
-      <canvas
-          v-show="isPhotoTaken"
-          id="photoTaken"
-          ref="canvas"
-          :width="450"
-          :height="337.5"
-      ></canvas>
-    </div>
-
-    <div v-if="isCameraOpen && !isLoading" class="camera-shoot">
-      <button type="button" class="button" @click="takePhoto">
-        <img
-            src="https://as2.ftcdn.net/v2/jpg/02/23/11/09/1000_F_223110931_bdOHXcVaPDq7HFgxENNqOol4x3v2kpRB.jpg"
-            style="width: 50px; height: 50px"
-        />
-      </button>
-    </div>
-
-    <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
-      <a
-          id="downloadPhoto"
-          download="my-photo.jpg"
-          class="button"
-          role="button"
-          @click="downloadImage"
+      <div
+          v-if="isCameraOpen"
+          v-show="!isLoading"
+          class="camera-box"
+          :class="{ flash: isShotPhoto }"
       >
-        Download
-      </a>
+        <div class="camera-shutter" :class="{ flash: isShotPhoto }"></div>
+        <video v-show="!isPhotoTaken" ref="camera" :width="450"
+               :height="337.5" autoplay></video>
+        <canvas
+            v-show="isPhotoTaken"
+            id="photoTaken"
+            ref="canvas"
+            :width="450"
+            :height="337.5"
+        ></canvas>
+      </div>
+
+      <div v-if="isCameraOpen && !isLoading" class="">
+        <button type="button" class="button" @click="takePhoto">
+          <img
+              src="../assets/camera.png"
+              style="width: 50px; height: 50px"
+          />
+        </button>
+      </div>
+
+      <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
+        <a
+            id="downloadPhoto"
+            download="my-photo.jpg"
+            class="button"
+            role="button"
+            @click="downloadImage"
+        >
+          Download
+        </a>
+      </div>
     </div>
   </div>
+
 </template>
 <script>
 export default {

@@ -2,7 +2,7 @@
   <div style="padding-bottom: 36px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
       <el-row :gutter="20">
-        <el-col :lg="7" :xl="6" >
+        <el-col :md="6" :lg="7" :xl="6" >
           <div class="grid-content" style="margin-bottom: 20px">
             <span>Ngày</span> &ensp;
             <el-date-picker style=""
@@ -19,7 +19,7 @@
           </div>
         </el-col>
 
-        <el-col :lg="6" :xl="5" style="margin-bottom: 20px; margin-left: 10px">
+        <el-col :md="6" :lg="6" :xl="5" style="margin-bottom: 20px; margin-left: 10px">
           <div class="grid-content">
             <span>Phòng ban</span> &ensp;
             <el-select
@@ -37,14 +37,14 @@
             </el-select>
           </div>
         </el-col>
-        <el-col :lg="6" :xl="5" style=" margin-left: 10px">
+        <el-col :md="6" :lg="6" :xl="5" style=" margin-left: 10px">
           <div class="grid-content">
             <span style="">Tìm kiếm</span> &ensp;
             <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
                       style="width: 240px;"/>
           </div>
         </el-col>
-        <el-col :lg="3" :xl="6" >
+        <el-col  :md="6" :lg="3" :xl="6" >
           <div class="grid-content ">
             <div style="display: flex;float: right" class="text-end">
               <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll"/>
@@ -319,4 +319,20 @@ export default {
 /*    width: 100%;*/
 /*  }*/
 /*}*/
+
+
+
+
+@media only screen and (min-width: 992px){
+  .el-col-md-6 {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 1600px){
+  .el-col-md-6 {
+    width: 25%;
+  }
+}
+
+
 </style>
