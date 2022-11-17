@@ -93,6 +93,11 @@ const router = new Router({
       component: () => import('./views/UnPermist.vue')
     },
     {
+      path: '/selfie',
+      name: 'selfie',
+      component: () => import('./views/Selfie.vue')
+    },
+    {
       path: '/reset_password-tokenLink',
       component: () => import('./views/ForgotChangePassword.vue')
     },
@@ -101,7 +106,7 @@ const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/reset_password-tokenLink'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
   const managePages = [ '/timesheetmod','/report'];

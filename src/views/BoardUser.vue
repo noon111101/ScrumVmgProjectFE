@@ -1,100 +1,65 @@
 <template>
-  <div style="padding-bottom: 38px">
+  <div style="padding-bottom: 38px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
 
       <!--    <h5 style="font-weight: 600;">-->
       <!--      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-->
       <!--      Nhân viên: {{currentUser.user.fullName}}-->
       <!--    </h5>-->
+      <el-row :gutter="20">
+        <el-col :lg="9" :xl="6" >
+          <div class="grid-content text-start">
+            <span>Ngày</span> &ensp;
+            <el-date-picker style=""
+                            v-model="dateRange"
+                            type="daterange"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd"
+                            range-separator=""
+                            start-placeholder="Chọn thời gian"
+                            :editable="false"
+                            @change="getAllByDate"
+            >
+            </el-date-picker>
+          </div>
+        </el-col>
+      </el-row>
 
-      <form ac>
-        <div className="block" class="text-start">
-          <span className="demonstration">Thời gian</span> &ensp;&ensp;&ensp;&ensp;
-          <el-date-picker style="width: 20%;font-size: 16px;"
-                          v-model="dateRange"
-                          type="daterange"
-                          format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd"
-                          range-separator=""
-                          start-placeholder="Chọn thời gian"
-                          @change="getAllByDate">
-          </el-date-picker>
-        </div>
-      </form>
+<!--      <form ac>-->
+<!--        <div className="block" class="text-start">-->
+<!--          <span className="demonstration">Ngày</span> &ensp;-->
+<!--          <el-date-picker style="width: 20%;font-size: 16px;"-->
+<!--                          v-model="dateRange"-->
+<!--                          type="daterange"-->
+<!--                          format="yyyy-MM-dd"-->
+<!--                          value-format="yyyy-MM-dd"-->
+<!--                          range-separator=""-->
+<!--                          start-placeholder="Chọn thời gian"-->
+<!--                          @change="getAllByDate">-->
+<!--          </el-date-picker>-->
+<!--        </div>-->
+<!--      </form>-->
 
-      <!--    <p> {{ from }} </p>-->
-      <!--    <p> {{ to }} </p>-->
+
       <br>
       <div class="text-center ">
         <el-table
             :data="logs"
-            height="900px"
+            height="800px"
             :default-sort="{prop: 'date_log', order: 'descending'}"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
-            style="width: 100%; display: inline-block; border-radius: 10px;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
-"
-            :editable="false"
+            style="width: 100%; display: inline-block; border-radius: 10px;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;"
             :row-class-name="tableRowClassName">
-          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
-            <h3>Không có dữ liệu</h3>
-          </div>
-          <div slot="append" v-if="logs.length!='0'">
-          <el-table-column
-              type="index"
-              label="STT"
-              width="80px"
-              align="center"
-          >
-          </el-table-column>
 
-          <el-table-column
-              prop="user.code"
-              label="Mã nhân viên"
-              width="150px"
-              align="center">
-          </el-table-column>
-          <el-table-column
-              prop="user.fullName"
-              label="Họ và tên"
-              align="center"
+          <el-table-column type="index" label="STT" width="100px" align="center"></el-table-column>
+          <el-table-column prop="user.code" label="Mã nhân viên" width="150px" align="center"></el-table-column>
+          <el-table-column prop="user.fullName" label="Họ và tên" align="center"></el-table-column>
+          <el-table-column prop="user.departments.name" label="Bộ phận" align="center" ></el-table-column>
+          <el-table-column prop="user.username" label="Email" align="center" width="300px"></el-table-column>
+          <el-table-column prop="date_log" sortable label="Ngày" width="150px" align="center"></el-table-column>
+          <el-table-column prop="timeIn" label="Giờ vào" width="150px" align="center"></el-table-column>
+          <el-table-column prop="timeOut" label="Giờ ra" width="150px" align="center"></el-table-column>
 
-          >
-          </el-table-column>
-          <el-table-column
-              prop="user.departments.name"
-              label="Bộ phận"
-              align="center"
-              width="300px"
-          >
-          </el-table-column>
-          <el-table-column
-              prop="user.username"
-              label="Email"
-              align="center"
-              width="300px"
-          >
-          </el-table-column>
-
-          <el-table-column
-              prop="date_log"
-              sortable
-              label="Ngày"
-              width="200px"
-              align="center">
-          </el-table-column>
-          <el-table-column
-              prop="timeIn"
-              label="Giờ vào"
-              width="200px"
-              align="center">
-          </el-table-column>
-          <el-table-column
-              prop="timeOut"
-              label="Giờ ra"
-              width="200px"
-              align="center">
-          </el-table-column>
-          </div>
         </el-table>
       </div>
 
