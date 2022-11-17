@@ -110,10 +110,10 @@
           <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
           <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
           <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
-          <el-table-column label="Ngày" prop="date_log" align="center" sortable width="150px"></el-table-column>
+          <el-table-column label="Ngày" prop="dateLog" align="center" sortable width="150px"></el-table-column>
           <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
           <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>
-
+          <el-table-column prop="totalWork" label="Số giờ làm" width="150px" align="center"></el-table-column>
 
         </el-table>
         <el-pagination class="text-end"

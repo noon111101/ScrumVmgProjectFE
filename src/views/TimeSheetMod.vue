@@ -73,26 +73,16 @@
                   style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
                   :row-class-name="tableRowClassName"
         >
-<!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">-->
-<!--            <h3>Không có dữ liệu</h3>-->
-<!--          </div>-->
-<!--          <div slot="append" v-if="logs.length!='0'">-->
             <el-table-column label="ID" type="index" align="center"></el-table-column>
             <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"></el-table-column>
             <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
             <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
             <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
-            <el-table-column label="Ngày" prop="date_log" sortable width="150px" align="center"></el-table-column>
+            <el-table-column label="Ngày" prop="dateLog" sortable width="150px" align="center"></el-table-column>
             <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"></el-table-column>
             <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"></el-table-column>
-            <!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->
-            <!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
-            <!--            <el-button type="info">Xem chi tiết</el-button>-->
-            <!--&lt;!&ndash;            <el-button type="primary" icon="el-icon-edit" circle></el-button>&ndash;&gt;-->
-            <!--          </router-link>-->
+          <el-table-column prop="totalWork" label="Số giờ làm" width="150px" align="center"></el-table-column>
 
-            <!--        </el-table-column>-->
-<!--          </div>-->
         </el-table>
 
     </div>

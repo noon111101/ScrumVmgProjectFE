@@ -56,9 +56,10 @@
           <el-table-column prop="user.fullName" label="Họ và tên" align="center"></el-table-column>
           <el-table-column prop="user.departments.name" label="Bộ phận" align="center" ></el-table-column>
           <el-table-column prop="user.username" label="Email" align="center" width="300px"></el-table-column>
-          <el-table-column prop="date_log" sortable label="Ngày" width="150px" align="center"></el-table-column>
+          <el-table-column prop="dateLog" sortable label="Ngày" width="150px" align="center"></el-table-column>
           <el-table-column prop="timeIn" label="Giờ vào" width="150px" align="center"></el-table-column>
           <el-table-column prop="timeOut" label="Giờ ra" width="150px" align="center"></el-table-column>
+          <el-table-column prop="totalWork" label="Số giờ làm" width="150px" align="center"></el-table-column>
 
         </el-table>
       </div>
