@@ -92,12 +92,17 @@ const router = new Router({
       name: 'unpermist',
       component: () => import('./views/UnPermist.vue')
     },
+    {
+      path: '/selfie',
+      name: 'selfie',
+      component: () => import('./views/Selfie.vue')
+    },
   ]
 }
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/selfie','/'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
   const managePages = [ '/timesheetmod','/report'];

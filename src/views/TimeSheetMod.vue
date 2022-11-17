@@ -1,45 +1,82 @@
 <template style="font-size: 16px">
-  <div style="padding-bottom: 4px">
+  <div style="padding-bottom: 4px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
-      <div style="" class="d-flex">
-        <div className="block" class="text-start col-10">
-          <h5 style="font-weight: 600;">
-            Phòng ban: {{ departmentName }}&emsp;
-          </h5>
-          <span className="demonstration">Ngày</span> &ensp;
-          <el-date-picker style="width: 20%;font-size: 16px;margin-right: 180px"
-                          v-model="dateRange"
-                          type="daterange"
-                          format="yyyy-MM-dd"
-                          value-format="yyyy-MM-dd"
-                          range-separator=""
-                          start-placeholder="Chọn thời gian"
-                          :editable="false"
-                          @change="getAll">
-          </el-date-picker>
-          <span style="">Tìm kiếm</span> &ensp;
-          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
-                    style="width: 20%;"/>
-        </div>
 
-        <!--      <div class="text-end col-2" >-->
-        <!--        <el-input v-model="search" @input="getAll" size="medium" placeholder="Tên nhân viên" style="width: 100%"/>-->
-        <!--      </div>-->
-      </div>
+      <el-row :gutter="20">
+        <el-col :lg="9" :xl="6" style="margin-bottom: 20px">
+          <div class="grid-content text-start">
+            <h5 style="font-weight: 600;">
+              Phòng ban: {{ departmentName }}&emsp;
+            </h5>
+          </div>
+        </el-col>
+
+        <el-col :lg="9" :xl="6">
+          <div class="grid-content text-start" style="margin-bottom: 20px">
+            <span>Ngày</span> &ensp;
+            <el-date-picker style=""
+                            v-model="dateRange"
+                            type="daterange"
+                            format="yyyy-MM-dd"
+                            value-format="yyyy-MM-dd"
+                            range-separator=""
+                            start-placeholder="Chọn thời gian"
+                            :editable="false"
+                            @change="getAll"
+            >
+            </el-date-picker>
+          </div>
+        </el-col>
+        <el-col :lg="9" :xl="8">
+          <div class="grid-content text-start">
+            <span style="">Tìm kiếm</span> &ensp;
+            <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
+                      style="width: 240px;"/>
+          </div>
+        </el-col>
+        <el-col :lg="9" :xl="5">
+          <div class="grid-content ">
+
+          </div>
+        </el-col>
+      </el-row>
+
+<!--      <div style="" class="d-flex">-->
+<!--        <div className="block" class="text-start col-10">-->
+<!--          <h5 style="font-weight: 600;">-->
+<!--            Phòng ban: {{ departmentName }}&emsp;-->
+<!--          </h5>-->
+<!--          <span className="demonstration">Ngày</span> &ensp;-->
+<!--          <el-date-picker style="width: 20%;font-size: 16px;margin-right: 180px"-->
+<!--                          v-model="dateRange"-->
+<!--                          type="daterange"-->
+<!--                          format="yyyy-MM-dd"-->
+<!--                          value-format="yyyy-MM-dd"-->
+<!--                          range-separator=""-->
+<!--                          start-placeholder="Chọn thời gian"-->
+<!--                          :editable="false"-->
+<!--                          @change="getAll">-->
+<!--          </el-date-picker>-->
+<!--          <span style="">Tìm kiếm</span> &ensp;-->
+<!--          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"-->
+<!--                    style="width: 20%;"/>-->
+<!--        </div>-->
+
+<!--      </div>-->
 
       <br/>
       <div>
         <el-table class="text-center " :data="logs"
-                  height="900px"
+                  height="800px"
                   :default-sort="{prop: 'date_log', order: 'descending'}"
                   :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
                   style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
                   :row-class-name="tableRowClassName"
         >
-          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">
-            <h3>Không có dữ liệu</h3>
-          </div>
-          <div slot="append" v-if="logs.length!='0'">
+<!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">-->
+<!--            <h3>Không có dữ liệu</h3>-->
+<!--          </div>-->
+<!--          <div slot="append" v-if="logs.length!='0'">-->
             <el-table-column label="ID" type="index" align="center"></el-table-column>
             <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"></el-table-column>
             <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
@@ -55,7 +92,7 @@
             <!--          </router-link>-->
 
             <!--        </el-table-column>-->
-          </div>
+<!--          </div>-->
         </el-table>
 
     </div>

@@ -141,7 +141,7 @@ export default {
             this.formData.oldPassword = this.form.old_password;
             this.formData.newPassword = this.form.new_password;
             AuthService.changePassword(this.formData).then(response => {
-              if (response.data.message.equals("Thay đổi mật khẩu thành công!")) {
+              if (response.data.message == "Thay đổi mật khẩu thành công!") {
                 this.$refs[formName].resetFields();
                 this.$swal.fire(
                     {
