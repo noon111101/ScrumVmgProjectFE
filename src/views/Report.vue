@@ -5,7 +5,7 @@
 
     <div class="d-flex flex-row mt-3 ms-0 ">
       <div class="col-9  ">
-        <el-select v-if="showAdminBoard" class="mx-3" v-model="department" @change="getLog" placeholder="Chọn Bộ phận">
+        <el-select v-if="showAdminBoard" class="mx-3 my-3" v-model="department" @change="getLog" placeholder="Chọn Bộ phận">
           <el-option
               label="Tất cả"
               value=""
@@ -20,9 +20,9 @@
           >
           </el-option>
         </el-select>
-        <span v-if="showModeratorBoard" class="mx-3 fw-bold" >Phòng {{accountDepartment.name}}</span>
+        <span v-if="showModeratorBoard" class="mx-3 my-3 fw-bold" >Phòng {{accountDepartment.name}}</span>
         <el-input
-            class="mx-3"
+            class="mx-3 my-3"
             size="medium"
             placeholder="Tìm kiếm nhân viên"
             v-model="search"
@@ -31,7 +31,7 @@
             style="width: 200px"
         >
         </el-input>
-        <el-select class="mx-3" v-model="currentMonth" @change="getLog" placeholder="Tháng">
+        <el-select class="mx-3 my-3" v-model="currentMonth" @change="getLog" placeholder="Tháng">
           <el-option
               v-for="item in 12"
               :key="item"
@@ -46,7 +46,7 @@
 
 
           <el-tooltip placement="right" effect="light"  >
-            <el-button type="primary" class="el-icon-info el-button--info " style="border-radius: 10px" > Chú thích</el-button>
+            <el-button type="primary" class="el-icon-info el-button--info my-3 " style="border-radius: 10px" > Chú thích</el-button>
             <div class="note-wrapper" slot="content">
               <div class="d-flex flex-column" >
                 <div style="font-weight: bold;">Chú thích</div>
@@ -88,9 +88,9 @@
       <!--     Nút chọn-->
 
       <div class="col-3 ">
-        <el-button @click="exportExcel()" type="danger" class="el-icon-download float-end ms-3" round> Xuất File
+        <el-button @click="exportExcel()" type="danger" class="el-icon-download float-end ms-3 my-3" round> Xuất File
         </el-button>
-        <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end "
+        <el-button v-if="showAdminBoard" v-b-modal="'save-modal'" type="primary" class="el-icon-edit-outline float-end my-3"
                    round> Cập nhật
         </el-button>
 
