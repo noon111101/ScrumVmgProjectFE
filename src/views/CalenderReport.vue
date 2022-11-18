@@ -157,7 +157,7 @@ export default {
        reason:null
      };
      for (let log of this.logs) {
-       if(log.date_log==date){
+       if(log.dateLog==date){
          if(log.signs!=null)
           sign.name= log.signs.name
          sign.timeIn= log.timeIn

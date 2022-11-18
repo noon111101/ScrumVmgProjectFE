@@ -49,7 +49,7 @@
 
           <el-col  :md="6"  :lg="6" :xl="6" >
             <div class="grid-content">
-                <import-excel header="Thêm nhân viên" format=1 @getData="getAll" class="" style="margin-right: 20px; margin-bottom: 20px"/>
+                <import-excel class="text-start"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 20px; "/>
               <el-button class="" type="danger" style="" round
                          @click="dialogFormVisible = true"
               ><i class="el-icon-plus"></i> Thêm nhân viên

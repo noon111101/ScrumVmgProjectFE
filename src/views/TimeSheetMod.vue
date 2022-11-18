@@ -3,7 +3,7 @@
     <div className="container" style="text-align: center; width: 90%;margin: auto">
 
       <el-row :gutter="20">
-        <el-col :lg="9" :xl="6" style="margin-bottom: 20px">
+        <el-col :md="6" :lg="6" :xl="5" style="margin-bottom: 20px">
           <div class="grid-content text-start">
             <h5 style="font-weight: 600;">
               Phòng ban: {{ departmentName }}&emsp;
@@ -11,30 +11,30 @@
           </div>
         </el-col>
 
-        <el-col :lg="9" :xl="6">
+        <el-col :md="6" :lg="6" :xl="5">
           <div class="grid-content text-start" style="margin-bottom: 20px">
             <span>Ngày</span> &ensp;
-            <el-date-picker style=""
+            <el-date-picker style="width: 250px"
                             v-model="dateRange"
                             type="daterange"
                             format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd"
                             range-separator=""
-                            start-placeholder="Chọn thời gian"
+                            start-placeholder="Chọn Ngày"
                             :editable="false"
                             @change="getAll"
             >
             </el-date-picker>
           </div>
         </el-col>
-        <el-col :lg="9" :xl="8">
+        <el-col :md="6" :lg="6" :xl="5">
           <div class="grid-content text-start">
             <span style="">Tìm kiếm</span> &ensp;
             <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
                       style="width: 240px;"/>
           </div>
         </el-col>
-        <el-col :lg="9" :xl="5">
+        <el-col :md="6" :lg="6" :xl="5">
           <div class="grid-content ">
 
           </div>
