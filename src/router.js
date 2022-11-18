@@ -106,16 +106,16 @@ const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
   const managePages = [ '/timesheetmod','/report'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
-  if (authRequired && !loggedIn) {
+  if (authRequired && !loggedIn && !to.path.startsWith("/reset_password-tokenLink")) {
     next('/login');
   }
-  if(!authRequired && !loggedIn){
+  if((!authRequired && !loggedIn) || to.path.startsWith("/reset_password-tokenLink")){
     next()
   }
   else {

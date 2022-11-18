@@ -22,8 +22,6 @@
                 aria-labelledby="home-tab">
               <el-form :model="form" :rules="rules" ref="user" label-width="120px" id="register-form"
                        class="text-start">
-
-                <!--              <h3 class="register-heading">Create an account</h3>-->
                 <div class="row register-form">
                   <div class="col-md-8">
                     <table class="text-start" style="margin-left: 150px;">
@@ -35,7 +33,6 @@
                           </el-form-item>
                         </td>
                       </tr>
-
                       <tr style="height: 70px">
                         <td style="width: 300px">
                           <el-form-item label="Nhập lại mật khẩu mới" prop="new_password_confirm" label-width="200px">
@@ -90,15 +87,20 @@ export default {
         ]
       },
       form: {
-        newPassword: "",
-        token:''
+        new_password: "",
+        new_password_confirm:""
+      },
+      formData: {
+        token:'',
+        newPassword: ""
       },
       message: "",
 
     };
   },
-  created() {
-    this.form.token=this.$route.params.token;
+  mounted() {
+    this.formData.token=this.$route.query.token;
+    console.log(this.formData.token)
   },
   methods: {
     submit(formName) {
@@ -106,12 +108,12 @@ export default {
         if (this.form.new_password == "" || this.form.new_password_confirm == "" ) {
           this.message = 'Chưa nhập đủ thông tin!'
         }
-        if (this.form.new_password != this.form.new_password_confirm) {
+        if (this.form.new_password !== this.form.new_password_confirm) {
           this.message = 'Mật khẩu mới không khớp !'
         }
         else if (valid && this.form.new_password === this.form.new_password_confirm) {
             this.formData.newPassword = this.form.new_password;
-            AuthService.changePassword(this.formData).then(() => {
+            AuthService.changePasswordForgot(this.formData).then(() => {
                 this.$router.push('/login')
                 this.$swal.fire(
                     {
@@ -127,7 +129,7 @@ export default {
               this.$refs[formName].resetFields();
               this.$swal.fire({
                 title: "Lỗi",
-                text: error.response.data.message,
+                text: error.response.data.error.message,
                 icon: "error",
                 timer: 2000,
                 timerProgressBar: true,

@@ -30,6 +30,10 @@ class AuthService {
         // let formData = new FormData(data);
         return axios.post(API_URL + 'changePassword', data)
     }
+    changePasswordForgot(data){
+        // let formData = new FormData(data);
+        return axios.post(API_URL + 'reset_password-tokenLink', data)
+    }
 
     lockAccount(id){
         return axios.put(API_URL + `lockAccount/${id}`)
