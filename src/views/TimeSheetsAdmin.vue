@@ -2,24 +2,25 @@
   <div style="padding-bottom: 36px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
       <el-row :gutter="20">
-        <el-col :lg="7" :xl="6" >
+        <el-col :md="6" :lg="6" :xl="5" >
           <div class="grid-content" style="margin-bottom: 20px">
             <span>Ngày</span> &ensp;
-            <el-date-picker style=""
+            <el-date-picker style="width: 250px"
                             v-model="dateRange"
                             type="daterange"
                             format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd"
                             range-separator=""
-                            start-placeholder="Chọn thời gian"
+                            start-placeholder="Chọn Ngày"
                             :editable="false"
                             @change="getAll"
+
                             >
             </el-date-picker>
           </div>
         </el-col>
 
-        <el-col :lg="6" :xl="5" style="margin-bottom: 20px; margin-left: 10px">
+        <el-col :md="6" :lg="6" :xl="5" style="margin-bottom: 20px;">
           <div class="grid-content">
             <span>Phòng ban</span> &ensp;
             <el-select
@@ -37,16 +38,16 @@
             </el-select>
           </div>
         </el-col>
-        <el-col :lg="6" :xl="5" style=" margin-left: 10px">
+        <el-col :md="6" :lg="6" :xl="5" style="">
           <div class="grid-content">
             <span style="">Tìm kiếm</span> &ensp;
             <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
-                      style="width: 240px;"/>
+                      style="width: 240px;margin-bottom: 10px"/>
           </div>
         </el-col>
-        <el-col :lg="3" :xl="6" >
-          <div class="grid-content ">
-            <div style="display: flex;float: right" class="text-end">
+        <el-col :md="6" :lg="6" :xl="5" >
+          <div class="grid-content buttons">
+            <div >
               <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll"/>
             </div>
           </div>
@@ -110,10 +111,10 @@
           <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
           <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
           <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
-          <el-table-column label="Ngày" prop="date_log" align="center" sortable width="150px"></el-table-column>
+          <el-table-column label="Ngày" prop="dateLog" align="center" sortable width="150px"></el-table-column>
           <el-table-column label="Giờ vào" prop="timeIn" align="center" width="150px"></el-table-column>
           <el-table-column label="Giờ ra" prop="timeOut" align="center" width="150px"></el-table-column>
-
+          <el-table-column prop="totalWork" label="Số giờ làm" width="150px" align="center"></el-table-column>
 
         </el-table>
         <el-pagination class="text-end"
@@ -319,4 +320,36 @@ export default {
 /*    width: 100%;*/
 /*  }*/
 /*}*/
+
+
+@media only screen and (min-width: 280px){
+  .el-col-md-6 {
+    width: 80%;
+  }
+
+  .buttons{
+    text-align: left;
+  }
+
+}
+
+@media only screen and (min-width: 992px){
+  .el-col-md-6 {
+    width: 100%;
+  }
+  .buttons{
+    text-align: left;
+  }
+}
+@media only screen and (min-width: 1665px){
+  .el-col-md-6 {
+    width: 24%;
+  }
+
+  .buttons{
+    text-align: right;
+  }
+}
+
+
 </style>
