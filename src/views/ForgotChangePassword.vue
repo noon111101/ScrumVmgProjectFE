@@ -5,7 +5,7 @@
     </header>
   </div> -->
   <div style="padding-bottom: 430px">
-    <div class="container register" style="border-radius: 10px">
+    <div v-if="check" class="container register" style="border-radius: 10px">
 
       <div class="row" >
         <div class="col-md-3 register-left">
@@ -68,6 +68,15 @@
         </div>
       </div>
     </div>
+    <div v-if="!check" id="notfound">
+      <div class="notfound">
+        <div class="notfound-404">
+          <h1>Oops!</h1>
+          <h2>404 - Link của bạn đã hết hạn</h2>
+        </div>
+        <a href="/login">Đến trang đăng nhập</a>
+      </div>
+    </div>
   </div>
 
 </template>
@@ -95,12 +104,20 @@ export default {
         newPassword: ""
       },
       message: "",
+      check:""
 
     };
   },
   mounted() {
+    const params = {
+      "token": this.$route.query.token,
+    }
     this.formData.token=this.$route.query.token;
-    console.log(this.formData.token)
+    AuthService.checkChangePasswordForgot(params).then(response =>{
+      this.check=response.data
+    }).catch(error=>{
+      console.log(error)
+    })
   },
   methods: {
     submit(formName) {

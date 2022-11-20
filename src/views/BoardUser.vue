@@ -45,7 +45,7 @@
       <div class="text-center ">
         <el-table
             :data="logs"
-            height="800px"
+            height="600px"
             :default-sort="{prop: 'date_log', order: 'descending'}"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
             style="width: 100%; display: inline-block; border-radius: 10px;box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;"
