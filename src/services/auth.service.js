@@ -1,4 +1,5 @@
 import axios from 'axios';
+import httpCommon from "@/http-common";
 
 const API_URL = 'http://localhost:8080/api/auth/';
 
@@ -27,12 +28,13 @@ class AuthService {
     }
 
     changePassword(data){
-        // let formData = new FormData(data);
         return axios.post(API_URL + 'changePassword', data)
     }
     changePasswordForgot(data){
-        // let formData = new FormData(data);
         return axios.post(API_URL + 'reset_password-tokenLink', data)
+    }
+    checkChangePasswordForgot(params){
+        return httpCommon.get(API_URL+'checkResetPassword',{params})
     }
 
     lockAccount(id){

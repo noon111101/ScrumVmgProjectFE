@@ -100,7 +100,7 @@
       <div>
 
         <el-table
-            height="780px"
+            height="600px"
             :default-sort="{prop: 'date_log', order: 'descending'}"
             :data="logs"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
