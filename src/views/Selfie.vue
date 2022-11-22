@@ -1,19 +1,19 @@
 <template>
   <div class="container" >
     <div class="web-camera-container text-center" >
-      <div class="camera-button">
-        <button type="button" class="button is-rounded" @click="toggleCamera">
-          <span v-if="!isCameraOpen">open camera</span>
-          <span v-else>close camera</span>
-        </button>
-      </div>
-      <div class="camera-loading" v-show="isCameraOpen && isLoading">
-        <ul class="loader-circle">
-          <li></li>
-          <li></li>
-          <li></li>
-        </ul>
-      </div>
+<!--      <div class="camera-button">-->
+<!--        <button type="button" class="button is-rounded" @click="toggleCamera">-->
+<!--          <span v-if="!isCameraOpen">open camera</span>-->
+<!--          <span v-else>close camera</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="camera-loading" v-show="isCameraOpen && isLoading">-->
+<!--        <ul class="loader-circle">-->
+<!--          <li></li>-->
+<!--          <li></li>-->
+<!--          <li></li>-->
+<!--        </ul>-->
+<!--      </div>-->
 
       <div
           v-if="isCameraOpen"
@@ -34,12 +34,12 @@
       </div>
 
       <div v-if="isCameraOpen && !isLoading" class="">
-        <button type="button" class="button" @click="takePhoto">
+        <el-button type="button" class="button" @click="takePhoto" round>
           <img
               src="../assets/camera.png"
               style="width: 50px; height: 50px"
           />
-        </button>
+        </el-button>
       </div>
 
       <div v-if="isPhotoTaken && isCameraOpen" class="camera-download">
@@ -49,9 +49,28 @@
             class="button"
             role="button"
             @click="downloadImage"
+            style="margin-bottom: 100px"
         >
           Download
         </a>
+        <br>
+
+        <table class="text-center" style="display: inline-block; margin: auto">
+          <tr>
+            <td width="200px">Mã nhân viên</td>
+            <td>{{currentUser.user.code}}</td>
+          </tr>
+          <tr>
+              <td width="200px">Họ và tên</td>
+              <td>{{currentUser.user.fullName}}</td>
+          </tr>
+          <tr>
+            <td width="200px">Email</td>
+            <td>{{currentUser.user.username}}</td>
+          </tr>
+          
+
+        </table>
       </div>
     </div>
   </div>
@@ -70,18 +89,34 @@ export default {
     };
   },
 
-  methods: {
-    toggleCamera() {
-      if (this.isCameraOpen) {
-        this.isCameraOpen = false;
-        this.isPhotoTaken = false;
-        this.isShotPhoto = false;
-        this.stopCameraStream();
-      } else {
-        this.isCameraOpen = true;
-        this.createCameraElement();
-      }
+  created(){
+    this.isCameraOpen = true;
+    this.createCameraElement();
+  },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
     },
+    currentUser() {
+      console.log(localStorage.getItem('user'))
+      // return JSON.parse(localStorage.getItem('user'));
+      // console.log("dddd"+this.$store.state.auth.user)
+      return this.$store.state.auth.user;
+
+    },
+  },
+  methods: {
+    // toggleCamera() {
+    //   if (this.isCameraOpen) {
+    //     this.isCameraOpen = false;
+    //     this.isPhotoTaken = false;
+    //     this.isShotPhoto = false;
+    //     this.stopCameraStream();
+    //   } else {
+    //     this.isCameraOpen = true;
+    //     this.createCameraElement();
+    //   }
+    // },
     createCameraElement() {
       this.isLoading = true;
       const constraints = (window.constraints = {

@@ -336,10 +336,10 @@
             ></el-table-column>
             <el-table-column
                 label="Mã NV"
-                prop="code"
+                v-slot:="data"
                 align="center"
-                width="100px"
-            ></el-table-column>
+                width="120px"
+            >VMG_{{data.row.code}}</el-table-column>
             <el-table-column
                 label="Ho và tên"
                 prop="fullName"

@@ -173,7 +173,7 @@ export default {
           });
     },
     exportExcel() {
-      ExcelService.exportExcel();
+      ExcelService.exportExcelReport();
     },
     handlePageChange(value) {
       this.page = value - 1;
