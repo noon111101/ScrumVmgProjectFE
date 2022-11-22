@@ -429,7 +429,7 @@ export default {
               "month": this.currentMonth
             }
           }
-          ExcelService.exportExcel(params);
+          ExcelService.exportExcelReport(params);
 
         } else if (result.isDenied) {
           this.$swal.fire(

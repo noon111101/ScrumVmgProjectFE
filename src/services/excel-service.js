@@ -3,8 +3,8 @@ import axios from 'axios';
 
 
 class ExcelService{
-    exportExcel(params){
-        axios.get(`http://localhost:8080/api/excel/export`, {params,
+    exportExcelReport(params){
+        axios.get(`http://localhost:8080/api/excel/export_report`, {params,
             responseType: 'blob',
         }).then((response) => {
             const url = URL.createObjectURL(new Blob([response.data]))
@@ -13,6 +13,21 @@ class ExcelService{
             link.setAttribute(
                 'download',
                 `Bảng Chấm Công-${new Date().toLocaleDateString()}.xlsx`
+            )
+            document.body.appendChild(link)
+            link.click()
+        })
+    }
+    exportExcelPhep(params){
+        axios.get(`http://localhost:8080/api/excel/export_phep`, {params,
+            responseType: 'blob',
+        }).then((response) => {
+            const url = URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+                'download',
+                `Bảng Ngày Phép -${new Date().toLocaleDateString()}.xlsx`
             )
             document.body.appendChild(link)
             link.click()
