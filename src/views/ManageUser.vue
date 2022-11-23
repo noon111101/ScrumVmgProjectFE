@@ -47,8 +47,8 @@
             </div>
           </el-col>
 
-          <el-col  :md="6"  :lg="6" :xl="6" >
-            <div class="grid-content">
+          <el-col  :md="6"  :lg="6" :xl="6" class="div-buttons">
+            <div class="grid-content div-buttons">
                 <import-excel class="text-start buttons"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 10px; "/>
               <el-button class="buttons" type="danger" style="" round
                          @click="dialogFormVisible = true"
@@ -1021,9 +1021,9 @@ input:checked + .slider:before {
   width: 25rem;
 }
 
-@media only screen and (min-width: 280px){
+@media only screen and (min-width: 150px){
   .el-col-md-6 {
-    width: 80%;
+    width: 108%;
   }
 
   .buttons{
@@ -1041,13 +1041,31 @@ input:checked + .slider:before {
   }
 }
 
-@media only screen and (min-width: 1665px){
+@media only screen and (min-width: 1669px){
   .el-col-md-6 {
     width: 23%;
   }
 
   .buttons{
     text-align: right;
+  }
+
+  .div-buttons{
+    float: right;
+  }
+}
+
+@media only screen and (min-width: 1920px){
+  .el-col-md-6 {
+    width: 23%;
+  }
+
+  .buttons{
+    text-align: right;
+  }
+
+  .div-buttons{
+    float: right;
   }
 }
 </style>
