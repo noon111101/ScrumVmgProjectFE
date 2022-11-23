@@ -910,6 +910,7 @@ export default {
 }
 
 .el-table .tt1 {
+  cursor: default;
   color: black;
   background-color: #75c4c0;
   border: none;
@@ -918,6 +919,7 @@ export default {
 }
 
 .el-table .tt2 {
+  cursor: default;
   color: black;
   background-color: #ed9696;
   border: none;

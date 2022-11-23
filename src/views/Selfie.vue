@@ -11,6 +11,7 @@
         />
       </el-button>
 
+
     </div>
     <div class="text-center mt-5 position-relative" v-show="!isCameraOpen">
       <canvas
@@ -23,6 +24,7 @@
       <div class="text-center mt-5">
         <el-button  v-show="isPhotoTaken" type="danger"  @click="confirm" round>Xác nhận</el-button>
         <el-button type="info"  @click="openFullscreen" round>Chụp ảnh</el-button>
+
       </div>
     </div>
   </div>
@@ -106,6 +108,7 @@ export default {
   }
 };
 </script>
+
 <style>
 video {
   position: absolute;
@@ -138,3 +141,4 @@ video {
 }
 
 </style>
+
