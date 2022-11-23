@@ -9,7 +9,7 @@
     <div style="padding-bottom: 20px">
       <div className="container" style="width: 90%; margin: auto">
         <el-row :gutter="20">
-          <el-col :sm="6" :md="6" :lg="5" :xl="6">
+          <el-col  :md="6" :lg="5" :xl="6">
             <div class="grid-content" style="margin-bottom: 20px">
               <span>Phòng ban</span> &ensp;
               <el-select
@@ -29,14 +29,14 @@
             </div>
           </el-col>
 
-          <el-col :sm="6" :md="6" :lg="6" :xl="5" style="margin-bottom: 20px">
+          <el-col  :md="6" :lg="6" :xl="5" style="margin-bottom: 20px">
             <div class="grid-content">
               <span style="">Tìm kiếm</span> &ensp;
               <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
                         style="width: 240px;"/>
             </div>
           </el-col>
-          <el-col :sm="6" :md="6" :lg="5" :xl="5" style="margin-bottom: 20px">
+          <el-col :md="6" :lg="5" :xl="5" style="margin-bottom: 20px">
             <div class="grid-content ">
               <span style="">Trạng thái</span> &ensp;
               <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
@@ -47,9 +47,9 @@
             </div>
           </el-col>
 
-          <el-col :sm="6" :md="6"  :lg="6" :xl="6" >
+          <el-col  :md="6"  :lg="6" :xl="6" >
             <div class="grid-content">
-                <import-excel header="Thêm nhân viên" format=1 @getData="getAll" class="" style="margin-right: 20px"/>
+                <import-excel class="text-start"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 20px; "/>
               <el-button class="" type="danger" style="" round
                          @click="dialogFormVisible = true"
               ><i class="el-icon-plus"></i> Thêm nhân viên
@@ -317,6 +317,7 @@
         <div>
           <el-table
               :data="users"
+              height="800px"
               :header-cell-style="{
           background: '#D9D9D9',
           color: 'black',
@@ -335,10 +336,10 @@
             ></el-table-column>
             <el-table-column
                 label="Mã NV"
-                prop="code"
+                v-slot:="data"
                 align="center"
-                width="100px"
-            ></el-table-column>
+                width="120px"
+            >VMG_{{data.row.code}}</el-table-column>
             <el-table-column
                 label="Ho và tên"
                 prop="fullName"

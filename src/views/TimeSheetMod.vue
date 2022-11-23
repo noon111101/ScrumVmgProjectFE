@@ -3,7 +3,7 @@
     <div className="container" style="text-align: center; width: 90%;margin: auto">
 
       <el-row :gutter="20">
-        <el-col :lg="9" :xl="6" style="margin-bottom: 20px">
+        <el-col :md="6" :lg="6" :xl="5" style="margin-bottom: 20px">
           <div class="grid-content text-start">
             <h5 style="font-weight: 600;">
               Phòng ban: {{ departmentName }}&emsp;
@@ -11,30 +11,30 @@
           </div>
         </el-col>
 
-        <el-col :lg="9" :xl="6">
+        <el-col :md="6" :lg="6" :xl="5">
           <div class="grid-content text-start" style="margin-bottom: 20px">
             <span>Ngày</span> &ensp;
-            <el-date-picker style=""
+            <el-date-picker style="width: 250px"
                             v-model="dateRange"
                             type="daterange"
                             format="yyyy-MM-dd"
                             value-format="yyyy-MM-dd"
                             range-separator=""
-                            start-placeholder="Chọn thời gian"
+                            start-placeholder="Chọn Ngày"
                             :editable="false"
                             @change="getAll"
             >
             </el-date-picker>
           </div>
         </el-col>
-        <el-col :lg="9" :xl="8">
+        <el-col :md="6" :lg="6" :xl="5">
           <div class="grid-content text-start">
             <span style="">Tìm kiếm</span> &ensp;
             <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
                       style="width: 240px;"/>
           </div>
         </el-col>
-        <el-col :lg="9" :xl="5">
+        <el-col :md="6" :lg="6" :xl="5">
           <div class="grid-content ">
 
           </div>
@@ -73,26 +73,16 @@
                   style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
                   :row-class-name="tableRowClassName"
         >
-<!--          <div slot="append" v-if="logs.length=='0'" style="display: block; margin: auto">-->
-<!--            <h3>Không có dữ liệu</h3>-->
-<!--          </div>-->
-<!--          <div slot="append" v-if="logs.length!='0'">-->
             <el-table-column label="ID" type="index" align="center"></el-table-column>
             <el-table-column label="Mã nhân viên" prop="user.code" width="150px" align="center"></el-table-column>
             <el-table-column label="Họ và tên" prop="user.fullName" align="center"></el-table-column>
             <el-table-column label="Phòng ban" prop="user.departments.name" align="center"></el-table-column>
             <el-table-column label="Email" prop="user.username" align="center"></el-table-column>
-            <el-table-column label="Ngày" prop="date_log" sortable width="150px" align="center"></el-table-column>
+            <el-table-column label="Ngày" prop="dateLog" sortable width="150px" align="center"></el-table-column>
             <el-table-column label="Giờ vào" prop="timeIn" width="150px" align="center"></el-table-column>
             <el-table-column label="Giờ ra" prop="timeOut" width="150px" align="center"></el-table-column>
-            <!--        <el-table-column label="" prop="" v-slot:="data" width="150px" align="center">-->
-            <!--          <router-link :to="`/user/${data.row.user.code}/${data.row.user.departments.name}/${data.row.user.fullName}`">-->
-            <!--            <el-button type="info">Xem chi tiết</el-button>-->
-            <!--&lt;!&ndash;            <el-button type="primary" icon="el-icon-edit" circle></el-button>&ndash;&gt;-->
-            <!--          </router-link>-->
+          <el-table-column prop="totalWork" label="Số giờ làm" width="150px" align="center"></el-table-column>
 
-            <!--        </el-table-column>-->
-<!--          </div>-->
         </el-table>
 
     </div>
@@ -183,7 +173,7 @@ export default {
           });
     },
     exportExcel() {
-      ExcelService.exportExcel();
+      ExcelService.exportExcelReport();
     },
     handlePageChange(value) {
       this.page = value - 1;

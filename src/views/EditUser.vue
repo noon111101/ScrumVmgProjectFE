@@ -157,14 +157,15 @@
                         </td>
                       </tr>
 
-                      <template v-if="user.code == currentUser.user.code">
-                        <tr style="height: 40px" disabled="" >
+                      <template v-if="user.code == currentUser.user.code" >
+                        <tr style="height: 40px" >
                           <td style="width: 100px">
                             Chức vụ<span style="color: red">*</span>
                           </td>
                           <td style="width: 300px">
+
                             <input
-                                disabled
+                                readonly
                                 type="radio"
                                 id="admin"
                                 value="admin"
@@ -174,7 +175,38 @@
                             <label for="admin">&nbsp; Nhân sự</label>
                           </td>
                         </tr>
+                        <tr style="height: 40px">
+                          <td style="width: 100px"></td>
+                          <td style="width: 300px">
+
+                            <input
+                                disabled
+                                type="radio"
+                                id="manage"
+                                value="manage"
+                                :checked="checkRole('ROLE_MANAGE')"
+                                name="role"
+                            />
+
+                            <label for="manage">&nbsp; Trưởng phòng</label>
+                          </td>
+                        </tr>
+                        <tr style="height: 40px">
+                          <td style="width: 100px"></td>
+                          <td style="width: 300px">
+                            <input
+                                disabled
+                                type="radio"
+                                id="user"
+                                value="user"
+                                name="role"
+                                :checked="checkRole('ROLE_USER')"
+                            />
+                            <label for="user">&nbsp; Nhân viên</label>
+                          </td>
+                        </tr>
                       </template>
+
 
                       <template v-if="user.code != currentUser.user.code">
                         <tr style="height: 40px"  >
@@ -192,33 +224,34 @@
                             <label for="admin">&nbsp; Nhân sự</label>
                           </td>
                         </tr>
+                        <tr style="height: 40px">
+                          <td style="width: 100px"></td>
+                          <td style="width: 300px">
+                            <input
+                                type="radio"
+                                id="manage"
+                                value="manage"
+                                :checked="checkRole('ROLE_MANAGE')"
+                                name="role"
+                            />
+                            <label for="manage">&nbsp; Trưởng phòng</label>
+                          </td>
+                        </tr>
+                        <tr style="height: 40px">
+                          <td style="width: 100px"></td>
+                          <td style="width: 300px">
+                            <input
+                                type="radio"
+                                id="user"
+                                value="user"
+                                name="role"
+                                :checked="checkRole('ROLE_USER')"
+                            />
+                            <label for="user">&nbsp; Nhân viên</label>
+                          </td>
+                        </tr>
                       </template>
-                      <tr style="height: 40px">
-                        <td style="width: 100px"></td>
-                        <td style="width: 300px">
-                          <input
-                              type="radio"
-                              id="manage"
-                              value="manage"
-                              :checked="checkRole('ROLE_MANAGE')"
-                              name="role"
-                          />
-                          <label for="manage">&nbsp; Trưởng phòng</label>
-                        </td>
-                      </tr>
-                      <tr style="height: 40px">
-                        <td style="width: 100px"></td>
-                        <td style="width: 300px">
-                          <input
-                              type="radio"
-                              id="user"
-                              value="user"
-                              name="role"
-                              :checked="checkRole('ROLE_USER')"
-                          />
-                          <label for="user">&nbsp; Nhân viên</label>
-                        </td>
-                      </tr>
+
                       <tr style="height: 60px">
                         <td style="width: 100px"></td>
                         <td style="width: 300px">
