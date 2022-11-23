@@ -53,11 +53,11 @@
         >
           Download
         </a>
-        <br>
+        <br><br><br>
 
-        <table class="text-center" style="display: inline-block; margin: auto">
-          <tr>
-            <td width="200px">Mã nhân viên</td>
+        <table class="text-center" style="display: inline-block; margin: auto" border="1px">
+          <tr style="border: 1px">
+            <td width="200px" >Mã nhân viên</td>
             <td>{{currentUser.user.code}}</td>
           </tr>
           <tr>
@@ -166,3 +166,9 @@ export default {
   },
 };
 </script>
+
+<style>
+table{
+  border: 1px;
+}
+</style>
