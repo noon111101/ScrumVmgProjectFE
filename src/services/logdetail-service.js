@@ -44,6 +44,9 @@ class LogdtailService{
     save(data) {
         return axios.post("http://localhost:8080/api/log/create",data);
     }
+    sendImg(data) {
+        return axios.post("http://localhost:8080/api/log/testSendImg",data);
+    }
 
 }
 
