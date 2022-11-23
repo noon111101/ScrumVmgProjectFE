@@ -341,9 +341,10 @@ export default {
     text-align: left;
   }
 }
+
 @media only screen and (min-width: 1665px){
   .el-col-md-6 {
-    width: 24%;
+    width: 23%;
   }
 
   .buttons{

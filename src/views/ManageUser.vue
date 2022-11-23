@@ -33,7 +33,7 @@
             <div class="grid-content">
               <span style="">Tìm kiếm</span> &ensp;
               <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
-                        style="width: 240px;"/>
+                        style="width: 240px;padding-top: 2px;padding-bottom: 2px"/>
             </div>
           </el-col>
           <el-col :md="6" :lg="5" :xl="5" style="margin-bottom: 20px">
@@ -49,8 +49,8 @@
 
           <el-col  :md="6"  :lg="6" :xl="6" >
             <div class="grid-content">
-                <import-excel class="text-start"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 20px; "/>
-              <el-button class="" type="danger" style="" round
+                <import-excel class="text-start buttons"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 10px; "/>
+              <el-button class="buttons" type="danger" style="" round
                          @click="dialogFormVisible = true"
               ><i class="el-icon-plus"></i> Thêm nhân viên
               </el-button>
@@ -1019,5 +1019,35 @@ input:checked + .slider:before {
 
 .loading img {
   width: 25rem;
+}
+
+@media only screen and (min-width: 280px){
+  .el-col-md-6 {
+    width: 80%;
+  }
+
+  .buttons{
+    text-align: left;
+  }
+
+}
+
+@media only screen and (min-width: 992px){
+  .el-col-md-6 {
+    width: 100%;
+  }
+  .buttons{
+    text-align: left;
+  }
+}
+
+@media only screen and (min-width: 1665px){
+  .el-col-md-6 {
+    width: 23%;
+  }
+
+  .buttons{
+    text-align: right;
+  }
 }
 </style>
