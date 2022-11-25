@@ -9,7 +9,7 @@
     <div style="padding-bottom: 20px">
       <div className="container" style="width: 90%; margin: auto">
         <el-row :gutter="20">
-          <el-col  :md="6" :lg="5" :xl="6">
+          <el-col  :md="6" :lg="6" :xl="6">
             <div class="grid-content" style="margin-bottom: 20px">
               <span>Phòng ban</span> &ensp;
               <el-select
@@ -29,14 +29,14 @@
             </div>
           </el-col>
 
-          <el-col  :md="6" :lg="6" :xl="5" style="margin-bottom: 20px">
+          <el-col  :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">
             <div class="grid-content">
               <span style="">Tìm kiếm</span> &ensp;
-              <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"
-                        style="width: 240px;padding-top: 2px;padding-bottom: 2px"/>
+              <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email"
+                        style="width: 200px;padding: 2px 0"/>
             </div>
           </el-col>
-          <el-col :md="6" :lg="5" :xl="5" style="margin-bottom: 20px">
+          <el-col :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">
             <div class="grid-content ">
               <span style="">Trạng thái</span> &ensp;
               <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
@@ -49,8 +49,8 @@
 
           <el-col  :md="6"  :lg="6" :xl="6" class="div-buttons">
             <div class="grid-content div-buttons">
-                <import-excel class="text-start buttons"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 10px; "/>
-              <el-button class="buttons" type="danger" style="" round
+                <import-excel class="text-start buttons btn-import"  header="Thêm nhân viên" format=1 @getData="getAll" style="margin-right: 10px; "/>
+              <el-button class="buttons btn-add" type="danger" style="" round
                          @click="dialogFormVisible = true"
               ><i class="el-icon-plus"></i> Thêm nhân viên
               </el-button>
@@ -58,51 +58,6 @@
           </el-col>
         </el-row>
 
-<!--        <div class="d-flex">-->
-<!--          <div className="block" class="text-start col-8">-->
-<!--            <span>Phòng ban</span> &ensp;-->
-<!--            <el-select-->
-<!--                v-model="departmentId"-->
-<!--                @change="getAll"-->
-<!--                placeholder="Chọn Phòng ban"-->
-<!--            >-->
-<!--              <el-option value="0" label="Tất cả các phòng ban"></el-option>-->
-<!--              <el-option-->
-<!--                  v-for="item in departments"-->
-<!--                  :key="item.id"-->
-<!--                  :label="item.name"-->
-<!--                  :value="item.id"-->
-<!--              >-->
-<!--              </el-option>-->
-<!--            </el-select>-->
-<!--            &lt;!&ndash;        <div style="width: 200px" class="">&ndash;&gt;-->
-<!--            <span style="margin-left: 100px">Tìm kiếm</span> &ensp;-->
-<!--            <el-input-->
-<!--                v-model="search"-->
-<!--                @input="getAll"-->
-<!--                size="medium"-->
-<!--                placeholder="Tìm tên, email "-->
-<!--                style="width: 20%"-->
-<!--            />-->
-
-<!--            <span style="margin-left: 100px;">Trạng thái</span> &ensp;-->
-<!--            <el-select v-model="status" @change="getAll" placeholder="Trạng thái">-->
-<!--              <el-option value="" label="Tất cả"></el-option>-->
-<!--              <el-option label="Có hiệu lực" value="1"></el-option>-->
-<!--              <el-option label="Vô hiệu lực" value="0"></el-option>-->
-<!--            </el-select>-->
-
-<!--            &lt;!&ndash;        </div>&ndash;&gt;-->
-<!--          </div>-->
-
-<!--          <div style="float: right; margin-bottom: 20px" class="col-4 text-end">-->
-<!--            <import-excel header="Thêm nhân viên" format=1 @getData="getAll"/>-->
-<!--            <el-button class="" type="danger" style="margin-left: 20px;margin-right: 20px" round-->
-<!--                       @click="dialogFormVisible = true"-->
-<!--            ><i class="el-icon-plus"></i> Thêm nhân viên-->
-<!--            </el-button>-->
-<!--          </div>-->
-<!--        </div>-->
 
         <el-dialog title="Thêm nhân viên" :visible.sync="dialogFormVisible">
           <form id="formRegister">
@@ -317,7 +272,7 @@
         <div>
           <el-table
               :data="users"
-              height="800px"
+              height="780px"
               :header-cell-style="{
           background: '#D9D9D9',
           color: 'black',
@@ -942,6 +897,11 @@ export default {
 
 }
 
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #c9f5eb !important;
+
+}
+
 /* The switch - the box around the slider */
 .switch {
   position: relative;
@@ -1030,6 +990,8 @@ input:checked + .slider:before {
     text-align: left;
   }
 
+
+
 }
 
 @media only screen and (min-width: 992px){
@@ -1041,7 +1003,7 @@ input:checked + .slider:before {
   }
 }
 
-@media only screen and (min-width: 1669px){
+@media only screen and (min-width: 1440px){
   .el-col-md-6 {
     width: 23%;
   }
@@ -1053,6 +1015,22 @@ input:checked + .slider:before {
   .div-buttons{
     float: right;
   }
+
+}
+
+@media only screen and (min-width: 1689px){
+  .el-col-md-6 {
+    width: 23%;
+  }
+
+  .buttons{
+    text-align: right;
+  }
+
+  .div-buttons{
+    float: right;
+  }
+
 }
 
 @media only screen and (min-width: 1920px){

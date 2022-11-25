@@ -158,7 +158,7 @@ export default {
 .btn-1:hover {
   float: right;
   color: #FFFFFF;
-  background-color: #e00910;
+  background-color: #de1d23;
   border: none;
   border-radius: 8px;
   padding: 6px 30px;
@@ -168,7 +168,7 @@ export default {
 .btn-2:hover {
   float: right;
   color: #FFFFFF;
-  background-color: #0dd6c9;
+  background-color: #06bdb3;
   border: none;
   border-radius: 8px;
   padding: 6px 30px;
