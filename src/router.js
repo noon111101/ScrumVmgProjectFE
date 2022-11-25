@@ -103,25 +103,22 @@ const router = new Router({
       component: () => import('./views/RequestDetail.vue')
     },
     {
+      path: '/managele',
+      name: 'managele',
+      component: () => import('./views/ManageLe.vue')
+    },
+    {
       path: '/reset_password-tokenLink',
       component: () => import('./views/ForgotChangePassword.vue')
     },
-    {
-      path: '/managerequest',
-      name: 'managerequest',
-      component: () => import('./views/ManageRequest.vue')
-    },
+
   ]
 }
 );
 
 router.beforeEach((to, from, next) => {
-
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/managerequest'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/managele'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
-
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie'];
-  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist','/requestdetail']
 
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
   const managePages = [ '/timesheetmod','/report'];
