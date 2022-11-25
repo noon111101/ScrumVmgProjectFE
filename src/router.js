@@ -98,6 +98,11 @@ const router = new Router({
       component: () => import('./views/Selfie.vue')
     },
     {
+      path: '/requestdetail',
+      name: 'requestdetail',
+      component: () => import('./views/RequestDetail.vue')
+    },
+    {
       path: '/reset_password-tokenLink',
       component: () => import('./views/ForgotChangePassword.vue')
     },
@@ -111,8 +116,13 @@ const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
+
   const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/managerequest'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
+
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie'];
+  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist','/requestdetail']
+
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
   const managePages = [ '/timesheetmod','/report'];
   const authRequired = !publicPages.includes(to.path);

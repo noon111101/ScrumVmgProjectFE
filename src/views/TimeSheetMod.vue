@@ -67,7 +67,7 @@
       <br/>
       <div>
         <el-table class="text-center " :data="logs"
-                  height="600px"
+                  height="780px"
                   :default-sort="{prop: 'date_log', order: 'descending'}"
                   :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
                   style="width: 100%; display: inline-block; font-size: 16px;border-radius: 10px"
@@ -204,5 +204,10 @@ export default {
 
 .el-table .success-row {
   background: #F5F5F5;
+}
+
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #c9f5eb !important;
+
 }
 </style>
