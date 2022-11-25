@@ -205,4 +205,9 @@ export default {
 .el-table .success-row {
   background: #F5F5F5;
 }
+
+.el-table--enable-row-hover .el-table__body tr:hover > td {
+  background-color: #c9f5eb !important;
+
+}
 </style>
