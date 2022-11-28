@@ -103,9 +103,9 @@ const router = new Router({
       component: () => import('./views/RequestDetail.vue')
     },
     {
-      path: '/managele',
-      name: 'managele',
-      component: () => import('./views/ManageLe.vue')
+      path: '/manageholiday',
+      name: 'manageholiday',
+      component: () => import('./views/ManageHoliday.vue')
     },
     {
       path: '/reset_password-tokenLink',
@@ -117,7 +117,7 @@ const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/managele'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
 
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
