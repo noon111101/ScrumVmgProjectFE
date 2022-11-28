@@ -6,20 +6,20 @@
       <div className="container" style="width: 90%; margin: auto">
         <h1 class="title-header">Danh Sách Ngày Lễ Trong Năm 2022</h1>
 
-        <div class="grid-content div-buttons" style="margin-bottom: 10px">
+        <div class="grid-content div-buttons" style="margin-bottom: 30px">
           <span style="">Tìm kiếm</span> &ensp;
-          <el-input size="medium" placeholder="Tìm theo tên, email" class="text-start buttons btn-import"
+          <el-input size="medium" v-model="search" @input="getAll" placeholder="Tìm theo tên, email" class="text-start buttons btn-import"
                     style="width: 200px;padding: 2px 0;margin-right: 20px;"/>
           <el-button class="buttons btn-add" type="danger" style="" round
                      @click="dialogFormVisible = true"
-          ><i class="el-icon-plus"></i> Thêm nhân viên
+          ><i class="el-icon-plus"></i> Thêm Nghỉ Lễ
           </el-button>
         </div>
 
         <div>
           <el-table
-              :data="users"
-              height="780px"
+              :data="holidays"
+              height="745px"
               :header-cell-style="{
           background: '#D9D9D9',
           color: 'black',
@@ -37,43 +37,37 @@
                 width="100px"
             ></el-table-column>
             <el-table-column
-                label="Ngày nghỉ"
-                v-slot:="data"
-                align="center"
-                width="120px"
-            >{{data.row.code}}</el-table-column>
-            <el-table-column
                 label="Tên ngày nghỉ lễ"
-                prop="fullName"
+                prop="holidayName"
+                align="center"
+            ></el-table-column>
+            <el-table-column
+                label="Từ Ngày"
+                prop="dateFrom"
+                align="center"
+            ></el-table-column>
+            <el-table-column
+                label="Đến Ngày"
+                prop="dateTo"
                 align="center"
             ></el-table-column>
             <el-table-column
                 label="Số ngày nghỉ"
-                prop="departments.name"
                 align="center"
             >
+              10
             </el-table-column>
-            <el-table-column
-                label="Tính Công"
-                prop="username"
-                align="center"
-            ></el-table-column>
+
             <el-table-column
                 label="Lặp"
                 v-slot:="data"
                 align="center"
                 width="150px"
             >
-
+              <span v-if="data.row.isLoop">Hàng Năm</span>
+              <span v-if="!data.row.isLoop">Không</span>
             </el-table-column>
-            <el-table-column
-                v-slot:="data"
-                label="Phòng ban"
-                width="200px"
-                align="center"
-            >
 
-            </el-table-column>
 
             <el-table-column
                 v-slot:="data"
@@ -81,57 +75,12 @@
                 width="200px"
                 align="center"
             >
-              <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
-
-              <router-link :to="`/user/${data.row.id}`">
-                <!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
-                <button style="margin-right: 10px" class="btn-action">
-                  <i class="el-icon-edit-outline" style="width: 30px"></i>
-                </button>
-              </router-link>
-
-              <!--          <div v-if="data.row.id == currentUser.user.id">-->
-              <button
-                  v-if="data.row.avalible == 1 && data.row.id == currentUser.user.id"
-                  class="btn-action"
-                  @click="
-              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
-            "
-                  disabled
-              >
-                <i class="el-icon-unlock" style="width: 30px"></i>
+              <button style="margin-right: 10px" class="btn-action">
+                <i class="el-icon-edit-outline" style="width: 30px"></i>
               </button>
-              <button
-                  v-if="data.row.avalible == 0 && data.row.id == currentUser.user.id"
-                  class="btn-action"
-                  @click="
-              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
-            "
-                  disabled
-              >
-                <i class="el-icon-lock" style="width: 30px"></i>
+              <button class="btn-action" @click="deleteHoliday(data.row.id, data.row.holidayName)">
+                <i class="el-icon-delete" style="width: 30px"></i>
               </button>
-              <!--          </div>-->
-              <!--          <div v-if="data.row.id != currentUser.user.id">-->
-              <button
-                  v-if="data.row.avalible == 1 && data.row.id != currentUser.user.id"
-                  class="btn-action"
-                  @click="
-              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
-            "
-              >
-                <i class="el-icon-unlock" style="width: 30px"></i>
-              </button>
-              <button
-                  v-if="data.row.avalible == 0 && data.row.id != currentUser.user.id"
-                  class="btn-action"
-                  @click="
-              changeStatus(data.row.id, data.row.fullName, data.row.avalible)
-            "
-              >
-                <i class="el-icon-lock" style="width: 30px"></i>
-              </button>
-              <!--          </div>-->
             </el-table-column>
           </el-table>
 
@@ -151,6 +100,8 @@
 </template>
 
 <script>
+import HolidayService from "@/services/holiday-service";
+
 export default {
   name: "ManageLe",
   data() {
@@ -158,10 +109,15 @@ export default {
       dialogFormVisible: false,
       totalItems: 0,
       page: 0,
-      pageSize: 10,
+      pageSize: 12,
+      holidays: [],
+      search: ''
     }
   },
-  methods:{
+  created() {
+    this.getAll()
+  },
+  methods: {
     tableRowClassName({rowIndex}) {
       if (rowIndex % 2 === 1) {
         return 'warning-row';
@@ -170,6 +126,92 @@ export default {
       }
       return 'success-row';
     },
+    getAll() {
+      let params = null;
+      if(this.search != null && this.search != ''){
+        this.page = 0;
+        params ={
+          "page": this.page,
+          "size": this.pageSize,
+          "search": this.search,
+        };
+      }
+      else{
+        params ={
+          "page": this.page,
+          "size": this.pageSize,
+        };
+      }
+
+      HolidayService.getAll(params).then(response => {
+        this.holidays = response.data.content
+        this.totalItems = response.data.totalElements
+      })
+    },
+    deleteHoliday(id, name) {
+      this.$swal
+          .fire({
+            title: "Xóa ngày lễ " + name + "?",
+            showDenyButton: true,
+            confirmButtonColor: "#75C4C0",
+            confirmButtonText: "Xóa",
+            denyButtonColor: "#ED9696",
+            denyButtonText: "Đóng",
+            customClass: {
+              actions: "my-actions",
+              cancelButton: "order-1 right-gap",
+              confirmButton: "order-2",
+              denyButton: "order-3",
+            },
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              HolidayService.deleteHoliday(id).then((response) => {
+                this.$swal.fire({
+                  title: response.data.message,
+                  icon: "success",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+                this.getAll();
+              })
+                  .catch((e) => {
+                    this.$swal.fire({
+                      title: e.data.error.message,
+                      icon: "error",
+                      timer: 2000,
+                      timerProgressBar: true,
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      width: "24em",
+                    });
+                  });
+
+            } else if (result.isDenied) {
+              this.$swal.fire({
+                title: "Thay đổi thất bại",
+                icon: "error",
+                timer: 2000,
+                timerProgressBar: true,
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                width: "24em",
+              });
+            }
+          })
+      ;
+    },
+    handlePageChange(value) {
+      this.page = value - 1;
+      this.getAll();
+    },
+
   }
 }
 </script>
@@ -197,13 +239,29 @@ export default {
 .el-table .success-row {
   background: #F5F5F5;
 }
+
+.el-table .btn-action {
+  border: none;
+  padding: 5px 5px;
+  background-color: #f8cbad;
+  border-radius: 5px;
+}
+
+.el-table .btn-action:hover {
+  border: none;
+  padding: 5px 5px;
+  background-color: #f4e4d4;
+  border-radius: 5px;
+
+}
+
 .title-header {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 24px;
 }
 
-.div-buttons{
+.div-buttons {
   float: right;
 }
 </style>
