@@ -152,14 +152,14 @@
                         </td>
                       </tr>
 
-                      <template v-if="user.code == currentUser.user.code">
+                      <template v-if="user.username == currentUser.user.username">
                         <tr style="height: 40px">
                           <td style="width: 100px">
                             Chức vụ<span style="color: red">*</span>
                           </td>
                           <td style="width: 300px">
                             <input
-                              readonly
+                              readonly=""
                               type="radio"
                               id="admin"
                               value="admin"
@@ -173,7 +173,7 @@
                           <td style="width: 100px"></td>
                           <td style="width: 300px">
                             <input
-                              disabled
+                                disabled=""
                               type="radio"
                               id="manage"
                               value="manage"
@@ -188,7 +188,7 @@
                           <td style="width: 100px"></td>
                           <td style="width: 300px">
                             <input
-                              disabled
+                                disabled
                               type="radio"
                               id="user"
                               value="user"
@@ -199,7 +199,7 @@
                           </td>
                         </tr>
                       </template>
-                      <template v-if="user.code != currentUser.user.code">
+                      <template v-if="user.username != currentUser.user.username">
                         <tr style="height: 40px">
                           <td style="width: 100px">
                             Chức vụ<span style="color: red">*</span>
