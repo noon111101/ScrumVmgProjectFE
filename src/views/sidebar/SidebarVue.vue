@@ -192,6 +192,7 @@ export default {
 .navbar {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  font-weight: 600;
 }
 .user-detail{
   position: fixed;
@@ -204,6 +205,14 @@ export default {
   width:16%;
 }
 
+
+.nav-link:hover{
+  color: #75c4c0;
+}
+
+.nav-link:focus{
+  color: #ed9696;
+}
 @media screen and (max-width: 700px) {
       #offcanvasDarkNavbar{
           width:60%

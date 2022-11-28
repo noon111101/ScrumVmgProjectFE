@@ -100,7 +100,7 @@
       <div>
 
         <el-table
-            height="600px"
+            height="780px"
             :default-sort="{prop: 'date_log', order: 'descending'}"
             :data="logs"
             :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"
@@ -341,9 +341,10 @@ export default {
     text-align: left;
   }
 }
+
 @media only screen and (min-width: 1665px){
   .el-col-md-6 {
-    width: 24%;
+    width: 23%;
   }
 
   .buttons{

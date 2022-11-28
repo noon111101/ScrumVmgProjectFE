@@ -74,7 +74,7 @@
           <h1>Oops!</h1>
           <h2>404 - Link của bạn đã hết hạn</h2>
         </div>
-        <a href="/login">Đến trang đăng nhập</a>
+        <a href="/login" >Đến trang đăng nhập</a>
       </div>
     </div>
   </div>
@@ -184,9 +184,6 @@ li {
   margin: 0 10px;
 }
 
-a {
-  color: #42b983;
-}
 
 .register {
   background: -webkit-linear-gradient(left, rgba(52, 58, 64, 255), #ffffff);
