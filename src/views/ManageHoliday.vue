@@ -2,37 +2,55 @@
   <div>
     <div class="loading" id="loading">
       <img
+
         src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"
         alt="loading"
+
       />
     </div>
     <div style="padding-bottom: 20px">
       <div className="container" style="width: 90%; margin: auto">
-        <h1 class="title-header">Danh Sách Ngày Lễ Trong Năm 2022</h1>
-        <div class="grid-content div-buttons" style="margin-bottom: 30px">
-          <span style="">Tìm kiếm</span> &ensp;
-          <el-input
-            size="medium"
-            v-model="search"
-            @input="getAll"
-            placeholder="Tìm theo tên, email"
-            class="text-start buttons btn-import"
-            style="width: 200px; padding: 2px 0; margin-right: 20px"
-          />
-          <el-button
-            class="buttons btn-add"
-            type="danger"
-            style=""
-            round
-            @click="dialogFormVisible = true"
+
+        <h1 class="title-header" style="margin-bottom: 20px">Danh Sách Ngày Lễ Trong Năm 2022</h1>
+
+
+        <div class="grid-content" style="margin-bottom: 30px">
+          <span class="demonstration">Year</span>&ensp;
+          <el-date-picker
+              @change="getAll"
+              v-model="year"
+              type="year"
+              placeholder="Chọn Năm"
+              value-format="yyyy">
+          </el-date-picker>
+          <div class="div-buttons">
+            <span style="">Tìm kiếm</span> &ensp;
+            <el-input
+                size="medium"
+                v-model="search"
+                @input="getAll"
+                placeholder="Tìm tên nghỉ lễ"
+                class="text-start buttons btn-import"
+                style="width: 200px; padding: 2px 0; margin-right: 20px"
+            />
+            <el-button
+                class="buttons btn-add"
+                type="danger"
+                style=""
+                round
+                @click="dialogFormVisible = true"
             ><i class="el-icon-plus"></i> Thêm Nghỉ Lễ
-          </el-button>
+            </el-button>
+          </div>
+
+
         </div>
         <el-dialog
-          style="text-align: center; font-weight: bold"
-          title="Chỉnh sửa ngày nghỉ lễ"
-          :visible.sync="dialogFormVisible"
+            style="text-align: center; font-weight: bold"
+            title="Chỉnh sửa ngày nghỉ lễ"
+            :visible.sync="dialogFormVisible"
         >
+
           <form id="formRegister">
             <div class="row register-form">
               <div class="col-md-8">
@@ -106,38 +124,47 @@
           </form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="removeValidate(false)">Hủy</el-button>
+
             <el-button type="primary" @click="sendForm">Lưu</el-button>
           </span>
         </el-dialog>
         <div>
           <el-table
-            :data="holidays"
-            height="745px"
-            :header-cell-style="{
+
+              :data="holidays"
+              height="745px"
+              :header-cell-style="{
+
               background: '#D9D9D9',
               color: 'black',
               align: 'center',
             }"
-            style="
+
+              style="
+
               width: 100%;
               display: inline-block;
               font-size: 16px;
               border-radius: 10px;
               box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
             "
+
             :row-class-name="tableRowClassName"
+
           >
             >
             <el-table-column
-              label="STT"
-              type="index"
-              align="center"
-              width="100px"
+                label="STT"
+                type="index"
+                align="center"
+                width="100px"
             ></el-table-column>
             <el-table-column
-              label="Tên ngày nghỉ lễ"
-              prop="holidayName"
-              align="center"
+
+                label="Tên ngày nghỉ lễ"
+                prop="holidayName"
+                align="center"
+
             ></el-table-column>
             <el-table-column
               label="Từ Ngày"
@@ -153,28 +180,21 @@
               10
             </el-table-column>
 
-            <el-table-column
-              label="Lặp"
-              v-slot:="data"
-              align="center"
-              width="150px"
-            >
-              <span v-if="data.row.isLoop">Hàng Năm</span>
-              <span v-if="!data.row.isLoop">Không</span>
-            </el-table-column>
 
             <el-table-column
-              v-slot:="data"
-              label="Thao tác"
-              width="200px"
-              align="center"
+                v-slot:="data"
+                label="Thao tác"
+                width="200px"
+                align="center"
             >
               <button style="margin-right: 10px" class="btn-action">
                 <i class="el-icon-edit-outline" style="width: 30px"></i>
               </button>
               <button
-                class="btn-action"
-                @click="deleteHoliday(data.row.id, data.row.holidayName)"
+
+                  class="btn-action"
+                  @click="deleteHoliday(data.row.id, data.row.holidayName)"
+
               >
                 <i class="el-icon-delete" style="width: 30px"></i>
               </button>
@@ -182,12 +202,12 @@
           </el-table>
         </div>
         <el-pagination
-          class="text-end"
-          background
-          layout="prev, pager, next"
-          :total="totalItems"
-          :page-size="pageSize"
-          @current-change="handlePageChange"
+            class="text-end"
+            background
+            layout="prev, pager, next"
+            :total="totalItems"
+            :page-size="pageSize"
+            @current-change="handlePageChange"
         >
         </el-pagination>
       </div>
@@ -215,16 +235,21 @@ export default {
       holidays: [],
       search: "",
 
+      year: '',
+
+
       errName: "",
       checkName: true,
       errDateTo: "",
       checkDateTo: true,
       errDateFrom: "",
       checkDateFrom: true,
+
     };
   },
   created() {
     this.getAll();
+
   },
   methods: {
     removeValidate(check) {
@@ -234,6 +259,7 @@ export default {
       this.checkName = false;
       this.errName = "";
     },
+
 
     showLoading: function () {
       const iconLoading = document.getElementById("loading");
@@ -245,6 +271,7 @@ export default {
       iconLoading.style.display = "none";
     },
     async sendForm() {
+
       let response = await HolidayService.getAll();
       this.holidays = response.data;
 
@@ -313,20 +340,23 @@ export default {
       return "success-row";
     },
     getAll() {
-      let params = null;
-      if (this.search != null && this.search != "") {
-        this.page = 0;
-        params = {
-          page: this.page,
-          size: this.pageSize,
-          search: this.search,
-        };
-      } else {
-        params = {
-          page: this.page,
-          size: this.pageSize,
-        };
-      }
+
+      this.year = this.year !== null ? this.year : 0;
+      // if (this.search != null && this.search != "") {
+      //   this.page = 0;
+      const params = {
+        page: this.page,
+        size: this.pageSize,
+        search: this.search,
+        year: this.year
+      };
+      // } else {
+      //   params = {
+      //     page: this.page,
+      //     size: this.pageSize,
+      //   };
+      // }
+
 
       HolidayService.getAll(params).then((response) => {
         this.holidays = response.data.content;
@@ -335,61 +365,63 @@ export default {
     },
     deleteHoliday(id, name) {
       this.$swal
-        .fire({
-          title: "Xóa ngày lễ " + name + "?",
-          showDenyButton: true,
-          confirmButtonColor: "#75C4C0",
-          confirmButtonText: "Xóa",
-          denyButtonColor: "#ED9696",
-          denyButtonText: "Đóng",
-          customClass: {
-            actions: "my-actions",
-            cancelButton: "order-1 right-gap",
-            confirmButton: "order-2",
-            denyButton: "order-3",
-          },
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            HolidayService.deleteHoliday(id)
-              .then((response) => {
-                this.$swal.fire({
-                  title: response.data.message,
-                  icon: "success",
-                  timer: 2000,
-                  timerProgressBar: true,
-                  toast: true,
-                  position: "top-end",
-                  showConfirmButton: false,
-                  width: "24em",
-                });
-                this.getAll();
-              })
-              .catch((e) => {
-                this.$swal.fire({
-                  title: e.data.error.message,
-                  icon: "error",
-                  timer: 2000,
-                  timerProgressBar: true,
-                  toast: true,
-                  position: "top-end",
-                  showConfirmButton: false,
-                  width: "24em",
-                });
+
+          .fire({
+            title: "Xóa ngày lễ " + name + "?",
+            showDenyButton: true,
+            confirmButtonColor: "#75C4C0",
+            confirmButtonText: "Xóa",
+            denyButtonColor: "#ED9696",
+            denyButtonText: "Đóng",
+            customClass: {
+              actions: "my-actions",
+              cancelButton: "order-1 right-gap",
+              confirmButton: "order-2",
+              denyButton: "order-3",
+            },
+          })
+          .then((result) => {
+            if (result.isConfirmed) {
+              HolidayService.deleteHoliday(id)
+                  .then((response) => {
+                    this.$swal.fire({
+                      title: response.data.message,
+                      icon: "success",
+                      timer: 2000,
+                      timerProgressBar: true,
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      width: "24em",
+                    });
+                    this.getAll();
+                  })
+                  .catch((e) => {
+                    this.$swal.fire({
+                      title: e.data.error.message,
+                      icon: "error",
+                      timer: 2000,
+                      timerProgressBar: true,
+                      toast: true,
+                      position: "top-end",
+                      showConfirmButton: false,
+                      width: "24em",
+                    });
+                  });
+            } else if (result.isDenied) {
+              this.$swal.fire({
+                title: "Thay đổi thất bại",
+                icon: "error",
+                timer: 2000,
+                timerProgressBar: true,
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                width: "24em",
               });
-          } else if (result.isDenied) {
-            this.$swal.fire({
-              title: "Thay đổi thất bại",
-              icon: "error",
-              timer: 2000,
-              timerProgressBar: true,
-              toast: true,
-              position: "top-end",
-              showConfirmButton: false,
-              width: "24em",
-            });
-          }
-        });
+            }
+          });
+
     },
     handlePageChange(value) {
       this.page = value - 1;
