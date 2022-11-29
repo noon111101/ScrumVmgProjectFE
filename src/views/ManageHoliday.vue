@@ -33,10 +33,44 @@
           title="Chỉnh sửa ngày nghỉ lễ"
           :visible.sync="dialogFormVisible"
         >
-          <form id="formRegister">
+          <form id="formAddHoliday">
             <div class="row register-form">
               <div class="col-md-8">
                 <table class="text-start">
+                  <tr style="height: 70px">
+                    <td style="width: 150px">
+                      Lựa chọn ngày nghỉ lễ<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 500px">
+                      <div class="form-group">
+                        <!-- <el-select v-model="value" placeholder="Select">
+                          <el-option>
+                            <el-button
+                              @click="removeValidate(false)"
+                            ></el-button>
+                          </el-option>
+                        </el-select> -->
+                        <el-dropdown>
+                          <el-button type="warning">
+                            Dropdown List<i
+                              class="el-icon-arrow-down el-icon--right"
+                            ></i>
+                          </el-button>
+                          <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>
+                              <el-button @click="tetduong()"
+                                >Tết dương lịch</el-button
+                              ></el-dropdown-item
+                            >
+                            <el-dropdown-item>Action 2</el-dropdown-item>
+                            <el-dropdown-item>Action 3</el-dropdown-item>
+                            <el-dropdown-item>Action 4</el-dropdown-item>
+                            <el-dropdown-item>Action 5</el-dropdown-item>
+                          </el-dropdown-menu>
+                        </el-dropdown>
+                      </div>
+                    </td>
+                  </tr>
                   <tr style="height: 70px">
                     <td style="width: 150px">
                       Họ và tên<span style="color: red">*</span>
@@ -203,12 +237,12 @@ export default {
   data() {
     return {
       dialogFormVisible: false,
-
       form: {
         name: "",
         dateFrom: "",
         dateTo: "",
       },
+
       totalItems: 0,
       page: 0,
       pageSize: 12,
@@ -232,17 +266,16 @@ export default {
       this.form.dateFrom = "";
       this.form.dateTo = "";
       this.checkName = false;
+      this.checkDateFrom = false;
+      this.checkDateTo = false;
       this.errName = "";
+      this.errDateFrom = "";
+      this.errDateTo = "";
     },
 
-    showLoading: function () {
-      const iconLoading = document.getElementById("loading");
-      iconLoading.style.display = "flex";
-    },
-
-    hideLoading: function () {
-      const iconLoading = document.getElementById("loading");
-      iconLoading.style.display = "none";
+    tetduong() {
+      this.form.name = "Tết dương lịch";
+    
     },
     async sendForm() {
       let response = await HolidayService.getAll();
@@ -283,23 +316,18 @@ export default {
         this.checkDateTo = true;
       }
       if (this.checkName === true && this.checkDateTo === true) {
-        this.showLoading();
         this.dialogFormVisible = false;
-        setTimeout(() => {
-          this.submitted = true;
-          let form = document.querySelector("#formAddHoliday");
-          HolidayService.addHoliday(form).then(() => {
-            this.$notify.success({
-              message: "Thêm ngày nghỉ lễ thành công",
-              title: "Success",
-              timer: 2000,
-              timerProgressBar: true,
-            });
-            this.hideLoading();
-            this.getAll();
+        this.submitted = true;
+        let form = document.querySelector("#formAddHoliday");
+        HolidayService.addHoliday(form).then(() => {
+          this.$notify.success({
+            message: "Thêm ngày nghỉ lễ thành công",
+            title: "Success",
+            timer: 2000,
+            timerProgressBar: true,
           });
-        }, 2000).catch(() => {
-          this.message = "";
+          this.removeValidate(false);
+          this.getAll();
         });
       }
     },
