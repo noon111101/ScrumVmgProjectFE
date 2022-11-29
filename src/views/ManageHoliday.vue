@@ -2,12 +2,15 @@
   <div>
     <div class="loading" id="loading">
       <img
-          src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"
-          alt="loading"
+
+        src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"
+        alt="loading"
+
       />
     </div>
     <div style="padding-bottom: 20px">
       <div className="container" style="width: 90%; margin: auto">
+
         <h1 class="title-header" style="margin-bottom: 20px">Danh Sách Ngày Lễ Trong Năm 2022</h1>
 
 
@@ -40,70 +43,114 @@
             </el-button>
           </div>
 
+
         </div>
         <el-dialog
             style="text-align: center; font-weight: bold"
             title="Chỉnh sửa ngày nghỉ lễ"
             :visible.sync="dialogFormVisible"
         >
-          <el-form id="formAddHoliday">
-            <el-form-item label="Tên ngày nghỉ lễ *">
-              <el-col :span="16">
-                <el-input
-                    type="text"
-                    v-model="form.name"
-                    name="name"
-                    placeholder="Tết Dương lịch"
-                    style="width: 100%"
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Nghỉ từ *">
-              <el-col :span="16">
-                <el-date-picker
-                    type="date"
-                    placeholder="Chọn ngày bắt đầu"
-                    v-model="form.dateFrom"
-                    name="dateFrom"
-                    style="width: 100%"
-                ></el-date-picker>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Nghỉ đến *">
-              <el-col :span="16">
-                <el-date-picker
-                    type="date"
-                    placeholder="Chọn ngày kết thúc"
-                    v-model="form.dateTo"
-                    name="dateTo"
-                    style="width: 100%"
-                ></el-date-picker>
-              </el-col>
-            </el-form-item>
-          </el-form>
+
+          <form id="formRegister">
+            <div class="row register-form">
+              <div class="col-md-8">
+                <table class="text-start">
+                  <tr style="height: 70px">
+                    <td style="width: 150px">
+                      Họ và tên<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 500px">
+                      <div class="form-group">
+                        <el-input
+                          v-model="form.name"
+                          type="text"
+                          name="name"
+                          placeholder="Họ và tên"
+                          autocomplete="off"
+                        >
+                        </el-input>
+                        <small v-if="errName !== null" style="color: red">
+                          {{ errName }}
+                        </small>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr style="height: 70px">
+                    <td style="width: 150px">
+                      Email<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 500px">
+                      <div class="form-group">
+                        <el-date-picker
+                          v-model="form.dateFrom"
+                          placeholder="Chọn ngày bắt đầu"
+                          value=""
+                          name="dateFrom"
+                          autocomplete="off"
+                        >
+                        </el-date-picker>
+                      </div>
+                      <small v-if="errDateFrom !== null" style="color: red">
+                        {{ errDateFrom }}
+                      </small>
+                    </td>
+                  </tr>
+                  <tr style="height: 70px">
+                    <td style="width: 150px">
+                      Mã nhân viên<span style="color: red">*</span>
+                    </td>
+                    <td style="width: 500px">
+                      <div class="form-group">
+                        <el-date-picker
+                          placeholder="Chọn ngày kết thúc"
+                          v-model="form.dateTo"
+                          name="dateTo"
+                          autocomplete="off"
+                        >
+                        </el-date-picker>
+                      </div>
+                      <small v-if="errDateTo !== null" style="color: red">
+                        {{ errDateTo }}
+                      </small>
+                    </td>
+                  </tr>
+                </table>
+                <br />
+              </div>
+              <small style="color: green">
+                {{ message }}
+              </small>
+            </div>
+          </form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">Hủy</el-button>
+            <el-button @click="removeValidate(false)">Hủy</el-button>
+
             <el-button type="primary" @click="sendForm">Lưu</el-button>
           </span>
         </el-dialog>
-
         <div>
           <el-table
+
               :data="holidays"
               height="745px"
               :header-cell-style="{
+
               background: '#D9D9D9',
               color: 'black',
               align: 'center',
             }"
+
               style="
+
               width: 100%;
               display: inline-block;
               font-size: 16px;
               border-radius: 10px;
               box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
             "
-              :row-class-name="tableRowClassName"
+
+            :row-class-name="tableRowClassName"
+
           >
             >
             <el-table-column
@@ -113,33 +160,26 @@
                 width="100px"
             ></el-table-column>
             <el-table-column
+
                 label="Tên ngày nghỉ lễ"
                 prop="holidayName"
                 align="center"
+
             ></el-table-column>
             <el-table-column
-                label="Từ Ngày"
-                prop="dateFrom"
-                align="center"
+              label="Từ Ngày"
+              prop="dateFrom"
+              align="center"
             ></el-table-column>
             <el-table-column
-                label="Đến Ngày"
-                prop="dateTo"
-                align="center"
+              label="Đến Ngày"
+              prop="dateTo"
+              align="center"
             ></el-table-column>
             <el-table-column label="Số ngày nghỉ" align="center">
               10
             </el-table-column>
 
-            <el-table-column
-                label="Lặp"
-                v-slot:="data"
-                align="center"
-                width="150px"
-            >
-              <span v-if="data.row.isLoop">Hàng Năm</span>
-              <span v-if="!data.row.isLoop">Không</span>
-            </el-table-column>
 
             <el-table-column
                 v-slot:="data"
@@ -151,8 +191,10 @@
                 <i class="el-icon-edit-outline" style="width: 30px"></i>
               </button>
               <button
+
                   class="btn-action"
                   @click="deleteHoliday(data.row.id, data.row.holidayName)"
+
               >
                 <i class="el-icon-delete" style="width: 30px"></i>
               </button>
@@ -192,16 +234,33 @@ export default {
       pageSize: 12,
       holidays: [],
       search: "",
+
       year: '',
+
+
+      errName: "",
+      checkName: true,
+      errDateTo: "",
+      checkDateTo: true,
+      errDateFrom: "",
+      checkDateFrom: true,
+
     };
   },
   created() {
     this.getAll();
-  },
-  mounted() {
-    this.getAll();
+
   },
   methods: {
+    removeValidate(check) {
+      (this.dialogFormVisible = check), (this.form.name = "");
+      this.form.dateFrom = "";
+      this.form.dateTo = "";
+      this.checkName = false;
+      this.errName = "";
+    },
+
+
     showLoading: function () {
       const iconLoading = document.getElementById("loading");
       iconLoading.style.display = "flex";
@@ -212,27 +271,67 @@ export default {
       iconLoading.style.display = "none";
     },
     async sendForm() {
-      this.showLoading();
-      this.dialogFormVisible = false;
-      setTimeout(() => {
-        this.submitted = true;
-        let form = document.querySelector("#formAddHoliday");
-        HolidayService.addHoliday(form).then(() => {
-          this.$notify.success({
-            message: "Tạo tài khoản thành công",
-            title: "Success",
-            timer: 2000,
-            timerProgressBar: true,
+
+      let response = await HolidayService.getAll();
+      this.holidays = response.data;
+
+      if (!this.form.name) {
+        this.errName = "Vui lòng nhập họ và tên";
+        this.checkName = false;
+      } else {
+        this.errName = "";
+        this.checkName = true;
+      }
+
+      for (let i = 0; i < this.holidays.length; i++) {
+        if (this.form.name === this.holidays[i].name) {
+          this.errName = "Ngày nghỉ lễ đã tồn tại";
+          this.checkName = false;
+          break;
+        } else {
+          this.errName = "";
+          this.checkName = true;
+        }
+      }
+
+      if (!this.form.dateFrom) {
+        this.errDateFrom = "Vui lòng chọn ngày bắt đầu";
+        this.checkDateFrom = false;
+      } else {
+        this.errDateFrom = "";
+        this.checkDateFrom = true;
+      }
+
+      if (!this.form.dateTo) {
+        this.errDateTo = "Vui lòng chọn ngày kết thúc";
+        this.checkDateTo = false;
+      } else {
+        this.errDateTo = "";
+        this.checkDateTo = true;
+      }
+      if (this.checkName === true && this.checkDateTo === true) {
+        this.showLoading();
+        this.dialogFormVisible = false;
+        setTimeout(() => {
+          this.submitted = true;
+          let form = document.querySelector("#formAddHoliday");
+          HolidayService.addHoliday(form).then(() => {
+            this.$notify.success({
+              message: "Thêm ngày nghỉ lễ thành công",
+              title: "Success",
+              timer: 2000,
+              timerProgressBar: true,
+            });
+            this.hideLoading();
+            this.getAll();
           });
-          this.hideLoading();
-          this.getAll();
+        }, 2000).catch(() => {
+          this.message = "";
         });
-      }, 2000).catch(() => {
-        this.message = "";
-      });
+      }
     },
 
-    tableRowClassName({rowIndex}) {
+    tableRowClassName({ rowIndex }) {
       if (rowIndex % 2 === 1) {
         return "warning-row";
       } else if (rowIndex % 2 === 0) {
@@ -241,6 +340,7 @@ export default {
       return "success-row";
     },
     getAll() {
+
       this.year = this.year !== null ? this.year : 0;
       // if (this.search != null && this.search != "") {
       //   this.page = 0;
@@ -257,6 +357,7 @@ export default {
       //   };
       // }
 
+
       HolidayService.getAll(params).then((response) => {
         this.holidays = response.data.content;
         this.totalItems = response.data.totalElements;
@@ -264,6 +365,7 @@ export default {
     },
     deleteHoliday(id, name) {
       this.$swal
+
           .fire({
             title: "Xóa ngày lễ " + name + "?",
             showDenyButton: true,
@@ -319,6 +421,7 @@ export default {
               });
             }
           });
+
     },
     handlePageChange(value) {
       this.page = value - 1;

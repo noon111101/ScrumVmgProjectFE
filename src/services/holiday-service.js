@@ -10,7 +10,9 @@ class HolidayService{
     }
     addHoliday(holiday){
         let holidayForm = new FormData(holiday)
-        return axios.post(API_URL + 'add', holidayForm);
+
+      return axios.post(API_URL + 'add', holidayForm);
+
     }
 }
 
