@@ -103,28 +103,24 @@ const router = new Router({
       component: () => import('./views/RequestDetail.vue')
     },
     {
+      path: '/manageholiday',
+      name: 'manageholiday',
+      component: () => import('./views/ManageHoliday.vue')
+    },
+    {
       path: '/reset_password-tokenLink',
       component: () => import('./views/ForgotChangePassword.vue')
     },
-    {
-      path: '/managerequest',
-      name: 'managerequest',
-      component: () => import('./views/ManageRequest.vue')
-    },
-    {
-      path: '/holiday',
-      name: 'HolidayPublic',
-      component: () => import('./views/Holiday.vue')
-    },
+
   ]
 }
 );
 
 router.beforeEach((to, from, next) => {
-
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/managerequest'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
-  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report','/holiday'];
+
+  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
   const managePages = [ '/timesheetmod','/report'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');

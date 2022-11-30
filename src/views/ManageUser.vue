@@ -322,17 +322,27 @@
                 align="center"
                 width="210px"
             >
-              <img
+              <el-image
+                  style="width: 100px; height: 100px"
                   v-if="data.row.cover != null"
                   v-bind:src="`http://localhost:8080/` + data.row.cover"
-                  width="150px"
-                  height="150px"
-              />
-              <img
+                  :fit="fit"></el-image>
+              <el-image
+                  style="width: 100px; height: 100px"
                   v-if="data.row.cover == null"
                   src="../assets/user.jpg"
-                  width="150px"
-              />
+                  :fit="fit"></el-image>
+<!--              <img-->
+<!--                  v-if="data.row.cover != null"-->
+<!--                  v-bind:src="`http://localhost:8080/` + data.row.cover"-->
+<!--                  width="150px"-->
+<!--                  height="150px"-->
+<!--              />-->
+<!--              <img-->
+<!--                  v-if="data.row.cover == null"-->
+<!--                  src="../assets/user.jpg"-->
+<!--                  width="150px"-->
+<!--              />-->
             </el-table-column>
             <el-table-column
                 v-slot:="data"
@@ -365,7 +375,7 @@
             </el-table-column>
             <el-table-column
                 v-slot:="data"
-                label="Chỉnh sửa"
+                label="Thao tác"
                 width="200px"
                 align="center"
             >
@@ -454,6 +464,7 @@ export default {
       totalItems: 0,
       page: 0,
       pageSize: 10,
+      fit: 'fill',
       departments: [],
       departmentId: "",
       status: "",
@@ -711,7 +722,8 @@ export default {
       console.log("user code" + this.user_code);
     },
     getAll() {
-      const params = {
+      let params = null;
+      params = {
         page: this.page,
         size: this.pageSize,
         departid: this.departmentId,
