@@ -46,6 +46,9 @@ class UserService {
   forgotPassword(params){
     return axios.post("http://localhost:8080/api/mail/reset_password",{}, {params})
   }
+  getUserByCode(params){
+    return httpCommon.get(`/user-management/user/id_staff`,{params});
+  }
 }
 
 export default new UserService();

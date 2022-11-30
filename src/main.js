@@ -25,7 +25,6 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 
 Vue.use(VueSweetalert2);
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
-
 Vue.config.productionTip = false;
 Vue.use(ElementUI, { locale })
 
