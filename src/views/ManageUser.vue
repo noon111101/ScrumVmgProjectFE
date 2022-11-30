@@ -375,7 +375,7 @@
             </el-table-column>
             <el-table-column
                 v-slot:="data"
-                label="Chỉnh sửa"
+                label="Thao tác"
                 width="200px"
                 align="center"
             >
