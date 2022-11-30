@@ -45,9 +45,11 @@ class LogdtailService{
         return axios.post("http://localhost:8080/api/log/create",data);
     }
     sendImg(data) {
-        return axios.post("http://localhost:8080/api/log/testSendImg",data);
+        return axios.post("http://localhost:8080/api/log/saveImageLog",data);
     }
-
+    faceTimeKeepLog(data){
+        return axios.post("http://localhost:8080/api/log/timeKeep",data)
+    }
 }
 
 export default new LogdtailService();
