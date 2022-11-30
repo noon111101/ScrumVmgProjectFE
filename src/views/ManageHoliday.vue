@@ -268,8 +268,8 @@
               prop="dateTo"
               align="center"
             ></el-table-column>
-            <el-table-column label="Số ngày nghỉ" align="center">
-              10
+            <el-table-column prop="totalDays" label="Số ngày nghỉ" align="center">
+
             </el-table-column>
 
             <el-table-column
@@ -418,6 +418,7 @@ export default {
       holidays: [],
       search: "",
 
+
       year: "",
       choice: "",
       errName: "",
@@ -553,7 +554,7 @@ export default {
           })
           .catch((e) => {
             this.$notify.error({
-              message: e.error.message,
+              message: e.response.data.error.message,
               title: "Lỗi",
               timer: 2000,
               timerProgressBar: true,
@@ -658,6 +659,7 @@ export default {
       HolidayService.getAll(params).then((response) => {
         this.holidays = response.data.content;
         this.totalItems = response.data.totalElements;
+        console.log(this.holidays)
       });
     },
 
