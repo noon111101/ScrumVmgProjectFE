@@ -13,7 +13,7 @@
         </h1>
 
         <div class="grid-content" style="margin-bottom: 30px">
-          <span class="demonstration">Year</span>&ensp;
+          <span class="demonstration">Năm</span>&ensp;
           <el-date-picker
             @change="getAll"
             v-model="year"
