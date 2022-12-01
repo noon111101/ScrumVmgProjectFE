@@ -23,6 +23,10 @@
           <p><span style="font-weight: bold">NT</span>: Nghỉ tuần</p>
         </div>
         <div class="d-flex flex-row">
+          <el-button round class="h-25 me-3" style="background-color: #b3e3f7"></el-button>
+          <p><span style="font-weight: bold">L</span>: Nghỉ lễ</p>
+        </div>
+        <div class="d-flex flex-row">
           <el-button round class="h-25 me-3 position-relative" >
             <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
                  viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 10px;fill: #A843A8FF " xml:space="preserve">
