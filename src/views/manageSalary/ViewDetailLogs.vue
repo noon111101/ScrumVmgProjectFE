@@ -24,12 +24,6 @@
     </form>
     <br><br>
     <div >
-<!--      <div v-if="dateRange!=''" >-->
-<!--        <p  style="color: cadetblue">-->
-<!--          Từ ngày: {{from}} đến {{to}}-->
-<!--        </p>-->
-
-<!--      </div>-->
       <el-table
           :data="logs"
           :header-cell-style="{ background: '#D9D9D9', color: 'black', align: 'center'}"

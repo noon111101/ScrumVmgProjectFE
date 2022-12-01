@@ -1,11 +1,6 @@
 <template>
   <div style="padding-bottom: 38px;">
     <div className="container" style="text-align: center; width: 90%;margin: auto">
-
-      <!--    <h5 style="font-weight: 600;">-->
-      <!--      Phòng ban: {{currentUser.user.departments.name}}&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;-->
-      <!--      Nhân viên: {{currentUser.user.fullName}}-->
-      <!--    </h5>-->
       <el-row :gutter="20">
         <el-col :lg="9" :xl="6" >
           <div class="grid-content text-start">
