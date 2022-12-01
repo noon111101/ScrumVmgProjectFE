@@ -65,32 +65,36 @@
                           </el-button>
                           <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item>
-                              <el-link @click="tetduong()"
+                              <el-link :underline="false" @click="tetduong()"
                                 >Tết dương lịch</el-link
                               ></el-dropdown-item
                             >
                             <el-dropdown-item>
-                              <el-link @click="chienthang()"
+                              <el-link :underline="false" @click="chienthang()"
                                 >Ngày chiến thắng</el-link
                               ></el-dropdown-item
                             >
                             <el-dropdown-item>
-                              <el-link @click="quoctelaodong()"
+                              <el-link
+                                :underline="false"
+                                @click="quoctelaodong()"
                                 >Ngày quốc tế lao động</el-link
                               ></el-dropdown-item
                             >
                             <el-dropdown-item>
-                              <el-link @click="tetam()"
+                              <el-link :underline="false" @click="tetam()"
                                 >Tết âm lịch</el-link
                               ></el-dropdown-item
                             >
                             <el-dropdown-item
-                              ><el-link @click="giotoHungVuong()"
+                              ><el-link
+                                :underline="false"
+                                @click="giotoHungVuong()"
                                 >Ngày giỗ tổ Hùng Vương</el-link
                               ></el-dropdown-item
                             >
                             <el-dropdown-item
-                              ><el-link @click="quockhanh()"
+                              ><el-link :underline="false" @click="quockhanh()"
                                 >Ngày Quốc khánh</el-link
                               ></el-dropdown-item
                             >
@@ -268,8 +272,11 @@
               prop="dateTo"
               align="center"
             ></el-table-column>
-            <el-table-column prop="totalDays" label="Số ngày nghỉ" align="center">
-
+            <el-table-column
+              prop="totalDays"
+              label="Số ngày nghỉ"
+              align="center"
+            >
             </el-table-column>
 
             <el-table-column
@@ -417,7 +424,7 @@ export default {
       pageSize: 12,
       holidays: [],
       search: "",
-
+      numberDate: "",
 
       year: "",
       choice: "",
@@ -560,7 +567,7 @@ export default {
               timerProgressBar: true,
             });
             this.getAll();
-            console.log( e.response.data.error.message + "dfdas")
+            console.log(e.response.data.error.message + "dfdas");
           });
       }
     },
@@ -615,7 +622,7 @@ export default {
             });
             console.log(response);
             this.removeValidate(false);
-        this.dialogFormVisible2 = false;
+            this.dialogFormVisible2 = false;
 
             this.getAll();
           })
@@ -659,7 +666,7 @@ export default {
       HolidayService.getAll(params).then((response) => {
         this.holidays = response.data.content;
         this.totalItems = response.data.totalElements;
-        console.log(this.holidays)
+        console.log(this.holidays);
       });
     },
 

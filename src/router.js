@@ -98,6 +98,11 @@ const router = new Router({
       component: () => import('./views/Selfie.vue')
     },
     {
+      path: '/managerequest',
+      name: 'managerequest',
+      component: () => import('./views/ManageRequest.vue')
+    },
+    {
       path: '/requestdetail',
       name: 'requestdetail',
       component: () => import('./views/request/RequestDetail.vue')
@@ -117,7 +122,7 @@ const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday','/managerequest'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
 
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
