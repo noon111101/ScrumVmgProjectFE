@@ -100,7 +100,7 @@ const router = new Router({
     {
       path: '/managerequest',
       name: 'managerequest',
-      component: () => import('./views/ManageRequest.vue')
+      component: () => import('./views/request/ManageRequest.vue')
     },
     {
       path: '/requestdetail',
