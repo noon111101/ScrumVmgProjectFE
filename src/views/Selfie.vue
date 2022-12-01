@@ -118,10 +118,13 @@
               `http://localhost:8080/` + currentUser.cover
             "
                    width="250px"
+                   height="250px"
               />
               <img v-if="currentUser.cover==null"
                    src="../assets/FakeUser.png"
                    width="250px"
+                   height="250px"
+
               />
             </div>
           </div>
@@ -139,7 +142,7 @@
           </h1>
           <img src='../assets/LoiChamCong.png'>
         </div>
-        <div class="position-absolute bottom-0 float-end">
+        <div class="position-absolute bottom-0 float-end" >
           <span>Thời gian chụp</span>
           <span v-if="userInfo!=null" style="margin-left: 20px;margin-right: 60px">{{userInfo.time }}</span>
           <span v-if="userInfo==null" style="margin-left: 20px;margin-right: 60px">{{new Date()}}</span>
