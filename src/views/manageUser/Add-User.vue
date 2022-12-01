@@ -5,7 +5,7 @@
         <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
         <img
           style="width: 200px; line-height: 100%"
-          src="../assets/vmg_logo.png"
+          src="../../assets/vmg_logo.png"
         />
       </div>
       <div class="col-md-9 register-right">
@@ -267,7 +267,7 @@
 </template>
 <script>
 import authService from "@/services/auth.service";
-import userService from '../services/user.service';
+import userService from '../../services/user.service';
 
 export default {
   name: "AdminVue",
