@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar fixed-top container-fluid">
+  <nav class="navbar fixed-top container-fluid" style="padding: 14px 0">
     <div class="user-detail nav-item dropdown " v-if="currentUser">
       <a
           class="nav-link dropdown-toggle"
@@ -8,7 +8,8 @@
           data-bs-toggle="dropdown"
           aria-expanded="false"
       >
-        <font-awesome-icon icon="user" />
+        <b-avatar v-if="currentUser.user.cover == null" class="mr-3"></b-avatar>
+        <b-avatar v-if="currentUser.user.cover != null" class="mr-3" v-bind:src="`http://localhost:8080/` + currentUser.user.cover"></b-avatar>
         {{ currentUser.user.fullName }}
       </a>
       <ul class="dropdown-menu" style="left: -90px">
@@ -142,6 +143,20 @@
               <a class="nav-link">
                 <router-link to="/report" class="nav-link sel">
                   <i class="el-icon-document-copy"> </i> Thống kê chấm công
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
+              <a class="nav-link">
+                <router-link to="/manageholiday" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Quản lí nghỉ phép
+                </router-link>
+              </a>
+            </li>
+            <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
+              <a class="nav-link">
+                <router-link to="/managerequest" class="nav-link sel">
+                  <i class="el-icon-document-copy"> </i> Quản lí yêu cầu
                 </router-link>
               </a>
             </li>
