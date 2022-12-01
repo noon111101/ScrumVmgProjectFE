@@ -102,7 +102,7 @@
                    width="250px"
               />
               <img v-if="currentUser.user.cover==null"
-                   src="../assets/user.jpg"
+                   src="../../assets/user.jpg"
                    width="250px"
               />
             </div>

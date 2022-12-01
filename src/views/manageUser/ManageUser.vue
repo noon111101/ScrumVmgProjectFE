@@ -450,7 +450,7 @@
 import DepartmentService from "@/services/department.service";
 import UserService from "@/services/user.service";
 import AuthService from "@/services/auth.service";
-import ImportExcel from "@/views/ImportExcel";
+import ImportExcel from "@/views/excel/ImportExcel";
 
 export default {
   name: "HomeVue",
