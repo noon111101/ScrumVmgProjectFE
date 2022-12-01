@@ -417,6 +417,7 @@ export default {
       pageSize: 12,
       holidays: [],
       search: "",
+      numberDate:"",
 
       year: "",
       choice: "",
