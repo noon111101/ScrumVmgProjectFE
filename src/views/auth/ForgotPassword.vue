@@ -1,72 +1,4 @@
 <template>
-  <!-- <body>
-    <div class="loading" id="loading">
-      <img
-        src="https://img.pikbest.com/png-images/20190918/cartoon-snail-loading-loading-gif-animation_2734139.png!bw700"
-        alt="loading"
-      />
-    </div>
-    <div class="container py-5 h-100">
-      <div class="row d-flex justify-content-center align-items-center h-100">
-        <div class="col-xl-10">
-          <div class="card rounded-3 text-black">
-            <div class="row g-0">
-              <div class="col-lg-6">
-                <div class="card-body p-md-5 mx-md-4">
-                  <div class="text-center">
-                    <img
-                      src="http://danhbaict.vn/uploads/images/vmg%20logo.jpg"
-                      style="width: 185px"
-                      alt="logo"
-                    />
-                    <h4 class="mt-1 mb-5 pb-1">QUÊN MÂT KHẨU</h4>
-                  </div>
-                  <form
-                      v-loading="loading"
-                      accept-charset="utf-8"
-                  >
-                    <p>Vui lòng nhập email để lấy lại mật khẩu</p>
-                    <div class="form-outline mb-4">
-                      <input
-                        placeholder="Enter Your Email"
-                        v-model="email"
-                        v-validate="{ required: true }"
-                        type="email"
-                        class="form-control"
-                        name="email"
-                      />
-                      <small v-if="errEmail !== null" style="color: red">
-                        {{ errEmail }}
-                      </small>
-                    </div>
-                    <div class="text-center pt-1 mb-5 pb-1">
-                      <el-button type="danger" @click="handleForgot"
-                        >Xác nhân</el-button
-                      >
-                      <br />
-                      <div style="margin-top: 20px">
-                        <a
-                          style="color: #33acff"
-                          href="http://localhost:8081/login"
-                          >Quay lại trang Đăng nhập</a
-                        >
-                      </div>
-                      <br />
-                    </div>
-                  </form>
-                </div>
-              </div>
-              <div class="col-lg-6 d-flex align-items-center gradient-custom-2">
-                <div class="text-white px-3 py-4 p-md-5 mx-md-4">
-                  <img width="450px" src="../assets/Login.png" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-</body> -->
   <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -90,7 +22,7 @@
     />
   </div>
   <section class="side">
-    <img src="../assets/Login.png" alt="" />
+    <img src="../../assets/Login.png" alt="" />
   </section>
 
   <section class="main">
@@ -287,7 +219,7 @@ section {
 }
 
 section.side {
-  background: url(../assets/bk1.png)
+  background: url(../../assets/bk1.png)
   no-repeat;
   background-size: 100% 102%;
 }

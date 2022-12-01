@@ -81,7 +81,7 @@
 
 <script>
 import LogdetailService from "@/services/logdetail-service";
-import NoteCalender from "@/views/NoteCalender";
+import NoteCalender from "@/views/calendar/NoteCalender";
 
 export default {
   name: "CalenderReport",

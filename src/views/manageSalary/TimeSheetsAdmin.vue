@@ -135,7 +135,7 @@
 import ExcelService from "@/services/excel-service";
 import LogdetailService from "@/services/logdetail-service";
 import DepartmentService from "@/services/department.service";
-import ImportExcel from "@/views/ImportExcel";
+import ImportExcel from "@/views/excel/ImportExcel";
 
 export default {
   name: "HomeVue",

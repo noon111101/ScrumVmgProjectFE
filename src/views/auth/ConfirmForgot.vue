@@ -16,7 +16,7 @@
   </head>
   <body>
   <section class="side">
-    <img src="../assets/Login.png" alt="" />
+    <img src="../../assets/Login.png" alt="" />
   </section>
   <section class="main">
     <div class="login-container">
@@ -67,7 +67,7 @@ section {
 }
 
 section.side {
-  background: url(../assets/bk1.png)
+  background: url(../../assets/bk1.png)
   no-repeat;
   background-size: 100% 102%;
 }

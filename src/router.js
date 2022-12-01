@@ -9,7 +9,7 @@ const router = new Router({
   routes: [
     {
       path: '/login',
-      component: () => import('./views/Login.vue')
+      component: () => import('./views/auth/Login.vue')
     },
     {
       path: '/',
@@ -17,80 +17,80 @@ const router = new Router({
     },
     {
       path: '/register',
-      component:  () => import('./views/ManageUser.vue')
+      component:  () => import('./views/manageUser/ManageUser.vue')
     },
 
     {
       path: '/add-user',
       name: '',
-      component: () => import('./views/Add-User.vue'),
+      component: () => import('./views/manageUser/Add-User.vue'),
     },
     {
       path: '/user',
       name: 'user',
-      component: () => import('./views/BoardUser.vue')
+      component: () => import('./views/manageUser/BoardUser.vue')
     },
     {
       path: '/user/:code/:departmentName/:fullName',
       name: 'user',
-      component: () => import('./views/ViewDetailLogs.vue'),
+      component: () => import('./views/manageSalary/ViewDetailLogs.vue'),
     },
     {
       path: '/report',
       name: 'report',
-      component: () => import('./views/Report.vue'),
+      component: () => import('./views/report/ReportSalary.vue'),
       },
     {
       path: '/forgotPassword',
       name: 'forgotPassword',
-      component: () => import('./views/ForgotPassword.vue'),
+      component: () => import('./views/auth/ForgotPassword.vue'),
     },
     {
       path: '/confirmForgot',
       name: 'confirmForgot',
-      component: () => import('./views/ConfirmForgot.vue'),
+      component: () => import('./views/auth/ConfirmForgot.vue'),
     },
     {
       path: '/changepassword',
       name: 'changepassword',
-      component: () => import('./views/ChangePassword.vue')
+      component: () => import('./views/auth/ChangePassword.vue')
     },
     {
       path: '/calender',
       name: 'calender',
-      component: () => import('./views/CalenderReport.vue')
+      component: () => import('./views/calendar/CalenderReport.vue')
     },
     {
       path: '/timesheetmod',
       name: 'timesheetmod',
-      component: () => import('./views/TimeSheetMod.vue'),
+      component: () => import('./views/manageSalary/TimeSheetMod.vue'),
     },
 
     {
       path: '/user/:id',
       name: 'edit',
-      component: () => import('./views/EditUser.vue'),
+      component: () => import('./views/manageUser/EditUser.vue'),
     },
 
     {
       path: '/timesheetadmin',
       name: 'timesheetadmin',
-      component: () => import('./views/TimeSheetsAdmin.vue'),
+      component: () => import('./views/manageSalary/TimeSheetsAdmin.vue'),
     },
     {
       path: '/manage',
       name: 'manage',
-      component: () => import('./views/ManageUser.vue'),
+      component: () => import('./views/manageUser/ManageUser.vue'),
     },
     {
       path: '/profile',
       name: '',
-      component: () => import('./views/Profile.vue')
+      component: () => import('./views/manageUser/Profile.vue')
     },
     {
       path: '/unpermist',
       name: 'unpermist',
-      component: () => import('./views/UnPermist.vue')
+      component: () => import('./views/error/UnPermist.vue')
     },
     {
       path: '/selfie',
@@ -100,21 +100,21 @@ const router = new Router({
     {
       path: '/managerequest',
       name: 'managerequest',
-      component: () => import('./views/ManageRequest.vue')
+      component: () => import('./views/request/ManageRequest.vue')
     },
     {
       path: '/requestdetail',
       name: 'requestdetail',
-      component: () => import('./views/RequestDetail.vue')
+      component: () => import('./views/request/RequestDetail.vue')
     },
     {
       path: '/manageholiday',
       name: 'manageholiday',
-      component: () => import('./views/ManageHoliday.vue')
+      component: () => import('./views/holiday/ManageHoliday.vue')
     },
     {
       path: '/reset_password-tokenLink',
-      component: () => import('./views/ForgotChangePassword.vue')
+      component: () => import('./views/auth/ForgotChangePassword.vue')
     },
 
   ]
