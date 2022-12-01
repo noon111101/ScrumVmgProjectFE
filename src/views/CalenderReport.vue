@@ -16,6 +16,7 @@
               halfOff:Sign.halfOff,
               off:Sign.off,
               allDay:Sign.allDay,
+              holiday:Sign.holiday,
               cellSign:true,
               'position-relative':true
 
@@ -120,6 +121,7 @@ export default {
        halfOff:false,
        off:false,
        allDay:false,
+       holiday:false,
        timeIn:null,
        timeOut:null,
        reason:null
@@ -139,6 +141,8 @@ export default {
            sign.off=true
          if(sign.name.includes("NT"))
            sign.weekend=true
+         if(sign.name.includes("L") && !sign.name.includes("K"))
+           sign.holiday=true
          return sign
        }
      }
@@ -189,6 +193,9 @@ export default {
 }
 .allDay{
   background-color: #C9E3C6 ;
+}
+.holiday{
+  background-color: #b3e3f7;
 }
 .cellSign{
   margin: 5px;

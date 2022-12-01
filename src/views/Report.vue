@@ -80,6 +80,9 @@
                     <p>
                       <span style="font-weight: bold">__</span> : Không đi làm
                     </p>
+                    <p>
+                      <span style="font-weight: bold">L</span> : Ngày lễ
+                    </p>
                   </div>
                 </div>
                 <div class="d-flex flex-row">
