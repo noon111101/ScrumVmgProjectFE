@@ -162,7 +162,7 @@
                 </router-link>
               </a>
             </li>
-            
+
             <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
               <a class="nav-link">
                 <router-link to="/report" class="nav-link sel">

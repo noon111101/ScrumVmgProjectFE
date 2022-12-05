@@ -53,52 +53,8 @@
           </div>
         </el-col>
       </el-row>
-
-
-
-<!--      <div style="" class="d-flex">-->
-<!--        <div className="block" class="text-start col-10">-->
-<!--          <span>Ngày</span> &ensp;-->
-<!--          <el-date-picker style="width: 22%;font-size: 16px;margin-right: 100px"-->
-<!--                          v-model="dateRange"-->
-<!--                          type="daterange"-->
-<!--                          format="yyyy-MM-dd"-->
-<!--                          value-format="yyyy-MM-dd"-->
-<!--                          range-separator=""-->
-<!--                          start-placeholder="Chọn thời gian"-->
-<!--                          :editable="false"-->
-<!--                          @change="getAll">-->
-<!--          </el-date-picker>-->
-
-<!--          <span>Phòng ban</span> &ensp;-->
-<!--          <el-select-->
-<!--              v-model="departmentId"-->
-<!--              @change="getAll"-->
-<!--              placeholder="Chon Phòng ban"-->
-<!--          >-->
-<!--            <el-option value="0" label="All Users"></el-option>-->
-<!--            <el-option-->
-<!--                v-for="item in departments"-->
-<!--                :key="item.id"-->
-<!--                :label="item.name"-->
-<!--                :value="item.id">-->
-<!--            </el-option>-->
-<!--          </el-select>-->
-
-<!--          <span style=" margin-left: 100px">Tìm kiếm</span> &ensp;-->
-<!--          <el-input v-model="search" @input="getAll" size="medium" placeholder="Tìm theo tên, email, phòng ban"-->
-<!--                    style="width: 20%;"/>-->
-
-<!--        </div>-->
-<!--        <div style="float: right; margin-bottom: 20px" class="col-2 text-end">-->
-<!--          <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll"/>-->
-<!--        </div>-->
-<!--      </div>-->
-
-
       <br/>
       <div>
-
         <el-table
             height="780px"
             :default-sort="{prop: 'date_log', order: 'descending'}"

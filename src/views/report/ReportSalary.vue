@@ -550,6 +550,7 @@ export default {
         if (sign.sign == "H") dayWork = dayWork + 1;
         if (sign.sign == "H_KL") dayWork = dayWork + 0.5;
         if (sign.sign == "KL_H") dayWork = dayWork + 0.5;
+        if (sign.sign == "L") dayWork = dayWork + 1;
       }
       return dayWork;
     },
