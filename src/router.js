@@ -113,6 +113,11 @@ const router = new Router({
       component: () => import('./views/holiday/ManageHoliday.vue')
     },
     {
+      path: '/reportFurlough',
+      name: 'reportFurlough',
+      component: () => import('./views/report/ReportFurlough.vue')
+    },
+    {
       path: '/reset_password-tokenLink',
       component: () => import('./views/auth/ForgotChangePassword.vue')
     },
@@ -125,8 +130,8 @@ router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday','/managerequest'];
   const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
 
-  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report'];
-  const managePages = [ '/timesheetmod','/report'];
+  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report','/reportFurlough'];
+  const managePages = [ '/timesheetmod','/report','/reportFurlough'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
   if (authRequired && !loggedIn && !to.path.startsWith("/reset_password-tokenLink")) {

@@ -6,9 +6,9 @@
     <br><br>
     <div style="width: 100%">
       <span>Trạng thái:</span>&nbsp;&nbsp;
-      <button class="tt1">Chờ phê duyệt</button>
-      <button class="btn-2">Chấp thuận</button>
-      <button class="btn-1">Từ chối</button>
+      <button class="btn-1">Chờ phê duyệt</button>
+      <button class="btn-accept">Chấp thuận</button>
+      <button class="btn-refuse">Từ chối</button>
     </div>
     <br><br>
     <span class="title-request sub-title">Thông tin đề xuất</span>
@@ -126,16 +126,41 @@ export default {
   color: #828282;
 }
 
-.tt1 {
-  cursor: default;
+.btn-1 {
+  cursor: none;
   color: #DF8620;
   background-color: #FAECDB;
   border: none;
   border-radius: 20px;
   padding: 3px 20px;
 }
+.btn-2 {
+  cursor: none;
+  color: #2BBB6E;
+  background-color: #DEF7EA;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
 
-.btn-1 {
+.btn-3 {
+  cursor: none;
+  color: #BF2C31;
+  background-color: #F7DEDF;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+.btn-4 {
+  cursor: none;
+  color: #6C6F93;
+  background-color:  #E4E5F1;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+
+.btn-refuse {
   float: right;
   color: #FFFFFF;
   background-color: #E24146;
@@ -145,7 +170,7 @@ export default {
   margin-right: 10px;
 }
 
-.btn-2 {
+.btn-accept {
   float: right;
   color: #FFFFFF;
   background-color: #75C4C0;
@@ -155,7 +180,7 @@ export default {
   /*margin-right: 5px;*/
 }
 
-.btn-1:hover {
+.btn-refuse:hover {
   float: right;
   color: #FFFFFF;
   background-color: #de1d23;
@@ -165,7 +190,7 @@ export default {
   margin-right: 10px;
 }
 
-.btn-2:hover {
+.btn-accept:hover {
   float: right;
   color: #FFFFFF;
   background-color: #06bdb3;
