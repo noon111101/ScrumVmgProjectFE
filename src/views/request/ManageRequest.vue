@@ -221,7 +221,7 @@
                       placeholder="Chọn loại đề xuất chấm công"
                     >
                       <el-option
-                        v-for="item in options"
+                        v-for="item in users"
                         :key="item.value"
                         :label="item.label"
                         :value="item.value"
@@ -310,7 +310,26 @@
                 </el-form-item>
                 <el-form-item label="Người theo dõi *">
                   <el-col :span="16">
-                    <el-input style="width: 100%"></el-input>
+                    <!-- <el-input style="width: 100%"></el-input> -->
+                    <el-select
+                      style="width: 100%"
+                      v-model="form.followers"
+                      multiple
+                      filterable
+                      remote
+                      reserve-keyword
+                      placeholder="Please enter a keyword"
+                      :remote-method="remoteMethod"
+                      :loading="loading"
+                    >
+                      <el-option
+                        v-for="item in options"
+                        :key="item.id"
+                        :label="item.fullName"
+                        :value="item.id"
+                      >
+                      </el-option>
+                    </el-select>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Người phê duyệt *">
@@ -365,7 +384,7 @@
                 "
                 class="tt1"
               >
-                Có hiệu lực
+                Đã được duyệt
               </button>
             </el-table-column>
             <el-table-column
@@ -399,12 +418,17 @@
   </div>
 </template>
 <script>
+import UserService from "@/services/user.service";
 export default {
   data() {
     return {
+      options: [],
+      value: [],
+      list: [],
       activeName: "first",
       dialogFormNghi: false,
       dialogFormChamCong: false,
+      users: [],
       form: {
         name: "",
         region: "",
@@ -414,34 +438,26 @@ export default {
         type: [],
         resource: "",
         desc: "",
+        followers: "",
       },
       tableData: [
-        {
-          offer: "PHẠM HẢI TRIỀU XIN NGHỈ PHÉP NGÀY 15/11/2022",
-          name: "Phạm Hải Triều",
-          department: "Phát triển dịch vụ",
-          status: "Chờ phê duyệt",
-          manage: "Nguyễn Đăng Tùng",
-          date: "10/11/2022",
-        },
-        {
-          offer: "PHẠM VĂN NAM XIN NGHỈ PHÉP NGÀY 15/11/2022",
-          name: "Phạm Hải Triều",
-          department: "Phát triển phần mềm",
-          status: "Chờ phê duyệt",
-          manage: "Nguyễn Đăng Tùng",
-          date: "10/11/2022",
-        },
-        {
-          offer: "PHẠM VĂN NAM XIN NGHỈ PHÉP NGÀY 15/11/2022",
-          name: "Phạm Hải Triều",
-          department: "Phát triển phần mềm",
-          status: "Chờ phê duyệt",
-          manage: "Nguyễn Đăng Tùng",
-          date: "10/11/2022",
-        },
+      
       ],
     };
+  },
+  created() {
+    UserService.getAllUser()
+      .then((response) => {
+        this.users = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  },
+  mounted() {
+    this.list = this.users.map((item) => {
+      return { id: `id:${item}`, fullName: `${item}` };
+    });
   },
   methods: {
     handleClick(tab, event) {
@@ -449,6 +465,19 @@ export default {
     },
     onSubmit() {
       console.log("submit!");
+    },
+    remoteMethod(query) {
+      if (query !== "") {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.options = this.list.filter((item) => {
+            return item.label.toLowerCase().indexOf(query.toLowerCase()) > -1;
+          });
+        }, 200);
+      } else {
+        this.options = [];
+      }
     },
   },
 };
