@@ -37,10 +37,12 @@
             <el-col :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">
               <div class="grid-content ">
                 <span style="">Trạng thái</span> &ensp;
-                <el-select v-model="status"  placeholder="Trạng thái">
-                  <el-option value="" label="Tất cả"></el-option>
-                  <el-option label="Có hiệu lực" value="1"></el-option>
-                  <el-option label="Vô hiệu lực" value="0"></el-option>
+                <el-select v-model="status" @change="getAll" placeholder="Trạng thái">
+                  <el-option value="0" label="Tất cả"></el-option>
+                  <el-option label="Chờ phê duyệt" value="1"></el-option>
+                  <el-option label="Đã chấp thuận" value="2"></el-option>
+                  <el-option label="Đã từ chối" value="3"></el-option>
+                  <el-option label="Quá hạn duyệt" value="4"></el-option>
                 </el-select>
               </div>
             </el-col>
