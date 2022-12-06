@@ -12,73 +12,74 @@
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>
                   <el-link
-                    class=""
-                    type="danger"
-                    style="margin-left: 20px; margin-right: 20px"
-                    :underline="false"
-                    round
-                    @click="dialogFormNghi = true"
-                    ><i class="el-icon-plus"></i>Đề xuất nghỉ
+                      class=""
+                      type="danger"
+                      style="margin-left: 20px; margin-right: 20px"
+                      :underline="false"
+                      round
+                      @click="dialogFormNghi = true"
+                  ><i class="el-icon-plus"></i>Đề xuất nghỉ
                   </el-link>
                 </el-dropdown-item>
                 <el-dropdown-item>
                   <el-link
-                    class=""
-                    type="danger"
-                    style="margin-left: 20px; margin-right: 20px"
-                    :underline="false"
-                    round
-                    @click="dialogFormChamCong = true"
-                    ><i class="el-icon-plus"></i>Đề xuất chấm công
-                  </el-link></el-dropdown-item
+                      class=""
+                      type="danger"
+                      style="margin-left: 20px; margin-right: 20px"
+                      :underline="false"
+                      round
+                      @click="dialogFormChamCong = true"
+                  ><i class="el-icon-plus"></i>Đề xuất chấm công
+                  </el-link>
+                </el-dropdown-item
                 >
               </el-dropdown-menu>
             </el-dropdown>
 
             <el-dialog
-              style="text-align: center; font-weight: bold"
-              title="TẠO ĐỀ XUẤT NGHỈ"
-              :visible.sync="dialogFormNghi"
+                style="text-align: center; font-weight: bold"
+                title="TẠO ĐỀ XUẤT NGHỈ"
+                :visible.sync="dialogFormNghi"
             >
               <el-form ref="form" :model="form" label-width="150px">
                 <el-form-item label="Họ và tên *">
                   <el-col :span="16">
                     <el-input
-                      type="text"
-                      placeholder="Phạm Văn An"
-                      style="width: 100%"
+                        type="text"
+                        placeholder="Phạm Văn An"
+                        style="width: 100%"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Bộ phận *">
                   <el-col :span="16">
                     <el-input
-                      type="text"
-                      placeholder="Phòng PTPM"
-                      style="width: 100%"
+                        type="text"
+                        placeholder="Phòng PTPM"
+                        style="width: 100%"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Tên đề xuất *">
                   <el-col :span="16">
                     <el-input
-                      placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                      v-model="form.name"
+                        placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
+                        v-model="form.name"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Loại đề xuất *">
                   <el-col :span="15">
                     <el-select
-                      style="width: 100%"
-                      v-model="value"
-                      placeholder="Chọn loại đề xuất nghỉ"
+                        style="width: 100%"
+                        v-model="value"
+                        placeholder="Chọn loại đề xuất nghỉ"
                     >
                       <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
                       >
                       </el-option>
                     </el-select>
@@ -87,36 +88,36 @@
                 <el-form-item label="Nhập số ngày nghỉ *">
                   <el-col :span="16">
                     <el-input
-                      type="number"
-                      placeholder=""
-                      style="width: 100%"
+                        type="number"
+                        placeholder=""
+                        style="width: 100%"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Nghỉ từ *">
                   <el-col :span="15">
                     <el-date-picker
-                      type="date"
-                      placeholder="Chọn ngày"
-                      v-model="form.date1"
-                      style="width: 52%"
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.date1"
+                        style="width: 52%"
                     ></el-date-picker>
                     &emsp;
                     <el-select
-                      style="width: 43%"
-                      v-model="value"
-                      placeholder="Chọn ca bắt đầu"
+                        style="width: 43%"
+                        v-model="value"
+                        placeholder="Chọn ca bắt đầu"
                     >
                       <el-option-group
-                        v-for="group in options"
-                        :key="group.label"
-                        :label="group.label"
+                          v-for="group in options"
+                          :key="group.label"
+                          :label="group.label"
                       >
                         <el-option
-                          v-for="item in group.options"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
+                            v-for="item in group.options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
                         >
                         </el-option>
                       </el-option-group>
@@ -126,27 +127,27 @@
                 <el-form-item label="Nghỉ đến *">
                   <el-col :span="15">
                     <el-date-picker
-                      type="date"
-                      placeholder="Chọn ngày"
-                      v-model="form.date1"
-                      style="width: 52%"
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.date1"
+                        style="width: 52%"
                     ></el-date-picker>
                     &emsp;
                     <el-select
-                      style="width: 43%"
-                      v-model="value"
-                      placeholder="Chọn ca kết thúc"
+                        style="width: 43%"
+                        v-model="value"
+                        placeholder="Chọn ca kết thúc"
                     >
                       <el-option-group
-                        v-for="group in options"
-                        :key="group.label"
-                        :label="group.label"
+                          v-for="group in options"
+                          :key="group.label"
+                          :label="group.label"
                       >
                         <el-option
-                          v-for="item in group.options"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
+                            v-for="item in group.options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
                         >
                         </el-option>
                       </el-option-group>
@@ -156,9 +157,9 @@
                 <el-form-item label="Nhập nội dung *">
                   <el-col :span="16">
                     <el-input
-                      style="width: 100%"
-                      type="textarea"
-                      v-model="form.desc"
+                        style="width: 100%"
+                        type="textarea"
+                        v-model="form.desc"
                     ></el-input>
                   </el-col>
                 </el-form-item>
@@ -176,55 +177,55 @@
               <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Hủy</el-button>
                 <el-button type="primary" @click="dialogFormVisible = false"
-                  >Gửi đề xuất</el-button
+                >Gửi đề xuất</el-button
                 >
               </span>
             </el-dialog>
 
             <el-dialog
-              style="text-align: center; font-weight: bold"
-              title="TẠO ĐỀ XUẤT CHẤM CÔNG"
-              :visible.sync="dialogFormChamCong"
+                style="text-align: center; font-weight: bold"
+                title="TẠO ĐỀ XUẤT CHẤM CÔNG"
+                :visible.sync="dialogFormChamCong"
             >
               <el-form ref="form" :model="form" label-width="150px">
                 <el-form-item label="Họ và tên *">
                   <el-col :span="16">
                     <el-input
-                      type="text"
-                      placeholder="Phạm Văn An"
-                      style="width: 100%"
+                        type="text"
+                        placeholder="Phạm Văn An"
+                        style="width: 100%"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Bộ phận *">
                   <el-col :span="16">
                     <el-input
-                      type="text"
-                      placeholder="Phòng PTPM"
-                      style="width: 100%"
+                        type="text"
+                        placeholder="Phòng PTPM"
+                        style="width: 100%"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Tên đề xuất *">
                   <el-col :span="16">
                     <el-input
-                      placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                      v-model="form.name"
+                        placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
+                        v-model="form.name"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Loại đề xuất *">
                   <el-col :span="15">
                     <el-select
-                      style="width: 100%"
-                      v-model="value"
-                      placeholder="Chọn loại đề xuất chấm công"
+                        style="width: 100%"
+                        v-model="value"
+                        placeholder="Chọn loại đề xuất chấm công"
                     >
                       <el-option
-                        v-for="item in options"
-                        :key="item.value"
-                        :label="item.label"
-                        :value="item.value"
+                          v-for="item in options"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
                       >
                       </el-option>
                     </el-select>
@@ -233,36 +234,36 @@
                 <el-form-item label="Nhập số ngày nghỉ *">
                   <el-col :span="16">
                     <el-input
-                      type="number"
-                      placeholder=""
-                      style="width: 100%"
+                        type="number"
+                        placeholder=""
+                        style="width: 100%"
                     ></el-input>
                   </el-col>
                 </el-form-item>
                 <el-form-item label="Nghỉ từ *">
                   <el-col :span="15">
                     <el-date-picker
-                      type="date"
-                      placeholder="Chọn ngày"
-                      v-model="form.date1"
-                      style="width: 52%"
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.date1"
+                        style="width: 52%"
                     ></el-date-picker>
                     &emsp;
                     <el-select
-                      style="width: 43%"
-                      v-model="value"
-                      placeholder="Chọn ca bắt đầu"
+                        style="width: 43%"
+                        v-model="value"
+                        placeholder="Chọn ca bắt đầu"
                     >
                       <el-option-group
-                        v-for="group in options"
-                        :key="group.label"
-                        :label="group.label"
+                          v-for="group in options"
+                          :key="group.label"
+                          :label="group.label"
                       >
                         <el-option
-                          v-for="item in group.options"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
+                            v-for="item in group.options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
                         >
                         </el-option>
                       </el-option-group>
@@ -272,27 +273,27 @@
                 <el-form-item label="Nghỉ đến *">
                   <el-col :span="15">
                     <el-date-picker
-                      type="date"
-                      placeholder="Chọn ngày"
-                      v-model="form.date1"
-                      style="width: 52%"
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.date1"
+                        style="width: 52%"
                     ></el-date-picker>
                     &emsp;
                     <el-select
-                      style="width: 43%"
-                      v-model="value"
-                      placeholder="Chọn ca kết thúc"
+                        style="width: 43%"
+                        v-model="value"
+                        placeholder="Chọn ca kết thúc"
                     >
                       <el-option-group
-                        v-for="group in options"
-                        :key="group.label"
-                        :label="group.label"
+                          v-for="group in options"
+                          :key="group.label"
+                          :label="group.label"
                       >
                         <el-option
-                          v-for="item in group.options"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
+                            v-for="item in group.options"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
                         >
                         </el-option>
                       </el-option-group>
@@ -302,9 +303,9 @@
                 <el-form-item label="Nhập nội dung *">
                   <el-col :span="16">
                     <el-input
-                      style="width: 100%"
-                      type="textarea"
-                      v-model="form.desc"
+                        style="width: 100%"
+                        type="textarea"
+                        v-model="form.desc"
                     ></el-input>
                   </el-col>
                 </el-form-item>
@@ -322,71 +323,72 @@
               <span slot="footer" class="dialog-footer">
                 <el-button @click="dialogFormVisible = false">Hủy</el-button>
                 <el-button type="primary" @click="dialogFormVisible = false"
-                  >Gửi đề xuất</el-button
+                >Gửi đề xuất</el-button
                 >
               </span>
             </el-dialog>
           </div>
-          <el-table :data="tableData" height="250" style="width: 100%">
+          <el-table :data="tableData" height="780" style="width: 100%">
             <el-table-column
-              prop="offer"
-              label="Đề xuất"
-              align="center"
-              width="500"
+                v-slot:="data"
+                label="Đề xuất"
+                align="center"
+                width="500"
+            >
+              <router-link class="link" to="/requestdetail" >{{data.row.offer}}</router-link>
+            </el-table-column>
+            <el-table-column
+                prop="name"
+                label="Nhân viên"
+                align="center"
+                width="200"
             >
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="Nhân viên"
-              align="center"
-              width="200"
+                prop="department"
+                label="Phòng ban"
+                align="center"
+                width="200"
             >
             </el-table-column>
             <el-table-column
-              prop="department"
-              label="Phòng ban"
-              align="center"
-              width="200"
+                prop="status"
+                label="Trạng thái"
+                align="center"
+                width="200"
             >
-            </el-table-column>
-            <el-table-column
-              prop="status"
-              label="Trạng thái"
-              align="center"
-              width="200"
-            >
-              <button
-                style="
-                  color: black;
-                  background-color: #75c4c0;
-                  border: none;
-                  border-radius: 5px;
-                  padding: 3px 20px;
-                "
-                class="tt1"
-              >
-                Có hiệu lực
+              <button class="btn-1">
+                Chờ phê duyệt
+              </button>
+              <button class="btn-2">
+                Đã chấp thuận
+              </button>
+              <button class="btn-3">
+                Đã từ chối
+              </button>
+              <button class="btn-4">
+                Quá hạn duyệt
               </button>
             </el-table-column>
             <el-table-column
-              prop="manage"
-              label="Trưởng phòng"
-              align="center"
-              width="200"
+                prop="manage"
+                label="Trưởng phòng"
+                align="center"
+                width="200"
             >
             </el-table-column>
             <el-table-column
-              prop="date"
-              label="Ngày tạo"
-              align="center"
-              width="200"
+                prop="date"
+                label="Ngày tạo"
+                align="center"
+                width="200"
             >
             </el-table-column>
             <el-table-column
-              prop=""
-              label="Thao tác"
-              align="center"
-              width="200"
+                prop=""
+                label="Thao tác"
+                align="center"
+                width="200"
             >
               <el-button type="success" icon="el-icon-check" circle></el-button>
               <el-button type="danger" icon="el-icon-close" circle></el-button>
@@ -453,3 +455,45 @@ export default {
   },
 };
 </script>
+
+<style>
+.link{
+  text-decoration: none;
+  color: #06bdb3;
+  font-weight: 600
+}
+
+.btn-1 {
+  cursor: none;
+  color: #DF8620;
+  background-color: #FAECDB;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+.btn-2 {
+  cursor: none;
+  color: #2BBB6E;
+  background-color: #DEF7EA;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+
+.btn-3 {
+  cursor: none;
+  color: #BF2C31;
+  background-color: #F7DEDF;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+.btn-4 {
+  cursor: none;
+  color: #6C6F93;
+  background-color:  #E4E5F1;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+</style>
