@@ -137,6 +137,7 @@
                             v-model="user.code"
                             placeholder="Mã nhân viên"
                             name="code"
+
                             autocomplete="off"
                           /> -->
                           <el-input
@@ -332,17 +333,6 @@
                   v-if="data.row.cover == null"
                   src="../assets/user.jpg"
                   :fit="fit"></el-image>
-<!--              <img-->
-<!--                  v-if="data.row.cover != null"-->
-<!--                  v-bind:src="`http://localhost:8080/` + data.row.cover"-->
-<!--                  width="150px"-->
-<!--                  height="150px"-->
-<!--              />-->
-<!--              <img-->
-<!--                  v-if="data.row.cover == null"-->
-<!--                  src="../assets/user.jpg"-->
-<!--                  width="150px"-->
-<!--              />-->
             </el-table-column>
             <el-table-column
                 v-slot:="data"
