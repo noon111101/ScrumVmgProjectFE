@@ -44,7 +44,7 @@
         </div>
         <el-dialog
           style="text-align: center; font-weight: bold"
-          title="Chỉnh sửa ngày nghỉ lễ"
+          title="Thêm ngày nghỉ lễ"
           :visible.sync="dialogFormVisible"
         >
           <form id="formAddHoliday">
