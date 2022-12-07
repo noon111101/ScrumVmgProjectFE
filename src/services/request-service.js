@@ -7,7 +7,9 @@ class RequestService{
     getRequest(id){
         return httpCommon.get(`/request/${id}`);
     }
-
+    getCategoryReason(id){
+        return httpCommon.get(`/request/categoryreason/${id}`);
+    }
 }
 
 export default new RequestService()
