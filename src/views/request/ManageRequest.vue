@@ -4,23 +4,23 @@
 
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane style="width: 100%" label="Tất cả" name="first">
-        <br />
+        <br/>
         <div className="container" style="text-align: center">
           <el-row :gutter="20">
             <el-col :md="6" :lg="6" :xl="6">
               <div class="grid-content" style="margin-bottom: 20px">
                 <span>Phòng ban</span> &ensp;
                 <el-select
-                  v-model="departmentId"
-                  placeholder="Chọn Phòng ban"
-                  @change="getAll"
+                    v-model="departmentId"
+                    placeholder="Chọn Phòng ban"
+                    @change="getAll"
                 >
                   <el-option value="0" label="Tất cả các phòng ban"></el-option>
                   <el-option
-                    v-for="item in departments"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
+                      v-for="item in departments"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -31,11 +31,11 @@
               <div class="grid-content">
                 <span style="">Tìm kiếm</span> &ensp;
                 <el-input
-                  v-model="search"
-                  @input="getAll"
-                  size="medium"
-                  placeholder="Tìm theo tên, email"
-                  style="width: 200px; padding: 2px 0"
+                    v-model="search"
+                    @input="getAll"
+                    size="medium"
+                    placeholder="Tìm theo tên, email"
+                    style="width: 200px; padding: 2px 0"
                 />
               </div>
             </el-col>
@@ -43,9 +43,9 @@
               <div class="grid-content">
                 <span style="">Trạng thái</span> &ensp;
                 <el-select
-                  v-model="status"
-                  @change="getAll"
-                  placeholder="Trạng thái"
+                    v-model="status"
+                    @change="getAll"
+                    placeholder="Trạng thái"
                 >
                   <el-option value="0" label="Tất cả"></el-option>
                   <el-option label="Chờ phê duyệt" value="1"></el-option>
@@ -65,24 +65,24 @@
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
                       <el-link
-                        class=""
-                        type="danger"
-                        style="margin-left: 20px; margin-right: 20px"
-                        :underline="false"
-                        round
-                        @click="openFormNghi"
-                        ><i class="el-icon-plus"></i>Đề xuất nghỉ
+                          class=""
+                          type="danger"
+                          style="margin-left: 20px; margin-right: 20px"
+                          :underline="false"
+                          round
+                          @click="openFormNghi"
+                      ><i class="el-icon-plus"></i>Đề xuất nghỉ
                       </el-link>
                     </el-dropdown-item>
                     <el-dropdown-item>
                       <el-link
-                        class=""
-                        type="danger"
-                        style="margin-left: 20px; margin-right: 20px"
-                        :underline="false"
-                        round
-                        @click="openFormChamCong"
-                        ><i class="el-icon-plus"></i>Đề xuất chấm công
+                          class=""
+                          type="danger"
+                          style="margin-left: 20px; margin-right: 20px"
+                          :underline="false"
+                          round
+                          @click="openFormChamCong"
+                      ><i class="el-icon-plus"></i>Đề xuất chấm công
                       </el-link>
                     </el-dropdown-item>
                   </el-dropdown-menu>
@@ -122,153 +122,184 @@
           <!--              </el-dropdown-menu>-->
           <!--            </el-dropdown>-->
         </div>
-        <br />
+        <br/>
         <el-dialog
-          style="text-align: center; font-weight: bold"
-          title="TẠO ĐỀ XUẤT NGHỈ"
-          :visible.sync="dialogFormNghi"
+            style="text-align: center; font-weight: bold"
+            title="TẠO ĐỀ XUẤT NGHỈ"
+            :visible.sync="dialogFormNghi"
         >
-          <el-form ref="form" :model="form" label-width="150px">
+          <el-form id="formNghi" ref="form" :model="form" label-width="150px">
+            <el-input
+                type="text"
+                placeholder=""
+                v-model="username"
+                style="width: 100%"
+                name="creator"
+                hidden
+            ></el-input>
+            <el-input
+                type="text"
+                placeholder=""
+                v-model="categoryRequestId"
+                style="width: 100%"
+                name="catergoryRequest"
+                hidden
+            ></el-input>
+            <el-input
+                type="text"
+                placeholder=""
+                v-model="form.approveStatus"
+                style="width: 100%"
+                name="approveStatus"
+                hidden
+            ></el-input>
             <el-form-item label="Họ và tên *">
               <el-col :span="16">
                 <el-input
-                  type="text"
-                  placeholder=""
-                  v-model="fullName"
-                  style="width: 100%"
+                    type="text"
+                    placeholder=""
+                    v-model="fullName"
+                    style="width: 100%"
+                    readonly
                 ></el-input>
+
               </el-col>
             </el-form-item>
             <el-form-item label="Bộ phận *">
               <el-col :span="16">
                 <el-input
-                  type="text"
-                  v-model="departmentName"
-                  style="width: 100%"
+                    type="text"
+                    v-model="departmentName"
+                    style="width: 100%"
+                    readonly
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Tên đề xuất *">
               <el-col :span="16">
                 <el-input
-                  placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                  v-model="form.title"
+                    placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
+                    v-model="form.title"
+                    name="title"
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Loại đề xuất *">
               <el-col :span="15">
-                <el-select
-                  style="width: 100%"
-                  v-model="value"
-                  placeholder="Chọn loại đề xuất nghỉ"
-                >
-                  <el-option
-                    v-for="item in categoryReasons"
-                    :key="item.id"
-                    :label="item.name"
-                    :value="item.id"
-                  >
-                  </el-option>
-                </el-select>
+                <b-form-select style="width: 107%; padding: 9px 0; "
+                               v-model="form.categoryReason"
+                               placeholder="Chọn loại đề xuất nghỉ"
+                               name="categoryReason"
+                               >
+                  <template #first>
+                    <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
+                  </template>
+                  <b-form-select-option v-for="(item, index) in categoryReasons" :key="index" :value="item.id" >{{item.name}}</b-form-select-option>
+
+                </b-form-select>
+<!--                <el-select-->
+<!--                    style="width: 100%"-->
+<!--                    v-model="form.categoryReason"-->
+<!--                    placeholder="Chọn loại đề xuất nghỉ"-->
+<!--                    name="categoryReason"-->
+<!--                >-->
+<!--                  <el-option-->
+<!--                      v-for="(item,index) in categoryReasons"-->
+<!--                      :key="index"-->
+<!--                      :value="item.id"-->
+<!--                  >-->
+<!--                    {{item.name}}-->
+<!--                  </el-option>-->
+<!--                </el-select>-->
               </el-col>
             </el-form-item>
-            <el-form-item label="Nhập số ngày nghỉ *">
-              <el-col :span="16">
-                <el-input
-                  type="number"
-                  placeholder=""
-                  style="width: 100%"
-                ></el-input>
-              </el-col>
-            </el-form-item>
+
             <el-form-item label="Nghỉ từ *">
               <el-col :span="15">
                 <el-date-picker
-                  type="date"
-                  placeholder="Chọn ngày"
-                  v-model="form.date1"
-                  style="width: 52%"
+                    type="date"
+                    placeholder="Chọn ngày"
+                    v-model="form.dateFrom"
+                    style="width: 52%"
+                    format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd"
+                    name="dateFrom"
                 ></el-date-picker>
                 &emsp;
-                <el-select
-                  style="width: 43%"
-                  v-model="value"
-                  placeholder="Chọn ca bắt đầu"
+                <el-time-select
+                    name="timeStart"
+                    style="width: 43%"
+                    v-model="form.timeStart"
+                    placeholder="Chọn giờ bắt đầu"
+                    :picker-options="{
+      start: '07:00',
+      step: '00:15',
+      end: '19:00',
+    }"
+                    format="HH:mm"
+                    value-format="HH:mm"
                 >
-                  <el-option-group
-                    v-for="group in options"
-                    :key="group.label"
-                    :label="group.label"
-                  >
-                    <el-option
-                      v-for="item in group.options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-option-group>
-                </el-select>
+                </el-time-select>
               </el-col>
             </el-form-item>
             <el-form-item label="Nghỉ đến *">
               <el-col :span="15">
                 <el-date-picker
-                  type="date"
-                  placeholder="Chọn ngày"
-                  v-model="form.date1"
-                  style="width: 52%"
+                    name="dateTo"
+                    type="date"
+                    placeholder="Chọn ngày"
+                    v-model="form.dateTo"
+                    style="width: 52%"
+                    format="yyyy-MM-dd"
+                    value-format="yyyy-MM-dd"
                 ></el-date-picker>
                 &emsp;
-                <el-select
-                  style="width: 43%"
-                  v-model="value"
-                  placeholder="Chọn ca kết thúc"
+                <el-time-select
+                    name="timeEnd"
+                    style="width: 43%"
+                    v-model="form.timeEnd"
+                    placeholder="Chọn giờ kết thúc"
+                    :picker-options="{
+      start: '07:00',
+      step: '00:15',
+      end: '19:00',
+    }"
+                    format="HH:mm"
+                    value-format="HH:mm"
                 >
-                  <el-option-group
-                    v-for="group in options"
-                    :key="group.label"
-                    :label="group.label"
-                  >
-                    <el-option
-                      v-for="item in group.options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-option-group>
-                </el-select>
+
+                </el-time-select>
               </el-col>
             </el-form-item>
             <el-form-item label="Nhập nội dung *">
               <el-col :span="16">
                 <el-input
-                  style="width: 100%"
-                  type="textarea"
-                  v-model="form"
+                    name="content"
+                    style="width: 100%"
+                    type="textarea"
+                    v-model="form.content"
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Người theo dõi *">
               <el-col :span="16">
                 <el-select
-                  style="width: 100%"
-                  v-model="form.followers"
-                  multiple
-                  filterable
-                  remote
-                  reserve-keyword
-                  placeholder="Người theo dõi"
-                  :remote-method="remoteMethod"
-                  :loading="loading"
+                    name="followers"
+                    style="width: 100%"
+                    v-model="form.followers"
+                    multiple
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="Người theo dõi"
+                    :remote-method="remoteMethod"
+                    :loading="loading"
                 >
                   <el-option
-                    v-for="item in options"
-                    :key="item.id"
-                    :label="item.fullName"
-                    :value="item.id"
+                      v-for="item in options"
+                      :key="item.username"
+                      :label="item.username"
+                      :value="item.username"
                   >
                   </el-option>
                 </el-select>
@@ -277,6 +308,7 @@
             <el-form-item label="Người phê duyệt *">
               <el-col :span="16">
                 <el-select
+                    name="approvers"
                     style="width: 100%"
                     v-model="form.approvers"
                     multiple
@@ -289,9 +321,9 @@
                 >
                   <el-option
                       v-for="item in options"
-                      :key="item.id"
-                      :label="item.fullName"
-                      :value="item.id"
+                      :key="item.username"
+                      :label="item.username"
+                      :value="item.username"
                   >
                   </el-option>
                 </el-select>
@@ -299,56 +331,64 @@
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogFormVisible = false">Hủy</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false"
-              >Gửi đề xuất</el-button
+            <el-button @click="dialogFormNghi = false">Hủy</el-button>
+            <el-button type="primary" @click="sendFormNghi"
+            >Gửi đề xuất</el-button
             >
           </span>
         </el-dialog>
 
         <el-dialog
-          style="text-align: center; font-weight: bold"
-          title="TẠO ĐỀ XUẤT CHẤM CÔNG"
-          :visible.sync="dialogFormChamCong"
+            style="text-align: center; font-weight: bold"
+            title="TẠO ĐỀ XUẤT CHẤM CÔNG"
+            :visible.sync="dialogFormChamCong"
         >
           <el-form ref="form" :model="form" label-width="150px">
             <el-form-item label="Họ và tên *">
               <el-col :span="16">
                 <el-input
-                  type="text"
-                  placeholder="Phạm Văn An"
-                  style="width: 100%"
-                  v-model="fullName"
+                    type="text"
+                    placeholder="Phạm Văn An"
+                    style="width: 100%"
+                    v-model="fullName"
+                ></el-input>
+                <el-input
+                    type="text"
+                    placeholder="Phạm Văn An"
+                    style="width: 100%"
+                    v-model="fullName"
+                    name="creator"
+                    hidden
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Bộ phận *">
               <el-col :span="16">
                 <el-input
-                  type="text"
-                  placeholder="Phòng PTPM"
-                  style="width: 100%"
-                  v-model="departmentName"
+                    type="text"
+                    placeholder="Phòng PTPM"
+                    style="width: 100%"
+                    v-model="departmentName"
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Tên đề xuất *">
               <el-col :span="16">
                 <el-input
-                  placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                  v-model="form.title"
-                  name="title"
-                  type="text"
-                  auto-complete="off"
+                    placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
+                    v-model="form.title"
+                    name="title"
+                    type="text"
+                    auto-complete="off"
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Loại đề xuất *">
               <el-col :span="15">
                 <el-select
-                  style="width: 100%"
-                  v-model="value"
-                  placeholder="Chọn loại đề xuất chấm công"
+                    style="width: 100%"
+                    v-model="value"
+                    placeholder="Chọn loại đề xuất chấm công"
                 >
                   <el-option
                       v-for="item in categoryReasons"
@@ -363,27 +403,27 @@
             <el-form-item label="Nghỉ từ *">
               <el-col :span="15">
                 <el-date-picker
-                  type="date"
-                  placeholder="Chọn ngày"
-                  v-model="form.date1"
-                  style="width: 52%"
+                    type="date"
+                    placeholder="Chọn ngày"
+                    v-model="form.date1"
+                    style="width: 52%"
                 ></el-date-picker>
                 &emsp;
                 <el-time-select
-                  style="width: 43%"
-                  v-model="value"
-                  placeholder="Chọn giờ bắt đầu"
+                    style="width: 43%"
+                    v-model="value"
+                    placeholder="Chọn giờ bắt đầu"
                 >
                   <el-option-group
-                    v-for="group in options"
-                    :key="group.label"
-                    :label="group.label"
+                      v-for="group in options"
+                      :key="group.label"
+                      :label="group.label"
                   >
                     <el-option
-                      v-for="item in group.options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                        v-for="item in group.options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
                     >
                     </el-option>
                   </el-option-group>
@@ -393,27 +433,27 @@
             <el-form-item label="Nghỉ đến *">
               <el-col :span="15">
                 <el-date-picker
-                  type="date"
-                  placeholder="Chọn ngày"
-                  v-model="form.date1"
-                  style="width: 52%"
+                    type="date"
+                    placeholder="Chọn ngày"
+                    v-model="form.date1"
+                    style="width: 52%"
                 ></el-date-picker>
                 &emsp;
                 <el-select
-                  style="width: 43%"
-                  v-model="value"
-                  placeholder="Chọn ca kết thúc"
+                    style="width: 43%"
+                    v-model="value"
+                    placeholder="Chọn ca kết thúc"
                 >
                   <el-option-group
-                    v-for="group in options"
-                    :key="group.label"
-                    :label="group.label"
+                      v-for="group in options"
+                      :key="group.label"
+                      :label="group.label"
                   >
                     <el-option
-                      v-for="item in group.options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
+                        v-for="item in group.options"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
                     >
                     </el-option>
                   </el-option-group>
@@ -423,9 +463,9 @@
             <el-form-item label="Nhập nội dung *">
               <el-col :span="16">
                 <el-input
-                  style="width: 100%"
-                  type="textarea"
-                  v-model="form.desc"
+                    style="width: 100%"
+                    type="textarea"
+                    v-model="form.desc"
                 ></el-input>
               </el-col>
             </el-form-item>
@@ -443,41 +483,44 @@
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">Hủy</el-button>
             <el-button type="primary" @click="dialogFormVisible = false"
-              >Gửi đề xuất</el-button
+            >Gửi đề xuất</el-button
             >
           </span>
         </el-dialog>
 
         <el-table :data="requests" height="780" style="width: 100%">
           <el-table-column
-            v-slot:="data"
-            label="Đề xuất"
-            align="center"
-            width="380"
+              v-slot:="data"
+              label="Đề xuất"
+              align="center"
+              width="380"
           >
 
-            <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{ data.row.title }}</router-link>
+            <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{
+                data.row.title
+              }}
+            </router-link>
 
           </el-table-column>
           <el-table-column
-            prop="creator.fullName"
-            label="Nhân viên"
-            align="center"
-            width="200"
+              prop="creator.fullName"
+              label="Nhân viên"
+              align="center"
+              width="200"
           >
           </el-table-column>
           <el-table-column
-            prop="creator.departments.name"
-            label="Phòng ban"
-            align="center"
-            width="200"
+              prop="creator.departments.name"
+              label="Phòng ban"
+              align="center"
+              width="200"
           >
           </el-table-column>
           <el-table-column
-            v-slot:="data"
-            label="Trạng thái"
-            align="center"
-            width="200"
+              v-slot:="data"
+              label="Trạng thái"
+              align="center"
+              width="200"
           >
             <button v-if="data.row.approveStatus.id == 1" class="btn-1">
               {{ data.row.approveStatus.name }}
@@ -491,51 +534,42 @@
             <button v-if="data.row.approveStatus.id == 4" class="btn-4">
               {{ data.row.approveStatus.name }}
             </button>
-            <!--            <button class="btn-2">-->
-            <!--              Đã chấp thuận-->
-            <!--            </button>-->
-            <!--            <button class="btn-3">-->
-            <!--              Đã từ chối-->
-            <!--            </button>-->
-            <!--            <button class="btn-4">-->
-            <!--              Quá hạn duyệt-->
-            <!--            </button>-->
           </el-table-column>
           <el-table-column
-            v-slot:="data"
-            label="Người duyệt"
-            align="center"
-            width="200"
+              v-slot:="data"
+              label="Người duyệt"
+              align="center"
+              width="200"
           >
             <div
-              v-for="(item, index) in data.row.approvers"
-              :item="item"
-              :index="index"
-              :key="item.id"
+                v-for="(item, index) in data.row.approvers"
+                :item="item"
+                :index="index"
+                :key="item.id"
             >
               <span>{{ item.fullName }}</span>
             </div>
           </el-table-column>
           <el-table-column
-            v-slot:="data"
-            label="Người theo dõi"
-            align="center"
-            width="200"
+              v-slot:="data"
+              label="Người theo dõi"
+              align="center"
+              width="200"
           >
             <div
-              v-for="(item, index) in data.row.followers"
-              :item="item"
-              :index="index"
-              :key="item.id"
+                v-for="(item, index) in data.row.followers"
+                :item="item"
+                :index="index"
+                :key="item.id"
             >
               <span>{{ item.fullName }}</span>
             </div>
           </el-table-column>
           <el-table-column
-            prop="date"
-            label="Ngày tạo"
-            align="center"
-            width="200"
+              prop="date"
+              label="Ngày tạo"
+              align="center"
+              width="200"
           >
           </el-table-column>
           <el-table-column prop="" label="Thao tác" align="center" width="200">
@@ -551,6 +585,7 @@
 <script>
 import RequestService from "@/services/request-service";
 import UserService from "@/services/user.service";
+
 export default {
   data() {
     return {
@@ -562,23 +597,11 @@ export default {
       dialogFormNghi: false,
       dialogFormChamCong: false,
       fullName: "",
+      username: "",
       departmentName: "",
       categoryRequestId: "",
       categoryReasons: [],
-      form: {
-        title: "",
-        creator: "",
-        approvers: "",
-        followers: "",
-        content: "",
-        approveStatus: "",
-        catergoryRequest: "",
-        categoryReason: "",
-        dateFrom: "",
-        dateTo: "",
-        timeStart: "",
-        timeEnd: "",
-      },
+
       requests: [],
       departments: [],
       departmentId: "",
@@ -589,6 +612,22 @@ export default {
       totalItems: 0,
       page: 0,
       pageSize: 10,
+
+
+      form: {
+        title: "",
+        creator: "",
+        approvers: "",
+        followers: "",
+        content: "",
+        approveStatus: 1,
+        catergoryRequest: null,
+        categoryReason: null,
+        dateFrom: "",
+        dateTo: "",
+        timeStart: "",
+        timeEnd: "",
+      },
     };
   },
   computed: {
@@ -603,23 +642,23 @@ export default {
     this.getParams();
     this.getAll();
     UserService.getAllUser()
-      .then((response) => {
-        this.users = response.data;
-        console.log(1, response.data);
-        this.list = this.users.map((item) => {
-          console.log(111);
-          console.log(5, item);
-          return { id: `id:${item.id}`, fullName: `${item.fullName}` };
+        .then((response) => {
+          this.users = response.data;
+          console.log(1, response.data);
+          this.list = this.users.map((item) => {
+            console.log(5, item);
+            return {username: `${item.username}`, fullName: `${item.fullName}`};
+          });
+        })
+        .catch((e) => {
+          console.log(e);
         });
-      })
-      .catch((e) => {
-        console.log(e);
-      });
   },
   methods: {
     getParams() {
       this.fullName = this.currentUser.user.fullName;
       this.departmentName = this.currentUser.user.departments.name;
+      this.username = this.currentUser.user.username
     },
     remoteMethod(query) {
       console.log(query);
@@ -635,21 +674,52 @@ export default {
         this.options = [];
       }
     },
-    sendFormNghi(){
-      this.form.creator = this.currentUser.user.username;
+     async sendFormNghi() {
+
+
+      this.creator = this.currentUser.user.username;
+      this.catergoryRequest = this.categoryRequestId;
+      this.approveStatus = 1;
+       // const params ={
+       //   "title": this.title,
+       //   "creator": this.currentUser.user.username,
+       //   "approvers": this.approvers,
+       //   "followers": this.followers,
+       //   "content": this.content,
+       //   "approveStatus": 1,
+       //   "catergoryRequest": this.categoryRequestId,
+       //   "categoryReason": this.categoryReason,
+       //   "dateFrom": this.dateFrom,
+       //   "dateTo": this.dateTo,
+       //   "timeStart": this.timeStart,
+       //   "timeEnd": this.timeEnd
+       // }
+      this.dialogFormNghi = false;
+      let form = document.querySelector("#formNghi");
+      console.log(this.form)
+      RequestService.addRequest(form).then(() => {
+        this.$notify.success({
+          message: "Tạo đề xuất thành công",
+          title: "Thành Công",
+          timer: 2000,
+          timerProgressBar: true,
+        });
+        this.getAll();
+      });
 
     },
-    openFormNghi(){
+    openFormNghi() {
       this.dialogFormNghi = true;
       this.categoryRequestId = 1;
-      RequestService.getCategoryReason(this.categoryRequestId).then(response =>{
+      RequestService.getCategoryReason(this.categoryRequestId).then(response => {
         this.categoryReasons = response.data
+        console.log(this.categoryReasons)
       })
     },
-    openFormChamCong(){
+    openFormChamCong() {
       this.dialogFormChamCong = true;
       this.categoryRequestId = 2;
-      RequestService.getCategoryReason(this.categoryRequestId).then(response =>{
+      RequestService.getCategoryReason(this.categoryRequestId).then(response => {
         this.categoryReasons = response.data
       })
     },
@@ -674,15 +744,15 @@ export default {
         status: this.sendStatus,
       };
       RequestService.getAll(params)
-        .then((response) => {
-          this.requests = response.data.content;
-          this.page = response.data.pageable.pageNumber;
-          console.log(response.data.pageable.pageNumber);
-          this.totalItems = response.data.totalElements;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+          .then((response) => {
+            this.requests = response.data.content;
+            this.page = response.data.pageable.pageNumber;
+            console.log(response.data.pageable.pageNumber);
+            this.totalItems = response.data.totalElements;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
     },
     handleClick(tab, event) {
       console.log(tab, event);
