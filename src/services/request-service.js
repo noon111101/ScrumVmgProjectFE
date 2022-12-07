@@ -4,6 +4,10 @@ class RequestService{
         return httpCommon.get("/request", {params});
     }
 
+    getRequest(id){
+        return httpCommon.get(`/request/${id}`);
+    }
+
 }
 
 export default new RequestService()
