@@ -440,9 +440,9 @@
             align="center"
             width="380"
           >
-            <router-link class="link" to="/requestdetail">{{
-              data.row.title
-            }}</router-link>
+
+            <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{ data.row.title }}</router-link>
+
           </el-table-column>
           <el-table-column
             prop="creator.fullName"
