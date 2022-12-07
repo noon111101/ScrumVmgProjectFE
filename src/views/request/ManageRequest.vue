@@ -299,6 +299,7 @@
                   type="text"
                   placeholder="Phạm Văn An"
                   style="width: 100%"
+                  v-model="fullName"
                 ></el-input>
               </el-col>
             </el-form-item>
@@ -308,6 +309,7 @@
                   type="text"
                   placeholder="Phòng PTPM"
                   style="width: 100%"
+                  v-model="departmentName"
                 ></el-input>
               </el-col>
             </el-form-item>
@@ -315,7 +317,10 @@
               <el-col :span="16">
                 <el-input
                   placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                  v-model="form.name"
+                  v-model="form.title"
+                  name="title"
+                  type="text"
+                  auto-complete="off"
                 ></el-input>
               </el-col>
             </el-form-item>
@@ -336,15 +341,6 @@
                 </el-select>
               </el-col>
             </el-form-item>
-            <el-form-item label="Nhập số ngày nghỉ *">
-              <el-col :span="16">
-                <el-input
-                  type="number"
-                  placeholder=""
-                  style="width: 100%"
-                ></el-input>
-              </el-col>
-            </el-form-item>
             <el-form-item label="Nghỉ từ *">
               <el-col :span="15">
                 <el-date-picker
@@ -354,10 +350,10 @@
                   style="width: 52%"
                 ></el-date-picker>
                 &emsp;
-                <el-select
+                <el-time-select
                   style="width: 43%"
                   v-model="value"
-                  placeholder="Chọn ca bắt đầu"
+                  placeholder="Chọn giờ bắt đầu"
                 >
                   <el-option-group
                     v-for="group in options"
@@ -372,7 +368,7 @@
                     >
                     </el-option>
                   </el-option-group>
-                </el-select>
+                </el-time-select>
               </el-col>
             </el-form-item>
             <el-form-item label="Nghỉ đến *">
@@ -552,9 +548,12 @@ export default {
         approvers: "",
         followers: "",
         content: false,
-        type: [],
-        resource: "",
-        desc: "",
+        approveStatus: [],
+        catergoryRequest: [],
+        dateFrom: "",
+        dateTo: "",
+        timeStart: "",
+        timeEnd: "",
       },
       requests: [],
       departments: [],
@@ -582,9 +581,9 @@ export default {
     UserService.getAllUser()
       .then((response) => {
         this.users = response.data;
-        console.log(1,  response.data);
+        console.log(1, response.data);
         this.list = this.users.map((item) => {
-          console.log(111)
+          console.log(111);
           console.log(5, item);
           return { id: `id:${item.id}`, fullName: `${item.fullName}` };
         });
@@ -592,23 +591,22 @@ export default {
       .catch((e) => {
         console.log(e);
       });
-
   },
   methods: {
     getParams() {
       this.fullName = this.currentUser.user.fullName;
+      this.departmentName = this.currentUser.user.departments.name
     },
     remoteMethod(query) {
       console.log(query);
       console.log(2, this.list);
       if (query !== "") {
         this.loading = true;
-   
-          this.loading = false;
-          this.options = this.list.filter((item) => {
-            return item.fullName.toLowerCase().indexOf(query.toLowerCase()) > -1;
-          });
-       
+
+        this.loading = false;
+        this.options = this.list.filter((item) => {
+          return item.fullName.toLowerCase().indexOf(query.toLowerCase()) > -1;
+        });
       } else {
         this.options = [];
       }
