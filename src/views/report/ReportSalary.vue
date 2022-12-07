@@ -9,7 +9,7 @@
           class="mx-3 my-3"
           v-model="department"
           @change="getLog"
-          placeholder="Chọn Bộ phận"
+          placeholder="Chọn Phòng Ban"
         >
           <el-option label="Tất cả" value="" selected> </el-option>
           <el-option
