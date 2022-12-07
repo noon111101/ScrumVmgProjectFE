@@ -439,8 +439,8 @@
                 >
                   <el-option
                     v-for="item in options"
-                    :key="item.username"
-                    :label="item.fullName"
+                    :key="item.fullName"
+                    :label="item.username"
                     :value="item.username"
                   >
                   </el-option>
@@ -463,8 +463,8 @@
                 >
                   <el-option
                     v-for="item in options"
-                    :key="item.username"
-                    :label="item.fullName"
+                    :key="item.fullName"
+                    :label="item.username"
                     :value="item.username"
                   >
                   </el-option>
@@ -484,7 +484,7 @@
           <el-table-column
             v-slot:="data"
             label="Đề xuất"
-            align="center" 
+            align="center"
             width="380"
           >
             <router-link
@@ -600,7 +600,7 @@ export default {
       departmentName: "",
       categoryRequestId: "",
       categoryReasons: [],
-      approvestatus:"1",
+      approvestatus: "1",
       form: {
         title: "",
         creator: "",
