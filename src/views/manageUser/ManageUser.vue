@@ -687,7 +687,6 @@ export default {
       console.log(12, this.checkEmail);
       console.log(13, this.checkGender);
       console.log(14, this.checkDepartment);
-      // console.log(15, this.checkDepartment)
       if (
           this.checkId === true &&
           this.checkEmail === true &&

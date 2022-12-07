@@ -277,21 +277,21 @@
             <el-form-item label="Người phê duyệt *">
               <el-col :span="16">
                 <el-select
-                    style="width: 100%"
-                    v-model="form.approvers"
-                    multiple
-                    filterable
-                    remote
-                    reserve-keyword
-                    placeholder="Người phê duyệt"
-                    :remote-method="remoteMethod"
-                    :loading="loading"
+                  style="width: 100%"
+                  v-model="form.approvers"
+                  multiple
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="Người phê duyệt"
+                  :remote-method="remoteMethod"
+                  :loading="loading"
                 >
                   <el-option
-                      v-for="item in options"
-                      :key="item.id"
-                      :label="item.fullName"
-                      :value="item.id"
+                    v-for="item in options"
+                    :key="item.id"
+                    :label="item.fullName"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -311,7 +311,21 @@
           title="TẠO ĐỀ XUẤT CHẤM CÔNG"
           :visible.sync="dialogFormChamCong"
         >
-          <el-form ref="form" :model="form" label-width="150px">
+          <el-form id="formChamCong" label-width="150px">
+            <el-input
+              type="text"
+              style="width: 100%"
+              v-model="username"
+              hidden
+              name="creator"
+            ></el-input>
+            <el-input
+              type="text"
+              style="width: 100%"
+              v-model="approvestatus"
+              hidden
+              name="approveStatus"
+            ></el-input>
             <el-form-item label="Họ và tên *">
               <el-col :span="16">
                 <el-input
@@ -347,14 +361,15 @@
               <el-col :span="15">
                 <el-select
                   style="width: 100%"
-                  v-model="value"
+                  v-model="form.categoryReason"
+                  name="categoryReason"
                   placeholder="Chọn loại đề xuất chấm công"
                 >
                   <el-option
-                      v-for="item in categoryReasons"
-                      :key="item.id"
-                      :label="item.name"
-                      :value="item.id"
+                    v-for="item in categoryReasons"
+                    :key="item.id"
+                    :label="item.id"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -365,28 +380,17 @@
                 <el-date-picker
                   type="date"
                   placeholder="Chọn ngày"
-                  v-model="form.date1"
+                  v-model="form.dateFrom"
+                  name="dateFrom"
                   style="width: 52%"
                 ></el-date-picker>
                 &emsp;
                 <el-time-select
                   style="width: 43%"
-                  v-model="value"
+                  v-model="form.timeStart"
                   placeholder="Chọn giờ bắt đầu"
+                  name="timeStart"
                 >
-                  <el-option-group
-                    v-for="group in options"
-                    :key="group.label"
-                    :label="group.label"
-                  >
-                    <el-option
-                      v-for="item in group.options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-option-group>
                 </el-time-select>
               </el-col>
             </el-form-item>
@@ -395,29 +399,18 @@
                 <el-date-picker
                   type="date"
                   placeholder="Chọn ngày"
-                  v-model="form.date1"
+                  v-model="form.dateTo"
                   style="width: 52%"
+                  name="dateTo"
                 ></el-date-picker>
                 &emsp;
-                <el-select
+                <el-time-select
                   style="width: 43%"
-                  v-model="value"
-                  placeholder="Chọn ca kết thúc"
+                  v-model="form.timeEnd"
+                  placeholder="Chọn giờ kết thúc"
+                  name="timeEnd"
                 >
-                  <el-option-group
-                    v-for="group in options"
-                    :key="group.label"
-                    :label="group.label"
-                  >
-                    <el-option
-                      v-for="item in group.options"
-                      :key="item.value"
-                      :label="item.label"
-                      :value="item.value"
-                    >
-                    </el-option>
-                  </el-option-group>
-                </el-select>
+                </el-time-select>
               </el-col>
             </el-form-item>
             <el-form-item label="Nhập nội dung *">
@@ -425,24 +418,63 @@
                 <el-input
                   style="width: 100%"
                   type="textarea"
-                  v-model="form.desc"
+                  v-model="form.content"
+                  name="content"
                 ></el-input>
               </el-col>
             </el-form-item>
             <el-form-item label="Người theo dõi *">
               <el-col :span="16">
-                <el-input style="width: 100%"></el-input>
+                <el-select
+                  name="approvers"
+                  style="width: 100%"
+                  v-model="form.approvers"
+                  multiple
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="Người theo dõi"
+                  :remote-method="remoteMethod"
+                  :loading="loading"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.username"
+                    :label="item.fullName"
+                    :value="item.username"
+                  >
+                  </el-option>
+                </el-select>
               </el-col>
             </el-form-item>
             <el-form-item label="Người phê duyệt *">
               <el-col :span="16">
-                <el-input style="width: 100%"></el-input>
+                <el-select
+                  name="followers"
+                  style="width: 100%"
+                  v-model="form.followers"
+                  multiple
+                  filterable
+                  remote
+                  reserve-keyword
+                  placeholder="Người phê duyệt"
+                  :remote-method="remoteMethod"
+                  :loading="loading"
+                >
+                  <el-option
+                    v-for="item in options"
+                    :key="item.username"
+                    :label="item.fullName"
+                    :value="item.username"
+                  >
+                  </el-option>
+                </el-select>
               </el-col>
             </el-form-item>
           </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="dialogFormVisible = false">Hủy</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false"
+            <el-button type="primary" @click="sendFormChamCong"
               >Gửi đề xuất</el-button
             >
           </span>
@@ -452,12 +484,14 @@
           <el-table-column
             v-slot:="data"
             label="Đề xuất"
-            align="center"
+            align="center" 
             width="380"
           >
-
-            <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{ data.row.title }}</router-link>
-
+            <router-link
+              class="link"
+              :to="{ name: 'requestdetail', params: { id: data.row.id } }"
+              >{{ data.row.title }}</router-link
+            >
           </el-table-column>
           <el-table-column
             prop="creator.fullName"
@@ -562,9 +596,11 @@ export default {
       dialogFormNghi: false,
       dialogFormChamCong: false,
       fullName: "",
+      username: "",
       departmentName: "",
       categoryRequestId: "",
       categoryReasons: [],
+      approvestatus:"1",
       form: {
         title: "",
         creator: "",
@@ -572,7 +608,7 @@ export default {
         followers: "",
         content: "",
         approveStatus: "",
-        catergoryRequest: "",
+        categoryRequest: "",
         categoryReason: "",
         dateFrom: "",
         dateTo: "",
@@ -607,9 +643,7 @@ export default {
         this.users = response.data;
         console.log(1, response.data);
         this.list = this.users.map((item) => {
-          console.log(111);
-          console.log(5, item);
-          return { id: `id:${item.id}`, fullName: `${item.fullName}` };
+          return { username: `${item.username}`, fullName: `${item.fullName}` };
         });
       })
       .catch((e) => {
@@ -620,6 +654,7 @@ export default {
     getParams() {
       this.fullName = this.currentUser.user.fullName;
       this.departmentName = this.currentUser.user.departments.name;
+      this.username = this.currentUser.user.username;
     },
     remoteMethod(query) {
       console.log(query);
@@ -635,23 +670,49 @@ export default {
         this.options = [];
       }
     },
-    sendFormNghi(){
+    sendFormNghi() {
       this.form.creator = this.currentUser.user.username;
-
     },
-    openFormNghi(){
+    async sendFormChamCong() {
+      this.submitted = true;
+      let form = document.querySelector("#formChamCong");
+      RequestService.addRequest(form)
+        .then((response) => {
+          this.$notify.success({
+            message: response.data.message,
+            title: "Success",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          this.getAll();
+        })
+        .catch((e) => {
+          this.$notify.error({
+            message: e.response.data.error.message,
+            title: "Lỗi",
+            timer: 2000,
+            timerProgressBar: true,
+          });
+          this.getAll();
+        });
+    },
+    openFormNghi() {
       this.dialogFormNghi = true;
       this.categoryRequestId = 1;
-      RequestService.getCategoryReason(this.categoryRequestId).then(response =>{
-        this.categoryReasons = response.data
-      })
+      RequestService.getCategoryReason(this.categoryRequestId).then(
+        (response) => {
+          this.categoryReasons = response.data;
+        }
+      );
     },
-    openFormChamCong(){
+    openFormChamCong() {
       this.dialogFormChamCong = true;
       this.categoryRequestId = 2;
-      RequestService.getCategoryReason(this.categoryRequestId).then(response =>{
-        this.categoryReasons = response.data
-      })
+      RequestService.getCategoryReason(this.categoryRequestId).then(
+        (response) => {
+          this.categoryReasons = response.data;
+        }
+      );
     },
     getAll() {
       let params = null;
