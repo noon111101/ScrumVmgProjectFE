@@ -2,13 +2,24 @@
   <div class="container ">
     <router-link to="/profile" class="btn-back"><i class="el-icon-back"></i>&nbsp;&nbsp;Chi tiết đề xuất</router-link>
     <br><br>
-    <h5 class="title-request">Nguyễn Đình Phú xin nghỉ phép ngày 15/11</h5>
+    <h5 class="title-request">{{request.title}}</h5>
     <br><br>
     <div style="width: 100%">
       <span>Trạng thái:</span>&nbsp;&nbsp;
-      <button class="tt1">Chờ phê duyệt</button>
-      <button class="btn-2">Chấp thuận</button>
-      <button class="btn-1">Từ chối</button>
+      <button v-if="request.approveStatus.id==1" class="btn-1">
+        {{request.approveStatus.name}}
+      </button>
+      <button v-if="request.approveStatus.id==2" class="btn-2">
+        {{request.approveStatus.name}}
+      </button>
+      <button v-if="request.approveStatus.id==3" class="btn-3">
+        {{request.approveStatus.name}}
+      </button>
+      <button v-if="request.approveStatus.id==4" class="btn-4">
+        {{request.approveStatus.name}}
+      </button>
+      <button class="btn-accept">Chấp thuận</button>
+      <button class="btn-refuse">Từ chối</button>
     </div>
     <br><br>
     <span class="title-request sub-title">Thông tin đề xuất</span>
@@ -19,15 +30,15 @@
         <table>
           <tr >
             <td class="header-table" >Nhân viên:</td>
-            <td>Nguyễn Đình Phú</td>
+            <td>{{request.creator.fullName}}</td>
           </tr>
           <tr>
             <td class="header-table" >Mã nhân viên:</td>
-            <td>VMG_0307</td>
+            <td>{{request.creator.code}}</td>
           </tr>
           <tr>
             <td class="header-table" >Phòng ban:</td>
-            <td>Phòng phát triền dịch vụ</td>
+            <td>{{request.creator.departments.name}}</td>
           </tr>
         </table>
       </div>
@@ -36,7 +47,7 @@
         <table>
           <tr >
             <td class="header-table" >Loại đề xuất:</td>
-            <td>Nghỉ phép</td>
+            <td>Đề xuất {{request.catergoryRequest.name}}</td>
           </tr>
           <tr>
             <td class="header-table" >Thời gian tạo:</td>
@@ -52,7 +63,7 @@
           </tr>
           <tr>
             <td class="header-table" >Nội dung đề xuất:</td>
-            <td>Xin nghỉ ngày</td>
+            <td>{{request.content}}</td>
           </tr>
         </table>
       </div>
@@ -64,31 +75,33 @@
         <span class="title-request sub-title">Người phê duyệt</span>
         <hr style="margin: 0; width: 90%">
         <br>
-        <b-avatar style="margin-left: 12px" variant="info" v-if="currentUser.user.cover != null"
-                  v-bind:src="`http://localhost:8080/` + currentUser.user.cover"></b-avatar>
-        <b-avatar style="margin-left: 12px" variant="info" v-if="currentUser.user.cover == null"
-                  src="../assets/user.jpg"></b-avatar>  <span style="font-weight: 600">&nbsp; Nguyễn Đăng Tùng</span>
+        <div v-for="(item, index) in request.approvers" :item="item"
+             :index="index"
+             :key="item.id">
+          <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover != null"
+                    v-bind:src="`http://localhost:8080/` + item.cover"></b-avatar>
+          <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover == null"
+                    src="../assets/user.jpg"></b-avatar>  <span style="font-weight: 600">&nbsp; {{item.fullName}}</span>
+          <br><br>
+        </div>
+
       </div>
       <div class="col-6 right">
         <br>
         <span class="title-request sub-title">Người theo dõi</span>
         <hr style="margin: 0; width: 90%">
         <br>
-        <b-avatar style="margin-left: 12px" variant="info" src="https://placekitten.com/300/300"></b-avatar>  <span style="font-weight: 600">&nbsp; Đàm Hồng Nhung</span>
 
-        <br><br>
-        <b-avatar style="margin-left: 12px" variant="info" v-if="currentUser.user.cover != null"
-                  v-bind:src="`http://localhost:8080/` + currentUser.user.cover"></b-avatar>
-        <b-avatar style="margin-left: 12px" variant="info" v-if="currentUser.user.cover == null"
-                  src="../assets/user.jpg"></b-avatar>
-        <span style="font-weight: 600">&nbsp; Trịnh Thị Hà</span>
+        <div v-for="(item, index) in request.followers" :item="item"
+             :index="index"
+             :key="item.id">
+          <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover != null"
+                    v-bind:src="`http://localhost:8080/` + item.cover"></b-avatar>
+          <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover == null"
+                    src="../assets/user.jpg"></b-avatar>  <span style="font-weight: 600">&nbsp; {{item.fullName}}</span>
+          <br><br>
+        </div>
 
-        <br><br>
-        <b-avatar style="margin-left: 12px" variant="info" v-if="currentUser.user.cover != null"
-                  v-bind:src="`http://localhost:8080/` + currentUser.user.cover"></b-avatar>
-        <b-avatar style="margin-left: 12px" variant="info" v-if="currentUser.user.cover == null"
-                  src="../assets/user.jpg"></b-avatar>
-        <span style="font-weight: 600">&nbsp; Nguyễn Đăng Tùng</span>
       </div>
     </div>
 
@@ -96,15 +109,40 @@
 </template>
 
 <script>
+import RequestService from "@/services/request-service";
 export default {
   name: "RequestDetail",
+  data() {
+    return{
+      request: [],
+      requestId: '',
+    }
+
+  },
+  created() {
+  this.getParams()
+    this.getRequest()
+    },
   computed: {
+
     currentUser() {
       // return JSON.parse(localStorage.getItem('user'));
       return this.$store.state.auth.user;
     },
-
   },
+  methods: {
+    getParams(){
+      this.requestId = this.$route.params.id
+      console.log(this.requestId)
+    },
+    getRequest(){
+      this.requestId = this.$route.params.id
+      RequestService.getRequest(this.requestId ).then(response => {
+        this.request = response.data
+        console.log(this.request)
+      })
+    }
+  }
 }
 </script>
 
@@ -126,7 +164,7 @@ export default {
   color: #828282;
 }
 
-.tt1 {
+.btn-1 {
   cursor: default;
   color: #DF8620;
   background-color: #FAECDB;
@@ -134,8 +172,33 @@ export default {
   border-radius: 20px;
   padding: 3px 20px;
 }
+.btn-2 {
+  cursor: default;
+  color: #2BBB6E;
+  background-color: #DEF7EA;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
 
-.btn-1 {
+.btn-3 {
+  cursor: default;
+  color: #BF2C31;
+  background-color: #F7DEDF;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+.btn-4 {
+  cursor: default;
+  color: #6C6F93;
+  background-color:  #E4E5F1;
+  border: none;
+  border-radius: 20px;
+  padding: 3px 20px;
+}
+
+.btn-refuse {
   float: right;
   color: #FFFFFF;
   background-color: #E24146;
@@ -145,7 +208,7 @@ export default {
   margin-right: 10px;
 }
 
-.btn-2 {
+.btn-accept {
   float: right;
   color: #FFFFFF;
   background-color: #75C4C0;
@@ -155,7 +218,7 @@ export default {
   /*margin-right: 5px;*/
 }
 
-.btn-1:hover {
+.btn-refuse:hover {
   float: right;
   color: #FFFFFF;
   background-color: #de1d23;
@@ -165,7 +228,7 @@ export default {
   margin-right: 10px;
 }
 
-.btn-2:hover {
+.btn-accept:hover {
   float: right;
   color: #FFFFFF;
   background-color: #06bdb3;
