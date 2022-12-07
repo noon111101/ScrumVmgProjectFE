@@ -312,7 +312,7 @@ video {
 .button-camera{
   background-color: #666;
   border: medium none;
-  color: #fff;
+  color: #666;
   display: block;
   font-size: 18px;
   left: 50%;

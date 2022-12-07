@@ -139,7 +139,7 @@
                 </router-link>
               </a>
             </li>
-            <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
+            <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
                 <router-link to="/manageholiday" class="nav-link sel">
                   <i class="el-icon-files"> </i> Quản lí nghỉ lễ
@@ -162,7 +162,7 @@
                 </router-link>
               </a>
             </li>
-            
+
             <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
               <a class="nav-link">
                 <router-link to="/report" class="nav-link sel">
