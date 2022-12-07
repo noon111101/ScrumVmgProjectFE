@@ -70,7 +70,7 @@
                         style="margin-left: 20px; margin-right: 20px"
                         :underline="false"
                         round
-                        @click="dialogFormNghi = true"
+                        @click="openFormNghi"
                         ><i class="el-icon-plus"></i>Đề xuất nghỉ
                       </el-link>
                     </el-dropdown-item>
@@ -81,7 +81,7 @@
                         style="margin-left: 20px; margin-right: 20px"
                         :underline="false"
                         round
-                        @click="dialogFormChamCong = true"
+                        @click="openFormChamCong"
                         ><i class="el-icon-plus"></i>Đề xuất chấm công
                       </el-link>
                     </el-dropdown-item>
@@ -133,7 +133,8 @@
               <el-col :span="16">
                 <el-input
                   type="text"
-                  placeholder="Phạm Văn An"
+                  placeholder=""
+                  v-model="fullName"
                   style="width: 100%"
                 ></el-input>
               </el-col>
@@ -142,7 +143,7 @@
               <el-col :span="16">
                 <el-input
                   type="text"
-                  placeholder="Phòng PTPM"
+                  v-model="departmentName"
                   style="width: 100%"
                 ></el-input>
               </el-col>
@@ -151,7 +152,7 @@
               <el-col :span="16">
                 <el-input
                   placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                  v-model="form.name"
+                  v-model="form.title"
                 ></el-input>
               </el-col>
             </el-form-item>
@@ -163,10 +164,10 @@
                   placeholder="Chọn loại đề xuất nghỉ"
                 >
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                    v-for="item in categoryReasons"
+                    :key="item.id"
+                    :label="item.name"
+                    :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -246,7 +247,7 @@
                 <el-input
                   style="width: 100%"
                   type="textarea"
-                  v-model="form.desc"
+                  v-model="form"
                 ></el-input>
               </el-col>
             </el-form-item>
@@ -259,7 +260,7 @@
                   filterable
                   remote
                   reserve-keyword
-                  placeholder="Please enter a keyword"
+                  placeholder="Người theo dõi"
                   :remote-method="remoteMethod"
                   :loading="loading"
                 >
@@ -275,7 +276,25 @@
             </el-form-item>
             <el-form-item label="Người phê duyệt *">
               <el-col :span="16">
-                <el-input style="width: 100%"></el-input>
+                <el-select
+                    style="width: 100%"
+                    v-model="form.approvers"
+                    multiple
+                    filterable
+                    remote
+                    reserve-keyword
+                    placeholder="Người phê duyệt"
+                    :remote-method="remoteMethod"
+                    :loading="loading"
+                >
+                  <el-option
+                      v-for="item in options"
+                      :key="item.id"
+                      :label="item.fullName"
+                      :value="item.id"
+                  >
+                  </el-option>
+                </el-select>
               </el-col>
             </el-form-item>
           </el-form>
@@ -327,10 +346,10 @@
                   placeholder="Chọn loại đề xuất chấm công"
                 >
                   <el-option
-                    v-for="item in options"
-                    :key="item.value"
-                    :label="item.label"
-                    :value="item.value"
+                      v-for="item in categoryReasons"
+                      :key="item.id"
+                      :label="item.name"
+                      :value="item.id"
                   >
                   </el-option>
                 </el-select>
@@ -546,15 +565,23 @@ export default {
       activeName: "first",
       dialogFormNghi: false,
       dialogFormChamCong: false,
+      fullName: "",
+      departmentName: "",
+      categoryRequestId: "",
+      categoryReasons: [],
       form: {
         title: "",
         creator: "",
         approvers: "",
         followers: "",
-        content: false,
-        type: [],
-        resource: "",
-        desc: "",
+        content: "",
+        approveStatus: "",
+        catergoryRequest: "",
+        categoryReason: "",
+        dateFrom: "",
+        dateTo: "",
+        timeStart: "",
+        timeEnd: "",
       },
       requests: [],
       departments: [],
@@ -592,11 +619,11 @@ export default {
       .catch((e) => {
         console.log(e);
       });
-
   },
   methods: {
     getParams() {
       this.fullName = this.currentUser.user.fullName;
+      this.departmentName = this.currentUser.user.departments.name;
     },
     remoteMethod(query) {
       console.log(query);
@@ -612,6 +639,24 @@ export default {
       } else {
         this.options = [];
       }
+    },
+    sendFormNghi(){
+      this.form.creator = this.currentUser.user.username;
+
+    },
+    openFormNghi(){
+      this.dialogFormNghi = true;
+      this.categoryRequestId = 1;
+      RequestService.getCategoryReason(this.categoryRequestId).then(response =>{
+        this.categoryReasons = response.data
+      })
+    },
+    openFormChamCong(){
+      this.dialogFormChamCong = true;
+      this.categoryRequestId = 2;
+      RequestService.getCategoryReason(this.categoryRequestId).then(response =>{
+        this.categoryReasons = response.data
+      })
     },
     getAll() {
       let params = null;
