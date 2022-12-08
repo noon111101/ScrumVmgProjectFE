@@ -190,27 +190,29 @@
                                v-model="form.categoryReason"
                                placeholder="Chọn loại đề xuất nghỉ"
                                name="categoryReason"
-                               >
+                >
                   <template #first>
                     <b-form-select-option :value="null" disabled>-- Please select an option --</b-form-select-option>
                   </template>
-                  <b-form-select-option v-for="(item, index) in categoryReasons" :key="index" :value="item.id" >{{item.name}}</b-form-select-option>
+                  <b-form-select-option v-for="(item, index) in categoryReasons" :key="index" :value="item.id">
+                    {{ item.name }}
+                  </b-form-select-option>
 
                 </b-form-select>
-<!--                <el-select-->
-<!--                    style="width: 100%"-->
-<!--                    v-model="form.categoryReason"-->
-<!--                    placeholder="Chọn loại đề xuất nghỉ"-->
-<!--                    name="categoryReason"-->
-<!--                >-->
-<!--                  <el-option-->
-<!--                      v-for="(item,index) in categoryReasons"-->
-<!--                      :key="index"-->
-<!--                      :value="item.id"-->
-<!--                  >-->
-<!--                    {{item.name}}-->
-<!--                  </el-option>-->
-<!--                </el-select>-->
+                <!--                <el-select-->
+                <!--                    style="width: 100%"-->
+                <!--                    v-model="form.categoryReason"-->
+                <!--                    placeholder="Chọn loại đề xuất nghỉ"-->
+                <!--                    name="categoryReason"-->
+                <!--                >-->
+                <!--                  <el-option-->
+                <!--                      v-for="(item,index) in categoryReasons"-->
+                <!--                      :key="index"-->
+                <!--                      :value="item.id"-->
+                <!--                  >-->
+                <!--                    {{item.name}}-->
+                <!--                  </el-option>-->
+                <!--                </el-select>-->
               </el-col>
             </el-form-item>
 
@@ -572,9 +574,13 @@
               width="200"
           >
           </el-table-column>
-          <el-table-column prop="" label="Thao tác" align="center" width="200">
-            <el-button type="success" icon="el-icon-check" circle></el-button>
-            <el-button type="danger" icon="el-icon-close" circle></el-button>
+          <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
+            <el-button type="success" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 2)"
+                       icon="el-icon-check" circle></el-button>
+            <el-button type="danger" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 3)"
+                       icon="el-icon-close" circle></el-button>
+            <el-button type="info" v-if="data.row.approveStatus.id==2 || data.row.approveStatus.id==3"
+                       @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -617,8 +623,8 @@ export default {
       form: {
         title: "",
         creator: "",
-        approvers: "",
-        followers: "",
+        approvers: [],
+        followers: [],
         content: "",
         approveStatus: 1,
         catergoryRequest: null,
@@ -644,9 +650,8 @@ export default {
     UserService.getAllUser()
         .then((response) => {
           this.users = response.data;
-          console.log(1, response.data);
           this.list = this.users.map((item) => {
-            console.log(5, item);
+
             return {username: `${item.username}`, fullName: `${item.fullName}`};
           });
         })
@@ -660,9 +665,145 @@ export default {
       this.departmentName = this.currentUser.user.departments.name;
       this.username = this.currentUser.user.username
     },
+    changeStatus(requestId, statusId) {
+      if (statusId == 1) {
+        this.$swal
+            .fire({
+              title: "Xác nhận hoàn tác",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Hoàn Tác",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId,statusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getAll();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
+      if (statusId == 2) {
+        this.$swal
+            .fire({
+              title: "Xác nhận chấp thuận",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Chấp thuận",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId,statusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getAll();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
+      if (statusId == 3) {
+        this.$swal
+            .fire({
+              title: "Xác nhận từ chối",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Tù chối",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId,statusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getAll();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
+
+    },
     remoteMethod(query) {
-      console.log(query);
-      console.log(2, this.list);
       if (query !== "") {
         this.loading = true;
 
@@ -674,26 +815,26 @@ export default {
         this.options = [];
       }
     },
-     async sendFormNghi() {
+    async sendFormNghi() {
 
 
       this.creator = this.currentUser.user.username;
       this.catergoryRequest = this.categoryRequestId;
       this.approveStatus = 1;
-       // const params ={
-       //   "title": this.title,
-       //   "creator": this.currentUser.user.username,
-       //   "approvers": this.approvers,
-       //   "followers": this.followers,
-       //   "content": this.content,
-       //   "approveStatus": 1,
-       //   "catergoryRequest": this.categoryRequestId,
-       //   "categoryReason": this.categoryReason,
-       //   "dateFrom": this.dateFrom,
-       //   "dateTo": this.dateTo,
-       //   "timeStart": this.timeStart,
-       //   "timeEnd": this.timeEnd
-       // }
+      // const params ={
+      //   "title": this.title,
+      //   "creator": this.currentUser.user.username,
+      //   "approvers": this.approvers,
+      //   "followers": this.followers,
+      //   "content": this.content,
+      //   "approveStatus": 1,
+      //   "catergoryRequest": this.categoryRequestId,
+      //   "categoryReason": this.categoryReason,
+      //   "dateFrom": this.dateFrom,
+      //   "dateTo": this.dateTo,
+      //   "timeStart": this.timeStart,
+      //   "timeEnd": this.timeEnd
+      // }
       this.dialogFormNghi = false;
       let form = document.querySelector("#formNghi");
       console.log(this.form)

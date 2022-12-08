@@ -20,8 +20,10 @@
             type="year"
             placeholder="Chọn Năm"
             value-format="yyyy"
+
           >
           </el-date-picker>
+
           <div class="div-buttons">
             <span style="">Tìm kiếm</span> &ensp;
             <el-input
@@ -648,25 +650,17 @@ export default {
     },
     getAll() {
       this.year = this.year !== null ? this.year : 0;
-      // if (this.search != null && this.search != "") {
-      //   this.page = 0;
+      if(this.year=="" || this.year==null) this.year = 0
       const params = {
         page: this.page,
         size: this.pageSize,
         search: this.search,
         year: this.year,
       };
-      // } else {
-      //   params = {
-      //     page: this.page,
-      //     size: this.pageSize,
-      //   };
-      // }
-
       HolidayService.getAll(params).then((response) => {
         this.holidays = response.data.content;
         this.totalItems = response.data.totalElements;
-        console.log(this.holidays);
+
       });
     },
 

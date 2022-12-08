@@ -5,7 +5,6 @@ class RequestService{
     getAll(params){
         return httpCommon.get("/request", {params});
     }
-
     getRequest(id){
         return httpCommon.get(`/request/${id}`);
     }
@@ -14,6 +13,9 @@ class RequestService{
     }
     addRequest(request){
         return axios.post(API_URL + `request`, request);
+    }
+    changeStatus(requestId, statusId){
+        return axios.put(API_URL + `request?requestId=${requestId}&statusId=${statusId}` );
     }
 }
 
