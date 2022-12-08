@@ -2,24 +2,26 @@
   <div class="container ">
     <router-link to="/profile" class="btn-back"><i class="el-icon-back"></i>&nbsp;&nbsp;Chi tiết đề xuất</router-link>
     <br><br>
-    <h5 class="title-request">{{request.title}}</h5>
+    <h5 class="title-request">{{ request.title }}</h5>
     <br><br>
     <div style="width: 100%">
       <span>Trạng thái:</span>&nbsp;&nbsp;
-      <button v-if="request.approveStatus.id==1" class="btn-1">
-        {{request.approveStatus.name}}
+      <button v-if="request.approveStatus.id==1"  class="btn-1" >
+        {{ request.approveStatus.name }}
       </button>
       <button v-if="request.approveStatus.id==2" class="btn-2">
-        {{request.approveStatus.name}}
+        {{ request.approveStatus.name }}
       </button>
       <button v-if="request.approveStatus.id==3" class="btn-3">
-        {{request.approveStatus.name}}
+        {{ request.approveStatus.name }}
       </button>
       <button v-if="request.approveStatus.id==4" class="btn-4">
-        {{request.approveStatus.name}}
+        {{ request.approveStatus.name }}
       </button>
-      <button class="btn-accept">Chấp thuận</button>
-      <button class="btn-refuse">Từ chối</button>
+      <button class="btn-accept"  v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 2)">Chấp thuận</button>
+      <button class="btn-refuse" v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 3)">Từ chối</button>
+      <button class="btn-undo" v-if="request.approveStatus.id==2 || request.approveStatus.id==3" @click="changeStatus(request.id, 1)">Hoàn tác</button>
+
     </div>
     <br><br>
     <span class="title-request sub-title">Thông tin đề xuất</span>
@@ -28,42 +30,42 @@
       <div class="col-6 left">
         <br>
         <table>
-          <tr >
-            <td class="header-table" >Nhân viên:</td>
-            <td>{{request.creator.fullName}}</td>
+          <tr>
+            <td class="header-table">Nhân viên:</td>
+            <td>{{ request.creator.fullName }}</td>
           </tr>
           <tr>
-            <td class="header-table" >Mã nhân viên:</td>
-            <td>{{request.creator.code}}</td>
+            <td class="header-table">Mã nhân viên:</td>
+            <td>{{ request.creator.code }}</td>
           </tr>
           <tr>
-            <td class="header-table" >Phòng ban:</td>
-            <td>{{request.creator.departments.name}}</td>
+            <td class="header-table">Phòng ban:</td>
+            <td>{{ request.creator.departments.name }}</td>
           </tr>
         </table>
       </div>
       <div class="col-6 right">
         <br>
         <table>
-          <tr >
-            <td class="header-table" >Loại đề xuất:</td>
-            <td>Đề xuất {{request.catergoryRequest.name}}</td>
+          <tr>
+            <td class="header-table">Loại đề xuất:</td>
+            <td>Đề xuất {{ request.catergoryRequest.name }}</td>
           </tr>
           <tr>
-            <td class="header-table" >Thời gian tạo:</td>
+            <td class="header-table">Thời gian tạo:</td>
             <td>09/11/2022</td>
           </tr>
           <tr>
-            <td class="header-table" >Thời gian thực hiện:</td>
+            <td class="header-table">Thời gian thực hiện:</td>
             <td>09/11/2022</td>
           </tr>
           <tr>
-            <td class="header-table" >Số ngày nghỉ:</td>
+            <td class="header-table">Số ngày nghỉ:</td>
             <td>1 ngày</td>
           </tr>
           <tr>
-            <td class="header-table" >Nội dung đề xuất:</td>
-            <td>{{request.content}}</td>
+            <td class="header-table">Nội dung đề xuất:</td>
+            <td>{{ request.content }}</td>
           </tr>
         </table>
       </div>
@@ -81,7 +83,8 @@
           <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover != null"
                     v-bind:src="`http://localhost:8080/` + item.cover"></b-avatar>
           <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover == null"
-                    src="../assets/user.jpg"></b-avatar>  <span style="font-weight: 600">&nbsp; {{item.fullName}}</span>
+                    src="../assets/user.jpg"></b-avatar>
+          <span style="font-weight: 600">&nbsp; {{ item.fullName }}</span>
           <br><br>
         </div>
 
@@ -98,7 +101,8 @@
           <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover != null"
                     v-bind:src="`http://localhost:8080/` + item.cover"></b-avatar>
           <b-avatar style="margin-left: 12px" variant="info" v-if="item.cover == null"
-                    src="../assets/user.jpg"></b-avatar>  <span style="font-weight: 600">&nbsp; {{item.fullName}}</span>
+                    src="../assets/user.jpg"></b-avatar>
+          <span style="font-weight: 600">&nbsp; {{ item.fullName }}</span>
           <br><br>
         </div>
 
@@ -110,19 +114,20 @@
 
 <script>
 import RequestService from "@/services/request-service";
+
 export default {
   name: "RequestDetail",
   data() {
-    return{
+    return {
       request: [],
       requestId: '',
     }
 
   },
   created() {
-  this.getParams()
+    this.getParams()
     this.getRequest()
-    },
+  },
   computed: {
 
     currentUser() {
@@ -131,17 +136,155 @@ export default {
     },
   },
   methods: {
-    getParams(){
+    getParams() {
       this.requestId = this.$route.params.id
       console.log(this.requestId)
     },
-    getRequest(){
+    getRequest() {
       this.requestId = this.$route.params.id
-      RequestService.getRequest(this.requestId ).then(response => {
+      RequestService.getRequest(this.requestId).then(response => {
         this.request = response.data
         console.log(this.request)
       })
-    }
+    },
+    changeStatus(requestId, statusId) {
+      if (statusId == 1) {
+        this.$swal
+            .fire({
+              title: "Xác nhận hoàn tác",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Hoàn Tác",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId, statusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getRequest();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
+      if (statusId == 2) {
+        this.$swal
+            .fire({
+              title: "Xác nhận chấp thuận",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Chấp thuận",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId, statusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getRequest();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
+      if (statusId == 3) {
+        this.$swal
+            .fire({
+              title: "Xác nhận từ chối",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Tù chối",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId, statusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getRequest();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
+
+    },
   }
 }
 </script>
@@ -160,7 +303,7 @@ export default {
   text-transform: uppercase;
 }
 
-.sub-title{
+.sub-title {
   color: #828282;
 }
 
@@ -172,6 +315,7 @@ export default {
   border-radius: 20px;
   padding: 3px 20px;
 }
+
 .btn-2 {
   cursor: default;
   color: #2BBB6E;
@@ -189,10 +333,11 @@ export default {
   border-radius: 20px;
   padding: 3px 20px;
 }
+
 .btn-4 {
   cursor: default;
   color: #6C6F93;
-  background-color:  #E4E5F1;
+  background-color: #E4E5F1;
   border: none;
   border-radius: 20px;
   padding: 3px 20px;
@@ -238,12 +383,32 @@ export default {
   /*margin-right: 5px;*/
 }
 
-.header-table{
+.btn-undo{
+  float: right;
+  color: #FFFFFF;
+  background-color: #e28743;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 30px;
+  /*margin-right: 5px;*/
+}
+
+.btn-undo:hover{
+  float: right;
+  color: #FFFFFF;
+  background-color: #eab676;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 30px;
+  /*margin-right: 5px;*/
+}
+
+.header-table {
   font-weight: 600;
   width: 180px;
 }
 
-td{
+td {
   padding: 20px 0;
 }
 
