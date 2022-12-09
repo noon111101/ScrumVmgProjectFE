@@ -4,41 +4,7 @@
 
     <br/>
     <div className="container" style="text-align: center">
-      <!--      <el-row :gutter="20">-->
-      <!--        <el-col :md="6" :lg="6" :xl="6">-->
-      <!--          <div class="grid-content" style="margin-bottom: 20px">-->
 
-      <!--          </div>-->
-      <!--        </el-col>-->
-
-      <!--        <el-col :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">-->
-      <!--          <div class="grid-content">-->
-
-      <!--          </div>-->
-      <!--        </el-col>-->
-      <!--        <el-col :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">-->
-      <!--          <div class="grid-content">-->
-      <!--            <span style="">Trạng thái</span> &ensp;-->
-      <!--            <el-select-->
-      <!--                v-model="status"-->
-      <!--                @change="getMyRequests"-->
-      <!--                placeholder="Trạng thái"-->
-      <!--            >-->
-      <!--              <el-option value="0" label="Tất cả"></el-option>-->
-      <!--              <el-option label="Chờ phê duyệt" value="1"></el-option>-->
-      <!--              <el-option label="Đã chấp thuận" value="2"></el-option>-->
-      <!--              <el-option label="Đã từ chối" value="3"></el-option>-->
-      <!--              <el-option label="Quá hạn duyệt" value="4"></el-option>-->
-      <!--            </el-select>-->
-      <!--          </div>-->
-      <!--        </el-col>-->
-
-      <!--        <el-col :md="6" :lg="6" :xl="6" class="div-buttons">-->
-      <!--          <div class="grid-content div-buttons">-->
-
-      <!--          </div>-->
-      <!--        </el-col>-->
-      <!--      </el-row>-->
       <div class="grid-content text-start">
         <span style="">Trạng thái</span> &ensp;
         <el-select
@@ -63,7 +29,6 @@
           v-slot:="data"
           label="Đề xuất"
           align="center"
-          width="380"
       >
 
         <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{
@@ -76,14 +41,14 @@
           prop="creator.fullName"
           label="Nhân viên"
           align="center"
-          width="200"
+          width="300"
       >
       </el-table-column>
       <el-table-column
           prop="creator.departments.name"
           label="Phòng ban"
           align="center"
-          width="200"
+          width="300"
       >
       </el-table-column>
       <el-table-column
@@ -141,13 +106,7 @@
           <span>{{ item.fullName }}</span>
         </div>
       </el-table-column>
-      <el-table-column
-          prop="date"
-          label="Ngày tạo"
-          align="center"
-          width="200"
-      >
-      </el-table-column>
+
       <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
         <el-button type="warning" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 5)"
                    icon="el-icon-delete" circle></el-button>
@@ -224,7 +183,7 @@ export default {
                     showConfirmButton: false,
                     width: "24em",
                   });
-                  this.getAll();
+                  this.getMyRequests();
                 });
               } else if (result.isDenied) {
                 this.$swal.fire({

@@ -728,7 +728,7 @@
             v-slot:="data"
             label="Đề xuất"
             align="center"
-            width="380"
+
           >
             <router-link
               class="link"
@@ -740,14 +740,14 @@
             prop="creator.fullName"
             label="Nhân viên"
             align="center"
-            width="200"
+            width="300"
           >
           </el-table-column>
           <el-table-column
             prop="creator.departments.name"
             label="Phòng ban"
             align="center"
-            width="200"
+            width="300"
           >
           </el-table-column>
           <el-table-column
@@ -805,19 +805,19 @@
               <span>{{ item.fullName }}</span>
             </div>
           </el-table-column>
-          <el-table-column
-            prop="date"
-            label="Ngày tạo"
-            align="center"
-            width="200"
-          >
-          </el-table-column>
+<!--          <el-table-column-->
+<!--            prop="date"-->
+<!--            label="Ngày tạo"-->
+<!--            align="center"-->
+<!--            width="200"-->
+<!--          >-->
+<!--          </el-table-column>-->
           <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
             <el-button type="success" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 2)"
                        icon="el-icon-check" circle></el-button>
             <el-button type="danger" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 3)"
                        icon="el-icon-close" circle></el-button>
-            <el-button type="warning" v-if="data.row.approveStatus.id==2 || data.row.approveStatus.id==3"
+            <el-button type="warning" v-if="(data.row.approveStatus.id==2 || data.row.approveStatus.id==3)"
                        @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
           </el-table-column>
         </el-table>
@@ -833,6 +833,7 @@
 import RequestService from "@/services/request-service";
 import UserService from "@/services/user.service";
 import MyRequests from "@/views/request/MyRequests";
+import DepartmentService from "@/services/department.service";
 
 export default {
   components: {MyRequests},
@@ -928,6 +929,9 @@ export default {
       .catch((e) => {
         console.log(e);
       });
+    DepartmentService.getAllDepartment().then((response)=>{
+      this.departments = response.data
+    })
   },
   methods: {
     onOptionClick({ option, addTag }) {
@@ -1094,20 +1098,7 @@ export default {
       this.creator = this.currentUser.user.username;
       this.catergoryRequest = this.categoryRequestId;
       this.approveStatus = 1;
-      // const params ={
-      //   "title": this.title,
-      //   "creator": this.currentUser.user.username,
-      //   "approvers": this.approvers,
-      //   "followers": this.followers,
-      //   "content": this.content,
-      //   "approveStatus": 1,
-      //   "catergoryRequest": this.categoryRequestId,
-      //   "categoryReason": this.categoryReason,
-      //   "dateFrom": this.dateFrom,
-      //   "dateTo": this.dateTo,
-      //   "timeStart": this.timeStart,
-      //   "timeEnd": this.timeEnd
-      // }
+
       this.dialogFormNghi = false;
       let form = document.querySelector("#formNghi");
       console.log(this.form);
@@ -1154,8 +1145,7 @@ export default {
         this.sendStatus = this.status;
       }
       params = {
-        page: this.page,
-        size: this.pageSize,
+        user_id: this.currentUser.user.id,
         depart_id: this.sendDepartmentId,
         search: this.search,
         status: this.sendStatus,
