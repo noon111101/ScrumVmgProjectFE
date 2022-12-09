@@ -12,7 +12,9 @@ class RequestService{
         return httpCommon.get(`/request/categoryreason/${id}`);
     }
     addRequest(request){
-        return axios.post(API_URL + `request`, request);
+        let requestForm = new FormData(request);
+        return axios.post(API_URL + `request`, requestForm);
+
     }
     changeStatus(requestId, statusId){
         return axios.put(API_URL + `request?requestId=${requestId}&statusId=${statusId}` );
