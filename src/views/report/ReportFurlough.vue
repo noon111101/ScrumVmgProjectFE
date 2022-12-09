@@ -40,6 +40,7 @@
               type="danger"
               class="el-icon-download float-end ms-3 my-3"
               round
+              @click="exportExcel"
           >
             Xuất File
           </el-button>
@@ -261,6 +262,7 @@
 <script>
 import FurloughService from "@/services/furlough.service";
 import LogService from "@/services/logdetail-service";
+import ExcelService from "@/services/excel-service";
 export default {
   name: "ReportFurlough",
   data(){
@@ -397,6 +399,14 @@ export default {
             });
           });
     },
+    exportExcel(){
+      const params ={
+        "year":  this.currentYear
+      }
+      ExcelService.exportExcelPhep(params).then(() =>{
+        console.log("dafdas")
+      })
+    }
   },
   computed: {
     currentUser() {
