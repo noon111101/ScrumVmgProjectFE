@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Danh sách đề xuất</h1>
+    <h1 style="text-transform: uppercase">Danh sách đề xuất</h1>
 
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane style="width: 100%" label="Tất cả" name="first">
@@ -93,7 +93,7 @@
             </el-col>
           </el-row>
         </div>
-        <br />
+
         <el-dialog
           style="text-align: center; font-weight: bold"
           title="TẠO ĐỀ XUẤT NGHỈ"
@@ -722,7 +722,7 @@
           </span>
         </el-dialog>
 
-        <el-table :data="requests" height="780" style="width: 100%">
+        <el-table :data="requests" height="700" style="width: 100%">
 
           <el-table-column
             v-slot:="data"
@@ -1162,10 +1162,7 @@ export default {
       };
       RequestService.getAll(params)
         .then((response) => {
-          this.requests = response.data.content;
-          this.page = response.data.pageable.pageNumber;
-          console.log(response.data.pageable.pageNumber);
-          this.totalItems = response.data.totalElements;
+          this.requests = response.data;
         })
         .catch((error) => {
           console.log(error);

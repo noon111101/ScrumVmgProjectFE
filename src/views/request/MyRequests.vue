@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Danh sách đề xuất của tôi</h1>
+
 
     <br/>
     <div className="container" style="text-align: center">
@@ -39,7 +39,7 @@
       <!--          </div>-->
       <!--        </el-col>-->
       <!--      </el-row>-->
-      <div class="grid-content">
+      <div class="grid-content text-start">
         <span style="">Trạng thái</span> &ensp;
         <el-select
             v-model="statusId"
@@ -56,7 +56,8 @@
         </el-select>
       </div>
     </div>
-    <el-table :data="requests" height="780" style="width: 100%">
+    <br>
+    <el-table :data="requests" height="700" style="width: 100%">
 
       <el-table-column
           v-slot:="data"
@@ -150,8 +151,6 @@
       <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
         <el-button type="warning" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 5)"
                    icon="el-icon-delete" circle></el-button>
-
-
       </el-table-column>
     </el-table>
   </div>
