@@ -52,6 +52,8 @@
                   <el-option label="Đã chấp thuận" value="2"></el-option>
                   <el-option label="Đã từ chối" value="3"></el-option>
                   <el-option label="Quá hạn duyệt" value="4"></el-option>
+                  <el-option label="Đã hủy" value="5"></el-option>
+                  <el-option label="Hoàn thành" value="6"></el-option>
                 </el-select>
               </div>
             </el-col>
@@ -491,6 +493,7 @@
         </el-dialog>
 
         <el-table :data="requests" height="780" style="width: 100%">
+
           <el-table-column
               v-slot:="data"
               label="Đề xuất"
@@ -536,6 +539,12 @@
             <button v-if="data.row.approveStatus.id == 4" class="btn-4">
               {{ data.row.approveStatus.name }}
             </button>
+            <button v-if="data.row.approveStatus.id == 5" class="btn-3">
+              {{ data.row.approveStatus.name }}
+            </button>
+            <button v-if="data.row.approveStatus.id == 6" class="btn-2">
+              {{ data.row.approveStatus.name }}
+            </button>
           </el-table-column>
           <el-table-column
               v-slot:="data"
@@ -579,20 +588,25 @@
                        icon="el-icon-check" circle></el-button>
             <el-button type="danger" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 3)"
                        icon="el-icon-close" circle></el-button>
-            <el-button type="info" v-if="data.row.approveStatus.id==2 || data.row.approveStatus.id==3"
+            <el-button type="warning" v-if="data.row.approveStatus.id==2 || data.row.approveStatus.id==3"
                        @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
           </el-table-column>
         </el-table>
       </el-tab-pane>
-      <el-tab-pane label="Đề xuất của tôi" name="second">Config</el-tab-pane>
+      <el-tab-pane label="Đề xuất của tôi" name="second">
+        <MyRequests/>
+      </el-tab-pane>
     </el-tabs>
+
   </div>
 </template>
 <script>
 import RequestService from "@/services/request-service";
 import UserService from "@/services/user.service";
+import MyRequests from "@/views/request/MyRequests";
 
 export default {
+  components: {MyRequests},
   data() {
     return {
       options: [],
@@ -634,8 +648,10 @@ export default {
         timeStart: "",
         timeEnd: "",
       },
+
     };
   },
+
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
@@ -816,8 +832,6 @@ export default {
       }
     },
     async sendFormNghi() {
-
-
       this.creator = this.currentUser.user.username;
       this.catergoryRequest = this.categoryRequestId;
       this.approveStatus = 1;

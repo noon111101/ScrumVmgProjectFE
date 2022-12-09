@@ -1,6 +1,6 @@
 <template>
   <div class="container ">
-    <router-link to="/profile" class="btn-back"><i class="el-icon-back"></i>&nbsp;&nbsp;Chi tiết đề xuất</router-link>
+    <router-link to="/managerequest" class="btn-back"><i class="el-icon-back"></i>&nbsp;&nbsp;Chi tiết đề xuất</router-link>
     <br><br>
     <h5 class="title-request">{{ request.title }}</h5>
     <br><br>
@@ -21,7 +21,8 @@
       <button class="btn-accept"  v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 2)">Chấp thuận</button>
       <button class="btn-refuse" v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 3)">Từ chối</button>
       <button class="btn-undo" v-if="request.approveStatus.id==2 || request.approveStatus.id==3" @click="changeStatus(request.id, 1)">Hoàn tác</button>
-
+      <span class="btn-refuse" v-if="request.approveStatus.id==5">Đã hủy</span>
+      <span class="btn-refuse" v-if="request.approveStatus.id==6">Hoàn thành</span>
     </div>
     <br><br>
     <span class="title-request sub-title">Thông tin đề xuất</span>

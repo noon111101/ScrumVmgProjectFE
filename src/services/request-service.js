@@ -17,6 +17,9 @@ class RequestService{
     changeStatus(requestId, statusId){
         return axios.put(API_URL + `request?requestId=${requestId}&statusId=${statusId}` );
     }
+    myRequests(params){
+        return httpCommon.get(`/request/creator`, {params});
+    }
 }
 
 export default new RequestService()
