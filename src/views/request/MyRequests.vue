@@ -151,6 +151,7 @@ export default {
       }
       RequestService.myRequests(params).then((response) => {
         this.requests = response.data
+        console.log(this.requests)
       })
     },
     changeStatus(requestId, statusId) {

@@ -813,12 +813,15 @@
 <!--          >-->
 <!--          </el-table-column>-->
           <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
-            <el-button type="success" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 2)"
-                       icon="el-icon-check" circle></el-button>
-            <el-button type="danger" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 3)"
-                       icon="el-icon-close" circle></el-button>
-            <el-button type="warning" v-if="(data.row.approveStatus.id==2 || data.row.approveStatus.id==3)"
-                       @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
+            <div v-for="(item, index) in data.row.approvers" :key="index">
+              <el-button type="success" v-if="data.row.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(data.row.id, 2)"
+                         icon="el-icon-check" circle></el-button>
+              <el-button type="danger" v-if="data.row.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(data.row.id, 3)"
+                         icon="el-icon-close" circle></el-button>
+              <el-button type="warning" v-if="(data.row.approveStatus.id==2 || data.row.approveStatus.id==3) && item.id==currentUser.user.id"
+                         @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
+            </div>
+
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -920,9 +923,7 @@ export default {
 
       .then((response) => {
         this.users = response.data;
-        console.log(1, response.data);
         this.list = this.users.map((item) => {
-          console.log(5, item);
           return { username: `${item.username}`, fullName: `${item.fullName}` };
         });
       })
@@ -1153,6 +1154,7 @@ export default {
       RequestService.getAll(params)
         .then((response) => {
           this.requests = response.data;
+          console.log("haha"+this.requests)
         })
         .catch((error) => {
           console.log(error);
