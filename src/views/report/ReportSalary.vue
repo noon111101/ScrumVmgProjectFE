@@ -484,7 +484,7 @@ export default {
           user.log[date].sign = sign;
           user.log[date].status = true;
           user.dayWork = this.caculateDayWork(user.log);
-          user.dayEarn = this.caculateDayWork(user.log);
+          user.dayEarn = this.caculateDayEarn(user.log);
           user.log[date].reason = reason;
 
           this.logsEdit = this.logsEdit.filter((log) => {
@@ -548,21 +548,33 @@ export default {
         });
     },
     //CaculateDayWork
+    caculateDayEarn(signs) {
+      let dayEarn = 0;
+      for (let sign of signs) {
+        if (sign.sign == "H") dayEarn = dayEarn + 1;
+        if (sign.sign == "P_H") dayEarn = dayEarn + 1;
+        if (sign.sign == "H_P") dayEarn = dayEarn + 1;
+        if (sign.sign == "H_KL") dayEarn = dayEarn + 0.5;
+        if (sign.sign == "KL_H") dayEarn = dayEarn + 0.5;
+        if (sign.sign == "P") dayEarn = dayEarn + 1;
+        if (sign.sign == "P_KL") dayEarn = dayEarn + 0.5;
+        if (sign.sign == "KL_P") dayEarn = dayEarn + 0.5;
+        if (sign.sign == "L") dayEarn = dayEarn + 1;
+        if (sign.sign == "Ô") dayEarn = dayEarn + 1;
+        if (sign.sign == "TC") dayEarn = dayEarn + 1;
+        if (sign.sign == "CĐ") dayEarn = dayEarn + 1;
+      }
+      return dayEarn;
+    },
+    // Số ngày hưởng lương
     caculateDayWork(signs) {
       let dayWork = 0;
       for (let sign of signs) {
         if (sign.sign == "H") dayWork = dayWork + 1;
-        if (sign.sign == "P_H") dayWork = dayWork + 1;
-        if (sign.sign == "H_P") dayWork = dayWork + 1;
+        if (sign.sign == "P_H") dayWork = dayWork + 0.5;
+        if (sign.sign == "H_P") dayWork = dayWork + 0.5;
         if (sign.sign == "H_KL") dayWork = dayWork + 0.5;
         if (sign.sign == "KL_H") dayWork = dayWork + 0.5;
-        if (sign.sign == "P") dayWork = dayWork + 1;
-        if (sign.sign == "P_KL") dayWork = dayWork + 0.5;
-        if (sign.sign == "KL_P") dayWork = dayWork + 0.5;
-        if (sign.sign == "L") dayWork = dayWork + 1;
-        if (sign.sign == "Ô") dayWork = dayWork + 1;
-        if (sign.sign == "TC") dayWork = dayWork + 1;
-        if (sign.sign == "CĐ") dayWork = dayWork + 1;
       }
       return dayWork;
     },
@@ -681,7 +693,7 @@ export default {
             log: signs,
             name: users.name,
             dayWork: this.caculateDayWork(signs),
-            dayEarn: this.caculateDayWork(signs),
+            dayEarn: this.caculateDayEarn(signs),
           });
           console.log(dataCall);
         }
