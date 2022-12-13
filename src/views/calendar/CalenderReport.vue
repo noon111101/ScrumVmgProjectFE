@@ -1,18 +1,16 @@
 <template>
 
   <div style="padding-bottom: 310px">
-    <el-tooltip placement="bottom" effect="light" style="display: none" id="button-note">
-      <el-button type="primary" class="el-icon-info el-button--info el-calendar__header" style="border-radius: 10px">
-        Chú thích
-      </el-button>
+    <el-tooltip placement="bottom" effect="light" style="display: none" id="button-note" >
+      <el-button type="primary" class="el-icon-info el-button--info el-calendar__header" style="border-radius: 10px" > Chú thích</el-button>
       <div slot="content">
-        <note-calender/>
+        <note-calender />
       </div>
     </el-tooltip>
     <div class="d-flex flex-row justify-content-center">
 
-      <el-calendar style="width: 70% ; margin-top: 50px; border-radius: 10px" v-model="value">
-        <template slot="dateCell" slot-scope="{date,data,Sign=getSign(data.day)}">
+      <el-calendar  style="width: 70% ; margin-top: 50px; border-radius: 10px" v-model="value" >
+        <template  slot="dateCell" slot-scope="{date,data,Sign=getSign(data.day)}">
           <div :class="{
               weekend:getSign(data.day).weekend,
               halfOff:Sign.halfOff,
@@ -30,27 +28,12 @@
               {{ date.getDate() }}
               <br>
             </p>
-            <div class="sign-calender text-center align-middle ">
-              {{ Sign.name }}
+            <div class="sign-calender text-center align-middle " >
+              {{Sign.name}}
               <el-tooltip popper-class="reason-popper" v-if="Sign.reason!=null" placement="right" effect="light">
-                <div slot="content">
-                  <div class="note-wrapper">Lí do: {{ Sign.reason }}
-                    <hr>
-                    <span v-if="requests.at(0).lastSign!=null">Lịch sử thay đổi từ đề xuất: </span>
-                    <br>
-                    <span v-for="(item,key) in requests" :key="key">
-                        <span v-if="item.dateFrom==data.day && key!=0">
-                          --> {{ item.lastSign.name }}
-                        </span>
-                      <span v-if="item.dateFrom==data.day && key==0">
-                          {{ item.lastSign.name }}
-                        </span>
-                    </span>
-                  </div>
-                </div>
+                <div slot="content"><div class="note-wrapper">{{Sign.reason}}</div></div>
                 <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
-                     viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 15px;fill: #A843A8FF "
-                     xml:space="preserve">
+                     viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 15px;fill: #A843A8FF " xml:space="preserve">
               <g>
                 <polygon points="5.8,0.6 0,6.4 0,378.3 5.8,384 384,384 512,512 512,5.8 506.3,0 6.4,0 	"/>
               </g>
@@ -72,18 +55,18 @@
       <note-calender id="table-note" style="margin-left: 80px ;margin-top: 100px"/>
     </div>
     <!--    MODAL-->
-    <b-modal id="my-modal" centered size="sm">
+    <b-modal id="my-modal" centered size="sm" >
       <template #modal-header="{ close }">
         <!-- Emulate built in modal header close button action -->
-        <h5>Chi tiết ngày {{ cellDate }}</h5>
+        <h5>Chi tiết ngày {{cellDate}}</h5>
         <b-icon-x-circle-fill style="color: #d8363a" size="sm" @click="close()">
         </b-icon-x-circle-fill>
       </template>
       <div class="text-center" style="font-size: 16px;line-height: 19.5px;letter-spacing: 1px;">
-        <div v-if="cellSign.timeIn!=null">{{ cellSign.timeIn }}</div>
+        <div v-if="cellSign.timeIn!=null">{{cellSign.timeIn}}</div>
         <div v-if="cellSign.timeIn==null">None</div>
         <div>...</div>
-        <div v-if="cellSign.timeOut!=null">{{ cellSign.timeOut }}</div>
+        <div v-if="cellSign.timeOut!=null">{{cellSign.timeOut}}</div>
         <div v-if="cellSign.timeOut==null">None</div>
       </div>
 
@@ -99,7 +82,6 @@
 <script>
 import LogdetailService from "@/services/logdetail-service";
 import NoteCalender from "@/views/calendar/NoteCalender";
-import RequestService from "@/services/request-service";
 
 export default {
   name: "CalenderReport",
@@ -107,73 +89,60 @@ export default {
   data() {
     return {
       value: new Date(),
-      logs: [],
-      mounth: "",
-      cellDate: '',
-      cellSign: {},
-      requests: [],
+      logs:[],
+      mounth:"",
+      cellDate:'',
+      cellSign:{}
     }
   },
-  created() {
-    this.myRequests()
-  },
   methods: {
-    myRequests() {
-      const params = {
-        id: this.currentUser.user.id,
-        statusId: 0,
-      }
-      RequestService.myRequests(params).then(response => {
-        this.requests = response.data
-
-      })
-    },
     getAll() {
       const params = {
         'code': this.currentUser.user.code,
       }
       LogdetailService.getAllByUser(params).then(response => {
         this.logs = response.data;
+        console.log(this.logs)
       })
           .catch(error => {
             console.log(error);
           })
 
     },
-    setCell(date, sign) {
+    setCell(date,sign){
       date = date.split("-").reverse().join("/");
-      this.cellDate = date;
-      this.cellSign = sign
+      this.cellDate=date;
+      this.cellSign=sign
     },
-    getSign(date) {
-      let sign = {
-        name: '',
-        weekend: false,
-        halfOff: false,
-        off: false,
-        allDay: false,
-        holiday: false,
-        timeIn: null,
-        timeOut: null,
-        reason: null
+    getSign(date){
+      let sign={
+        name:'',
+        weekend:false,
+        halfOff:false,
+        off:false,
+        allDay:false,
+        holiday:false,
+        timeIn:null,
+        timeOut:null,
+        reason:null
       };
       for (let log of this.logs) {
-        if (log.dateLog == date) {
-          if (log.signs != null)
-            sign.name = log.signs.name
-          sign.timeIn = log.timeIn
-          sign.timeOut = log.timeOut
-          sign.reason = log.reason
-          if (sign.name.includes("_"))
-            sign.halfOff = true;
-          if (sign.name.includes("H") && !sign.name.includes("_"))
-            sign.allDay = true
-          if (sign.name.includes("KL") && !sign.name.includes("_"))
-            sign.off = true
-          if (sign.name.includes("NT"))
-            sign.weekend = true
-          if (sign.name.includes("L") && !sign.name.includes("K"))
-            sign.holiday = true
+        if(log.dateLog==date){
+          if(log.signs!=null)
+            sign.name= log.signs.name
+          sign.timeIn= log.timeIn
+          sign.timeOut= log.timeOut
+          sign.reason= log.reason
+          if(sign.name.includes("_"))
+            sign.halfOff=true;
+          if(sign.name.includes("H") && !sign.name.includes("_"))
+            sign.allDay=true
+          if(sign.name.includes("KL") && !sign.name.includes("_"))
+            sign.off=true
+          if(sign.name.includes("NT"))
+            sign.weekend=true
+          if(sign.name.includes("L") && !sign.name.includes("K"))
+            sign.holiday=true
           return sign
         }
       }
@@ -186,14 +155,14 @@ export default {
       return this.$store.state.auth.user;
     }
   },
-  watch: {
-    mounth: function () {
+  watch:{
+    mounth :function (){
 
-      const mounth = this.mounth.split("-")[1] - 1
-      this.value = new Date().setMonth(mounth, 1)
+      const mounth = this.mounth.split("-")[1]-1
+      this.value=new Date().setMonth(mounth,1)
     }
   },
-  mounted() {
+  mounted(){
     this.getAll()
   }
 }
@@ -202,49 +171,40 @@ export default {
 
 <style scoped>
 
-.note-wrapper .el-button:hover {
+.note-wrapper .el-button:hover{
   cursor: default;
 }
-
-.sign-calender {
+.sign-calender{
   font-weight: bold;
 }
-
-.mounthSelect {
+.mounthSelect{
   position: absolute;
   right: 30%;
   top: 130px;
 }
-
-.weekend {
-  background-color: #F8CBAD;
+.weekend{
+  background-color: #F8CBAD ;
 }
-
-.halfOff {
-  background-color: #ECC376;
+.halfOff{
+  background-color: #ECC376 ;
 }
-
-.off {
-  background-color: #E97C7CCC;
+.off{
+  background-color: #E97C7CCC ;
 }
-
-.allDay {
-  background-color: #C9E3C6;
+.allDay{
+  background-color: #C9E3C6 ;
 }
-
-.holiday {
+.holiday{
   background-color: #b3e3f7;
 }
-
-.cellSign {
+.cellSign{
   margin: 5px;
   box-sizing: content-box;
   border-radius: 10px;
   height: inherit;
   width: inherit;
 }
-
-.reason-popper {
+.reason-popper{
   border: #a843a8 1px;
 }
 
