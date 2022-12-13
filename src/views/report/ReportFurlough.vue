@@ -24,7 +24,7 @@
         >Phòng {{ accountDepartment.name }}</span
         >
 
-        <span class="demonstration">Năm </span>
+        <span class="demonstration ms-5">Năm </span>
         <el-date-picker
             v-model="currentYear"
             type="year"
@@ -115,7 +115,10 @@
       <tr>
         <td style="background-color: #E0E0E04D;font-weight: bold" colspan="24">{{indexDepart}}</td>
       </tr>
-      <tr v-for="(u,indexUser) in depart" :key="indexUser">
+      <tr :class="{
+                'user-lock': !u.user.avalible,
+              }"
+          v-for="(u,indexUser) in depart" :key="indexUser">
         <td>{{indexUser + 1}}</td>
         <td>{{u.user.fullName}}</td>
         <td class="text-center">{{u.user.code}}</td>
@@ -439,6 +442,9 @@ tr th {
 .edited {
   background-color: #e24146 !important;
   color: white;
+}
+.user-lock {
+  background-color: #ed9696 !important;
 }
 .fix:hover {
   background-color: #e24146;
