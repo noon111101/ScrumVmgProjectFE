@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Danh sách đề xuất</h1>
+    <h1 style="text-transform: uppercase">Danh sách đề xuất</h1>
 
     <el-tabs v-model="activeName" @tab-click="handleClick">
       <el-tab-pane style="width: 100%" label="Tất cả" name="first">
@@ -93,7 +93,7 @@
             </el-col>
           </el-row>
         </div>
-        <br />
+
         <el-dialog
           style="text-align: center; font-weight: bold"
           title="TẠO ĐỀ XUẤT NGHỈ"
@@ -722,13 +722,13 @@
           </span>
         </el-dialog>
 
-        <el-table :data="requests" height="780" style="width: 100%">
+        <el-table :data="requests" height="700" style="width: 100%">
 
           <el-table-column
             v-slot:="data"
             label="Đề xuất"
             align="center"
-            width="380"
+
           >
             <router-link
               class="link"
@@ -740,14 +740,14 @@
             prop="creator.fullName"
             label="Nhân viên"
             align="center"
-            width="200"
+            width="300"
           >
           </el-table-column>
           <el-table-column
             prop="creator.departments.name"
             label="Phòng ban"
             align="center"
-            width="200"
+            width="300"
           >
           </el-table-column>
           <el-table-column
@@ -805,20 +805,23 @@
               <span>{{ item.fullName }}</span>
             </div>
           </el-table-column>
-          <el-table-column
-            prop="date"
-            label="Ngày tạo"
-            align="center"
-            width="200"
-          >
-          </el-table-column>
+<!--          <el-table-column-->
+<!--            prop="date"-->
+<!--            label="Ngày tạo"-->
+<!--            align="center"-->
+<!--            width="200"-->
+<!--          >-->
+<!--          </el-table-column>-->
           <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
-            <el-button type="success" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 2)"
-                       icon="el-icon-check" circle></el-button>
-            <el-button type="danger" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 3)"
-                       icon="el-icon-close" circle></el-button>
-            <el-button type="warning" v-if="data.row.approveStatus.id==2 || data.row.approveStatus.id==3"
-                       @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
+            <div v-for="(item, index) in data.row.approvers" :key="index">
+              <el-button type="success" v-if="data.row.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(data.row.id, 2)"
+                         icon="el-icon-check" circle></el-button>
+              <el-button type="danger" v-if="data.row.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(data.row.id, 3)"
+                         icon="el-icon-close" circle></el-button>
+              <el-button type="warning" v-if="(data.row.approveStatus.id==2 || data.row.approveStatus.id==3) && item.id==currentUser.user.id"
+                         @click="changeStatus(data.row.id, 1)" icon="el-icon-refresh-left" circle></el-button>
+            </div>
+
           </el-table-column>
         </el-table>
       </el-tab-pane>
@@ -833,6 +836,7 @@
 import RequestService from "@/services/request-service";
 import UserService from "@/services/user.service";
 import MyRequests from "@/views/request/MyRequests";
+import DepartmentService from "@/services/department.service";
 
 export default {
   components: {MyRequests},
@@ -919,15 +923,16 @@ export default {
 
       .then((response) => {
         this.users = response.data;
-        console.log(1, response.data);
         this.list = this.users.map((item) => {
-          console.log(5, item);
           return { username: `${item.username}`, fullName: `${item.fullName}` };
         });
       })
       .catch((e) => {
         console.log(e);
       });
+    DepartmentService.getAllDepartment().then((response)=>{
+      this.departments = response.data
+    })
   },
   methods: {
     onOptionClick({ option, addTag }) {
@@ -1094,20 +1099,7 @@ export default {
       this.creator = this.currentUser.user.username;
       this.catergoryRequest = this.categoryRequestId;
       this.approveStatus = 1;
-      // const params ={
-      //   "title": this.title,
-      //   "creator": this.currentUser.user.username,
-      //   "approvers": this.approvers,
-      //   "followers": this.followers,
-      //   "content": this.content,
-      //   "approveStatus": 1,
-      //   "catergoryRequest": this.categoryRequestId,
-      //   "categoryReason": this.categoryReason,
-      //   "dateFrom": this.dateFrom,
-      //   "dateTo": this.dateTo,
-      //   "timeStart": this.timeStart,
-      //   "timeEnd": this.timeEnd
-      // }
+
       this.dialogFormNghi = false;
       let form = document.querySelector("#formNghi");
       console.log(this.form);
@@ -1154,18 +1146,15 @@ export default {
         this.sendStatus = this.status;
       }
       params = {
-        page: this.page,
-        size: this.pageSize,
+        user_id: this.currentUser.user.id,
         depart_id: this.sendDepartmentId,
         search: this.search,
         status: this.sendStatus,
       };
       RequestService.getAll(params)
         .then((response) => {
-          this.requests = response.data.content;
-          this.page = response.data.pageable.pageNumber;
-          console.log(response.data.pageable.pageNumber);
-          this.totalItems = response.data.totalElements;
+          this.requests = response.data;
+          console.log("haha"+this.requests)
         })
         .catch((error) => {
           console.log(error);

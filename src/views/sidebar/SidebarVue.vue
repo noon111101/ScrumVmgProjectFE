@@ -147,7 +147,7 @@
               </a>
             </li>
 
-            <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
+            <li class="nav-item" v-if="currentUser">
               <a class="nav-link">
                 <router-link to="/managerequest" class="nav-link sel">
                   <i class="el-icon-files"> </i> Quản lý đề xuất
