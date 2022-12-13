@@ -67,21 +67,25 @@
                   <el-button round class="h-25 me-3"></el-button>
                   <div style="text-align: justify">
                     <p>
-                      <span style="font-weight: bold">KL/H,H/KL</span>: Nghỉ nửa
-                      ngày
-                    </p>
-                    <p>
-                      <span style="font-weight: bold">KL</span>: Nghỉ không
-                      lương
-                    </p>
-                    <p>
                       <span style="font-weight: bold">H</span>: Làm hành chính
                     </p>
                     <p>
-                      <span style="font-weight: bold">__</span> : Không đi làm
+                      <span style="font-weight: bold">P</span> : Nghỉ phép
                     </p>
                     <p>
-                      <span style="font-weight: bold">L</span> : Ngày lễ
+                      <span style="font-weight: bold">KL</span>: Nghỉ không lương
+                    </p>
+                    <p>
+                      <span style="font-weight: bold">L</span> : Nghỉ lễ
+                    </p>
+                    <p>
+                      <span style="font-weight: bold">Ô</span> : Nghỉ ốm
+                    </p>
+                    <p>
+                      <span style="font-weight: bold">TC</span> : Nghỉ tiêu chuẩn
+                    </p>
+                    <p>
+                      <span style="font-weight: bold">CĐ</span> : Nghỉ chế độ
                     </p>
                   </div>
                 </div>
@@ -548,9 +552,17 @@ export default {
       let dayWork = 0;
       for (let sign of signs) {
         if (sign.sign == "H") dayWork = dayWork + 1;
+        if (sign.sign == "P_H") dayWork = dayWork + 1;
+        if (sign.sign == "H_P") dayWork = dayWork + 1;
         if (sign.sign == "H_KL") dayWork = dayWork + 0.5;
         if (sign.sign == "KL_H") dayWork = dayWork + 0.5;
+        if (sign.sign == "P") dayWork = dayWork + 1;
+        if (sign.sign == "P_KL") dayWork = dayWork + 0.5;
+        if (sign.sign == "KL_P") dayWork = dayWork + 0.5;
         if (sign.sign == "L") dayWork = dayWork + 1;
+        if (sign.sign == "Ô") dayWork = dayWork + 1;
+        if (sign.sign == "TC") dayWork = dayWork + 1;
+        if (sign.sign == "CĐ") dayWork = dayWork + 1;
       }
       return dayWork;
     },
