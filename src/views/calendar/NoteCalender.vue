@@ -4,16 +4,6 @@
       <div style="font-weight: bold;">Chú thích</div>
       <div>
         <div class="d-flex flex-row">
-          <el-button round class="h-25 me-3" style="background-color: #ecc376" ></el-button>
-          <div style="text-align: justify">
-            <p><span style="font-weight: bold">KL/H,H/KL</span>: Nghỉ nửa ngày</p>
-          </div>
-        </div>
-        <div class="d-flex flex-row">
-          <el-button round class="h-25 me-3" style="background-color:#E97C7C" ></el-button>
-          <p><span style="font-weight: bold">KL</span>: Nghỉ không lương</p>
-        </div>
-        <div class="d-flex flex-row">
           <el-button round class="h-25 me-3 position-relative" style="background-color: #c9e3c6" >
           </el-button>
           <p><span style="font-weight: bold">H</span>: Làm hành chính</p>
@@ -23,8 +13,30 @@
           <p><span style="font-weight: bold">NT</span>: Nghỉ tuần</p>
         </div>
         <div class="d-flex flex-row">
+          <el-button round class="h-25 me-3" style="background-color:#ecc376" ></el-button>
+          <p><span style="font-weight: bold;letter-spacing:3px">P_H H_P KL_H H_KL</span>: Làm nửa ngày </p>
+        </div>
+        <div class="d-flex flex-row">
+          <el-button round class="h-25 me-3" style="background-color: #E97C7C" ></el-button>
+          <div style="text-align: justify">
+            <p><span style="font-weight: bold;letter-spacing:3px ">P P_KL KL_P KL</span>: Nghỉ cả ngày</p>
+          </div>
+        </div>
+        <div class="d-flex flex-row">
+          <el-button round class="h-25 me-3" style="background-color: #CFD0E2"></el-button>
+          <p><span style="font-weight: bold">Ô</span>: Nghỉ ốm</p>
+        </div>
+        <div class="d-flex flex-row">
+          <el-button round class="h-25 me-3" style="background-color: #CBA4F3"></el-button>
+          <p><span style="font-weight: bold">TC</span>: Nghỉ tiêu chuẩn</p>
+        </div>
+        <div class="d-flex flex-row">
           <el-button round class="h-25 me-3" style="background-color: #b3e3f7"></el-button>
           <p><span style="font-weight: bold">L</span>: Nghỉ lễ</p>
+        </div>
+        <div class="d-flex flex-row">
+          <el-button round class="h-25 me-3" style="background-color: #e381e3"></el-button>
+          <p><span style="font-weight: bold">CĐ</span>: Nghỉ chế độ</p>
         </div>
         <div class="d-flex flex-row">
           <el-button round class="h-25 me-3 position-relative" >
@@ -36,10 +48,6 @@
           </svg>
           </el-button>
           <p>Ghi chú</p>
-        </div>
-        <div class="d-flex flex-row">
-          <el-button round class="h-25 me-3" ></el-button>
-          <p><span style="font-weight: bold"></span>  Không đi làm</p>
         </div>
       </div>
     </div>
