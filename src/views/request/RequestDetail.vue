@@ -18,9 +18,9 @@
       <button v-if="request.approveStatus.id==4" class="btn-4">
         {{ request.approveStatus.name }}
       </button>
-      <button class="btn-accept"  v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 2)">Chấp thuận</button>
-      <button class="btn-refuse" v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 3)">Từ chối</button>
-      <button class="btn-undo" v-if="request.approveStatus.id==2 || request.approveStatus.id==3" @click="changeStatus(request.id, 1)">Hoàn tác</button>
+      <button class="btn-accept"  v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 2,request.approveStatus.id)">Chấp thuận</button>
+      <button class="btn-refuse" v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 3,request.approveStatus.id)">Từ chối</button>
+      <button class="btn-undo" v-if="request.approveStatus.id==2 || request.approveStatus.id==3" @click="changeStatus(request.id, 1,request.approveStatus.id)">Hoàn tác</button>
       <span class="btn-refuse" v-if="request.approveStatus.id==5">Đã hủy</span>
       <span class="btn-refuse" v-if="request.approveStatus.id==6">Hoàn thành</span>
     </div>
@@ -148,8 +148,8 @@ export default {
         console.log(this.request)
       })
     },
-    changeStatus(requestId, statusId) {
-      if (statusId == 1) {
+    changeStatus(requestId, newStatusId, oldStatusId ) {
+      if (newStatusId == 1) {
         this.$swal
             .fire({
               title: "Xác nhận hoàn tác",
@@ -167,7 +167,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, statusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -194,7 +194,7 @@ export default {
               }
             });
       }
-      if (statusId == 2) {
+      if (newStatusId == 2) {
         this.$swal
             .fire({
               title: "Xác nhận chấp thuận",
@@ -212,7 +212,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, statusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -239,7 +239,7 @@ export default {
               }
             });
       }
-      if (statusId == 3) {
+      if (newStatusId == 3) {
         this.$swal
             .fire({
               title: "Xác nhận từ chối",
@@ -257,7 +257,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, statusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -284,7 +284,51 @@ export default {
               }
             });
       }
-
+      if (newStatusId == 4) {
+        this.$swal
+            .fire({
+              title: "Xác nhận hủy yêu cầu",
+              showDenyButton: true,
+              confirmButtonColor: "#75C4C0",
+              confirmButtonText: "Xác nhận",
+              denyButtonColor: "#ED9696",
+              denyButtonText: "Đóng",
+              customClass: {
+                actions: "my-actions",
+                cancelButton: "order-1 right-gap",
+                confirmButton: "order-2",
+                denyButton: "order-3",
+              },
+            })
+            .then((result) => {
+              if (result.isConfirmed) {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                  this.$swal.fire({
+                    title: response.data.message,
+                    icon: "success",
+                    timer: 2000,
+                    timerProgressBar: true,
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    width: "24em",
+                  });
+                  this.getRequest();
+                });
+              } else if (result.isDenied) {
+                this.$swal.fire({
+                  title: "Thay đổi thất bại",
+                  icon: "error",
+                  timer: 2000,
+                  timerProgressBar: true,
+                  toast: true,
+                  position: "top-end",
+                  showConfirmButton: false,
+                  width: "24em",
+                });
+              }
+            });
+      }
     },
   }
 }

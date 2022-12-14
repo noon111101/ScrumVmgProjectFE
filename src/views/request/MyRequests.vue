@@ -1,7 +1,5 @@
 <template>
   <div>
-
-
     <br/>
     <div className="container" style="text-align: center">
 
@@ -35,7 +33,6 @@
             data.row.title
           }}
         </router-link>
-
       </el-table-column>
       <el-table-column
           prop="creator.fullName"
@@ -108,7 +105,7 @@
       </el-table-column>
 
       <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
-        <el-button type="warning" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 5)"
+        <el-button type="warning" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 4)"
                    icon="el-icon-delete" circle></el-button>
       </el-table-column>
     </el-table>
@@ -145,14 +142,11 @@ export default {
       } else {
         this.sendStatusId = this.statusId;
       }
-      const params = {
-        "id": this.currentUser.user.id,
-        "statusId": this.sendStatusId
-      }
-      RequestService.myRequests(params).then((response) => {
-        this.requests = response.data
-        console.log(this.requests)
-      })
+      RequestService.getMyRequest(this.currentUser.user.id, this.sendStatusId)
+          .then((response) => {
+            this.requests = response.data
+            console.log(this.requests)
+          })
     },
     changeStatus(requestId, statusId) {
       if (statusId == 5) {
