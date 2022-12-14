@@ -499,6 +499,7 @@ export default {
               code: code,
               sign: null,
               reason: reason,
+              codeAdminEdit:this.currentUser.user.code
             });
           else
             this.logsEdit.push({
@@ -506,6 +507,7 @@ export default {
               code: code,
               sign: sign,
               reason: reason,
+              codeAdminEdit:this.currentUser.user.code
             });
         }
       }
@@ -729,7 +731,7 @@ export default {
   mounted() {
     this.getDepartment();
     this.getLog();
-    console.log(this.currentUser.user.fullName);
+    console.log(this.currentUser.user.code);
     this.accountDepartment = this.currentUser.user.departments;
   },
 };
