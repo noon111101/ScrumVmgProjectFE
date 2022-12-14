@@ -118,10 +118,18 @@
                 </router-link>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link">
+                <router-link to="/myFurlough" v-if="currentUser" class="nav-link sel">
+                  <i class="el-icon-question"></i>
+                  Nghỉ phép của tôi
+                </router-link>
+              </a>
+            </li>
             <li class="nav-item" v-if="showAdminBoard">
               <a class="nav-link">
                 <router-link to="/timesheetadmin" class="nav-link sel">
-                  <i class="el-icon-files"> </i> Quản lý chấm công
+                  <i class="el-icon-files"></i> Quản lý chấm công
                 </router-link>
               </a>
             </li>
@@ -147,7 +155,7 @@
               </a>
             </li>
 
-            <li class="nav-item" v-if="showAdminBoard || showModeratorBoard">
+            <li class="nav-item" v-if="currentUser">
               <a class="nav-link">
                 <router-link to="/managerequest" class="nav-link sel">
                   <i class="el-icon-files"> </i> Quản lý đề xuất

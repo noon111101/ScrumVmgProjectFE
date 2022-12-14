@@ -24,7 +24,7 @@
         >Phòng {{ accountDepartment.name }}</span
         >
 
-        <span class="demonstration">Năm </span>
+        <span class="demonstration ms-5">Năm </span>
         <el-date-picker
             v-model="currentYear"
             type="year"
@@ -40,6 +40,7 @@
               type="danger"
               class="el-icon-download float-end ms-3 my-3"
               round
+              @click="exportExcel"
           >
             Xuất File
           </el-button>
@@ -114,7 +115,10 @@
       <tr>
         <td style="background-color: #E0E0E04D;font-weight: bold" colspan="24">{{indexDepart}}</td>
       </tr>
-      <tr v-for="(u,indexUser) in depart" :key="indexUser">
+      <tr :class="{
+                'user-lock': !u.user.avalible,
+              }"
+          v-for="(u,indexUser) in depart" :key="indexUser">
         <td>{{indexUser + 1}}</td>
         <td>{{u.user.fullName}}</td>
         <td class="text-center">{{u.user.code}}</td>
@@ -261,6 +265,7 @@
 <script>
 import FurloughService from "@/services/furlough.service";
 import LogService from "@/services/logdetail-service";
+import ExcelService from "@/services/excel-service";
 export default {
   name: "ReportFurlough",
   data(){
@@ -397,6 +402,14 @@ export default {
             });
           });
     },
+    exportExcel(){
+      const params ={
+        "year":  this.currentYear
+      }
+      ExcelService.exportExcelPhep(params).then(() =>{
+        console.log("dafdas")
+      })
+    }
   },
   computed: {
     currentUser() {
@@ -429,6 +442,9 @@ tr th {
 .edited {
   background-color: #e24146 !important;
   color: white;
+}
+.user-lock {
+  background-color: #ed9696 !important;
 }
 .fix:hover {
   background-color: #e24146;

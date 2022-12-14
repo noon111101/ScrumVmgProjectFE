@@ -121,6 +121,10 @@ const router = new Router({
       path: '/reset_password-tokenLink',
       component: () => import('./views/auth/ForgotChangePassword.vue')
     },
+    {
+      path: '/myFurlough',
+      component: () => import('./views/manageUser/FurloughSelf.vue')
+    },
 
   ]
 }
@@ -128,7 +132,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday','/managerequest'];
-  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist']
+  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist','/myFurlough']
 
   const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report','/reportFurlough'];
   const managePages = [ '/timesheetmod','/report','/reportFurlough'];
