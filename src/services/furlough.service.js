@@ -5,6 +5,9 @@ const API_URL = 'http://localhost:8080/api/furlough/';
      getAllByYear(param){
          return axios.get(API_URL + "furloughByYear", {params:param})
      }
+     getAllByYearAndUser(param){
+         return axios.get(API_URL + "furloughByYearAndUser", {params:param})
+     }
      edit(data){
          return axios.post(API_URL + "edit", data)
      }
