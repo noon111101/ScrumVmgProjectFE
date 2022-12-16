@@ -10,7 +10,885 @@
     <h1>Danh sách đề xuất</h1>
 
     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane style="width: 100%" label="Tất cả" name="first">
+      <el-tab-pane style="width: 100%" label="Đề xuất của tôi" name="first">
+        <div>
+          <br/>
+          <div className="container" style="text-align: center">
+
+            <div class="grid-content text-start">
+
+            </div>
+          </div>
+          <div className="container" style="text-align: center">
+            <el-row :gutter="20">
+              <el-col :md="6" :lg="6" :xl="6">
+                <div class="grid-content" style="margin-bottom: 20px">
+                  <span style="">Trạng thái</span> &ensp;
+                  <el-select
+                      v-model="statusId"
+                      @change="getAll"
+                      placeholder="Trạng thái"
+                  >
+                    <el-option value="0" label="Tất cả"></el-option>
+                    <el-option label="Chờ phê duyệt" value="1"></el-option>
+                    <el-option label="Đã chấp thuận" value="2"></el-option>
+                    <el-option label="Đã từ chối" value="3"></el-option>
+                    <el-option label="Đã hủy" value="4"></el-option>
+                  </el-select>
+                </div>
+              </el-col>
+
+              <el-col :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">
+                <div class="grid-content">
+
+                </div>
+              </el-col>
+              <el-col :md="6" :lg="6" :xl="6" style="margin-bottom: 20px">
+                <div class="grid-content">
+
+                </div>
+              </el-col>
+
+              <el-col :md="6" :lg="6" :xl="6" class="div-buttons">
+                <div class="grid-content div-buttons">
+                  <el-dropdown>
+                    <el-button type="danger">
+                      Tạo đề xuất<i class="el-icon-arrow-down el-icon--right"></i>
+                    </el-button>
+                    <el-dropdown-menu slot="dropdown">
+                      <el-dropdown-item>
+                        <el-link
+                            class=""
+                            type="danger"
+                            style="margin-left: 20px; margin-right: 20px"
+                            :underline="false"
+                            round
+                            @click="openFormNghi"
+                        ><i class="el-icon-plus"></i>Đề xuất nghỉ
+                        </el-link>
+                      </el-dropdown-item>
+                      <el-dropdown-item>
+                        <el-link
+                            class=""
+                            type="danger"
+                            style="margin-left: 20px; margin-right: 20px"
+                            :underline="false"
+                            round
+                            @click="openFormChamCong"
+                        ><i class="el-icon-plus"></i>Đề xuất chấm công
+                        </el-link>
+                      </el-dropdown-item>
+                    </el-dropdown-menu>
+                  </el-dropdown>
+                </div>
+              </el-col>
+            </el-row>
+          </div>
+
+          <el-dialog
+              style="text-align: center; font-weight: bold"
+              title="TẠO ĐỀ XUẤT NGHỈ"
+              :visible.sync="dialogFormNghi"
+          >
+            <el-form
+                id="formNghi"
+                ref="form"
+                :model="form"
+                :rules="rules"
+                label-width="150px"
+            >
+              <el-input
+                  type="text"
+                  placeholder=""
+                  v-model="username"
+                  style="width: 100%"
+                  name="creator"
+                  hidden
+              ></el-input>
+              <el-input
+                  type="text"
+                  placeholder=""
+                  v-model="categoryRequestId"
+                  style="width: 100%"
+                  name="catergoryRequest"
+                  hidden
+              ></el-input>
+              <el-input
+                  type="text"
+                  placeholder=""
+                  v-model="form.approveStatus"
+                  style="width: 100%"
+                  name="approveStatus"
+                  hidden
+              ></el-input>
+              <el-form-item label="Họ và tên *">
+                <el-col :span="16">
+                  <el-input
+                      type="text"
+                      placeholder=""
+                      v-model="fullName"
+                      style="width: 100%"
+                      readonly
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Bộ phận *">
+                <el-col :span="16">
+                  <el-input
+                      type="text"
+                      v-model="departmentName"
+                      style="width: 100%"
+                      readonly
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Tên đề xuất *" prop="title">
+                <el-col :span="16">
+                  <el-input
+                      placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
+                      v-model="form.title"
+                      name="title"
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Loại đề xuất *" prop="categoryReason">
+                <el-col :span="15">
+
+                  <b-form-select
+                      style="width: 107%; padding: 9px 0"
+                      v-model="form.categoryReason"
+                      placeholder="Chọn loại đề xuất nghỉ"
+                      name="categoryReason"
+                  >
+                    <template #first>
+                      <b-form-select-option :value="null" disabled
+                      >Chọn loại đề xuất
+                      </b-form-select-option
+                      >
+                    </template>
+
+                    <b-form-select-option
+                        v-validate="{ required: true }"
+                        v-for="(item, index) in categoryReasons"
+                        :key="index"
+                        :value="item.id"
+                    >{{ item.name }}</b-form-select-option
+                    >
+                  </b-form-select>
+
+                  <!-- <b-form-invalid-feedback id="input-2-live-feedback">{{
+                    veeErrors.first("categoryReason")
+                  }}</b-form-invalid-feedback> -->
+                  <b-form-text v-if="form.categoryReason == 4"
+                  >Bạn được nghỉ 3 ngày nếu kết hôn, cha mẹ/vợ hoặc chồng/con
+                    mất</b-form-text
+                  >
+                  <br />
+                  <b-form-text v-if="form.categoryReason == 4"
+                  >Bạn được nghỉ 1 ngày nếu con ruột/con nuôi kết
+                    hôn</b-form-text
+                  >
+                  <b-form-text v-if="form.categoryReason == 3"
+                  >Đăng ký nghỉ ốm cần phải có giấy Bảo hiểm xã hội</b-form-text
+                  >
+
+                </el-col>
+              </el-form-item>
+
+
+              <el-form-item label="Nghỉ từ" required>
+                <el-col :span="7">
+                  <el-form-item prop="dateFrom">
+                    <el-date-picker
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.dateFrom"
+                        style="width: 100%"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        name="dateFrom"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col class="line" :span="2">-</el-col>
+                <el-col :span="7">
+                  <el-form-item prop="timeStart">
+                    <el-time-select
+                        v-if="form.categoryReason != 4 && form.categoryReason != 5"
+                        name="timeStart"
+                        style="width: 100%"
+                        v-model="form.timeStart"
+                        placeholder="Chọn giờ bắt đầu"
+                        :picker-options="{
+                      start: '07:00',
+                      step: '00:15',
+                      end: '19:00',
+                    }"
+                        format="HH:mm"
+                        value-format="HH:mm"
+                    ></el-time-select>
+                  </el-form-item>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="Nghỉ đến" required>
+                <el-col :span="7">
+                  <el-form-item prop="dateTo">
+                    <el-date-picker
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.dateTo"
+                        style="width: 100%"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        name="dateTo"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col class="line" :span="2">-</el-col>
+                <el-col :span="7">
+                  <el-form-item prop="timeEnd">
+                    <el-time-select
+                        v-if="form.categoryReason != 4 && form.categoryReason != 5"
+                        name="timeEnd"
+                        style="width: 100%"
+                        v-model="form.timeEnd"
+                        placeholder="Chọn giờ kết thúc"
+                        :picker-options="{
+                      start: '07:00',
+                      step: '00:15',
+                      end: '19:00',
+                    }"
+                        format="HH:mm"
+                        value-format="HH:mm"
+                    ></el-time-select>
+                  </el-form-item>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="Nhập nội dung" prop="content">
+                <el-col :span="16">
+                  <el-input
+                      name="content"
+                      style="width: 100%"
+                      type="textarea"
+                      v-model="form.content"
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Người theo dõi" prop="followers">
+                <el-col :span="16">
+                  <div>
+                    <b-form-tags
+                        id="tags-with-dropdown"
+                        no-outer-focus
+                        class="mb-2"
+                        v-model="form.followers"
+                        name="followers"
+                    >
+                      <template v-slot="{ tags, disabled, addTag, removeTag }">
+                        <ul
+                            v-if="tags.length > 0"
+                            class="list-inline d-inline-block mb-2"
+                        >
+                          <li
+                              v-for="tag in tags"
+                              :key="tag"
+                              class="list-inline-item"
+                          >
+                            <b-form-tag
+                                style="color: black; background-color: #abdbe3"
+                                @remove="removeTag(tag)"
+                                :title="tag"
+                                :disabled="disabled"
+                                variant="info"
+                            >{{ tag }}
+                            </b-form-tag
+                            >
+                          </li>
+                        </ul>
+                        <b-dropdown
+                            size="sm"
+                            variant="outline-secondary"
+                            block
+                            menu-class="w-100"
+                        >
+                          <template #button-content>
+                            <b-icon icon="tag-fill"></b-icon>
+                            Gắn thẻ người theo
+                            dõi
+                          </template>
+                          <b-dropdown-form @submit.stop.prevent="() => {}">
+                            <b-form-group
+                                label="Search tags"
+                                label-for="tag-search-input"
+                                label-cols-md="auto"
+                                class="mb-0"
+                                label-size="sm"
+                                :description="searchDesc"
+                                :disabled="disabled"
+                            >
+                              <b-form-input
+                                  v-model="search"
+                                  id="tag-search-input"
+                                  type="search"
+                                  size="sm"
+                                  autocomplete="off"
+                              ></b-form-input>
+                            </b-form-group>
+                          </b-dropdown-form>
+                          <b-dropdown-divider></b-dropdown-divider>
+                          <b-dropdown-item-button
+                              v-for="option in availableOptionsNS"
+                              :key="option"
+                              :value="option.username"
+                              @click="onOptionClick({ option, addTag })"
+                          >
+                            {{ option.fullName }}
+                          </b-dropdown-item-button>
+                          <b-dropdown-text v-if="availableOptions.length === 0">
+                            Không có người nào được chọn
+                          </b-dropdown-text>
+                        </b-dropdown>
+                      </template>
+                    </b-form-tags>
+                  </div>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Người phê duyệt" prop="approvers">
+                <el-col :span="16">
+                  <div>
+                    <b-form-tags
+                        id="tags-with-dropdown"
+                        no-outer-focus
+                        class="mb-2"
+                        v-model="form.approvers"
+                        name="approvers"
+                    >
+                      <template v-slot="{ tags, disabled, addTag, removeTag }">
+                        <ul
+                            v-if="tags.length > 0"
+                            class="list-inline d-inline-block mb-2"
+                        >
+                          <li
+                              v-for="tag in tags"
+                              :key="tag"
+                              class="list-inline-item"
+                          >
+                            <b-form-tag
+                                style="color: black; background-color: #abdbe3"
+                                @remove="removeTag(tag)"
+                                :title="tag"
+                                :disabled="disabled"
+                                variant="info"
+                            >{{ tag }}
+                            </b-form-tag
+                            >
+                          </li>
+                        </ul>
+                        <b-dropdown
+                            size="sm"
+                            variant="outline-secondary"
+                            block
+                            menu-class="w-100"
+                        >
+                          <template #button-content>
+                            <b-icon icon="tag-fill"></b-icon>
+                            Gắn thẻ người phê
+                            duyệt
+                          </template>
+                          <b-dropdown-form @submit.stop.prevent="() => {}">
+                            <b-form-group
+                                label="Search tags"
+                                label-for="tag-search-input"
+                                label-cols-md="auto"
+                                class="mb-0"
+                                label-size="sm"
+                                :description="searchDesc"
+                                :disabled="disabled"
+                            >
+                              <b-form-input
+                                  v-model="search"
+                                  id="tag-search-input"
+                                  type="search"
+                                  size="sm"
+                                  autocomplete="off"
+                              ></b-form-input>
+                            </b-form-group>
+                          </b-dropdown-form>
+                          <b-dropdown-divider></b-dropdown-divider>
+                          <b-dropdown-item-button
+                              v-for="option in availableOptions"
+                              :key="option"
+                              :value="option.username"
+                              @click="onOptionClick({ option, addTag })"
+                          >
+                            {{ option.fullName }}
+                          </b-dropdown-item-button>
+                          <b-dropdown-text v-if="availableOptions.length === 0">
+                            Không có người nào được chọn
+                          </b-dropdown-text>
+                        </b-dropdown>
+                      </template>
+                    </b-form-tags>
+                  </div>
+                </el-col>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="resetForm('form')">Hủy</el-button>
+            <el-button type="danger" @click="sendFormNghi"
+            >Gửi đề xuất</el-button
+            >
+          </span>
+          </el-dialog>
+
+          <el-dialog
+              style="text-align: center; font-weight: bold"
+              title="TẠO ĐỀ XUẤT CHẤM CÔNG"
+              :visible.sync="dialogFormChamCong"
+          >
+
+            <el-form
+                id="formChamCong"
+                ref="form"
+                :model="form"
+                :rules="rules"
+                label-width="150px"
+            >
+              <el-input
+                  type="text"
+                  placeholder=""
+                  v-model="username"
+                  style="width: 100%"
+                  name="creator"
+                  hidden
+              ></el-input>
+              <el-input
+                  type="text"
+                  placeholder=""
+                  v-model="categoryRequestId"
+                  style="width: 100%"
+                  name="catergoryRequest"
+                  hidden
+              ></el-input>
+              <el-input
+                  type="text"
+                  placeholder=""
+                  v-model="form.approveStatus"
+                  style="width: 100%"
+                  name="approveStatus"
+                  hidden
+              ></el-input>
+              <el-form-item label="Họ và tên *">
+                <el-col :span="16">
+                  <el-input
+                      type="text"
+                      placeholder=""
+                      v-model="fullName"
+                      style="width: 100%"
+                      readonly
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Bộ phận *">
+                <el-col :span="16">
+                  <el-input
+                      type="text"
+                      v-model="departmentName"
+                      style="width: 100%"
+                      readonly
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Tên đề xuất" prop="title">
+                <el-col :span="16">
+                  <el-input
+                      placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
+                      v-model="form.title"
+                      name="title"
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Loại đề xuất *">
+                <el-col :span="15">
+                  <b-form-select
+                      style="width: 107%; padding: 9px 0"
+                      v-model="form.categoryReason"
+                      placeholder="Chọn loại đề xuất nghỉ"
+                      name="categoryReason"
+                  >
+                    <template #first>
+                      <b-form-select-option :value="null" disabled
+                      >Chọn loại đề xuất
+                      </b-form-select-option
+                      >
+                    </template>
+                    <b-form-select-option
+                        v-for="(item, index) in categoryReasons"
+                        :key="index"
+                        :value="item.id"
+                    >{{ item.name }}
+                    </b-form-select-option
+                    >
+                  </b-form-select>
+                </el-col>
+              </el-form-item>
+              <el-form-item  v-if="form.categoryReason != 6">
+                <el-col :span="7">
+                  <el-form-item prop="dateFrom">
+                    <el-date-picker
+                        v-if="form.categoryReason != 6"
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.dateFrom"
+                        style="width: 100%"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        name="dateFrom"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col class="line" :span="2" v-if="form.categoryReason != 6">-</el-col>
+                <el-col :span="7">
+                  <el-form-item prop="timeStart">
+                    <el-time-select
+                        v-if=" form.categoryReason != 6"
+                        name="timeStart"
+                        style="width: 100%"
+                        v-model="form.timeStart"
+                        placeholder="Chọn giờ bắt đầu"
+                        :picker-options="{
+                      start: '07:00',
+                      step: '00:15',
+                      end: '19:00',
+                    }"
+                        format="HH:mm"
+                        value-format="HH:mm"
+                    ></el-time-select>
+                  </el-form-item>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="Quên ngày *" v-if="form.categoryReason == 6">
+                <el-col :span="16">
+                  <el-date-picker
+
+                      name="dateForget"
+                      type="date"
+                      placeholder="Chọn ngày"
+                      v-model="form.dateForget"
+                      style="width: 100%"
+                      format="yyyy-MM-dd"
+                      value-format="yyyy-MM-dd"
+                  ></el-date-picker>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="Nghỉ đến" v-if="form.categoryReason != 6" >
+                <el-col :span="7">
+                  <el-form-item prop="dateTo">
+                    <el-date-picker
+                        v-if="form.categoryReason != 6"
+                        type="date"
+                        placeholder="Chọn ngày"
+                        v-model="form.dateTo"
+                        style="width: 100%"
+                        format="yyyy-MM-dd"
+                        value-format="yyyy-MM-dd"
+                        name="dateTo"
+                    ></el-date-picker>
+                  </el-form-item>
+                </el-col>
+                <el-col class="line" :span="2" v-if="form.categoryReason != 6">-</el-col>
+                <el-col :span="7">
+                  <el-form-item prop="timeEnd">
+                    <el-time-select
+                        v-if="form.categoryReason != 6"
+                        name="timeEnd"
+                        style="width: 100%"
+                        v-model="form.timeEnd"
+                        placeholder="Chọn giờ kết thúc"
+                        :picker-options="{
+                      start: '07:00',
+                      step: '00:15',
+                      end: '19:00',
+                    }"
+                        format="HH:mm"
+                        value-format="HH:mm"
+                    ></el-time-select>
+                  </el-form-item>
+                </el-col>
+              </el-form-item>
+
+              <el-form-item label="Nhập nội dung" prop="content">
+                <el-col :span="16">
+                  <el-input
+                      name="content"
+                      style="width: 100%"
+                      type="textarea"
+                      v-model="form.content"
+                  ></el-input>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Người theo dõi" prop="followers">
+                <el-col :span="16">
+                  <div>
+                    <b-form-tags
+                        id="tags-with-dropdown"
+                        no-outer-focus
+                        class="mb-2"
+                        v-model="form.followers"
+                        name="followers"
+                    >
+                      <template v-slot="{ tags, disabled, addTag, removeTag }">
+                        <ul
+                            v-if="tags.length > 0"
+                            class="list-inline d-inline-block mb-2"
+                        >
+                          <li
+                              v-for="tag in tags"
+                              :key="tag"
+                              class="list-inline-item"
+                          >
+                            <b-form-tag
+                                style="color: black; background-color: #abdbe3"
+                                @remove="removeTag(tag)"
+                                :title="tag"
+                                :disabled="disabled"
+                                variant="info"
+                            >{{ tag }}
+                            </b-form-tag
+                            >
+                          </li>
+                        </ul>
+                        <b-dropdown
+                            size="sm"
+                            variant="outline-secondary"
+                            block
+                            menu-class="w-100"
+                        >
+                          <template #button-content>
+                            <b-icon icon="tag-fill"></b-icon>
+                            Gắn thẻ người theo
+                            dõi
+                          </template>
+                          <b-dropdown-form @submit.stop.prevent="() => {}">
+                            <b-form-group
+                                label="Search tags"
+                                label-for="tag-search-input"
+                                label-cols-md="auto"
+                                class="mb-0"
+                                label-size="sm"
+                                :description="searchDesc"
+                                :disabled="disabled"
+                            >
+                              <b-form-input
+                                  v-model="search"
+                                  id="tag-search-input"
+                                  type="search"
+                                  size="sm"
+                                  autocomplete="off"
+                              ></b-form-input>
+                            </b-form-group>
+                          </b-dropdown-form>
+                          <b-dropdown-divider></b-dropdown-divider>
+                          <b-dropdown-item-button
+                              v-for="option in availableOptionsNS"
+                              :key="option"
+                              :value="option.username"
+                              @click="onOptionClick({ option, addTag })"
+                          >
+                            {{ option.fullName }}
+                          </b-dropdown-item-button>
+                          <b-dropdown-text v-if="availableOptions.length === 0">
+                            Không có người nào được chọn
+                          </b-dropdown-text>
+                        </b-dropdown>
+                      </template>
+                    </b-form-tags>
+                  </div>
+                </el-col>
+              </el-form-item>
+              <el-form-item label="Người phê duyệt" prop="approvers">
+                <el-col :span="16">
+                  <div>
+                    <b-form-tags
+                        id="tags-with-dropdown"
+                        no-outer-focus
+                        class="mb-2"
+                        v-model="form.approvers"
+                        name="approvers"
+                    >
+                      <template v-slot="{ tags, disabled, addTag, removeTag }">
+                        <ul
+                            v-if="tags.length > 0"
+                            class="list-inline d-inline-block mb-2"
+                        >
+                          <li
+                              v-for="tag in tags"
+                              :key="tag"
+                              class="list-inline-item"
+                          >
+                            <b-form-tag
+                                style="color: black; background-color: #abdbe3"
+                                @remove="removeTag(tag)"
+                                :title="tag"
+                                :disabled="disabled"
+                                variant="info"
+                            >{{ tag }}
+                            </b-form-tag
+                            >
+                          </li>
+                        </ul>
+                        <b-dropdown
+                            size="sm"
+                            variant="outline-secondary"
+                            block
+                            menu-class="w-100"
+                        >
+                          <template #button-content>
+                            <b-icon icon="tag-fill"></b-icon>
+                            Gắn thẻ người phê
+                            duyệt
+                          </template>
+                          <b-dropdown-form @submit.stop.prevent="() => {}">
+                            <b-form-group
+                                label="Search tags"
+                                label-for="tag-search-input"
+                                label-cols-md="auto"
+                                class="mb-0"
+                                label-size="sm"
+                                :description="searchDesc"
+                                :disabled="disabled"
+                            >
+                              <b-form-input
+                                  v-model="search"
+                                  id="tag-search-input"
+                                  type="search"
+                                  size="sm"
+                                  autocomplete="off"
+                              ></b-form-input>
+                            </b-form-group>
+                          </b-dropdown-form>
+                          <b-dropdown-divider></b-dropdown-divider>
+                          <b-dropdown-item-button
+                              v-for="option in availableOptions"
+                              :key="option"
+                              :value="option.username"
+                              @click="onOptionClick({ option, addTag })"
+                          >
+                            {{ option.fullName }}
+                          </b-dropdown-item-button>
+                          <b-dropdown-text v-if="availableOptions.length === 0">
+                            Không có người nào được chọn
+                          </b-dropdown-text>
+                        </b-dropdown>
+                      </template>
+                    </b-form-tags>
+                  </div>
+                </el-col>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+            <el-button @click="resetForm('form')">Hủy</el-button>
+            <el-button type="danger" @click="sendFormChamCong"
+            >Gửi đề xuất</el-button
+            >
+          </span>
+          </el-dialog>
+          <br>
+          <el-table :data="myRequests" height="700" style="width: 100%">
+
+            <el-table-column
+                v-slot:="data"
+                label="Đề xuất"
+                align="center"
+            >
+
+              <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{
+                  data.row.title
+                }}
+              </router-link>
+            </el-table-column>
+            <el-table-column
+                prop="creator.fullName"
+                label="Nhân viên"
+                align="center"
+                width="300"
+            >
+            </el-table-column>
+            <el-table-column
+                prop="creator.departments.name"
+                label="Phòng ban"
+                align="center"
+                width="300"
+            >
+            </el-table-column>
+            <el-table-column
+                v-slot:="data"
+                label="Trạng thái"
+                align="center"
+                width="200"
+            >
+              <button v-if="data.row.approveStatus.id == 1" class="btn-1">
+                {{ data.row.approveStatus.name }}
+              </button>
+              <button v-if="data.row.approveStatus.id == 2" class="btn-2">
+                {{ data.row.approveStatus.name }}
+              </button>
+              <button v-if="data.row.approveStatus.id == 3" class="btn-3">
+                {{ data.row.approveStatus.name }}
+              </button>
+              <button v-if="data.row.approveStatus.id == 4" class="btn-4">
+                {{ data.row.approveStatus.name }}
+              </button>
+              <button v-if="data.row.approveStatus.id == 5" class="btn-3">
+                {{ data.row.approveStatus.name }}
+              </button>
+              <button v-if="data.row.approveStatus.id == 6" class="btn-2">
+                {{ data.row.approveStatus.name }}
+              </button>
+            </el-table-column>
+            <el-table-column
+                v-slot:="data"
+                label="Người duyệt"
+                align="center"
+                width="200"
+            >
+              <div
+                  v-for="(item, index) in data.row.approvers"
+                  :item="item"
+                  :index="index"
+                  :key="item.id"
+              >
+                <span>{{ item.fullName }}</span>
+              </div>
+            </el-table-column>
+            <el-table-column
+                v-slot:="data"
+                label="Người theo dõi"
+                align="center"
+                width="200"
+            >
+              <div
+                  v-for="(item, index) in data.row.followers"
+                  :item="item"
+                  :index="index"
+                  :key="item.id"
+              >
+                <span>{{ item.fullName }}</span>
+              </div>
+            </el-table-column>
+
+            <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
+              <el-button type="info" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 4,data.row.approveStatus.id)"
+                         icon="el-icon-delete" circle></el-button>
+            </el-table-column>
+          </el-table>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="Tất cả" name="second">
         <br/>
         <div className="container" style="text-align: center">
           <el-row :gutter="20">
@@ -65,750 +943,13 @@
 
             <el-col :md="6" :lg="6" :xl="6" class="div-buttons">
               <div class="grid-content div-buttons">
-                <el-dropdown>
-                  <el-button type="danger">
-                    Tạo đề xuất<i class="el-icon-arrow-down el-icon--right"></i>
-                  </el-button>
-                  <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
-                      <el-link
-                          class=""
-                          type="danger"
-                          style="margin-left: 20px; margin-right: 20px"
-                          :underline="false"
-                          round
-                          @click="openFormNghi"
-                      ><i class="el-icon-plus"></i>Đề xuất nghỉ
-                      </el-link>
-                    </el-dropdown-item>
-                    <el-dropdown-item>
-                      <el-link
-                          class=""
-                          type="danger"
-                          style="margin-left: 20px; margin-right: 20px"
-                          :underline="false"
-                          round
-                          @click="openFormChamCong"
-                      ><i class="el-icon-plus"></i>Đề xuất chấm công
-                      </el-link>
-                    </el-dropdown-item>
-                  </el-dropdown-menu>
-                </el-dropdown>
+
               </div>
             </el-col>
           </el-row>
         </div>
 
-        <el-dialog
-            style="text-align: center; font-weight: bold"
-            title="TẠO ĐỀ XUẤT NGHỈ"
-            :visible.sync="dialogFormNghi"
-        >
-          <el-form
-            id="formNghi"
-            ref="form"
-            :model="form"
-            :rules="rules"
-            label-width="150px"
-          >
-            <el-input
-                type="text"
-                placeholder=""
-                v-model="username"
-                style="width: 100%"
-                name="creator"
-                hidden
-            ></el-input>
-            <el-input
-                type="text"
-                placeholder=""
-                v-model="categoryRequestId"
-                style="width: 100%"
-                name="catergoryRequest"
-                hidden
-            ></el-input>
-            <el-input
-                type="text"
-                placeholder=""
-                v-model="form.approveStatus"
-                style="width: 100%"
-                name="approveStatus"
-                hidden
-            ></el-input>
-            <el-form-item label="Họ và tên *">
-              <el-col :span="16">
-                <el-input
-                    type="text"
-                    placeholder=""
-                    v-model="fullName"
-                    style="width: 100%"
-                    readonly
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Bộ phận *">
-              <el-col :span="16">
-                <el-input
-                    type="text"
-                    v-model="departmentName"
-                    style="width: 100%"
-                    readonly
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Tên đề xuất *" prop="title">
-              <el-col :span="16">
-                <el-input
-                    placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                    v-model="form.title"
-                    name="title"
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Loại đề xuất *" prop="categoryReason">
-              <el-col :span="15">
 
-                <b-form-select
-                  style="width: 107%; padding: 9px 0"
-                  v-model="form.categoryReason"
-                  placeholder="Chọn loại đề xuất nghỉ"
-                  name="categoryReason"
-                >
-                  <template #first>
-                    <b-form-select-option :value="null" disabled
-                    >Chọn loại đề xuất
-                    </b-form-select-option
-                    >
-                  </template>
-
-                  <b-form-select-option
-                    v-validate="{ required: true }"
-                    v-for="(item, index) in categoryReasons"
-                    :key="index"
-                    :value="item.id"
-                    >{{ item.name }}</b-form-select-option
-                  >
-                </b-form-select>
-
-                <!-- <b-form-invalid-feedback id="input-2-live-feedback">{{
-                  veeErrors.first("categoryReason")
-                }}</b-form-invalid-feedback> -->
-                <b-form-text v-if="form.categoryReason == 4"
-                  >Bạn được nghỉ 3 ngày nếu kết hôn, cha mẹ/vợ hoặc chồng/con
-                  mất</b-form-text
-                >
-                <br />
-                <b-form-text v-if="form.categoryReason == 4"
-                  >Bạn được nghỉ 1 ngày nếu con ruột/con nuôi kết
-                  hôn</b-form-text
-                >
-                <b-form-text v-if="form.categoryReason == 3"
-                  >Đăng ký nghỉ ốm cần phải có giấy Bảo hiểm xã hội</b-form-text
-                >
-
-              </el-col>
-            </el-form-item>
-
-
-            <el-form-item label="Nghỉ từ" required>
-              <el-col :span="7">
-                <el-form-item prop="dateFrom">
-                  <el-date-picker
-                    type="date"
-                    placeholder="Chọn ngày"
-                    v-model="form.dateFrom"
-                    style="width: 100%"
-                    format="yyyy-MM-dd"
-                    value-format="yyyy-MM-dd"
-                    name="dateFrom"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="7">
-                <el-form-item prop="timeStart">
-                  <el-time-select
-                    v-if="form.categoryReason != 4 && form.categoryReason != 5"
-                    name="timeStart"
-                    style="width: 100%"
-                    v-model="form.timeStart"
-                    placeholder="Chọn giờ bắt đầu"
-                    :picker-options="{
-                      start: '07:00',
-                      step: '00:15',
-                      end: '19:00',
-                    }"
-                    format="HH:mm"
-                    value-format="HH:mm"
-                  ></el-time-select>
-                </el-form-item>
-              </el-col>
-            </el-form-item>
-
-            <el-form-item label="Nghỉ đến" required>
-              <el-col :span="7">
-                <el-form-item prop="dateTo">
-                  <el-date-picker
-                    type="date"
-                    placeholder="Chọn ngày"
-                    v-model="form.dateTo"
-                    style="width: 100%"
-                    format="yyyy-MM-dd"
-                    value-format="yyyy-MM-dd"
-                    name="dateTo"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="7">
-                <el-form-item prop="timeEnd">
-                  <el-time-select
-                    v-if="form.categoryReason != 4 && form.categoryReason != 5"
-                    name="timeEnd"
-                    style="width: 100%"
-                    v-model="form.timeEnd"
-                    placeholder="Chọn giờ kết thúc"
-                    :picker-options="{
-                      start: '07:00',
-                      step: '00:15',
-                      end: '19:00',
-                    }"
-                    format="HH:mm"
-                    value-format="HH:mm"
-                  ></el-time-select>
-                </el-form-item>
-              </el-col>
-            </el-form-item>
-
-            <el-form-item label="Nhập nội dung" prop="content">
-              <el-col :span="16">
-                <el-input
-                    name="content"
-                    style="width: 100%"
-                    type="textarea"
-                    v-model="form.content"
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Người theo dõi" prop="followers">
-              <el-col :span="16">
-                <div>
-                  <b-form-tags
-                      id="tags-with-dropdown"
-                      no-outer-focus
-                      class="mb-2"
-                      v-model="form.followers"
-                      name="followers"
-                  >
-                    <template v-slot="{ tags, disabled, addTag, removeTag }">
-                      <ul
-                          v-if="tags.length > 0"
-                          class="list-inline d-inline-block mb-2"
-                      >
-                        <li
-                            v-for="tag in tags"
-                            :key="tag"
-                            class="list-inline-item"
-                        >
-                          <b-form-tag
-                              style="color: black; background-color: #abdbe3"
-                              @remove="removeTag(tag)"
-                              :title="tag"
-                              :disabled="disabled"
-                              variant="info"
-                          >{{ tag }}
-                          </b-form-tag
-                          >
-                        </li>
-                      </ul>
-                      <b-dropdown
-                          size="sm"
-                          variant="outline-secondary"
-                          block
-                          menu-class="w-100"
-                      >
-                        <template #button-content>
-                          <b-icon icon="tag-fill"></b-icon>
-                          Gắn thẻ người theo
-                          dõi
-                        </template>
-                        <b-dropdown-form @submit.stop.prevent="() => {}">
-                          <b-form-group
-                              label="Search tags"
-                              label-for="tag-search-input"
-                              label-cols-md="auto"
-                              class="mb-0"
-                              label-size="sm"
-                              :description="searchDesc"
-                              :disabled="disabled"
-                          >
-                            <b-form-input
-                                v-model="search"
-                                id="tag-search-input"
-                                type="search"
-                                size="sm"
-                                autocomplete="off"
-                            ></b-form-input>
-                          </b-form-group>
-                        </b-dropdown-form>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item-button
-                            v-for="option in availableOptions"
-                            :key="option"
-                            :value="option.username"
-                            @click="onOptionClick({ option, addTag })"
-                        >
-                          {{ option.fullName }}
-                        </b-dropdown-item-button>
-                        <b-dropdown-text v-if="availableOptions.length === 0">
-                          Không có người nào được chọn
-                        </b-dropdown-text>
-                      </b-dropdown>
-                    </template>
-                  </b-form-tags>
-                </div>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Người phê duyệt" prop="approvers">
-              <el-col :span="16">
-                <div>
-                  <b-form-tags
-                      id="tags-with-dropdown"
-                      no-outer-focus
-                      class="mb-2"
-                      v-model="form.approvers"
-                      name="approvers"
-                  >
-                    <template v-slot="{ tags, disabled, addTag, removeTag }">
-                      <ul
-                          v-if="tags.length > 0"
-                          class="list-inline d-inline-block mb-2"
-                      >
-                        <li
-                            v-for="tag in tags"
-                            :key="tag"
-                            class="list-inline-item"
-                        >
-                          <b-form-tag
-                              style="color: black; background-color: #abdbe3"
-                              @remove="removeTag(tag)"
-                              :title="tag"
-                              :disabled="disabled"
-                              variant="info"
-                          >{{ tag }}
-                          </b-form-tag
-                          >
-                        </li>
-                      </ul>
-                      <b-dropdown
-                          size="sm"
-                          variant="outline-secondary"
-                          block
-                          menu-class="w-100"
-                      >
-                        <template #button-content>
-                          <b-icon icon="tag-fill"></b-icon>
-                          Gắn thẻ người phê
-                          duyệt
-                        </template>
-                        <b-dropdown-form @submit.stop.prevent="() => {}">
-                          <b-form-group
-                              label="Search tags"
-                              label-for="tag-search-input"
-                              label-cols-md="auto"
-                              class="mb-0"
-                              label-size="sm"
-                              :description="searchDesc"
-                              :disabled="disabled"
-                          >
-                            <b-form-input
-                                v-model="search"
-                                id="tag-search-input"
-                                type="search"
-                                size="sm"
-                                autocomplete="off"
-                            ></b-form-input>
-                          </b-form-group>
-                        </b-dropdown-form>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item-button
-                            v-for="option in availableOptions"
-                            :key="option"
-                            :value="option.username"
-                            @click="onOptionClick({ option, addTag })"
-                        >
-                          {{ option.fullName }}
-                        </b-dropdown-item-button>
-                        <b-dropdown-text v-if="availableOptions.length === 0">
-                          Không có người nào được chọn
-                        </b-dropdown-text>
-                      </b-dropdown>
-                    </template>
-                  </b-form-tags>
-                </div>
-              </el-col>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="resetForm('form')">Hủy</el-button>
-            <el-button type="primary" @click="sendFormNghi"
-            >Gửi đề xuất</el-button
-            >
-          </span>
-        </el-dialog>
-
-        <el-dialog
-            style="text-align: center; font-weight: bold"
-            title="TẠO ĐỀ XUẤT CHẤM CÔNG"
-            :visible.sync="dialogFormChamCong"
-        >
-
-          <el-form
-            id="formChamCong"
-            ref="form"
-            :model="form"
-            :rules="rules"
-            label-width="150px"
-          >
-            <el-input
-                type="text"
-                placeholder=""
-                v-model="username"
-                style="width: 100%"
-                name="creator"
-                hidden
-            ></el-input>
-            <el-input
-                type="text"
-                placeholder=""
-                v-model="categoryRequestId"
-                style="width: 100%"
-                name="catergoryRequest"
-                hidden
-            ></el-input>
-            <el-input
-                type="text"
-                placeholder=""
-                v-model="form.approveStatus"
-                style="width: 100%"
-                name="approveStatus"
-                hidden
-            ></el-input>
-            <el-form-item label="Họ và tên *">
-              <el-col :span="16">
-                <el-input
-                    type="text"
-                    placeholder=""
-                    v-model="fullName"
-                    style="width: 100%"
-                    readonly
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Bộ phận *">
-              <el-col :span="16">
-                <el-input
-                    type="text"
-                    v-model="departmentName"
-                    style="width: 100%"
-                    readonly
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Tên đề xuất" prop="title">
-              <el-col :span="16">
-                <el-input
-                    placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
-                    v-model="form.title"
-                    name="title"
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Loại đề xuất *">
-              <el-col :span="15">
-                <b-form-select
-                  style="width: 107%; padding: 9px 0"
-                  v-model="form.categoryReason"
-                  placeholder="Chọn loại đề xuất nghỉ"
-                  name="categoryReason"
-                >
-                  <template #first>
-                    <b-form-select-option :value="null" disabled
-                    >Chọn loại đề xuất
-                    </b-form-select-option
-                    >
-                  </template>
-                  <b-form-select-option
-                      v-for="(item, index) in categoryReasons"
-                      :key="index"
-                      :value="item.id"
-                  >{{ item.name }}
-                  </b-form-select-option
-                  >
-                </b-form-select>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Nghỉ từ" required>
-              <el-col :span="7">
-                <el-form-item prop="dateFrom">
-                  <el-date-picker
-                    type="date"
-                    placeholder="Chọn ngày"
-                    v-model="form.dateFrom"
-                    style="width: 100%"
-                    format="yyyy-MM-dd"
-                    value-format="yyyy-MM-dd"
-                    name="dateFrom"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="7">
-                <el-form-item prop="timeStart">
-                  <el-time-select
-                    v-if="form.categoryReason != 4 && form.categoryReason != 5"
-                    name="timeStart"
-                    style="width: 100%"
-                    v-model="form.timeStart"
-                    placeholder="Chọn giờ bắt đầu"
-                    :picker-options="{
-                      start: '07:00',
-                      step: '00:15',
-                      end: '19:00',
-                    }"
-                    format="HH:mm"
-                    value-format="HH:mm"
-                  ></el-time-select>
-                </el-form-item>
-              </el-col>
-            </el-form-item>
-
-            <el-form-item label="Quên ngày *" v-if="form.categoryReason == 6">
-              <el-col :span="16">
-                <el-date-picker
-
-                  name="dateForget"
-                  type="date"
-                  placeholder="Chọn ngày"
-                  v-model="form.dateForget"
-                  style="width: 100%"
-                  format="yyyy-MM-dd"
-                  value-format="yyyy-MM-dd"
-                ></el-date-picker>
-              </el-col>
-            </el-form-item>
-
-            <el-form-item label="Nghỉ đến" required>
-              <el-col :span="7">
-                <el-form-item prop="dateTo">
-                  <el-date-picker
-                    type="date"
-                    placeholder="Chọn ngày"
-                    v-model="form.dateTo"
-                    style="width: 100%"
-                    format="yyyy-MM-dd"
-                    value-format="yyyy-MM-dd"
-                    name="dateTo"
-                  ></el-date-picker>
-                </el-form-item>
-              </el-col>
-              <el-col class="line" :span="2">-</el-col>
-              <el-col :span="7">
-                <el-form-item prop="timeEnd">
-                  <el-time-select
-                    v-if="form.categoryReason != 4 && form.categoryReason != 5"
-                    name="timeEnd"
-                    style="width: 100%"
-                    v-model="form.timeEnd"
-                    placeholder="Chọn giờ kết thúc"
-                    :picker-options="{
-                      start: '07:00',
-                      step: '00:15',
-                      end: '19:00',
-                    }"
-                    format="HH:mm"
-                    value-format="HH:mm"
-                  ></el-time-select>
-                </el-form-item>
-              </el-col>
-            </el-form-item>
-
-            <el-form-item label="Nhập nội dung" prop="content">
-              <el-col :span="16">
-                <el-input
-                    name="content"
-                    style="width: 100%"
-                    type="textarea"
-                    v-model="form.content"
-                ></el-input>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Người theo dõi" prop="followers">
-              <el-col :span="16">
-                <div>
-                  <b-form-tags
-                      id="tags-with-dropdown"
-                      no-outer-focus
-                      class="mb-2"
-                      v-model="form.followers"
-                      name="followers"
-                  >
-                    <template v-slot="{ tags, disabled, addTag, removeTag }">
-                      <ul
-                          v-if="tags.length > 0"
-                          class="list-inline d-inline-block mb-2"
-                      >
-                        <li
-                            v-for="tag in tags"
-                            :key="tag"
-                            class="list-inline-item"
-                        >
-                          <b-form-tag
-                              style="color: black; background-color: #abdbe3"
-                              @remove="removeTag(tag)"
-                              :title="tag"
-                              :disabled="disabled"
-                              variant="info"
-                          >{{ tag }}
-                          </b-form-tag
-                          >
-                        </li>
-                      </ul>
-                      <b-dropdown
-                          size="sm"
-                          variant="outline-secondary"
-                          block
-                          menu-class="w-100"
-                      >
-                        <template #button-content>
-                          <b-icon icon="tag-fill"></b-icon>
-                          Gắn thẻ người theo
-                          dõi
-                        </template>
-                        <b-dropdown-form @submit.stop.prevent="() => {}">
-                          <b-form-group
-                              label="Search tags"
-                              label-for="tag-search-input"
-                              label-cols-md="auto"
-                              class="mb-0"
-                              label-size="sm"
-                              :description="searchDesc"
-                              :disabled="disabled"
-                          >
-                            <b-form-input
-                                v-model="search"
-                                id="tag-search-input"
-                                type="search"
-                                size="sm"
-                                autocomplete="off"
-                            ></b-form-input>
-                          </b-form-group>
-                        </b-dropdown-form>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item-button
-                            v-for="option in availableOptions"
-                            :key="option"
-                            :value="option.username"
-                            @click="onOptionClick({ option, addTag })"
-                        >
-                          {{ option.fullName }}
-                        </b-dropdown-item-button>
-                        <b-dropdown-text v-if="availableOptions.length === 0">
-                          Không có người nào được chọn
-                        </b-dropdown-text>
-                      </b-dropdown>
-                    </template>
-                  </b-form-tags>
-                </div>
-              </el-col>
-            </el-form-item>
-            <el-form-item label="Người phê duyệt" prop="approvers">
-              <el-col :span="16">
-                <div>
-                  <b-form-tags
-                      id="tags-with-dropdown"
-                      no-outer-focus
-                      class="mb-2"
-                      v-model="form.approvers"
-                      name="approvers"
-                  >
-                    <template v-slot="{ tags, disabled, addTag, removeTag }">
-                      <ul
-                          v-if="tags.length > 0"
-                          class="list-inline d-inline-block mb-2"
-                      >
-                        <li
-                            v-for="tag in tags"
-                            :key="tag"
-                            class="list-inline-item"
-                        >
-                          <b-form-tag
-                              style="color: black; background-color: #abdbe3"
-                              @remove="removeTag(tag)"
-                              :title="tag"
-                              :disabled="disabled"
-                              variant="info"
-                          >{{ tag }}
-                          </b-form-tag
-                          >
-                        </li>
-                      </ul>
-                      <b-dropdown
-                          size="sm"
-                          variant="outline-secondary"
-                          block
-                          menu-class="w-100"
-                      >
-                        <template #button-content>
-                          <b-icon icon="tag-fill"></b-icon>
-                          Gắn thẻ người phê
-                          duyệt
-                        </template>
-                        <b-dropdown-form @submit.stop.prevent="() => {}">
-                          <b-form-group
-                              label="Search tags"
-                              label-for="tag-search-input"
-                              label-cols-md="auto"
-                              class="mb-0"
-                              label-size="sm"
-                              :description="searchDesc"
-                              :disabled="disabled"
-                          >
-                            <b-form-input
-                                v-model="search"
-                                id="tag-search-input"
-                                type="search"
-                                size="sm"
-                                autocomplete="off"
-                            ></b-form-input>
-                          </b-form-group>
-                        </b-dropdown-form>
-                        <b-dropdown-divider></b-dropdown-divider>
-                        <b-dropdown-item-button
-                            v-for="option in availableOptions"
-                            :key="option"
-                            :value="option.username"
-                            @click="onOptionClick({ option, addTag })"
-                        >
-                          {{ option.fullName }}
-                        </b-dropdown-item-button>
-                        <b-dropdown-text v-if="availableOptions.length === 0">
-                          Không có người nào được chọn
-                        </b-dropdown-text>
-                      </b-dropdown>
-                    </template>
-                  </b-form-tags>
-                </div>
-              </el-col>
-            </el-form-item>
-          </el-form>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="resetForm('form')">Hủy</el-button>
-            <el-button type="primary" @click="sendFormChamCong"
-              >Gửi đề xuất</el-button
-            >
-          </span>
-        </el-dialog>
 
         <el-table :data="requests" height="700" style="width: 100%">
 
@@ -915,118 +1056,7 @@
 
           </el-table-column>
         </el-table>
-      </el-tab-pane>
-      <el-tab-pane label="Đề xuất của tôi" name="second">
-<!--        <MyRequests prop=""/>-->
-        <div>
-          <br/>
-          <div className="container" style="text-align: center">
 
-            <div class="grid-content text-start">
-              <span style="">Trạng thái</span> &ensp;
-              <el-select
-                  v-model="statusId"
-                  @change="getAll"
-                  placeholder="Trạng thái"
-              >
-                <el-option value="0" label="Tất cả"></el-option>
-                <el-option label="Chờ phê duyệt" value="1"></el-option>
-                <el-option label="Đã chấp thuận" value="2"></el-option>
-                <el-option label="Đã từ chối" value="3"></el-option>
-                <el-option label="Đã hủy" value="4"></el-option>
-              </el-select>
-            </div>
-          </div>
-          <br>
-          <el-table :data="myRequests" height="700" style="width: 100%">
-
-            <el-table-column
-                v-slot:="data"
-                label="Đề xuất"
-                align="center"
-            >
-
-              <router-link class="link" :to="{name: 'requestdetail', params: {id: data.row.id}}">{{
-                  data.row.title
-                }}
-              </router-link>
-            </el-table-column>
-            <el-table-column
-                prop="creator.fullName"
-                label="Nhân viên"
-                align="center"
-                width="300"
-            >
-            </el-table-column>
-            <el-table-column
-                prop="creator.departments.name"
-                label="Phòng ban"
-                align="center"
-                width="300"
-            >
-            </el-table-column>
-            <el-table-column
-                v-slot:="data"
-                label="Trạng thái"
-                align="center"
-                width="200"
-            >
-              <button v-if="data.row.approveStatus.id == 1" class="btn-1">
-                {{ data.row.approveStatus.name }}
-              </button>
-              <button v-if="data.row.approveStatus.id == 2" class="btn-2">
-                {{ data.row.approveStatus.name }}
-              </button>
-              <button v-if="data.row.approveStatus.id == 3" class="btn-3">
-                {{ data.row.approveStatus.name }}
-              </button>
-              <button v-if="data.row.approveStatus.id == 4" class="btn-4">
-                {{ data.row.approveStatus.name }}
-              </button>
-              <button v-if="data.row.approveStatus.id == 5" class="btn-3">
-                {{ data.row.approveStatus.name }}
-              </button>
-              <button v-if="data.row.approveStatus.id == 6" class="btn-2">
-                {{ data.row.approveStatus.name }}
-              </button>
-            </el-table-column>
-            <el-table-column
-                v-slot:="data"
-                label="Người duyệt"
-                align="center"
-                width="200"
-            >
-              <div
-                  v-for="(item, index) in data.row.approvers"
-                  :item="item"
-                  :index="index"
-                  :key="item.id"
-              >
-                <span>{{ item.fullName }}</span>
-              </div>
-            </el-table-column>
-            <el-table-column
-                v-slot:="data"
-                label="Người theo dõi"
-                align="center"
-                width="200"
-            >
-              <div
-                  v-for="(item, index) in data.row.followers"
-                  :item="item"
-                  :index="index"
-                  :key="item.id"
-              >
-                <span>{{ item.fullName }}</span>
-              </div>
-            </el-table-column>
-
-            <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
-              <el-button type="warning" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 4,data.row.approveStatus.id)"
-                         icon="el-icon-delete" circle></el-button>
-            </el-table-column>
-          </el-table>
-        </div>
       </el-tab-pane>
     </el-tabs>
 
@@ -1035,7 +1065,7 @@
 <script>
 import RequestService from "@/services/request-service";
 import UserService from "@/services/user.service";
-import DepartmentService from "@/services/department.service";
+// import DepartmentService from "@/services/department.service";
 
 
 export default {
@@ -1045,6 +1075,7 @@ export default {
       value: [],
       list: [],
       users: [],
+      usersNS:[],
       activeName: "first",
       dialogFormNghi: false,
       dialogFormChamCong: false,
@@ -1169,6 +1200,21 @@ export default {
       // Show all options available
       return options;
     },
+    availableOptionsNS() {
+      const criteria = this.criteria;
+      // Filter out already selected options
+      const options = this.usersNS.filter(
+          (opt) => this.value.indexOf(opt) === -1
+      );
+      if (criteria) {
+        // Show only options that match criteria
+        return options.filter(
+            (opt) => opt.fullName.toLowerCase().indexOf(criteria) > -1
+        );
+      }
+      // Show all options available
+      return options;
+    },
     searchDesc() {
       if (this.criteria && this.availableOptions.length === 0) {
         return "Không có tên người bạn muốn tìm";
@@ -1190,10 +1236,20 @@ export default {
         .catch((e) => {
           console.log(e);
         });
-    DepartmentService.getAllDepartment().then((response) => {
-      this.departments = response.data
-    })
+    UserService.getAllUserByDepartmentId(2)
+
+        .then((response) => {
+          this.usersNS = response.data;
+          this.list = this.usersNS.map((item) => {
+            return {username: `${item.username}`, fullName: `${item.fullName}`};
+          });
+        })
+        .catch((e) => {
+          console.log(e);
+        });
   },
+
+
   methods: {
 
     resetForm(formName) {
@@ -1286,6 +1342,15 @@ export default {
                     width: "24em",
                   });
                   this.getAll();
+                }).catch(error => {
+                  this.$swal.fire({
+                    title: "Lỗi",
+                    text: error.response.data.error.message,
+                    icon: "error",
+                    timer: 2000,
+                    timerProgressBar: true,
+                  })
+                  this.message = ''
                 });
               } else if (result.isDenied) {
                 this.$swal.fire({
@@ -1375,7 +1440,7 @@ export default {
                     showConfirmButton: false,
                     width: "24em",
                   });
-                  this.getMyRequests();
+                  this.getAll();
                 });
               } else if (result.isDenied) {
                 this.$swal.fire({
@@ -1398,10 +1463,10 @@ export default {
       if (
         this.form.title == "" ||
         this.form.categoryReason == null ||
-        this.form.dateFrom == "" ||
-        this.form.dateTo == "" ||
-        this.form.timeStart == "" ||
-        this.form.timeEnd == "" ||
+        // this.form.dateFrom == "" ||
+        // this.form.dateTo == "" ||
+        // this.form.timeStart == "" ||
+        // this.form.timeEnd == "" ||
         this.form.content == "" ||
         this.form.approvers == "" ||
         this.form.followers == ""
@@ -1450,10 +1515,10 @@ export default {
       if (
         this.form.title == "" ||
         this.form.categoryReason == null ||
-        this.form.dateFrom == "" ||
-        this.form.dateTo == "" ||
-        this.form.timeStart == "" ||
-        this.form.timeEnd == "" ||
+        // this.form.dateFrom == "" ||
+        // this.form.dateTo == "" ||
+        // this.form.timeStart == "" ||
+        // this.form.timeEnd == "" ||
         this.form.content == "" ||
         this.form.approvers == "" ||
         this.form.followers == ""
@@ -1603,5 +1668,21 @@ export default {
   border: none;
   border-radius: 20px;
   padding: 3px 20px;
+}
+
+.b-form-tag > button.b-form-tag-remove {
+  color: white;
+  font-size: 125%;
+  line-height: 1;
+  float: none;
+  margin-left: 0.25rem;
+  border-radius: 5px;
+  border: none;
+  background-color: black;
+  font-weight: 600;
+}
+
+.btn-submit{
+  background-color: #f56c6c;
 }
 </style>

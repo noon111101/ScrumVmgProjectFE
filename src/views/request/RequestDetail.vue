@@ -1,6 +1,6 @@
 <template>
   <div class="container ">
-    <router-link to="/managerequest" class="btn-back"><i class="el-icon-back"></i>&nbsp;&nbsp;Chi tiết đề xuất</router-link>
+    <router-link to="/managerequest" class="btn-back"><i class="el-icon-back"></i>&nbsp;&nbsp;Danh sách đề xuất</router-link>
     <br><br>
     <h5 class="title-request">{{ request.title }}</h5>
     <br><br>
@@ -18,11 +18,14 @@
       <button v-if="request.approveStatus.id==4" class="btn-4">
         {{ request.approveStatus.name }}
       </button>
-      <button class="btn-accept"  v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 2,request.approveStatus.id)">Chấp thuận</button>
-      <button class="btn-refuse" v-if="request.approveStatus.id==1" @click="changeStatus(request.id, 3,request.approveStatus.id)">Từ chối</button>
-      <button class="btn-undo" v-if="request.approveStatus.id==2 || request.approveStatus.id==3" @click="changeStatus(request.id, 1,request.approveStatus.id)">Hoàn tác</button>
-      <span class="btn-refuse" v-if="request.approveStatus.id==5">Đã hủy</span>
-      <span class="btn-refuse" v-if="request.approveStatus.id==6">Hoàn thành</span>
+      <div v-for="(item, index) in request.approvers" :key="index">
+        <button class="btn-accept"  v-if="request.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(request.id, 2,request.approveStatus.id)">Chấp thuận</button>
+        <button class="btn-refuse" v-if="request.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(request.id, 3,request.approveStatus.id)">Từ chối</button>
+        <button class="btn-undo" v-if="(request.approveStatus.id==2 || request.approveStatus.id==3) && item.id==currentUser.user.id" @click="changeStatus(request.id, 1,request.approveStatus.id)">Hoàn tác</button>
+        <span class="btn-refuse" v-if="request.approveStatus.id==5">Đã hủy</span>
+        <span class="btn-refuse" v-if="request.approveStatus.id==6">Hoàn thành</span>
+      </div>
+
     </div>
     <br><br>
     <span class="title-request sub-title">Thông tin đề xuất</span>
@@ -50,19 +53,23 @@
         <table>
           <tr>
             <td class="header-table">Loại đề xuất:</td>
-            <td>Đề xuất {{ request.catergoryRequest.name }}</td>
+            <td>Đề xuất {{ request.catergoryRequest.name }}: {{ request.categoryReason.name }}</td>
           </tr>
-          <tr>
+          <tr v-if="request.categoryReason.id!=6">
             <td class="header-table">Thời gian tạo:</td>
-            <td>09/11/2022</td>
+            <td><span v-if="request.timeStart!=null">{{request.timeStart}},</span> <span v-if="request.dateFrom!=null">Ngày: {{request.dateFrom}}</span></td>
           </tr>
-          <tr>
+          <tr v-if="request.categoryReason.id!=6">
             <td class="header-table">Thời gian thực hiện:</td>
-            <td>09/11/2022</td>
+            <td><span v-if="request.timeEnd!=null">{{request.timeEnd}},</span> <span v-if="request.dateTo!=null">Ngày: {{request.dateTo}}</span></td>
           </tr>
-          <tr>
+          <tr v-if="request.categoryReason.id!=6">
             <td class="header-table">Số ngày nghỉ:</td>
-            <td>1 ngày</td>
+            <td>{{request.totalDays}} ngày</td>
+          </tr>
+          <tr v-if="request.categoryReason.id==6">
+            <td class="header-table">Chấm công ngày:</td>
+            <td>{{request.dateForget}}</td>
           </tr>
           <tr>
             <td class="header-table">Nội dung đề xuất:</td>
@@ -95,7 +102,6 @@
         <span class="title-request sub-title">Người theo dõi</span>
         <hr style="margin: 0; width: 90%">
         <br>
-
         <div v-for="(item, index) in request.followers" :item="item"
              :index="index"
              :key="item.id">
@@ -106,10 +112,8 @@
           <span style="font-weight: 600">&nbsp; {{ item.fullName }}</span>
           <br><br>
         </div>
-
       </div>
     </div>
-
   </div>
 </template>
 
@@ -449,7 +453,7 @@ export default {
 }
 
 .header-table {
-  font-weight: 600;
+  font-weight: 700;
   width: 180px;
 }
 
