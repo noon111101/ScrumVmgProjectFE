@@ -115,7 +115,7 @@
                           v-model="form.name"
                           type="text"
                           name="name"
-                          placeholder="Họ và tên"
+                          placeholder="Tên ngày lễ"
                           autocomplete="off"
                         >
                         </el-input>
@@ -332,7 +332,7 @@
                           v-model="formEdit.name"
                           type="text"
                           name="name"
-                          placeholder="Họ và tên"
+                          placeholder="Tên ngày lễ"
                           autocomplete="off"
                         >
                         </el-input>
