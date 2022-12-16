@@ -21,6 +21,10 @@ class UserService {
     return httpCommon.get("/user-management/getAllUser", { headers: authHeader() });
   }
 
+  getAllUserByDepartmentId(id){
+    return httpCommon.get(`/user-management/getAllUserByDepartmentId/${id}`)
+  }
+
 
   getModeratorBoard() {
     return httpCommon.get("/user-management"+ 'mod', { headers: authHeader() });

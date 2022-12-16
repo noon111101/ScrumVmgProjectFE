@@ -201,7 +201,6 @@
                 >
               </el-col>
             </el-form-item>
-
             <el-form-item label="Nghỉ từ" required>
               <el-col :span="7">
                 <el-form-item prop="dateFrom">
@@ -439,7 +438,7 @@
           </el-form>
           <span slot="footer" class="dialog-footer">
             <el-button @click="resetForm('form')">Hủy</el-button>
-            <el-button type="primary" @click="sendFormNghi"
+            <el-button type="danger" @click="sendFormNghi"
               >Gửi đề xuất</el-button
             >
           </span>
@@ -551,7 +550,7 @@
               <el-col :span="7">
                 <el-form-item prop="timeStart">
                   <el-time-select
-                    v-if="form.categoryReason != 4 && form.categoryReason != 5"
+                    v-if="form.categoryReason != 6"
                     name="timeStart"
                     style="width: 100%"
                     v-model="form.timeStart"
@@ -582,9 +581,9 @@
               </el-col>
             </el-form-item>
 
-            <el-form-item label="Nghỉ đến" required>
+            <el-form-item label="Nghỉ đến" v-if="form.categoryReason != 6" >
               <el-col :span="7">
-                <el-form-item prop="dateTo">
+                <el-form-item prop="dateTo" >
                   <el-date-picker
                     type="date"
                     placeholder="Chọn ngày"
@@ -600,7 +599,6 @@
               <el-col :span="7">
                 <el-form-item prop="timeEnd">
                   <el-time-select
-                    v-if="form.categoryReason != 4 && form.categoryReason != 5"
                     name="timeEnd"
                     style="width: 100%"
                     v-model="form.timeEnd"
@@ -688,14 +686,14 @@
                         </b-dropdown-form>
                         <b-dropdown-divider></b-dropdown-divider>
                         <b-dropdown-item-button
-                          v-for="option in availableOptions"
+                          v-for="option in availableOptionsNS"
                           :key="option"
                           :value="option.username"
                           @click="onOptionClick({ option, addTag })"
                         >
                           {{ option.fullName }}
                         </b-dropdown-item-button>
-                        <b-dropdown-text v-if="availableOptions.length === 0">
+                        <b-dropdown-text v-if="availableOptionsNS.length === 0">
                           Không có người nào được chọn
                         </b-dropdown-text>
                       </b-dropdown>
@@ -785,7 +783,7 @@
           <span slot="footer" class="dialog-footer">
             <el-button @click="resetForm('form')">Hủy</el-button>
 
-            <el-button type="primary" @click="sendFormChamCong"
+            <el-button type="danger" @click="sendFormChamCong"
               >Gửi đề xuất</el-button
             >
           </span>
@@ -894,6 +892,7 @@ export default {
       value: [],
       list: [],
       users: [],
+      usersNS: [],
       activeName: "first",
       dialogFormNghi: false,
       dialogFormChamCong: false,
@@ -1015,6 +1014,21 @@ export default {
       // Show all options available
       return options;
     },
+    availableOptionsNS() {
+      const criteria = this.criteria;
+      // Filter out already selected options
+      const options = this.usersNS.filter(
+        (opt) => this.value.indexOf(opt) === -1
+      );
+      if (criteria) {
+        // Show only options that match criteria
+        return options.filter(
+          (opt) => opt.fullName.toLowerCase().indexOf(criteria) > -1
+        );
+      }
+      // Show all options available
+      return options;
+    },
     searchDesc() {
       if (this.criteria && this.availableOptions.length === 0) {
         return "Không có tên người bạn muốn tìm";
@@ -1028,6 +1042,18 @@ export default {
     UserService.getAllUser()
       .then((response) => {
         this.users = response.data;
+        console.log(1, response.data);
+        this.list = this.users.map((item) => {
+          console.log(5, item);
+          return { username: `${item.username}`, fullName: `${item.fullName}` };
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    UserService.getAllUserByDepartmentId(2)
+      .then((response) => {
+        this.usersNS = response.data;
         console.log(1, response.data);
         this.list = this.users.map((item) => {
           console.log(5, item);
@@ -1059,8 +1085,8 @@ export default {
         this.form.categoryReason == null ||
         this.form.dateFrom == "" ||
         this.form.dateTo == "" ||
-        this.form.timeStart == "" ||
-        this.form.timeEnd == "" ||
+        // this.form.timeStart == "" ||
+        // this.form.timeEnd == "" ||
         this.form.content == "" ||
         this.form.approvers == "" ||
         this.form.followers == ""
@@ -1087,7 +1113,6 @@ export default {
               timer: 2000,
               timerProgressBar: true,
             });
-
             this.resetForm("form");
             this.loading = false;
             this.getAll();
@@ -1109,8 +1134,8 @@ export default {
         this.form.categoryReason == null ||
         this.form.dateFrom == "" ||
         this.form.dateTo == "" ||
-        this.form.timeStart == "" ||
-        this.form.timeEnd == "" ||
+        // this.form.timeStart == "" ||
+        // this.form.timeEnd == "" ||
         this.form.content == "" ||
         this.form.approvers == "" ||
         this.form.followers == ""
