@@ -33,8 +33,12 @@
             </p>
             <div class="sign-calender text-center align-middle " >
               {{Sign.name}}
-              <el-tooltip popper-class="reason-popper" v-if="Sign.reason!=null" placement="right" effect="light">
-                <div slot="content"><div class="note-wrapper">{{Sign.reason}}</div></div>
+              <el-tooltip popper-class="reason-popper" v-if="Sign.note.length!=0" placement="right" effect="light">
+                <div slot="content">
+                  <div class="note-wrapper">
+                    <note-log :notes="Sign.note"></note-log>
+                  </div>
+                </div>
                 <svg class="position-absolute top-0 end-0 " x="0px" y="0px"
                      viewBox="0 0 512 512" style="enable-background:new 0 0 512 512;width: 15px;fill: #A843A8FF " xml:space="preserve">
               <g>
@@ -85,10 +89,11 @@
 <script>
 import LogdetailService from "@/services/logdetail-service";
 import NoteCalender from "@/views/calendar/NoteCalender";
+import NoteLog from "@/views/calendar/NoteLog";
 
 export default {
   name: "CalenderReport",
-  components: {NoteCalender},
+  components: {NoteLog, NoteCalender},
   data() {
     return {
       value: new Date(),
@@ -130,7 +135,7 @@ export default {
         regime:false,
         timeIn:null,
         timeOut:null,
-        reason:null
+        note:[]
       };
       for (let log of this.logs) {
         if(log.dateLog==date){
@@ -138,7 +143,11 @@ export default {
             sign.name= log.signs.name
           sign.timeIn= log.timeIn
           sign.timeOut= log.timeOut
-          sign.reason= log.reason
+          sign.note= log.noteLogSet.sort(function(a, b){
+            var a1= a.note_log_id, b1= b.note_log_id;
+            if(a1== b1) return 0;
+            return a1> b1? 1: -1;
+          });
           if(sign.name.includes("H") && !sign.name.includes("_"))
             sign.allDay=true
           if(sign.name.includes("NT"))

@@ -396,7 +396,7 @@ export default {
             this.$swal.fire({
               title: "Cập nhật thất bại",
               type: "error",
-              text: error.response.data.message,
+              text: error.response.data.error.message,
               icon: "error",
               showCloseButton: true,
             });
