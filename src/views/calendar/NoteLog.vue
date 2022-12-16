@@ -45,7 +45,7 @@
          <i class="el-icon-right"></i> {{note.signChange.name}}
     </div>
     <div class="time">
-        {{note.createDate}}
+        {{note.createDate.replace("T"," ").split(".")[0].toString()}}
     </div>
   </div>
   </div>
