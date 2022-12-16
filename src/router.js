@@ -125,7 +125,6 @@ const router = new Router({
       path: '/myFurlough',
       component: () => import('./views/manageUser/FurloughSelf.vue')
     },
-
   ]
 }
 );
