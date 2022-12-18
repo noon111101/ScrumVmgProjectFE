@@ -3,7 +3,8 @@
     <h2 style="font-weight: bold">Bảng tổng hợp nghỉ phép năm {{currentYear}}</h2>
     <div class="d-flex flex-row mt-3 ms-0">
       <div class="col-9">
-        <span>Phòng ban </span>
+        <span v-if="showAdminBoard"
+        >Phòng ban </span>
         <el-select
             v-if="showAdminBoard"
             class="mx-3 my-3"
@@ -64,7 +65,8 @@
         box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
       "
   >
-    <table class="table table-bordered align-middle">
+<!--    ADMIN-->
+    <table v-if="showAdminBoard" class="table table-bordered align-middle">
       <thead style="background-color: #c2c2c2">
       <tr>
         <th rowspan="2" style="width: 60px" >STT</th>
@@ -154,8 +156,92 @@
       </tr>
 
       </tbody>
-      <!--      Check không có dữ liệu hiện "NO DATA"-->
+    </table>
+<!--    Truong phong-->
+    <table v-if="showModeratorBoard" class="table table-bordered align-middle">
+      <thead style="background-color: #c2c2c2">
+      <tr>
+        <th rowspan="2" style="width: 60px" >STT</th>
+        <th rowspan="2" class="text-center" style="width: 200px">
+          Họ và tên
+        </th>
+        <th rowspan="2" style="width: 150px" >
+          Mã nhân viên
+        </th>
+        <th rowspan="2" style="width: 130px" >
+          Thời gian tính phép
+        </th>
+        <th rowspan="2" style="width: 100px" >
+          Số ngày được nghỉ trong năm {{currentYear}}
+        </th>
+        <th rowspan="2" style="width: 100px" >
+          Số ngày phép dư đầu kì năm {{currentYear}}
+        </th>
+        <th colspan="12" class="text-center" style="width: 600px">
+          Số ngày phép đã sử dụng theo tháng
+        </th>
+        <th rowspan="2" style="width: 90px">
+          Tổng số ngày phép đã nghỉ trước tháng 4
+        </th>
+        <th rowspan="2" style="width: 90px">
+          Tổng số ngày nghỉ phép năm {{currentYear}}
+        </th>
+        <th rowspan="2" style="width: 90px">
+          Số ngày phép còn lại năm {{currentYear-1}}
+        </th>
+        <th rowspan="2" style="width: 90px">
+          Số ngày phép còn lại năm {{currentYear}}
+        </th>
+        <th rowspan="2" style="width: 60px">
+          Trả phép
+        </th>
+        <th rowspan="2"  style="width: 90px">
+          Số ngày phép được sử dụng đến tháng hiện tại
+        </th>
+      </tr>
+      <tr>
+        <th class="text-center" v-for="(n, index) in 12" :key="index">
+          {{ n }}
+        </th>
+      </tr>
+      </thead>
+      <tbody v-for="(depart,indexDepart) in furloughData" :key="indexDepart">
+      <tr>
+        <td style="background-color: #E0E0E04D;font-weight: bold" colspan="24">{{indexDepart}}</td>
+      </tr>
+      <tr :class="{
+                'user-lock': !u.user.avalible,
+              }"
+          v-for="(u,indexUser) in depart" :key="indexUser">
+        <td>{{indexUser + 1}}</td>
+        <td>{{u.user.fullName}}</td>
+        <td class="text-center">{{u.user.code}}</td>
+        <td>{{u.user.startWork}}</td>
+        <td class="fix text-center"
+            :class="{
+                edited: u.availibleEditStatus,
+              }"
+        >{{u.availibleCurrentYear}}</td>
+        <td class="fix text-center"
+            :class="{
+                edited: u.previousEditStatus,
+              }"
+        >{{u.oddCurrentYear}}</td>
+        <td class="fix"
+            :class="{
+                edited: log.status,
+              }"
+            v-for="(log, index) in u.furloughs" :key="index">{{log.usedInMonth}}</td>
+        <td class="text-center">{{u.usedBeforeApril}}</td>
+        <td class="text-center">{{u.usedInYear}}</td>
+        <td class="text-center">{{u.leftLastYear}}</td>
+        <td class="text-center">{{u.leftCurentYear}}</td>
+        <td class="text-center">{{u.payFurlough}}</td>
+        <td class="text-center">{{u.availibleUsePresentMonth}}</td>
 
+      </tr>
+
+      </tbody>
     </table>
 <!--    Modal chỉnh sửa số ngày nghỉ trong tháng-->
     <b-modal id="modal-month" centered size="sm">
@@ -271,6 +357,7 @@ export default {
   data(){
     return {
       currentYear:new Date().getFullYear().toString(),
+      accountDepartment:'',
       furloughData:'',
       monthEdit:'',
       department: null,
@@ -292,16 +379,21 @@ export default {
     getDepartment() {
       LogService.getDepartment().then((respone) => {
         this.departments = respone.data;
-        console.log(respone.data);
       });
     },
     getAllByYear(){
-      FurloughService.getAllByYear({
+      let param = {
         'year':this.currentYear,
         'department':this.department
-      }).then(respone => {
+      }
+      if (this.showModeratorBoard) {
+        param = {
+          'year': this.currentYear,
+          'department': this.accountDepartment.name,
+        };
+      }
+      FurloughService.getAllByYear(param).then(respone => {
         this.furloughData=respone.data
-        console.log(this.furloughData)
       })
     },
     infoEditMonth(month,useInMonth,userIndex,userId,depart){
@@ -345,12 +437,10 @@ export default {
             id:this.userIdEdit,
             availibleCurrentYear:this.currentFurloughYearEdit
           })
-          console.log(this.listEdit.year)
         }
       }
     },
     handleEditPrevious(){
-      console.log(this.useInMonthEdit)
       for(let depart in this.furloughData){
         if(depart==this.departmentEdit){
           this.furloughData[depart][this.userIndexEdit].oddCurrentYear= this.previousFurloughYearEdit
@@ -375,7 +465,6 @@ export default {
       this.listEdit.year=Number.parseInt(this.currentYear)
       FurloughService.edit(this.listEdit)
           .then((respone) => {
-            console.log(respone);
             this.$swal.fire({
               title: "Cập nhật thành công",
               text:respone.data.message,
@@ -392,7 +481,6 @@ export default {
             };
           })
           .catch((error) => {
-            console.log(error);
             this.$swal.fire({
               title: "Cập nhật thất bại",
               type: "error",
@@ -407,7 +495,6 @@ export default {
         "year":  this.currentYear
       }
       ExcelService.exportExcelPhep(params).then(() =>{
-        console.log("dafdas")
       })
     }
   },
@@ -430,6 +517,7 @@ export default {
   },
   mounted() {
     this.getDepartment();
+    this.accountDepartment = this.currentUser.user.departments;
     this.getAllByYear()
   }
 }
