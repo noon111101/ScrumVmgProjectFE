@@ -143,11 +143,7 @@ export default {
             sign.name= log.signs.name
           sign.timeIn= log.timeIn
           sign.timeOut= log.timeOut
-          sign.note= log.noteLogSet.sort(function(a, b){
-            var a1= a.note_log_id, b1= b.note_log_id;
-            if(a1== b1) return 0;
-            return a1> b1? 1: -1;
-          });
+          sign.note= log.noteLogSet
           if(sign.name.includes("H") && !sign.name.includes("_"))
             sign.allDay=true
           if(sign.name.includes("NT"))
@@ -178,7 +174,6 @@ export default {
   },
   watch:{
     mounth :function (){
-
       const mounth = this.mounth.split("-")[1]-1
       this.value=new Date().setMonth(mounth,1)
     }

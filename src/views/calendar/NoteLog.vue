@@ -1,6 +1,6 @@
 <template>
 <span>
-  <div  v-for="(note,index) in notes" :key="index">
+  <div  v-for="(note,index) in noteSort" :key="index">
     <div class="tab">
           <!--  Admin Edit-->
     <div v-if="note.noteCatergory.note_catergory_id==1">
@@ -61,15 +61,27 @@ export default {
   },
   data() {
     return {
-
+      noteSort:[]
     };
+
   },
+  mounted() {
+    this.noteSort = this.$props.notes.sort(function(a, b){
+      var a1= a.note_log_id, b1= b.note_log_id;
+      if(a1== b1) return 0;
+      return a1> b1? 1: -1;
+    });
+  }
 }
 </script>
 
 <style scoped>
 .time{
   font-size: small;
+}
+.content{
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
 .long-text{
   width : 200px;
@@ -91,6 +103,7 @@ export default {
   background-color: #EDDBF4;
   padding-left: 5px;
   padding-right: 5px;
+  margin-bottom: 10px;
 }
 .tab-type{
   width: 120px;

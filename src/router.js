@@ -130,10 +130,9 @@ const router = new Router({
 );
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/','/selfie','/requestdetail','/manageholiday','/managerequest'];
-  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist','/myFurlough']
-
-  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report','/reportFurlough'];
+  const publicPages = ['/login', '/register', '/home','/forgotPassword','/confirmForgot','/'];
+  const userPages = ['/user','/calender','/profile','/changepassword','/unpermist','/myFurlough','/managerequest','/requestdetail']
+  const adminPages = ['/add-user', '/manage', '/timesheetadmin','/report','/reportFurlough','/manageholiday'];
   const managePages = [ '/timesheetmod','/report','/reportFurlough'];
   const authRequired = !publicPages.includes(to.path);
   const loggedIn = localStorage.getItem('user');
