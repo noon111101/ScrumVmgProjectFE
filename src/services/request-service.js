@@ -5,7 +5,6 @@ class RequestService{
     getAll(params){
         return httpCommon.get("/request", {params});
     }
-
     getRequest(id){
         return httpCommon.get(`/request/${id}`);
     }
@@ -16,6 +15,12 @@ class RequestService{
         let requestForm = new FormData(request);
         return axios.post(API_URL + `request`, requestForm);
 
+    }
+    changeStatus(requestId, statusId){
+        return axios.put(API_URL + `request?requestId=${requestId}&statusId=${statusId}` );
+    }
+    myRequests(params){
+        return httpCommon.get(`/request/creator`, {params});
     }
 }
 
