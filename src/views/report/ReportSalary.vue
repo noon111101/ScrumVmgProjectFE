@@ -499,6 +499,7 @@ export default {
               code: code,
               sign: null,
               reason: reason,
+              codeAdminEdit:this.currentUser.user.code
             });
           else
             this.logsEdit.push({
@@ -506,6 +507,7 @@ export default {
               code: code,
               sign: sign,
               reason: reason,
+              codeAdminEdit:this.currentUser.user.code
             });
         }
       }
@@ -537,7 +539,6 @@ export default {
           this.logsEdit = [];
         })
         .catch((error) => {
-          console.log(error);
           this.$swal.fire({
             title: "Cập nhật thất bại",
             type: "error",
@@ -635,7 +636,6 @@ export default {
     getDepartment() {
       LogService.getDepartment().then((respone) => {
         this.departments = respone.data;
-        console.log(respone.data);
       });
     },
     getLog() {
@@ -648,7 +648,6 @@ export default {
         search: this.search,
       }).then((respone) => {
         let dataCall = [];
-        console.log(respone.data);
         let data = respone.data;
         for (let users of data) {
           let signs = [];
@@ -695,12 +694,10 @@ export default {
             dayWork: this.caculateDayWork(signs),
             dayEarn: this.caculateDayEarn(signs),
           });
-          console.log(dataCall);
         }
         if (data.length > 0) {
           this.users = dataCall;
           this.checkNone = false;
-          console.log(this.users);
         }
         if (data.length == 0) {
           this.users = [];
@@ -729,7 +726,6 @@ export default {
   mounted() {
     this.getDepartment();
     this.getLog();
-    console.log(this.currentUser.user.fullName);
     this.accountDepartment = this.currentUser.user.departments;
   },
 };

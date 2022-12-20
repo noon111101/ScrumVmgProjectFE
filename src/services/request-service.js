@@ -16,12 +16,20 @@ class RequestService{
         return axios.post(API_URL + `request`, requestForm);
 
     }
-    changeStatus(requestId, statusId){
-        return axios.put(API_URL + `request?requestId=${requestId}&statusId=${statusId}` );
+    changeStatus(requestId, newStatusId, oldStatusId, approvedId){
+        return axios.put(API_URL + `request?requestId=${requestId}&newStatusId=${newStatusId}&oldStatusId=${oldStatusId}&approvedId=${approvedId}` );
     }
     myRequests(params){
         return httpCommon.get(`/request/creator`, {params});
     }
+    getMyRequest(id,statusId){
+        const params = {
+            "id": id,
+            "statusId": statusId
+        }
+        return this.myRequests(params)
+    }
+
 }
 
 export default new RequestService()
