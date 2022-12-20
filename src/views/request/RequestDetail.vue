@@ -19,9 +19,9 @@
         {{ request.approveStatus.name }}
       </button>
       <div v-for="(item, index) in request.approvers" :key="index">
-        <button class="btn-accept"  v-if="request.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(request.id, 2,request.approveStatus.id)">Chấp thuận</button>
-        <button class="btn-refuse" v-if="request.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(request.id, 3,request.approveStatus.id)">Từ chối</button>
-        <button class="btn-undo" v-if="(request.approveStatus.id==2 || request.approveStatus.id==3) && item.id==currentUser.user.id" @click="changeStatus(request.id, 1,request.approveStatus.id)">Hoàn tác</button>
+        <button class="btn-accept"  v-if="request.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(request.id, 2,request.approveStatus.id, currentUser.user.id)">Chấp thuận</button>
+        <button class="btn-refuse" v-if="request.approveStatus.id==1 && item.id==currentUser.user.id" @click="changeStatus(request.id, 3,request.approveStatus.id,currentUser.user.id)">Từ chối</button>
+        <button class="btn-undo" v-if="(request.approveStatus.id==2 || request.approveStatus.id==3) && item.id==currentUser.user.id" @click="changeStatus(request.id, 1,request.approveStatus.id,currentUser.user.id)">Hoàn tác</button>
         <span class="btn-refuse" v-if="request.approveStatus.id==5">Đã hủy</span>
         <span class="btn-refuse" v-if="request.approveStatus.id==6">Hoàn thành</span>
       </div>
@@ -152,7 +152,7 @@ export default {
         console.log(this.request)
       })
     },
-    changeStatus(requestId, newStatusId, oldStatusId ) {
+    changeStatus(requestId, newStatusId, oldStatusId,approvedId) {
       if (newStatusId == 1) {
         this.$swal
             .fire({
@@ -171,7 +171,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -216,7 +216,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -261,7 +261,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -306,7 +306,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",

@@ -1044,14 +1044,14 @@
           <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
             <div v-for="(item, index) in data.row.approvers" :key="index">
               <el-button type="success" v-if="data.row.approveStatus.id==1 && item.id==currentUser.user.id"
-                         @click="changeStatus(data.row.id, 2,data.row.approveStatus.id)"
+                         @click="changeStatus(data.row.id, 2,data.row.approveStatus.id,currentUser.user.id)"
                          icon="el-icon-check" circle></el-button>
               <el-button type="danger" v-if="data.row.approveStatus.id==1 && item.id==currentUser.user.id"
-                         @click="changeStatus(data.row.id, 3,data.row.approveStatus.id)"
+                         @click="changeStatus(data.row.id, 3,data.row.approveStatus.id,currentUser.user.id)"
                          icon="el-icon-close" circle></el-button>
               <el-button type="warning"
                          v-if="(data.row.approveStatus.id==2 || data.row.approveStatus.id==3) && item.id==currentUser.user.id"
-                         @click="changeStatus(data.row.id, 1,data.row.approveStatus.id)" icon="el-icon-refresh-left" circle></el-button>
+                         @click="changeStatus(data.row.id, 1,data.row.approveStatus.id,currentUser.user.id)" icon="el-icon-refresh-left" circle></el-button>
             </div>
 
           </el-table-column>
@@ -1266,7 +1266,7 @@ export default {
       this.departmentName = this.currentUser.user.departments.name;
       this.username = this.currentUser.user.username;
     },
-    changeStatus(requestId, newStatusId, oldStatusId ) {
+    changeStatus(requestId, newStatusId, oldStatusId,approvedId) {
       if (newStatusId == 1) {
         this.$swal
             .fire({
@@ -1285,7 +1285,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -1330,7 +1330,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -1384,7 +1384,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",
@@ -1429,7 +1429,7 @@ export default {
             })
             .then((result) => {
               if (result.isConfirmed) {
-                RequestService.changeStatus(requestId, newStatusId, oldStatusId).then((response) => {
+                RequestService.changeStatus(requestId, newStatusId, oldStatusId,approvedId).then((response) => {
                   this.$swal.fire({
                     title: response.data.message,
                     icon: "success",

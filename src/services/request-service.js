@@ -16,8 +16,8 @@ class RequestService{
         return axios.post(API_URL + `request`, requestForm);
 
     }
-    changeStatus(requestId, newStatusId, oldStatusId){
-        return axios.put(API_URL + `request?requestId=${requestId}&newStatusId=${newStatusId}&oldStatusId=${oldStatusId}` );
+    changeStatus(requestId, newStatusId, oldStatusId, approvedId){
+        return axios.put(API_URL + `request?requestId=${requestId}&newStatusId=${newStatusId}&oldStatusId=${oldStatusId}&approvedId=${approvedId}` );
     }
     myRequests(params){
         return httpCommon.get(`/request/creator`, {params});
