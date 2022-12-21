@@ -6,7 +6,7 @@
     <div v-if="note.noteCatergory.note_catergory_id==1">
       <div class="tab-type edit"><span class="dot" style="background-color: #F5DD29"></span>Edit</div>
       <div class="avatar">
-        <b-avatar class="me-3" size="30px" src="https://placekitten.com/300/300"></b-avatar>
+        <b-avatar class="me-3" size="30px" v-bind:src="`http://localhost:8080/` + note.adminEdit.cover"></b-avatar>
         <span class="fw-bold">{{note.adminEdit.fullName}}</span>
       </div>
       <div class="content">
@@ -29,13 +29,14 @@
         </b-avatar-group>
       </div>
       <div class="content">
-        Xin nghỉ
+        {{note.content}}
       </div>
     </div>
       <!--  LỄ-->
     <div v-if="note.noteCatergory.note_catergory_id==4">
       <div class="tab-type holiday"><span class="dot" style="background-color: #5BA4CF"></span>Ngày lễ</div>
        <div class="content">
+         {{note.content}}
       </div>
     </div>
     <div v-if="note.lastSign!=null" class="tab-history">
@@ -45,7 +46,7 @@
          <i class="el-icon-right"></i> {{note.signChange.name}}
     </div>
     <div class="time">
-        {{note.createDate}}
+        {{note.createDate.replace("T"," ").split(".")[0].toString()}}
     </div>
   </div>
   </div>
