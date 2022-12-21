@@ -241,6 +241,7 @@
                           value=""
                           name="startWork"
                           autocomplete="off"
+                          :editable="false"
                         >
                         </el-date-picker>
                       </div>
