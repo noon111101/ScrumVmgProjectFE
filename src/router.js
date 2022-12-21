@@ -135,7 +135,6 @@ router.beforeEach((to, from, next) => {
     "/forgotPassword",
     "/confirmForgot",
     "/",
-    "/selfie",
     "/requestdetail",
     "/manageholiday",
     "/managerequest",
@@ -178,24 +177,24 @@ router.beforeEach((to, from, next) => {
     const manage = JSON.parse(localStorage.getItem("user")).roles.includes(
       "ROLE_MANAGE"
     );
-    // const photo = JSON.parse(localStorage.getItem("user")).roles.includes(
-    //   "ROLE_PHOTO"
-    // );
+    const photo = JSON.parse(localStorage.getItem("user")).roles.includes(
+      "ROLE_PHOTO"
+    );
     if (
       ((adminPages.includes(to.path) || to.path.startsWith("/user/")) &&
         admin) ||
       (managePages.includes(to.path) && manage) ||
       userPages.includes(to.path) ||
       publicPages.includes(to.path) ||
-      (!photoPages.includes(to.path))
+      (photoPages.includes(to.path) && photo)
     )
       next();
-    else if (
-      photoPages.includes(to.path) &&
-      to.path.startsWith("/selfie") 
-    ) {
-      next("/selfie");
-    } 
+    // else if (
+    //   photoPages.includes(to.path) &&
+    //   to.path.startsWith("/selfie") 
+    // ) {
+    //   next("/selfie");
+    // } 
     else next("/unpermist");
   }
 });
