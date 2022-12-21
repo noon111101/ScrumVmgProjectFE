@@ -18,6 +18,15 @@
             <div class="about-text go-to">
               <div class="row about-list">
                 <div
+                    style="border-bottom: 1px solid black; width: 500px;"
+                    class="media"
+                >
+                  <span style="font-size: 20px"> Mã nhân viên: </span>
+                  <span style="float: right; margin-right: 6px; font-size: 20px">
+                  {{ currentUser.user.code }}
+                </span>
+                </div>
+                <div
                     style="border-bottom: 1px solid black; width: 500px"
                     class="media"
                 >
@@ -84,11 +93,12 @@
                     style="border-bottom: 1px solid black; width: 500px; margin-bottom: 50px"
                     class="media"
                 >
-                  <span style="font-size: 20px"> Mã nhân viên: </span>
+                  <span style="font-size: 20px"> Ngày đi làm: </span>
                   <span style="float: right; margin-right: 6px; font-size: 20px">
-                  {{ currentUser.user.code }}
+                  {{ currentUser.user.startWork }}
                 </span>
                 </div>
+
               </div>
             </div>
           </div>

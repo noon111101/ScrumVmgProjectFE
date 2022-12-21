@@ -214,6 +214,7 @@
                 <el-col :span="7">
                   <el-form-item prop="timeStart">
                     <el-time-select
+                        :editable="false"
                         v-if="form.categoryReason != 4 && form.categoryReason != 5"
                         name="timeStart"
                         style="width: 100%"
@@ -221,7 +222,7 @@
                         placeholder="Chọn giờ bắt đầu"
                         :picker-options="{
                       start: '07:00',
-                      step: '00:15',
+                      step: '00:30',
                       end: '19:00',
                     }"
                         format="HH:mm"
@@ -249,6 +250,7 @@
                 <el-col :span="7">
                   <el-form-item prop="timeEnd">
                     <el-time-select
+                        :editable="false"
                         v-if="form.categoryReason != 4 && form.categoryReason != 5"
                         name="timeEnd"
                         style="width: 100%"
@@ -256,7 +258,7 @@
                         placeholder="Chọn giờ kết thúc"
                         :picker-options="{
                       start: '07:00',
-                      step: '00:15',
+                      step: '00:30',
                       end: '19:00',
                     }"
                         format="HH:mm"
@@ -553,6 +555,7 @@
                 <el-col :span="7">
                   <el-form-item prop="timeStart">
                     <el-time-select
+                        :editable="false"
                         v-if=" form.categoryReason != 6"
                         name="timeStart"
                         style="width: 100%"
@@ -560,7 +563,7 @@
                         placeholder="Chọn giờ bắt đầu"
                         :picker-options="{
                       start: '07:00',
-                      step: '00:15',
+                      step: '00:30',
                       end: '19:00',
                     }"
                         format="HH:mm"
@@ -604,6 +607,7 @@
                 <el-col :span="7">
                   <el-form-item prop="timeEnd">
                     <el-time-select
+                        :editable="false"
                         v-if="form.categoryReason != 6"
                         name="timeEnd"
                         style="width: 100%"
@@ -611,7 +615,7 @@
                         placeholder="Chọn giờ kết thúc"
                         :picker-options="{
                       start: '07:00',
-                      step: '00:15',
+                      step: '00:30',
                       end: '19:00',
                     }"
                         format="HH:mm"
@@ -1065,7 +1069,7 @@
 <script>
 import RequestService from "@/services/request-service";
 import UserService from "@/services/user.service";
-// import DepartmentService from "@/services/department.service";
+import DepartmentService from "@/services/department.service";
 
 
 export default {
@@ -1247,7 +1251,11 @@ export default {
         .catch((e) => {
           console.log(e);
         });
+    DepartmentService.getAllDepartment().then(response => {
+      this.departments = response.data
+    })
   },
+
 
 
   methods: {
@@ -1274,7 +1282,7 @@ export default {
               showDenyButton: true,
               icon: "question",
               confirmButtonColor: "#75C4C0",
-              confirmButtonText: "Hoàn Tác",
+              confirmButtonText: "Xác nhận",
               denyButtonColor: "#ED9696",
               denyButtonText: "Đóng",
               customClass: {
@@ -1329,7 +1337,7 @@ export default {
               showDenyButton: true,
               icon: "question",
               confirmButtonColor: "#75C4C0",
-              confirmButtonText: "Chấp thuận",
+              confirmButtonText: "Xác nhận",
               denyButtonColor: "#ED9696",
               denyButtonText: "Đóng",
               customClass: {
@@ -1384,7 +1392,7 @@ export default {
               showDenyButton: true,
               icon: "question",
               confirmButtonColor: "#75C4C0",
-              confirmButtonText: "Tù chối",
+              confirmButtonText: "Xác nhận",
               denyButtonColor: "#ED9696",
               denyButtonText: "Đóng",
               customClass: {
