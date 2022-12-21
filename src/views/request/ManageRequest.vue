@@ -1272,6 +1272,7 @@ export default {
             .fire({
               title: "Xác nhận hoàn tác",
               showDenyButton: true,
+              icon: "question",
               confirmButtonColor: "#75C4C0",
               confirmButtonText: "Hoàn Tác",
               denyButtonColor: "#ED9696",
@@ -1295,6 +1296,15 @@ export default {
                     position: "top-end",
                     showConfirmButton: false,
                     width: "24em",
+                  }).catch(error => {
+                    this.$swal.fire({
+                      title: "Lỗi",
+                      text: error.response.data.error.message,
+                      icon: "error",
+                      timer: 2000,
+                      timerProgressBar: true,
+                    })
+                    this.message = ''
                   });
                   this.getAll();
                 });
@@ -1317,6 +1327,7 @@ export default {
             .fire({
               title: "Xác nhận chấp thuận",
               showDenyButton: true,
+              icon: "question",
               confirmButtonColor: "#75C4C0",
               confirmButtonText: "Chấp thuận",
               denyButtonColor: "#ED9696",
@@ -1371,6 +1382,7 @@ export default {
             .fire({
               title: "Xác nhận từ chối",
               showDenyButton: true,
+              icon: "question",
               confirmButtonColor: "#75C4C0",
               confirmButtonText: "Tù chối",
               denyButtonColor: "#ED9696",
@@ -1416,6 +1428,7 @@ export default {
             .fire({
               title: "Xác nhận hủy yêu cầu",
               showDenyButton: true,
+              icon: "question",
               confirmButtonColor: "#75C4C0",
               confirmButtonText: "Xác nhận",
               denyButtonColor: "#ED9696",
