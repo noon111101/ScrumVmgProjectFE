@@ -1,5 +1,5 @@
 <template>
-  <div class="note-wrapper "  >
+  <div class="note-wrapper" >
     <div class="d-flex flex-column" >
       <div style="font-weight: bold;">Chú thích</div>
       <div>

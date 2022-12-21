@@ -1,6 +1,6 @@
 <template>
 <span>
-  <div  v-for="(note,index) in noteSort" :key="index">
+  <div   v-for="(note,index) in noteSort" :key="index">
     <div class="tab">
           <!--  Admin Edit-->
     <div v-if="note.noteCatergory.note_catergory_id==1">

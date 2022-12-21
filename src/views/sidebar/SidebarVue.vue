@@ -1,6 +1,6 @@
 <template>
   <nav class="navbar fixed-top container-fluid" style="padding: 14px 0">
-    <div class="user-detail nav-item dropdown " v-if="currentUser">
+    <div class="user-detail nav-item dropdown " v-if="currentUser && !showSecurityBoard">
       <a
           class="nav-link dropdown-toggle"
           href="#"
@@ -104,7 +104,7 @@
           <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
             <li class="nav-item">
               <a class="nav-link active" aria-current="page" href="/profile">
-                <router-link to="/calender" v-if="currentUser" class="nav-link sel">
+                <router-link to="/calender" v-if="currentUser && !showSecurityBoard" class="nav-link sel">
                   <font-awesome-icon icon="home" />
                   Trang chủ
                 </router-link>
@@ -112,7 +112,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link">
-                <router-link to="/user" v-if="currentUser" class="nav-link sel">
+                <router-link to="/user" v-if="currentUser && !showSecurityBoard" class="nav-link sel">
                   <i class="el-icon-question"></i>
                   Chấm công của tôi
                 </router-link>
@@ -120,7 +120,7 @@
             </li>
             <li class="nav-item">
               <a class="nav-link">
-                <router-link to="/myFurlough" v-if="currentUser" class="nav-link sel">
+                <router-link to="/myFurlough" v-if="currentUser && !showSecurityBoard" class="nav-link sel">
                   <i class="el-icon-question"></i>
                   Nghỉ phép của tôi
                 </router-link>
@@ -155,7 +155,7 @@
               </a>
             </li>
 
-            <li class="nav-item" v-if="currentUser">
+            <li class="nav-item" v-if="currentUser && !showSecurityBoard">
               <a class="nav-link">
                 <router-link to="/managerequest" class="nav-link sel">
                   <i class="el-icon-files"> </i> Quản lý đề xuất
@@ -178,7 +178,14 @@
                 </router-link>
               </a>
             </li>
-
+            <li class="nav-item">
+              <a class="nav-link">
+                <router-link to="/selfie" v-if="showSecurityBoard" class="nav-link sel">
+                  <i class="el-icon-question"></i>
+                  Chụp ảnh chấm công
+                </router-link>
+              </a>
+            </li>
 
 
           </ul>
@@ -206,6 +213,12 @@ export default {
     showModeratorBoard() {
       if (this.currentUser.roles) {
         return this.currentUser.roles.includes("ROLE_MANAGE");
+      }
+      return false;
+    },
+    showSecurityBoard() {
+      if (this.currentUser.roles) {
+        return this.currentUser.roles.includes("ROLE_PHOTO");
       }
       return false;
     },

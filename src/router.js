@@ -134,10 +134,7 @@ router.beforeEach((to, from, next) => {
     "/home",
     "/forgotPassword",
     "/confirmForgot",
-    "/",
-    "/requestdetail",
-    "/manageholiday",
-    "/managerequest",
+    "/"
   ];
   const userPages = [
     "/user",
@@ -146,6 +143,8 @@ router.beforeEach((to, from, next) => {
     "/changepassword",
     "/unpermist",
     "/myFurlough",
+    "/managerequest",
+    "/requestdetail"
   ];
   const photoPages = ["/selfie"];
   const adminPages = [
@@ -154,6 +153,7 @@ router.beforeEach((to, from, next) => {
     "/timesheetadmin",
     "/report",
     "/reportFurlough",
+    "/manageholiday"
   ];
   const managePages = ["/timesheetmod", "/report", "/reportFurlough"];
   const authRequired = !publicPages.includes(to.path);
@@ -177,24 +177,17 @@ router.beforeEach((to, from, next) => {
     const manage = JSON.parse(localStorage.getItem("user")).roles.includes(
       "ROLE_MANAGE"
     );
-    const photo = JSON.parse(localStorage.getItem("user")).roles.includes(
-      "ROLE_PHOTO"
-    );
+    // const photo = JSON.parse(localStorage.getItem("user")).roles.includes(
+    //   "ROLE_PHOTO"
+    // );
     if (
-      ((adminPages.includes(to.path) || to.path.startsWith("/user/")) &&
-        admin) ||
+      ((adminPages.includes(to.path) || to.path.startsWith("/user/")) && admin) ||
       (managePages.includes(to.path) && manage) ||
       userPages.includes(to.path) ||
       publicPages.includes(to.path) ||
-      (photoPages.includes(to.path) && photo)
+      (photoPages.includes(to.path))
     )
       next();
-    // else if (
-    //   photoPages.includes(to.path) &&
-    //   to.path.startsWith("/selfie") 
-    // ) {
-    //   next("/selfie");
-    // } 
     else next("/unpermist");
   }
 });

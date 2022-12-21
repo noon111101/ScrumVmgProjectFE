@@ -428,7 +428,7 @@ export default {
       search: "",
       numberDate: "",
 
-      year: "",
+      year: new Date().getFullYear().toString(),
       choice: "",
       errName: "",
       checkName: true,

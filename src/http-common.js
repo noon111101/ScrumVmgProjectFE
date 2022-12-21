@@ -6,12 +6,7 @@ export const jsonAPI = axios.create({
     }
 })
 export const faceAPI = axios.create({
-    baseURL: 'https://192.168.45.45:5001/',
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Methods": "GET, POST, PATCH, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Origin, Content-Type, X-Auth-Token"
-    },
+    baseURL: 'https://192.168.45.45:5001/'
 })
 export default axios.create({
     baseURL: 'http://localhost:8080/api/',

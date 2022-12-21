@@ -35,7 +35,7 @@
               {{Sign.name}}
               <el-tooltip popper-class="reason-popper" v-if="Sign.note.length!=0" placement="right" effect="light">
                 <div slot="content">
-                  <div class="note-wrapper">
+                  <div class="tooltip-wrapper">
                     <note-log :notes="Sign.note"></note-log>
                   </div>
                 </div>
@@ -186,7 +186,15 @@ export default {
 </script>
 
 <style scoped>
-
+.tooltip-wrapper{
+  width: fit-content;
+  height: 500px;
+  background-color: #F4F4F4;
+  padding: 15px;
+  box-sizing: content-box;
+  border-radius: 10px;
+  overflow: scroll;
+}
 .note-wrapper .el-button:hover{
   cursor: default;
 }
