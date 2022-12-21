@@ -178,9 +178,6 @@
                 </router-link>
               </a>
             </li>
-
-
-
           </ul>
         </div>
       </div>
