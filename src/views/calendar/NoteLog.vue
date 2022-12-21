@@ -20,13 +20,9 @@
       <!--  Request-->
     <div v-if="note.noteCatergory.note_catergory_id==3">
       <div class="tab-type request"><span class="dot" style="background-color: #EF7564"></span>Đề xuất</div>
-      <div>
-        <b-avatar-group size="30px">
-          <b-avatar></b-avatar>
-          <b-avatar src="https://placekitten.com/300/300" variant="info"></b-avatar>
-          <b-avatar src="https://placekitten.com/320/320" variant="dark"></b-avatar>
-          <span class="fw-bold ms-3 long-text">Phạm Hải Triều , Phạm Hoàng Anh,Nguyễn Đình Phú</span>
-        </b-avatar-group>
+      <div class="avatar">
+        <b-avatar class="me-3" size="30px" v-bind:src="`http://localhost:8080/` + note.approversRequest.cover"></b-avatar>
+        <span class="fw-bold">{{note.approversRequest.fullName}}</span>
       </div>
       <div class="content">
         {{note.content}}
