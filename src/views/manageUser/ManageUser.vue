@@ -549,7 +549,6 @@ export default {
       newImage: "",
       cover: null,
       formLabelWidth: "120px",
-
       errStartWork: "",
       checkStartWork: true,
       errId: "",
@@ -642,7 +641,7 @@ export default {
         (this.errGender = ""),
         (this.checkGender = false),
         (this.errRole = ""),
-        (this.checkRole = false);
+        (this.checkRole = false),
       this.errStartWork = "";
       this.checkStartWork = false;
       this.user.gender = "";
