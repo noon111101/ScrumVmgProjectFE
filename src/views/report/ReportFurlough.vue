@@ -139,12 +139,7 @@
             v-b-modal="'modal-previousYear'"
             v-on:click="infoEditPrevious(u.oddCurrentYear,indexUser,u.user.id,indexDepart)"
         >{{u.oddCurrentYear}}</td>
-        <td class="fix"
-            :class="{
-                edited: log.status,
-              }"
-            v-b-modal="'modal-month'"
-            v-on:click="infoEditMonth(index+1,log.usedInMonth,indexUser,u.user.id,indexDepart)"
+        <td
             v-for="(log, index) in u.furloughs" :key="index">{{log.usedInMonth}}</td>
         <td class="text-center">{{u.usedBeforeApril}}</td>
         <td class="text-center">{{u.usedInYear}}</td>
@@ -217,20 +212,11 @@
         <td>{{u.user.fullName}}</td>
         <td class="text-center">{{u.user.code}}</td>
         <td>{{u.user.startWork}}</td>
-        <td class="fix text-center"
-            :class="{
-                edited: u.availibleEditStatus,
-              }"
+        <td class="text-center"
         >{{u.availibleCurrentYear}}</td>
-        <td class="fix text-center"
-            :class="{
-                edited: u.previousEditStatus,
-              }"
+        <td class="text-center"
         >{{u.oddCurrentYear}}</td>
-        <td class="fix"
-            :class="{
-                edited: log.status,
-              }"
+        <td
             v-for="(log, index) in u.furloughs" :key="index">{{log.usedInMonth}}</td>
         <td class="text-center">{{u.usedBeforeApril}}</td>
         <td class="text-center">{{u.usedInYear}}</td>
@@ -243,32 +229,6 @@
 
       </tbody>
     </table>
-<!--    Modal chỉnh sửa số ngày nghỉ trong tháng-->
-    <b-modal id="modal-month" centered size="sm">
-      <template #modal-header="{ close }">
-        <!-- Emulate built in modal header close button action -->
-        <h5>Số phép trong tháng {{monthEdit}}</h5>
-        <b-icon-x-circle-fill style="color: #d8363a" size="sm" @click="close()">
-        </b-icon-x-circle-fill>
-      </template>
-      <b-form-input
-          v-model="useInMonthEdit"
-          size="sm"
-          min="0"
-          max="31"
-          type="number"
-      >{{ useInMonthEdit }}</b-form-input
-      >
-      <template #modal-footer="{ ok }">
-        <b-button
-            size="sm"
-            variant="success"
-            @click="handleEditMonth(), ok()"
-        >
-          OK
-        </b-button>
-      </template>
-    </b-modal>
 
 <!--    Modal chỉnh sửa số ngày được nghỉ trong năm 2022-->
     <b-modal id="modal-currentYear" centered style="width: 100px">
@@ -359,17 +319,14 @@ export default {
       currentYear:new Date().getFullYear().toString(),
       accountDepartment:'',
       furloughData:'',
-      monthEdit:'',
       department: null,
       departments: [],
-      useInMonthEdit:'',
       currentFurloughYearEdit:'',
       previousFurloughYearEdit:'',
       userIdEdit:'',
       userIndexEdit:'',
       departmentEdit:'',
       listEdit:{
-        monthFurloughEdits:[],
         furloughPreviousEdits:[],
         furloughCurrentEdits:[]
       }
@@ -396,13 +353,6 @@ export default {
         this.furloughData=respone.data
       })
     },
-    infoEditMonth(month,useInMonth,userIndex,userId,depart){
-      this.monthEdit=month;
-      this.useInMonthEdit=useInMonth;
-      this.userIndexEdit=userIndex;
-      this.userIdEdit=userId;
-      this.departmentEdit=depart
-    },
     infoEditCurrent(furloughCurrent,userIndex,userId,depart){
       this.currentFurloughYearEdit=furloughCurrent;
       this.userIndexEdit=userIndex;
@@ -414,19 +364,6 @@ export default {
       this.userIndexEdit=userIndex;
       this.userIdEdit=userId;
       this.departmentEdit=depart
-    },
-    handleEditMonth(){
-      for(let depart in this.furloughData){
-        if(depart==this.departmentEdit){
-          this.furloughData[depart][this.userIndexEdit].furloughs[this.monthEdit-1].usedInMonth= this.useInMonthEdit
-          this.furloughData[depart][this.userIndexEdit].furloughs[this.monthEdit-1].status=true;
-          this.listEdit.monthFurloughEdits.push({
-            id:this.userIdEdit,
-            month:this.monthEdit,
-            used:this.useInMonthEdit
-          })
-        }
-      }
     },
     handleEditCurrent(){
       for(let depart in this.furloughData){

@@ -35,7 +35,12 @@
               {{Sign.name}}
               <el-tooltip popper-class="reason-popper" v-if="Sign.note.length!=0" placement="right" effect="light">
                 <div slot="content">
-                  <div class="note-wrapper">
+                  <div class="tooltip-wrapper"
+                       :class="{
+                    'tooltip-wrapper_many':Sign.note.length>4,
+                    'tooltip-wrapper_min':Sign.note.length<=4
+                       }"
+                  >
                     <note-log :notes="Sign.note"></note-log>
                   </div>
                 </div>
@@ -52,7 +57,7 @@
       </el-calendar>
       <div class="mounthSelect ">
         <el-date-picker
-            v-model="mounth"
+            v-model="month"
             type="month"
             placeholder="Chọn tháng"
             format="yyyy/MM"
@@ -98,7 +103,7 @@ export default {
     return {
       value: new Date(),
       logs:[],
-      mounth:"",
+      month:"",
       cellDate:'',
       cellSign:{}
     }
@@ -107,8 +112,10 @@ export default {
     getAll() {
       const params = {
         'code': this.currentUser.user.code,
+        'month':this.month.split("/")[1].toString(),
+        'year':this.month.split("/")[0].toString()
       }
-      LogdetailService.getAllByUser(params).then(response => {
+      LogdetailService.getAllByUserAndTime(params).then(response => {
         this.logs = response.data;
         console.log(this.logs)
       })
@@ -143,11 +150,7 @@ export default {
             sign.name= log.signs.name
           sign.timeIn= log.timeIn
           sign.timeOut= log.timeOut
-          sign.note= log.noteLogSet.sort(function(a, b){
-            var a1= a.note_log_id, b1= b.note_log_id;
-            if(a1== b1) return 0;
-            return a1> b1? 1: -1;
-          });
+          sign.note= log.noteLogSet
           if(sign.name.includes("H") && !sign.name.includes("_"))
             sign.allDay=true
           if(sign.name.includes("NT"))
@@ -177,13 +180,14 @@ export default {
     }
   },
   watch:{
-    mounth :function (){
-
-      const mounth = this.mounth.split("-")[1]-1
-      this.value=new Date().setMonth(mounth,1)
+    month :function (){
+      const month = this.month.split("-")[1]-1
+      const year = this.month.split("-")[0]
+      this.value=new Date().setFullYear(year,month,1)
     }
   },
   mounted(){
+    this.month = new Date().getFullYear().toString()+"/"+(new Date().getMonth()+1).toString()
     this.getAll()
   }
 }
@@ -191,7 +195,20 @@ export default {
 </script>
 
 <style scoped>
-
+.tooltip-wrapper{
+  width: fit-content;
+  background-color: #F4F4F4;
+  padding: 15px;
+  box-sizing: content-box;
+  border-radius: 10px;
+  overflow: scroll;
+}
+.tooltip-wrapper_many{
+  height: 500px;
+}
+.tooltip-wrapper_min{
+  height: fit-content;
+}
 .note-wrapper .el-button:hover{
   cursor: default;
 }
