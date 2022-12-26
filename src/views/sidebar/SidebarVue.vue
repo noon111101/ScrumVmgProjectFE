@@ -178,6 +178,7 @@
                 </router-link>
               </a>
             </li>
+
             <li class="nav-item">
               <a class="nav-link">
                 <router-link to="/selfie" v-if="showSecurityBoard" class="nav-link sel">
@@ -186,8 +187,6 @@
                 </router-link>
               </a>
             </li>
-
-
           </ul>
         </div>
       </div>
