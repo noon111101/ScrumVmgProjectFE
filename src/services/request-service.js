@@ -30,6 +30,10 @@ class RequestService{
         return this.myRequests(params)
     }
 
+    getFurloughinMonth(userId){
+        return httpCommon.get(`furlough/furloughByMonthAndYearAndUser?userId=${userId}`);
+    }
+
 }
 
 export default new RequestService()
