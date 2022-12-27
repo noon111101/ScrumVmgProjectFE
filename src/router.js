@@ -134,7 +134,8 @@ router.beforeEach((to, from, next) => {
     "/home",
     "/forgotPassword",
     "/confirmForgot",
-    "/"
+    "/",
+      "/selfie"
   ];
   const userPages = [
     "/user",
@@ -146,7 +147,6 @@ router.beforeEach((to, from, next) => {
     "/managerequest",
     "/requestdetail"
   ];
-  const photoPages = ["/selfie"];
   const adminPages = [
     "/add-user",
     "/manage",
@@ -177,15 +177,11 @@ router.beforeEach((to, from, next) => {
     const manage = JSON.parse(localStorage.getItem("user")).roles.includes(
       "ROLE_MANAGE"
     );
-    // const photo = JSON.parse(localStorage.getItem("user")).roles.includes(
-    //   "ROLE_PHOTO"
-    // );
     if (
       ((adminPages.includes(to.path) || to.path.startsWith("/user/")) && admin) ||
       (managePages.includes(to.path) && manage) ||
       userPages.includes(to.path) ||
-      publicPages.includes(to.path) ||
-      (photoPages.includes(to.path))
+      publicPages.includes(to.path)
     )
       next();
     else next("/unpermist");
