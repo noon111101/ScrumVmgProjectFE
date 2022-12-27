@@ -1,68 +1,70 @@
 <template>
-  <div  id="snapShoot" class="container" style="background-color: white" >
-    <div v-show="isCameraOpen">
-      <video  ref="camera" :width="450"
-             :height="337.5" autoplay>
-      </video>
-      <el-button type="button" class="button-camera" @click="handleTakePhoto" round>
-        <img
-            src="../assets/camera.png"
-            style="width: 50px; height: 50px"
-        />
-      </el-button>
-    </div>
-    <div class="position-relative text-center mt-5 row" v-show="!isCameraOpen">
-      <div v-show="isPhotoTaken" class="col-lg-5 me-3">
-        <canvas
-            id="photoTaken"
-            ref="canvas"
-            width="560px"
-            height="560px"
-        ></canvas>
+  <div>
+    <un-permist v-if="checkAuth==false"></un-permist>
+    <div id="snapShoot" class="container" style="background-color: white" >
+      <div v-show="isCameraOpen">
+        <video  ref="camera" :width="450"
+                :height="337.5" autoplay>
+        </video>
+        <el-button v-if="checkAuth==true" type="button" class="button-camera" @click="handleTakePhoto" round>
+          <img v-if="checkAuth==true"
+              src="../assets/camera.png"
+              style="width: 50px; height: 50px"
+          />
+        </el-button>
       </div>
-      <div v-if="isPhotoTaken" class="col-lg-5 mt-5 position-relative">
-        <div id="log-swal-view"></div>
-        <div v-if="faceSuccess" class="row flex-row-reverse">
-          <h1
-              style="
+      <div v-if="checkAuth==true" class="position-relative text-center mt-5 row" v-show="!isCameraOpen">
+        <div v-show="isPhotoTaken" class="col-lg-5 me-3">
+          <canvas
+              id="photoTaken"
+              ref="canvas"
+              width="560px"
+              height="560px"
+          ></canvas>
+        </div>
+        <div v-if="isPhotoTaken" class="col-lg-5 mt-5 position-relative">
+          <div id="log-swal-view"></div>
+          <div v-if="faceSuccess" class="row flex-row-reverse">
+            <h1
+                style="
             text-align: center;
             padding: 20px;
             font-weight: bold;
 
           "
-          >
-            THÔNG TIN NHÂN VIÊN
-          </h1>
-          <div class="col-lg-6">
-            <div class="about-text go-to">
-              <div class="row about-list">
-                <div
-                    style="border-bottom: 1px solid black; width: 500px"
-                    class="media">
-                  <span class="float-start" style="font-size: 20px"> Họ và tên nhân viên: </span>
-                  <span style="float: right; margin-right: 6px; font-size: 20px">
+            >
+              THÔNG TIN NHÂN VIÊN
+            </h1>
+            <div class="col-lg-6">
+              <div class="about-text go-to">
+                <div class="row about-list">
+                  <div
+                      style="border-bottom: 1px solid black; width: 500px"
+                      class="media">
+                    <span class="float-start" style="font-size: 20px"> Họ và tên nhân viên: </span>
+                    <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.fullName }}
                 </span>
-                </div>
-                <div
-                    style="border-bottom: 1px solid black; width: 500px"
-                    class="media"
-                >
-                  <span class="float-start" style="font-size: 20px"> Giới tính: </span>
-                  <span style="float: right; margin-right: 6px; font-size: 20px">
+                  </div>
+                  <div
+                      style="border-bottom: 1px solid black; width: 500px"
+                      class="media"
+                  >
+                    <span class="float-start" style="font-size: 20px"> Giới tính: </span>
+                    <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.gender }}
                 </span>
-                </div>
-                <div
-                    style="border-bottom: 1px solid black; width: 500px"
-                    class="media"
-                >
-                  <span class="float-start" style="font-size: 20px"> Chức vụ: </span>
-                  <span
-                      class="text-muted mb-0"
-                      v-for="(role, index) in currentUser.roles"
-                      :key="index"
+                  </div>
+                  <div
+                      style="border-bottom: 1px solid black; width: 500px"
+                      class="media"
                   >
+                    <span class="float-start" style="font-size: 20px"> Chức vụ: </span>
+                    <span
+                        class="text-muted mb-0"
+                        v-for="(role, index) in currentUser.roles"
+                        :key="index"
+                    >
                   <span
                       style="float: right; margin-right: 6px; font-size: 20px"
                       v-if="role.name == 'ROLE_USER'"
@@ -79,82 +81,84 @@
                   >Phòng nhân sự</span
                   >
                 </span>
-                </div>
-                <div
-                    style="border-bottom: 1px solid black; width: 500px"
-                    class="media"
-                >
-                  <span class="float-start" style="font-size: 20px"> Email: </span>
-                  <span style="float: right; margin-right: 6px; font-size: 20px">
+                  </div>
+                  <div
+                      style="border-bottom: 1px solid black; width: 500px"
+                      class="media"
+                  >
+                    <span class="float-start" style="font-size: 20px"> Email: </span>
+                    <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.username }}
                 </span>
-                </div>
-                <div
-                    style="border-bottom: 1px solid black; width: 500px"
-                    class="media"
-                >
-                  <span class="float-start" style="font-size: 20px"> Phòng ban: </span>
-                  <span style="float: right; margin-right: 6px; font-size: 20px">
+                  </div>
+                  <div
+                      style="border-bottom: 1px solid black; width: 500px"
+                      class="media"
+                  >
+                    <span class="float-start" style="font-size: 20px"> Phòng ban: </span>
+                    <span style="float: right; margin-right: 6px; font-size: 20px">
                     {{ currentUser.departments.name }}
                 </span>
-                </div>
-                <div
-                    style="border-bottom: 1px solid black; width: 500px; margin-bottom: 50px"
-                    class="media"
-                >
-                  <span class="float-start" style="font-size: 20px"> Mã nhân viên: </span>
-                  <span style="float: right; margin-right: 6px; font-size: 20px">
+                  </div>
+                  <div
+                      style="border-bottom: 1px solid black; width: 500px; margin-bottom: 50px"
+                      class="media"
+                  >
+                    <span class="float-start" style="font-size: 20px"> Mã nhân viên: </span>
+                    <span style="float: right; margin-right: 6px; font-size: 20px">
                   {{ currentUser.code }}
                 </span>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="about-avatar">
-              <!--            currentUser.user.cover-->
-              <img v-if="currentUser.cover!=null"
-                   v-bind:src="
+            <div class="col-lg-6">
+              <div class="about-avatar">
+                <!--            currentUser.user.cover-->
+                <img v-if="currentUser.cover!=null"
+                     v-bind:src="
               `http://localhost:8080/` + currentUser.cover
             "
-                   width="250px"
-                   height="250px"
-              />
-              <img v-if="currentUser.cover==null"
-                   src="../assets/FakeUser.png"
-                   width="250px"
-                   height="250px"
+                     width="250px"
+                     height="250px"
+                />
+                <img v-if="currentUser.cover==null"
+                     src="../assets/FakeUser.png"
+                     width="250px"
+                     height="250px"
 
-              />
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div v-if="!faceSuccess">
-          <h1
-              style="
+          <div v-if="!faceSuccess">
+            <h1
+                style="
             text-align: center;
             color: #E81919;
             padding: 20px;
             font-size: 32px;
           "
-          >
-            KHÔNG TÌM THẤY NHÂN VIÊN
-          </h1>
-          <img src='../assets/LoiChamCong.png'>
+            >
+              KHÔNG TÌM THẤY NHÂN VIÊN
+            </h1>
+            <img src='../assets/LoiChamCong.png'>
+          </div>
+          <div class="position-absolute bottom-0 float-end" >
+            <span>Thời gian chụp</span>
+            <span v-if="userInfo!=null" style="margin-left: 20px;margin-right: 60px">{{userInfo.time }}</span>
+            <span v-if="userInfo==null" style="margin-left: 20px;margin-right: 60px">{{new Date()}}</span>
+            <el-button  type="primary" v-if="faceSuccess"  @click="handleConfirm" >Xác nhận</el-button>
+            <el-button  type="danger" plain @click="handleOpenCamera" >Chụp lại</el-button>
+          </div>
         </div>
-        <div class="position-absolute bottom-0 float-end" >
-          <span>Thời gian chụp</span>
-          <span v-if="userInfo!=null" style="margin-left: 20px;margin-right: 60px">{{userInfo.time }}</span>
-          <span v-if="userInfo==null" style="margin-left: 20px;margin-right: 60px">{{new Date()}}</span>
-          <el-button  type="primary" v-if="faceSuccess"  @click="handleConfirm" >Xác nhận</el-button>
-          <el-button  type="danger" plain @click="handleOpenCamera" >Chụp lại</el-button>
-        </div>
+        <section v-show="!isPhotoTaken" class="p10 ">
+          <a><img class="open-camera" src="../assets/ChupAnh.png" @click="handleOpenCamera"></a>
+        </section>
       </div>
-      <section v-show="!isPhotoTaken" class="p10 ">
-        <a><img class="open-camera" src="../assets/ChupAnh.png" @click="handleOpenCamera"></a>
-      </section>
     </div>
   </div>
+
 
 </template>
 <script>
@@ -162,9 +166,11 @@ import logdetailService from "@/services/logdetail-service";
 import FaceIdentified from "@/services/face-identified";
 import LogdetailService from "@/services/logdetail-service";
 import UserService from "@/services/user.service";
+import UnPermist from "@/views/error/UnPermist";
 
 export default {
   name: "App",
+  components: {UnPermist},
   data() {
     return {
       isCameraOpen: false,
@@ -172,11 +178,12 @@ export default {
       isLoading: false,
       faceSuccess:false,
       userInfo:null,
-      currentUser:null
+      currentUser:null,
+      checkAuth:false
     };
   },
   created(){
-    this.createCameraElement();
+
   },
   methods: {
     createCameraElement() {
@@ -277,6 +284,15 @@ export default {
 
 
     },
+    checkIP(){
+      fetch('https://api.ipify.org?format=json')
+          .then(x => x.json())
+          .then(({ ip }) => {
+            if(ip=='113.190.246.2')
+                this.checkAuth= true;
+            console.log(this.checkAuth)
+          });
+    },
     getUser() {
       console.log(this.userInfo)
       const params ={
@@ -287,6 +303,10 @@ export default {
       })
 
     },
+  },
+  mounted() {
+    this.createCameraElement();
+    this.checkIP();
   }
 };
 </script>
