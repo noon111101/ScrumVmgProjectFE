@@ -136,7 +136,7 @@
                   ></el-input>
                 </el-col>
               </el-form-item>
-              <el-form-item label="Tên đề xuất *" prop="title">
+              <el-form-item label="Tên đề xuất" prop="title">
                 <el-col :span="16">
                   <el-input
                     placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
@@ -145,7 +145,7 @@
                   ></el-input>
                 </el-col>
               </el-form-item>
-              <el-form-item label="Loại đề xuất *" prop="categoryReason">
+              <el-form-item label="Loại đề xuất" required prop="categoryReason">
                 <el-col :span="15">
                   <b-form-select
                     style="width: 107%; padding: 9px 0"
@@ -517,7 +517,7 @@
                   ></el-input>
                 </el-col>
               </el-form-item>
-              <el-form-item label="Loại đề xuất *">
+              <el-form-item required label="Loại đề xuất">
                 <el-col :span="15">
                   <b-form-select
                     style="width: 107%; padding: 9px 0"
@@ -539,7 +539,8 @@
                   </b-form-select>
                 </el-col>
               </el-form-item>
-              <el-form-item v-if="form.categoryReason != 6">
+
+              <el-form-item label="Nghỉ từ" required v-if="form.categoryReason != 6">
                 <el-col :span="7">
                   <el-form-item prop="dateFrom">
                     <el-date-picker
@@ -578,7 +579,7 @@
                 </el-col>
               </el-form-item>
 
-              <el-form-item label="Quên ngày *" v-if="form.categoryReason == 6">
+              <el-form-item label="Quên ngày" required v-if="form.categoryReason == 6">
                 <el-col :span="16">
                   <el-date-picker
                     name="dateForget"
@@ -592,7 +593,7 @@
                 </el-col>
               </el-form-item>
 
-              <el-form-item label="Nghỉ đến" v-if="form.categoryReason != 6">
+              <el-form-item label="Nghỉ đến" required v-if="form.categoryReason != 6">
                 <el-col :span="7">
                   <el-form-item prop="dateTo">
                     <el-date-picker
