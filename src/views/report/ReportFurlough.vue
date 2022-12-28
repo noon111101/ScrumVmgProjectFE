@@ -69,6 +69,14 @@
                   <el-button
                       round
                       class="h-25 me-3"
+                      style="background-color: #e28743"
+                  ></el-button>
+                  <p style="font-weight: bold"> Nghỉ làm</p>
+                </div>
+                <div class="d-flex flex-row">
+                  <el-button
+                      round
+                      class="h-25 me-3"
                       style="background-color: #e24146"
                   ></el-button>
                   <p style="font-weight: bold">Chỉnh sửa</p>
@@ -162,7 +170,8 @@
       </tr>
       <tr :class="{
                 'user-lock': !u.user.avalible,
-                probation:u.probation
+                probation:u.probation,
+                leave:u.leaveCurrentYear
               }"
           v-for="(u,indexUser) in depart" :key="indexUser">
         <td>{{indexUser + 1}}</td>
@@ -522,6 +531,10 @@ tr th {
 .probation{
   background-color: #42b983 !important;
 }
+.leave{
+  background-color: #e28743 !important;
+}
+
 .fix:hover {
   background-color: #e24146;
   color: white;
