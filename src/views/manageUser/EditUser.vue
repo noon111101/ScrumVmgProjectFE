@@ -198,99 +198,39 @@
                         </td>
                       </tr>
 
+                      <tr style="height: 70px">
+                        <td style="width: 100px">
+                          Vị trí<span style="color: red">*</span>
+                        </td>
+                        <td style="width: 300px">
+                          <div class="form-group">
+                            <b-form-select
+                              style="width: 100%; padding: 9px 0"
+                              name="position"
+                              v-model="user.position.id"
+                              @change="getAll"
+                              required
+                              placeholder="Chọn vị trí"
+                            >
+                              <template #first>
+                                <b-form-select-option :value="null" disabled
+                                  >Chọn vị trí
+                                </b-form-select-option>
+                              </template>
+                              <b-form-select-option
+                                v-for="(item, index) in position"
+                                :key="index"
+                                :value="item.id"
+                                >{{ item.name }}
+                              </b-form-select-option>
+                            </b-form-select>
+                          </div>
+                        </td>
+                      </tr>
+
                       <template
                         v-if="user.username == currentUser.user.username"
                       >
-                        <tr style="height: 40px">
-                          <td style="width: 100px">
-                            Chức vụ<span style="color: red">*</span>
-                          </td>
-                          <td style="width: 300px">
-                            <input
-                              readonly=""
-                              type="radio"
-                              id="admin"
-                              value="admin"
-                              :checked="checkRole('ROLE_ADMIN')"
-                              name="role"
-                            />
-                            <label for="admin">&nbsp; Nhân sự</label>
-                          </td>
-                        </tr>
-                        <tr style="height: 40px">
-                          <td style="width: 100px"></td>
-                          <td style="width: 300px">
-                            <input
-                              disabled=""
-                              type="radio"
-                              id="manage"
-                              value="manage"
-                              :checked="checkRole('ROLE_MANAGE')"
-                              name="role"
-                            />
-
-                            <label for="manage">&nbsp; Trưởng phòng</label>
-                          </td>
-                        </tr>
-                        <tr style="height: 40px">
-                          <td style="width: 100px"></td>
-                          <td style="width: 300px">
-                            <input
-                              disabled
-                              type="radio"
-                              id="user"
-                              value="user"
-                              name="role"
-                              :checked="checkRole('ROLE_USER')"
-                            />
-                            <label for="user">&nbsp; Nhân viên</label>
-                          </td>
-                        </tr>
-                      </template>
-                      <template
-                        v-if="user.username != currentUser.user.username"
-                      >
-                        <tr style="height: 40px">
-                          <td style="width: 100px">
-                            Chức vụ<span style="color: red">*</span>
-                          </td>
-                          <td style="width: 300px">
-                            <input
-                              type="radio"
-                              id="admin"
-                              value="admin"
-                              :checked="checkRole('ROLE_ADMIN')"
-                              name="role"
-                            />
-                            <label for="admin">&nbsp; Nhân sự</label>
-                          </td>
-                        </tr>
-                        <tr style="height: 40px">
-                          <td style="width: 100px"></td>
-                          <td style="width: 300px">
-                            <input
-                              type="radio"
-                              id="manage"
-                              value="manage"
-                              :checked="checkRole('ROLE_MANAGE')"
-                              name="role"
-                            />
-                            <label for="manage">&nbsp; Trưởng phòng</label>
-                          </td>
-                        </tr>
-                        <tr style="height: 40px">
-                          <td style="width: 100px"></td>
-                          <td style="width: 300px">
-                            <input
-                              type="radio"
-                              id="user"
-                              value="user"
-                              name="role"
-                              :checked="checkRole('ROLE_USER')"
-                            />
-                            <label for="user">&nbsp; Nhân viên</label>
-                          </td>
-                        </tr>
                       </template>
 
                       <tr style="height: 60px">
@@ -325,7 +265,7 @@
 <script>
 import UserService from "@/services/user.service";
 import DepartmentService from "@/services/department.service";
-
+import PositionService from "@/services/position.service";
 export default {
   name: "EditVue",
   data() {
@@ -339,6 +279,7 @@ export default {
       newImage: null,
       cover: {},
       departments: [],
+      position: [],
       departmentId: "",
       errId: "",
       checkId: true,
@@ -365,7 +306,7 @@ export default {
       this.codeEdit = this.user.code;
       this.user.code = Number(this.user.code.split("_")[1]);
 
-      console.log(this.user.cover);
+      console.log(this.user);
       this.newImage =
         this.user.cover !== null
           ? "http://localhost:8080/" + this.user.cover
@@ -374,6 +315,14 @@ export default {
     DepartmentService.getAllDepartment()
       .then((response) => {
         this.departments = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    PositionService.getAllPosition()
+      .then((response) => {
+        this.position = response.data;
+       console.log(this.position);
       })
       .catch((e) => {
         console.log(e);
