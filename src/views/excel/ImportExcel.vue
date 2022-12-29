@@ -12,6 +12,8 @@
       <form id="formFile" @submit.prevent="getData">
         <input type="file" name="file" />
         <el-button native-type="submit" type="primary" round >Xem trước dữ liệu</el-button>
+        <el-button v-if="format==2" round @click="downloadExample()">Tải xuống mẫu</el-button>
+        <el-button v-if="format==1" round @click="downloadExample()">Tải xuống mẫu</el-button>
       </form>
 
       <el-table
@@ -104,13 +106,12 @@ export default {
   name: "ImportExcel",
   props: {
     header: String,
-    format:Number
+    format:String
   },
   data() {
     return {
       check:true,
       tableData: []
-
     };
   },
   methods:{
@@ -148,6 +149,9 @@ export default {
           });
         })
       }
+    },
+    downloadExample(){
+      this.$emit('downloadExample');
     },
     save(){
       if(this.format==1){
