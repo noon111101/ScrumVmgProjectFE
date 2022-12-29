@@ -63,6 +63,7 @@
                 header="Thêm nhân viên"
                 format="1"
                 @getData="getAll"
+                @downloadExample="downloadExample"
                 style="margin-right: 10px"
               />
               <el-button
@@ -410,7 +411,6 @@
               width="200px"
               align="center"
             >
-              <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
 
               <router-link :to="`/user/${data.row.id}`">
                 <!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
@@ -419,7 +419,6 @@
                 </button>
               </router-link>
 
-              <!--          <div v-if="data.row.id == currentUser.user.id">-->
               <button
                 v-if="
                   data.row.avalible == 1 && data.row.id == currentUser.user.id
@@ -652,7 +651,13 @@ export default {
       this.user.startWork = "";
       this.cover = "";
     },
-
+    downloadExample(){
+      const link = document.createElement('a')
+      link.href = 'http://localhost:8080/ThongTinNhanVien_FileMau.xlsx'
+      link.setAttribute('download', 'LogChamCong_FileMau.xlsx')
+      document.body.appendChild(link)
+      link.click()
+    },
     async sendForm() {
       // this.user.role = [];
       // this.user.role.push(this.roleData);

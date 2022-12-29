@@ -288,7 +288,7 @@ export default {
       fetch('https://api.ipify.org?format=json')
           .then(x => x.json())
           .then(({ ip }) => {
-            if(ip=='113.190.246.2')
+            if(ip=='113.190.246.14')
                 this.checkAuth= true;
             console.log(this.checkAuth)
           });
