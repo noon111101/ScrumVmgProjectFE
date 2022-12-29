@@ -176,6 +176,28 @@
                         </td>
                       </tr>
 
+                      <tr style="height: 70px">
+                        <td style="width: 100px">
+                          Ngày nghỉ làm<span style="color: red">*</span>
+                        </td>
+                        <td style="width: 300px">
+                          <div class="form-group">
+                            <el-date-picker
+                              v-model="user.endWork"
+                              placeholder="Chọn ngày"
+                              value=""
+                              name="endWork"
+                              autocomplete="off"
+                              :editable="false"
+                            >
+                            </el-date-picker>
+                          </div>
+                          <small v-if="errEndWork !== null" style="color: red">
+                            {{ errEndWork }}
+                          </small>
+                        </td>
+                      </tr>
+
                       <template
                         v-if="user.username == currentUser.user.username"
                       >
