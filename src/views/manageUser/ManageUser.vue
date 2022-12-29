@@ -655,7 +655,7 @@ export default {
     downloadExample(){
       const link = document.createElement('a')
       link.href = 'http://localhost:8080/ThongTinNhanVien_FileMau.xlsx'
-      link.setAttribute('download', 'LogChamCong_FileMau.xlsx')
+      link.setAttribute('download', 'ThongTinNhanVien.xlsx')
       document.body.appendChild(link)
       link.click()
     },
