@@ -144,7 +144,7 @@ export default {
     downloadExample(){
       const link = document.createElement('a')
       link.href = 'http://localhost:8080/LogChamCong_FileMau.xlsx'
-      link.setAttribute('download', 'LogChamCong_FileMau.xlsx')
+      link.setAttribute('download', 'LogChamCong.xlsx')
       document.body.appendChild(link)
       link.click()
     },
@@ -240,49 +240,6 @@ export default {
   min-height: 36px;
   text-align: left;
 }
-
-/*@media (max-width: 1920px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-
-
-/*}*/
-/*@media (max-width: 1600px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-/*  .el-col-24 {*/
-/*    width: 100%;*/
-/*  }*/
-
-/*}*/
-/*@media (max-width: 1399.98px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-/*  .el-col-24 {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 768px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-/*  .el-col-24 {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-
-
 @media only screen and (min-width: 280px){
   .el-col-md-6 {
     width: 80%;
