@@ -35,7 +35,58 @@
         >
 
         </el-date-picker>
+        <el-tooltip placement="right" effect="light" style="display: inline; margin-left: 20px" id="button-note" >
+          <el-button type="primary" class="el-icon-info el-button--info el-calendar__header" style="border-radius: 10px" > Chú thích</el-button>
+          <div class="note-wrapper" slot="content">
+            <div class="d-flex flex-column">
+              <div style="font-weight: bold;font-size: 16px;margin-bottom: 20px">Chú thích</div>
+              <div>
+                <div class="d-flex flex-row">
+                  <el-button round class="h-25 me-3" style="background-color: #ed9696"></el-button>
+                  <div style="text-align: justify">
+                    <p style="font-weight: bold">
+                       Tài khoản khóa
+                    </p>
+                  </div>
+                </div>
+                <div class="d-flex flex-row">
+                  <el-button
+                      round
+                      class="h-25 me-3"
+                      style="background-color: #42b983"
+                  ></el-button>
+                  <p style="font-weight: bold"> Thử việc</p>
+                </div>
+                <div class="d-flex flex-row">
+                  <el-button
+                      round
+                      class="h-25 me-3"
+                      style="background-color: #eafa59"
+                  ></el-button>
+                  <p style="font-weight: bold"> Quá số phép</p>
+                </div>
+                <div class="d-flex flex-row">
+                  <el-button
+                      round
+                      class="h-25 me-3"
+                      style="background-color: #e28743"
+                  ></el-button>
+                  <p style="font-weight: bold"> Nghỉ làm</p>
+                </div>
+                <div class="d-flex flex-row">
+                  <el-button
+                      round
+                      class="h-25 me-3"
+                      style="background-color: #e24146"
+                  ></el-button>
+                  <p style="font-weight: bold">Chỉnh sửa</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </el-tooltip>
       </div>
+
         <div class="col-3">
           <el-button
               type="danger"
@@ -119,6 +170,8 @@
       </tr>
       <tr :class="{
                 'user-lock': !u.user.avalible,
+                probation:u.probation,
+                leave:u.leaveCurrentYear
               }"
           v-for="(u,indexUser) in depart" :key="indexUser">
         <td>{{indexUser + 1}}</td>
@@ -145,7 +198,7 @@
         <td class="text-center">{{u.usedInYear}}</td>
         <td class="text-center">{{u.leftLastYear}}</td>
         <td class="text-center">{{u.leftCurentYear}}</td>
-        <td class="text-center">{{u.payFurlough}}</td>
+        <td class="text-center" :class="{'negative-pay':u.payFurlough<0}">{{u.payFurlough}}</td>
         <td class="text-center">{{u.availibleUsePresentMonth}}</td>
 
       </tr>
@@ -222,7 +275,7 @@
         <td class="text-center">{{u.usedInYear}}</td>
         <td class="text-center">{{u.leftLastYear}}</td>
         <td class="text-center">{{u.leftCurentYear}}</td>
-        <td class="text-center">{{u.payFurlough}}</td>
+        <td class="text-center" >{{u.payFurlough}}</td>
         <td class="text-center">{{u.availibleUsePresentMonth}}</td>
 
       </tr>
@@ -471,6 +524,17 @@ tr th {
 .user-lock {
   background-color: #ed9696 !important;
 }
+
+.negative-pay {
+  background-color: #eafa59 !important;
+}
+.probation{
+  background-color: #42b983 !important;
+}
+.leave{
+  background-color: #e28743 !important;
+}
+
 .fix:hover {
   background-color: #e24146;
   color: white;

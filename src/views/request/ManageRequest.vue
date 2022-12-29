@@ -136,7 +136,7 @@
                   ></el-input>
                 </el-col>
               </el-form-item>
-              <el-form-item label="Tên đề xuất *" prop="title">
+              <el-form-item label="Tên đề xuất" prop="title">
                 <el-col :span="16">
                   <el-input
                     placeholder="Họ và tên - Loại đề xuất - Thời gian nghỉ"
@@ -145,7 +145,7 @@
                   ></el-input>
                 </el-col>
               </el-form-item>
-              <el-form-item label="Loại đề xuất *" prop="categoryReason">
+              <el-form-item label="Loại đề xuất" required prop="categoryReason">
                 <el-col :span="15">
                   <b-form-select
                     style="width: 107%; padding: 9px 0"
@@ -173,22 +173,28 @@
                   }}</b-form-invalid-feedback> -->
 
                   <b-form-text v-if="form.categoryReason == 1" class="noti"
-                  ><span class="noti">Số phép có thể sử dụng {{ furlought.availableUsedTillMonth }}</span></b-form-text
+                    ><span class="noti"
+                      >Số phép có thể sử dụng
+                      {{ furlought.availableUsedTillMonth }}</span
+                    ></b-form-text
                   >
                   <b-form-text v-if="form.categoryReason == 4" class="noti"
-                  ><span class="noti">Bạn được nghỉ 3 ngày nếu kết hôn, cha mẹ/vợ hoặc chồng/con
-                    mất</span></b-form-text
+                    ><span class="noti"
+                      >Bạn được nghỉ 3 ngày nếu kết hôn, cha mẹ/vợ hoặc
+                      chồng/con mất</span
+                    ></b-form-text
                   >
                   <br />
                   <b-form-text v-if="form.categoryReason == 4" class="noti"
-                  ><span class="noti">Bạn được nghỉ 1 ngày nếu con ruột/con nuôi kết
-                    hôn</span></b-form-text
+                    ><span class="noti"
+                      >Bạn được nghỉ 1 ngày nếu con ruột/con nuôi kết hôn</span
+                    ></b-form-text
                   >
                   <b-form-text v-if="form.categoryReason == 3" class="noti">
-                    <span class="noti">Đăng ký nghỉ ốm cần phải có giấy Bảo hiểm xã hội</span>
-                    </b-form-text>
-
-
+                    <span class="noti"
+                      >Đăng ký nghỉ ốm cần phải có giấy Bảo hiểm xã hội</span
+                    >
+                  </b-form-text>
                 </el-col>
               </el-form-item>
 
@@ -426,7 +432,7 @@
                           </b-dropdown-form>
                           <b-dropdown-divider></b-dropdown-divider>
                           <b-dropdown-item-button
-                            v-for="option in availableOptions"
+                            v-for="option in availableOptionsMN"
                             :key="option"
                             :value="option.username"
                             @click="onOptionClick({ option, addTag })"
@@ -517,7 +523,7 @@
                   ></el-input>
                 </el-col>
               </el-form-item>
-              <el-form-item label="Loại đề xuất *">
+              <el-form-item required label="Loại đề xuất">
                 <el-col :span="15">
                   <b-form-select
                     style="width: 107%; padding: 9px 0"
@@ -539,7 +545,12 @@
                   </b-form-select>
                 </el-col>
               </el-form-item>
-              <el-form-item v-if="form.categoryReason != 6">
+
+              <el-form-item
+                label="Nghỉ từ"
+                required
+                v-if="form.categoryReason != 6"
+              >
                 <el-col :span="7">
                   <el-form-item prop="dateFrom">
                     <el-date-picker
@@ -578,7 +589,11 @@
                 </el-col>
               </el-form-item>
 
-              <el-form-item label="Quên ngày *" v-if="form.categoryReason == 6">
+              <el-form-item
+                label="Quên ngày"
+                required
+                v-if="form.categoryReason == 6"
+              >
                 <el-col :span="16">
                   <el-date-picker
                     name="dateForget"
@@ -592,7 +607,11 @@
                 </el-col>
               </el-form-item>
 
-              <el-form-item label="Nghỉ đến" v-if="form.categoryReason != 6">
+              <el-form-item
+                label="Nghỉ đến"
+                required
+                v-if="form.categoryReason != 6"
+              >
                 <el-col :span="7">
                   <el-form-item prop="dateTo">
                     <el-date-picker
@@ -779,7 +798,7 @@
                           </b-dropdown-form>
                           <b-dropdown-divider></b-dropdown-divider>
                           <b-dropdown-item-button
-                            v-for="option in availableOptions"
+                            v-for="option in availableOptionsMN"
                             :key="option"
                             :value="option.username"
                             @click="onOptionClick({ option, addTag })"
@@ -882,10 +901,27 @@
               </div>
             </el-table-column>
 
-            <el-table-column prop="" label="Thao tác" align="center" width="200" v-slot:="data">
-              <el-button type="info" v-if="data.row.approveStatus.id==1" @click="changeStatus(data.row.id, 4,data.row.approveStatus.id,currentUser.user.id)"
-                         icon="el-icon-delete" circle></el-button>
-
+            <el-table-column
+              prop=""
+              label="Thao tác"
+              align="center"
+              width="200"
+              v-slot:="data"
+            >
+              <el-button
+                type="info"
+                v-if="data.row.approveStatus.id == 1"
+                @click="
+                  changeStatus(
+                    data.row.id,
+                    4,
+                    data.row.approveStatus.id,
+                    currentUser.user.id
+                  )
+                "
+                icon="el-icon-delete"
+                circle
+              ></el-button>
             </el-table-column>
           </el-table>
         </div>
@@ -1108,7 +1144,7 @@ import DepartmentService from "@/services/department.service";
 export default {
   data() {
     return {
-      furlought: '',
+      furlought: "",
       options: [],
       value: [],
       list: [],
@@ -1253,6 +1289,21 @@ export default {
       // Show all options available
       return options;
     },
+    availableOptionsMN() {
+      const criteria = this.criteria;
+      // Filter out already selected options
+      const options = this.usersMN.filter(
+        (opt) => this.value.indexOf(opt) === -1
+      );
+      if (criteria) {
+        // Show only options that match criteria
+        return options.filter(
+          (opt) => opt.fullName.toLowerCase().indexOf(criteria) > -1
+        );
+      }
+      // Show all options available
+      return options;
+    },
     searchDesc() {
       if (this.criteria && this.availableOptions.length === 0) {
         return "Không có tên người bạn muốn tìm";
@@ -1279,6 +1330,16 @@ export default {
       .then((response) => {
         this.usersNS = response.data;
         this.list = this.usersNS.map((item) => {
+          return { username: `${item.username}`, fullName: `${item.fullName}` };
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+    UserService.getAllUserByPositionId()
+      .then((response) => {
+        this.usersMN = response.data;
+        this.list = this.usersMN.map((item) => {
           return { username: `${item.username}`, fullName: `${item.fullName}` };
         });
       })
@@ -1685,15 +1746,18 @@ export default {
       } else {
         this.sendStatusId = this.statusId;
       }
-      RequestService.getMyRequest(this.currentUser.user.id, this.sendStatusId)
-          .then((response) => {
-            this.myRequests = response.data
-            console.log(this.myRequests)
-          })
-      RequestService.getFurloughinMonth(this.currentUser.user.id).then(response => {
-        this.furlought = response.data
-      })
-
+      RequestService.getMyRequest(
+        this.currentUser.user.id,
+        this.sendStatusId
+      ).then((response) => {
+        this.myRequests = response.data;
+        console.log(this.myRequests);
+      });
+      RequestService.getFurloughinMonth(this.currentUser.user.id).then(
+        (response) => {
+          this.furlought = response.data;
+        }
+      );
     },
     handleClick(tab, event) {
       console.log(tab, event);
@@ -1764,8 +1828,7 @@ export default {
   background-color: #f56c6c;
 }
 
-.noti{
+.noti {
   color: red;
 }
-
 </style>

@@ -63,6 +63,7 @@
                 header="Thêm nhân viên"
                 format="1"
                 @getData="getAll"
+                @downloadExample="downloadExample"
                 style="margin-right: 10px"
               />
               <el-button
@@ -220,7 +221,7 @@
                           name="department"
                           v-model="user.department"
                           @change="getAll"
-                          placeholder="Chon phòng ban"
+                          placeholder="Chọn phòng ban"
                         >
                           <el-option
                             v-for="item in departments"
@@ -261,45 +262,31 @@
 
                   <tr style="height: 40px">
                     <td style="width: 100px">
-                      Chức vụ<span style="color: red">*</span>
+                      Vị trí<span style="color: red">*</span>
                     </td>
-                    <td style="width: 300px">
-                      <input
-                        type="radio"
-                        id="admin"
-                        value="admin"
-                        v-model="roleData"
-                        name="role"
-                      />
-                      <label for="admin">&nbsp; Nhân sự</label>
-                    </td>
+                    <div class="form-group">
+                      <b-form-select
+                        style="width: 100%; padding: 9px 0"
+                        name="position"
+                        v-model="user.position"
+                        @change="getAll"
+                        required
+                      >
+                        <template #first>
+                          <b-form-select-option :value="null" disabled
+                            >Chọn vị trí
+                          </b-form-select-option>
+                        </template>
+                        <b-form-select-option
+                          v-for="(item, index) in positions"
+                          :key="index"
+                          :value="item.id"
+                          >{{ item.name }}
+                        </b-form-select-option>
+                      </b-form-select>
+                    </div>
                   </tr>
-                  <tr style="height: 40px">
-                    <td style="width: 100px"></td>
-                    <td style="width: 300px">
-                      <input
-                        type="radio"
-                        id="manage"
-                        value="manage"
-                        v-model="roleData"
-                        name="role"
-                      />
-                      <label for="manage">&nbsp; Trưởng phòng</label>
-                    </td>
-                  </tr>
-                  <tr style="height: 40px">
-                    <td style="width: 100px"></td>
-                    <td style="width: 300px">
-                      <input
-                        type="radio"
-                        id="user"
-                        value="user"
-                        v-model="roleData"
-                        name="role"
-                      />
-                      <label for="user">&nbsp; Nhân viên</label>
-                    </td>
-                  </tr>
+
                   <tr style="height: 40px">
                     <td style="width: 100px"></td>
                     <td style="width: 300px">
@@ -406,12 +393,17 @@
             >
               <p
                 class="text-muted mb-0"
-                v-for="(role, index) in data.row.roles"
+                v-for="(role, index) in data.row.position"
                 :key="index"
               >
-                <span v-if="role.id == 1">Nhân viên</span>
-                <span v-if="role.id == 2">Trưởng phòng</span>
-                <span v-if="role.id == 3">Phòng nhân sự</span>
+                <span v-if="role == 1">Nhân sự</span>
+                <span v-if="role == 2">Giám đốc trung tâm</span>
+                <span v-if="role == 3">Trưởng phòng</span>
+                <span v-if="role == 4">Trưởng nhóm</span>
+                <span v-if="role == 5">Chuyên viên</span>
+                <span v-if="role == 6">Nhân viên</span>
+                <span v-if="role == 7">Cộng tác viên</span>
+                <span v-if="role == 8">Thực tập </span>
               </p>
             </el-table-column>
             <el-table-column
@@ -433,7 +425,6 @@
               width="150px"
               align="center"
             >
-              <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
 
               <router-link :to="`/user/${data.row.id}`">
                 <!--            <el-button type="danger" icon="el-icon-edit-outline" circle></el-button>-->
@@ -442,7 +433,6 @@
                 </button>
               </router-link>
 
-              <!--          <div v-if="data.row.id == currentUser.user.id">-->
               <button
                 v-if="
                   data.row.avalible == 1 && data.row.id == currentUser.user.id
@@ -530,6 +520,8 @@ import UserService from "@/services/user.service";
 import AuthService from "@/services/auth.service";
 import ImportExcel from "@/views/excel/ImportExcel";
 import ExcelService from "@/services/excel-service";
+import PositionService from "@/services/position.service";
+
 
 export default {
   name: "HomeVue",
@@ -552,7 +544,7 @@ export default {
       user: {
         username: "",
         fullName: "",
-        role: [],
+        position: null,
         department: "",
         code: "",
         gender: "",
@@ -613,6 +605,13 @@ export default {
       .catch((e) => {
         console.log(e);
       });
+    PositionService.getAllPosition()
+      .then((response) => {
+        this.positions = response.data;
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   },
 
   methods: {
@@ -657,21 +656,27 @@ export default {
         (this.checkGender = false),
         (this.errRole = ""),
         (this.checkRole = false),
-      this.errStartWork = "";
+        (this.errStartWork = "");
       this.checkStartWork = false;
       this.user.gender = "";
       this.user.fullName = "";
-      this.user.role = "";
+      this.user.position = null;
       this.user.code = "";
       this.user.department = "";
       this.user.username = "";
       this.user.startWork = "";
       this.cover = "";
     },
-
+    downloadExample(){
+      const link = document.createElement('a')
+      link.href = 'http://localhost:8080/ThongTinNhanVien_FileMau.xlsx'
+      link.setAttribute('download', 'ThongTinNhanVien.xlsx')
+      document.body.appendChild(link)
+      link.click()
+    },
     async sendForm() {
-      this.user.role = [];
-      this.user.role.push(this.roleData);
+      // this.user.role = [];
+      // this.user.role.push(this.roleData);
       let response = await UserService.getAllUser();
       this.users = response.data;
 
@@ -759,8 +764,8 @@ export default {
         this.checkGender = true;
       }
 
-      if (!this.user.role) {
-        this.errRole = "Hãy chọn chức vu";
+      if (!this.user.position) {
+        this.errRole = "Hãy chọn vị trí";
         this.checkRole = false;
       } else {
         this.errRole = "";

@@ -48,7 +48,7 @@
         <el-col :md="6" :lg="6" :xl="5" >
           <div class="grid-content buttons">
             <div >
-              <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll"/>
+              <import-excel header="Thêm dữ liệu chấm công" format=2 @getData="getAll" @downloadExample="downloadExample"/>
             </div>
           </div>
         </el-col>
@@ -103,7 +103,6 @@ export default {
       dateRange: "",
       from: "",
       to: "",
-
       logs: [],
       search: "",
       totalItems: 0,
@@ -142,6 +141,13 @@ export default {
       console.log("user code" + this.user_code);
       // console.log("user code"+curr)
     },
+    downloadExample(){
+      const link = document.createElement('a')
+      link.href = 'http://localhost:8080/LogChamCong_FileMau.xlsx'
+      link.setAttribute('download', 'LogChamCong.xlsx')
+      document.body.appendChild(link)
+      link.click()
+    },
     getAll() {
       this.from = this.dateRange !== null ? this.dateRange.at(0) : null;
       this.to = this.dateRange !== null ? this.dateRange.at(1) : null;
@@ -158,7 +164,6 @@ export default {
             this.logs = response.data.content;
             this.page = response.data.pageable.pageNumber;
             this.totalItems = response.data.totalElements;
-            console.log(this.departmentId + "fdafdsafsd")
           })
           .catch((error) => {
             console.log(error);
@@ -235,49 +240,6 @@ export default {
   min-height: 36px;
   text-align: left;
 }
-
-/*@media (max-width: 1920px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-
-
-/*}*/
-/*@media (max-width: 1600px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-/*  .el-col-24 {*/
-/*    width: 100%;*/
-/*  }*/
-
-/*}*/
-/*@media (max-width: 1399.98px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-/*  .el-col-24 {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-/*@media (max-width: 768px) {*/
-/*  .calendar {*/
-/*    width: 100px;*/
-/*    overflow-x: auto;*/
-/*    -webkit-overflow-scrolling: touch;*/
-/*  }*/
-/*  .el-col-24 {*/
-/*    width: 100%;*/
-/*  }*/
-/*}*/
-
-
 @media only screen and (min-width: 280px){
   .el-col-md-6 {
     width: 80%;
