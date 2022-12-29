@@ -7,7 +7,7 @@
       />
     </div>
     <div style="padding-bottom: 20px">
-      <div className="container" style="width: 90%; margin: auto">
+      <div className="" style="width: 100%; margin: auto">
         <el-row :gutter="20">
           <el-col :md="6" :lg="6" :xl="6">
             <div class="grid-content" style="margin-bottom: 20px">
@@ -56,7 +56,7 @@
             </div>
           </el-col>
 
-          <el-col :md="6" :lg="6" :xl="6" class="div-buttons">
+          <el-col :md="7" :lg="7" :xl="7" class="div-buttons">
             <div class="grid-content div-buttons">
               <import-excel
                 class="text-start buttons btn-import"
@@ -72,6 +72,14 @@
                 round
                 @click="dialogFormVisible = true"
                 ><i class="el-icon-plus"></i> Thêm nhân viên
+              </el-button>
+              <el-button
+                  class="buttons btn-add"
+                  type="danger"
+                  style=""
+                  round
+                  @click="exportUsers"
+              ><i class="el-icon-plus"></i> Xuất file
               </el-button>
             </div>
           </el-col>
@@ -361,6 +369,12 @@
             >
             </el-table-column>
             <el-table-column
+                label="Ngày vào làm"
+                prop="startWork"
+                align="center"
+            >
+            </el-table-column>
+            <el-table-column
               label="Email"
               prop="username"
               align="center"
@@ -416,7 +430,7 @@
             <el-table-column
               v-slot:="data"
               label="Thao tác"
-              width="200px"
+              width="150px"
               align="center"
             >
               <!--          <font-awesome-icon icon="fa-duotone fa-pen-to-square" />-->
@@ -515,6 +529,7 @@ import DepartmentService from "@/services/department.service";
 import UserService from "@/services/user.service";
 import AuthService from "@/services/auth.service";
 import ImportExcel from "@/views/excel/ImportExcel";
+import ExcelService from "@/services/excel-service";
 
 export default {
   name: "HomeVue",
@@ -798,6 +813,12 @@ export default {
     getUserCode() {
       this.user_code = this.currentUser.user.user_code;
       console.log("user code" + this.user_code);
+    },
+    exportUsers(){
+      const params = {
+        "id": this.departmentId
+      }
+      ExcelService.exportExcelUser(params)
     },
     getAll() {
       let params = null;

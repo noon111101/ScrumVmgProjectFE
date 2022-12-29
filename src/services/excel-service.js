@@ -33,6 +33,21 @@ class ExcelService{
             link.click()
         })
     }
+    exportExcelUser(params){
+        axios.get(`http://localhost:8080/api/excel/export_users`, {params,
+            responseType: 'blob',
+        }).then((response) => {
+            const url = URL.createObjectURL(new Blob([response.data]))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute(
+                'download',
+                `Danh sách nhân viên -${new Date().toLocaleDateString()}.xlsx`
+            )
+            document.body.appendChild(link)
+            link.click()
+        })
+    }
     importUser(data){
         let formData = new FormData(data);
         console.log(formData)
